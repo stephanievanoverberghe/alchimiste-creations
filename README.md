@@ -99,8 +99,9 @@ src/
 -   ✅ Base technique posée (Next.js + Tailwind 4.1)
 -   ✅ Charte graphique et éditoriale intégrée
 -   ✅ Architecture fluide et modulaire créée
--   🔄 Contenus JSON en cours d’écriture
+-   ✅ Contenus JSON en cours d’écriture
 -   🔜 Composants dynamiques en développement
+-   🔜 Pages en développement
 
 ---
 
