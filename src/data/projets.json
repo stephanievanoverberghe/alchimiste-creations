@@ -1,0 +1,49 @@
+[
+    {
+        "slug": "norel-art",
+        "titre": "Norel Art",
+        "sousTitre": "Portfolio e-commerce sensible et expressif",
+        "client": "Norel",
+        "pourQui": "Norel, artiste peintre et illustratrice indépendante. Elle travaille l’encre, l’aquarelle et le fusain à travers des portraits expressifs et spirituels.",
+        "besoin": "Créer un espace émotionnel, fluide, avec une navigation claire pour vendre ses œuvres simplement, sans perdre le lien avec ceux qui la découvrent.",
+        "citationClient": "Je veux que les gens aient l’impression d’entrer dans mon atelier, même à distance.",
+        "proposition": [
+            "Création d’un site e-commerce sur mesure, structuré en collections",
+            "Univers graphique à partir de sa signature et de ses textures visuelles",
+            "Accueil immersif : images plein écran + effet d’entrée doux",
+            "Pages œuvres catégorisées (originaux, impressions limitées, fresques...)",
+            "Mises en situation (mockups) + zoom sur les détails techniques de chaque œuvre",
+            "Intégration Stripe pour le paiement (dont option en plusieurs fois)",
+            "Ajout d’un formulaire de commande personnalisé",
+            "Préparation du terrain pour témoignages automatisés"
+        ],
+        "resultat": "Un site minimaliste, poétique et structuré, à son image. Les visiteurs peuvent entrer dans son monde, ressentir l’émotion de ses œuvres, acheter en quelques clics, ou passer une commande sur mesure.",
+        "temoignage": "Je ne pensais pas qu’un site pouvait me ressembler à ce point. C’est comme si tu avais traduit mes gestes en interface.",
+        "collaboration": "Perrine Dassonville – Développeuse backend",
+        "image": "/images/projets/norel-art.jpg",
+        "lien": "/projets/norel-art"
+    },
+    {
+        "slug": "ania-sophro",
+        "titre": "Ania Sophro",
+        "sousTitre": "Site vitrine doux pour sophrologue & infirmière",
+        "client": "Ania",
+        "pourQui": "Ania, sophrologue professionnelle installée à Villeneuve-d’Ascq. Elle accompagne ses patient·es dans la régulation du stress, l’apaisement émotionnel et la reconnexion au corps.",
+        "besoin": "Un site clair et intuitif, qui donne confiance dès les premières secondes. Un espace rassurant pour les personnes stressées, en recherche de douceur, de sécurité et de cadre.",
+        "citationClient": "Je veux que les gens puissent déjà respirer un peu rien qu’en arrivant sur mon site.",
+        "proposition": [
+            "Création d’un site vitrine sur 3 pages (Accueil, À propos, Contact)",
+            "Mise en place d’un design sobre, doux et stable, en lien avec son rythme",
+            "Textes co-écrits : phrases inspirantes, respirables, en alternance avec les infos",
+            "Section dédiée à la prise de rendez-vous avec bouton clair + lien Calendly",
+            "Création d’une page À propos sensible, avec son parcours + sa posture d’accompagnement",
+            "Coordonnées accessibles + carte de localisation",
+            "Formation à l’autonomie pour modification de texte/image"
+        ],
+        "resultat": "Un site clair, rassurant, chaleureux. Le site d’Ania inspire la confiance, la sécurité et le respect du rythme de chacun.",
+        "temoignage": "On ressent déjà le soin rien qu’en lisant les mots.",
+        "temoignage2": "Je n’ai pas eu besoin de tout dire. Tu as capté mon énergie. Le site est juste, vivant, et je me sens alignée à 100 % avec ce qu’il renvoie.",
+        "image": "/images/projets/ania-site.jpg",
+        "lien": "/projets/ania-sophro"
+    }
+]
