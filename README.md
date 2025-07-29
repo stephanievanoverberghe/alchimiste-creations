@@ -114,7 +114,7 @@ src/
 
 ## 📬 Contact
 
-Projet créé par [@Alchimiste Créations](orangestreet@live.fr)  
+Projet créé par [@Alchimiste Créations](mailto:orangestreet@live.fr)  
 Tu peux me retrouver sur Instagram ou LinkedIn.
 
 ---
