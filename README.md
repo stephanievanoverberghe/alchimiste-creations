@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌿 Alchimiste Créations
 
-## Getting Started
+> Transformer les idées sensibles en expériences digitales vivantes.
 
-First, run the development server:
+Alchimiste Créations est un site vitrine conçu pour incarner l’univers de mon activité de développeuse web freelance.
+
+J’y propose des sites sur-mesure pour les artistes, thérapeutes, entrepreneurs du cœur et structures engagées dans le vivant. Chaque projet est une rencontre, un espace digital pensé comme un prolongement de l’âme de la personne qui le porte.
+
+Ce projet n’est pas seulement technique. Il est avant tout humain, sensible, intuitif. Il respecte une charte graphique douce, une voix éditoriale claire et un rythme de création fluide.
+
+---
+
+## ✨ Objectifs
+
+-   Créer un espace digital aligné avec mon identité de créatrice
+-   Structurer mes offres (packs, accompagnement)
+-   Montrer mes projets avec sensibilité (portfolio vivant)
+-   Offrir une expérience de navigation claire, intuitive et rassurante
+-   Me connecter à mes futurs clients via une page de contact chaleureuse
+
+---
+
+## 🛠️ Stack technique
+
+-   [Next.js 15 (App Router)](https://nextjs.org/)
+-   [Tailwind CSS 4.1](https://tailwindcss.com/)
+-   [Google Fonts via `next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+-   JSON local (fichiers dans `src/data/`) pour gérer les contenus dynamiques
+-   Déploiement prévu sur [Vercel](https://vercel.com/)
+
+---
+
+## 🧱 Architecture du projet
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/
+├── app/                    # Routage via App Router
+│   ├── layout.tsx          # Layout global (Header, Footer)
+│   ├── page.tsx            # Accueil
+│   ├── a-propos/           # Page À propos
+│   ├── offres/             # Offres & packs
+│   ├── methode/            # Ma méthode
+│   ├── projets/            # Portfolio
+│   ├── projets/[slug]/     # Pages projet individuelles
+│   └── contact/            # Page de contact
+│
+├── components/             # Composants réutilisables
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   ├── Hero.tsx
+│   ├── ProjectCard.tsx
+│   ├── PackCard.tsx
+│   └── ContactForm.tsx
+│
+├── data/                   # Contenus dynamiques en JSON
+│   ├── projets.json
+│   ├── packs.json
+│   ├── temoignages.json
+│   └── methode.json
+│
+├── lib/                    # Fonctions de lecture et utils
+│   ├── getProjets.ts
+│   ├── getPacks.ts
+│   └── ...
+│
+└── assets/                 # Images et ressources visuelles
+    └── images/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎨 Identité graphique
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **Couleurs** : ivoire, terracotta, sauge, or mat, ardoise
+-   **Typographies** :
+    -   **Titres** : Cormorant Garamond
+    -   **Textes** : Raleway
+-   **Ton de voix** : chaleureux, clair, incarné, sensible
+-   **Charte** : présente dans `globals.css` via CSS variables (`@theme inline`)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Page     | URL               | Contenu principal                              |
+| -------- | ----------------- | ---------------------------------------------- |
+| Accueil  | `/`               | Slogan, intention, lien vers offres et projets |
+| À propos | `/a-propos`       | WHY, vision, parcours, manifeste               |
+| Offres   | `/offres`         | Présentation des 3 packs + options             |
+| Méthode  | `/methode`        | Étapes de mon accompagnement fluide            |
+| Projets  | `/projets`        | Portfolio vivant (données JSON)                |
+| Projet   | `/projets/[slug]` | Page projet individuelle (route dynamique)     |
+| Contact  | `/contact`        | Formulaire, zone libre, message doux           |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🚧 Statut actuel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   ✅ Base technique posée (Next.js + Tailwind 4.1)
+-   ✅ Charte graphique et éditoriale intégrée
+-   ✅ Architecture fluide et modulaire créée
+-   🔄 Contenus JSON en cours d’écriture
+-   🔜 Composants dynamiques en développement
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 💡 Prochaines étapes
+
+-   Génération dynamique du portfolio à partir de `projets.json`
+-   Publication de la version 1 sur Vercel
+-   Ajout futur d’un blog (`/carnet`) si besoin
+
+---
+
+## 📬 Contact
+
+Projet créé par [@Alchimiste Créations](orangestreet@live.fr)  
+Tu peux me retrouver sur Instagram ou LinkedIn.
+
+---
+
+## 📜 Licence
+
+Projet personnel – Tous droits réservés.
