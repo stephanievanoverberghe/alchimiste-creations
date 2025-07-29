@@ -1,6 +1,8 @@
+import Script from 'next/script';
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Raleway } from 'next/font/google';
 import './globals.css';
+import Header from '@/components/Header';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
@@ -22,7 +24,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
-            <body>{children}</body>
+            <body>
+                {/* Font Awesome Kit */}
+                <Script src="https://kit.fontawesome.com/e5228146fd.js" crossOrigin="anonymous" strategy="beforeInteractive" />
+                <Header />
+                <main>{children}</main>
+            </body>
         </html>
     );
 }
