@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Raleway } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
+import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
@@ -24,11 +25,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
-            <body>
-                {/* Font Awesome Kit */}
+            <body className="min-h-screen">
                 <Script src="https://kit.fontawesome.com/e5228146fd.js" crossOrigin="anonymous" strategy="beforeInteractive" />
-                <Header />
-                <main>{children}</main>
+
+                {/* ✅ ENVELOPPE CLIENT QUI GÈRE L’IMAGE */}
+                <BackgroundImageWrapper>
+                    <Header />
+                    <main className="flex flex-col items-center justify-center h-[calc(100vh-72px)]">{children}</main>
+                </BackgroundImageWrapper>
             </body>
         </html>
     );

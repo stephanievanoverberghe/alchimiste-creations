@@ -19,7 +19,7 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="w-full px-6 py-4 flex items-center justify-between bg-foreground text-background font-body md:px-8 lg:px-12">
+        <header className="w-full px-6 py-4 flex items-center justify-between text-background font-body md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 z-50">
                 <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={60} height={60} className="h-14 w-14 object-contain" priority />

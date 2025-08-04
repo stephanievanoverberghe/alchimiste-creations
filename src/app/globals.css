@@ -21,8 +21,22 @@
   --font-body: var(--font-raleway);
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-title);
 }
