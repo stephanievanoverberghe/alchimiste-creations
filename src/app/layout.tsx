@@ -1,9 +1,12 @@
 import Script from 'next/script';
 import type { Metadata } from 'next';
+
 import { Cormorant_Garamond, Raleway } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
+import Hero from '@/components/Hero';
 import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
+import Footer from '@/components/Footer';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
@@ -28,11 +31,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="min-h-screen">
                 <Script src="https://kit.fontawesome.com/e5228146fd.js" crossOrigin="anonymous" strategy="beforeInteractive" />
 
-                {/* ✅ ENVELOPPE CLIENT QUI GÈRE L’IMAGE */}
                 <BackgroundImageWrapper>
                     <Header />
-                    <main className="flex flex-col items-center justify-center h-[calc(100vh-72px)]">{children}</main>
+                    <Hero />
                 </BackgroundImageWrapper>
+                <main>{children}</main>
+                <Footer />
             </body>
         </html>
     );

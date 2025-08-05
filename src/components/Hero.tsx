@@ -3,8 +3,6 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-import Button from '@/components/ui/Button';
-
 export default function Hero() {
     const pathname = usePathname();
 
@@ -43,7 +41,7 @@ export default function Hero() {
     const { title, paragraph } = textMap[pathname] || textMap['/'];
 
     return (
-        <section className="text-center lg:text-right px-6 md-px-8 lg:pr-12 lg:pl-56 xl:px-[150px]">
+        <section className="min-h-screen flex flex-col justify-center items-center  text-center lg:items-end lg:text-right px-6 md-px-8 lg:pr-12 lg:pl-56 xl:px-[150px] overflow-hidden">
             <h1 className="text-3xl md:text-6xl font-bold text-ormat leading-tight tracking-[0.16em]">{title}</h1>
             <p className="mt-6 md:mt-10 text-lg md:text-2xl font-light text-background/80 tracking-widest">{paragraph}</p>
 

@@ -1,7 +1,11 @@
 'use client';
 
-import Hero from '@/components/Hero';
+import Intro from '@/components/sections/home/Intro';
 
 export default function HomePage() {
-    return <Hero />;
+    return (
+        <div>
+            <Intro />
+        </div>
+    );
 }

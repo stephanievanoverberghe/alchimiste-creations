@@ -1,7 +1,9 @@
 'use client';
 
-import Hero from '@/components/Hero';
-
 export default function AboutPage() {
-    return <Hero />;
+    return (
+        <div>
+            <h1>Hello</h1>
+        </div>
+    );
 }
