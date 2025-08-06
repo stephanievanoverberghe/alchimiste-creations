@@ -27,6 +27,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
+            <head>
+                <meta name="robots" content="noindex, nofollow" />
+            </head>
             <body className="min-h-screen">
                 <PageWrapper>{children}</PageWrapper>
             </body>
