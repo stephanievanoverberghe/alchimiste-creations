@@ -1,4 +1,3 @@
-import Script from 'next/script';
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Raleway } from 'next/font/google';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -6,10 +5,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import './globals.css';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import BackgroundImageWrapper from '@/components/BackgroundImageWrapper';
-import Footer from '@/components/Footer';
+import PageWrapper from '@/components/PageWrapper';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
@@ -32,12 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
             <body className="min-h-screen">
-                <BackgroundImageWrapper>
-                    <Header />
-                    <Hero />
-                </BackgroundImageWrapper>
-                <main>{children}</main>
-                <Footer />
+                <PageWrapper>{children}</PageWrapper>
             </body>
         </html>
     );

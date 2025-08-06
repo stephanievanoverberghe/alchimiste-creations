@@ -9,7 +9,7 @@ export default function OffresPage() {
 
     return (
         <div>
-            <h1>Mes offres</h1>
+            <h1 className="text-center text-base lg:text-5xl py-24">Page offres</h1>
         </div>
     );
 }

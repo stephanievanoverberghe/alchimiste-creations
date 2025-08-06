@@ -14,12 +14,21 @@ const navLinks = [
     { href: '/projets', label: 'Projets vivants' },
 ];
 
+// pages sans background décoratif
+const simplePages = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq'];
+
 export default function Header() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
+    const isSimplePage = simplePages.includes(pathname);
 
     return (
-        <header className="w-full px-6 py-4 flex items-center justify-between text-background font-body md:px-8 lg:px-[100px] xl:px-[150px]">
+        <header
+            className={cn(
+                'w-full px-6 py-4 flex items-center justify-between text-background font-body md:px-8 lg:px-[100px] xl:px-[150px] transition-colors duration-300',
+                isSimplePage && 'bg-foreground'
+            )}
+        >
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 z-50">
                 <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={60} height={60} className="h-14 w-14 object-contain" priority />
