@@ -33,7 +33,7 @@ export default function OffersSection() {
     return (
         <section className="relative py-10 md:py-28 px-6 md:px-12 lg:px-[100px] xl:px-[150px] bg-background">
             <div className="relative z-10 text-foreground">
-                <h2 className="text-center lg:text-start text-xl md:text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">Mes accompagnements</h2>
+                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">Mes accompagnements</h2>
                 <p className="mb-5 md:mb-10 text-sm md:text-base text-center lg:text-start">
                     Chaque projet est une rencontre. J’écoute, je ressens, je co-crée avec vous un site qui vous ressemble.
                 </p>

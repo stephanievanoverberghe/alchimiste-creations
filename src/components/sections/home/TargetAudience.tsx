@@ -16,7 +16,7 @@ export default function TargetAudienceSection() {
 
             {/* Contenu principal */}
             <div className="relative z-10">
-                <h2 className="text-center lg:text-start text-xl md:text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
+                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
                     À qui s’adresse Alchimiste Créations ?
                 </h2>
 
