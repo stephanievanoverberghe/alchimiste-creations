@@ -49,15 +49,15 @@ export default function Hero() {
                 <div className="mt-12 md:mt-16 flex flex-col sm:flex-row justify-center lg:justify-end gap-4">
                     <Link
                         href="/offres"
-                        className="px-6 py-3 rounded-2xl bg-ormat text-foreground text-sm font-semibold tracking-widest transition hover:scale-105 border-b-2 border-r-2 border-background"
+                        className="px-6 py-3 rounded-2xl bg-ormat text-foreground text-sm font-semibold uppercase tracking-widest transition hover:scale-105 border-b-2 border-r-2 border-background"
                     >
-                        DÉCOUVRIR LES OFFRES
+                        Découvrir les offres
                     </Link>
                     <Link
                         href="/contact"
-                        className="px-6 py-3 rounded-2xl bg-[#A44B34] text-background text-sm font-semibold tracking-widest transition hover:scale-105 border-b-2 border-r-2 border-background"
+                        className="px-6 py-3 rounded-2xl bg-terracotta text-background text-sm font-semibold tracking-widest uppercase transition hover:scale-105 border-b-2 border-r-2 border-background"
                     >
-                        RÉSERVER UN APPEL
+                        Réserver un appel
                     </Link>
                 </div>
             )}

@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 
-export default function Intro() {
+export default function IntroSection() {
     return (
-        <section className="relative  py-10 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
+        <section className="relative py-10 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Triangle en haut à droite */}
             <div className="absolute top-[-70px] right-72 z-0 hidden lg:block">
                 <Image src="/deco/triangle.png" alt="Décoration triangle" width={140} height={140} />

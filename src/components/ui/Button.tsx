@@ -1,24 +1,22 @@
 'use client';
 
-import Link from 'next/link';
-import { cn } from '@/lib/utils'; // facultatif si tu utilises classnames conditionnelles
+import { ButtonHTMLAttributes } from 'react';
+import { cn } from '@/lib/utils';
 
-type ButtonProps = {
-    href: string;
-    children: React.ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
-};
+}
 
-export default function Button({ href, children, className }: ButtonProps) {
+export default function Button({ className, children, ...props }: ButtonProps) {
     return (
-        <Link
-            href={href}
+        <button
             className={cn(
-                'inline-block rounded-full border border-[#D5A85A] bg-[#A44B34] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-background shadow-md transition hover:scale-105 hover:shadow-lg',
+                'px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta/90 cursor-pointer text-background text-sm font-semibold tracking-widest uppercase transition hover:scale-105',
                 className
             )}
+            {...props}
         >
             {children}
-        </Link>
+        </button>
     );
 }

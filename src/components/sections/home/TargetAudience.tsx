@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import AudienceCard from './AudienceCard';
 
-export default function TargetAudience() {
+export default function TargetAudienceSection() {
     return (
         <section className="relative py-10 md:py-28 px-6 md:px-12 lg:px-[100px] xl:px-[150px]">
             {/* Fond or avec opacité 10% UNIQUEMENT sur mobile */}
@@ -15,7 +15,7 @@ export default function TargetAudience() {
             </div>
 
             {/* Contenu principal */}
-            <div className="relative z-10 text-foreground">
+            <div className="relative z-10">
                 <h2 className="text-center lg:text-start text-xl md:text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
                     À qui s’adresse Alchimiste Créations ?
                 </h2>
@@ -35,7 +35,7 @@ export default function TargetAudience() {
                     />
                     <AudienceCard
                         icon="/deco/icon-business.png"
-                        alt="Entrepreneurs du cœur"
+                        alt="Entrepreneurs"
                         title="Entrepreneurs du cœur"
                         description="Vous voulez une présence digitale alignée, sensible, et simple à prendre en main."
                     />
