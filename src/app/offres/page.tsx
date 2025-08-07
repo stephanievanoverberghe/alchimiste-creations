@@ -1,6 +1,9 @@
 'use client';
 
+import CallToActionSection from '@/components/sections/offers/CallToAction';
+import ContactSection from '@/components/sections/offers/Contact';
 import PacksSection from '@/components/sections/offers/Packs';
+import ProcessSection from '@/components/sections/offers/Process';
 import { useEffect } from 'react';
 
 export default function OffresPage() {
@@ -11,6 +14,9 @@ export default function OffresPage() {
     return (
         <div>
             <PacksSection />
+            <CallToActionSection />
+            <ProcessSection />
+            <ContactSection />
         </div>
     );
 }

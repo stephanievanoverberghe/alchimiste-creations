@@ -2,6 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition, faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import Link from 'next/link';
 import Button from '@/components/ui/Button';
 
 interface OfferCardProps {
@@ -55,7 +56,9 @@ export default function PackCard({ title, subtitle, cible, items, prix, centralI
             {/* Prix + bouton toujours en bas */}
             <div className="mt-auto pt-6 flex flex-col items-center gap-2">
                 <p className="text-sm font-semibold text-terracotta pb-6">{prix}</p>
-                <Button>Commencer avec ce pack</Button>
+                <Link href="/contact">
+                    <Button>Commencer avec ce pack</Button>
+                </Link>
             </div>
         </div>
     );
