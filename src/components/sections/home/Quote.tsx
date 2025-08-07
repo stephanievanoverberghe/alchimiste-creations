@@ -20,7 +20,7 @@ export default function QuoteSection() {
                 <p className="text-sm md:text-lg lg:text-xl italic">Créer, pour moi, c’est traduire l’invisible en structure vivante.</p>
                 <p className="text-sm md:text-lg lg:text-xl  italic">C’est transformer le brut en beau, le flou en clarté, le sensible en interface.</p>
                 <p className="text-sm md:text-lg lg:text-xl italic font-bold mt-6">Je ne vends pas du code. Je crée du lien.</p>
-                <p className="tracking-widest text-xs italic text-center mt-6">Stéphanie</p>
+                <p className="tracking-widest text-xs italic text-center mt-6">Stéphanie - Alchimiste Créations</p>
             </div>
         </section>
     );
