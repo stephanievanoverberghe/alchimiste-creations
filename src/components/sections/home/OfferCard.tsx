@@ -23,7 +23,7 @@ export default function OfferCard({ title, subtitle, items, centralIcon }: Offer
             </div>
 
             {/* Symbole central */}
-            <div className="flex items-center justify-center gap-3 w-full max-w-xs">
+            <div className="flex items-center justify-center gap-3 w-full max-w-xs mx-auto">
                 <span className="h-[1px] flex-1 bg-sauge" />
                 <FontAwesomeIcon icon={centralIcon} className="text-sauge text-xl shrink-0" />
                 <span className="h-[1px] flex-1 bg-sauge" />
