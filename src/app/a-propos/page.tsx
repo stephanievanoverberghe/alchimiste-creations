@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 
+import IntroSection from '@/components/sections/about/Intro';
+
 export default function AboutPage() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'auto' });
@@ -9,7 +11,7 @@ export default function AboutPage() {
 
     return (
         <div>
-            <h1 className="text-center text-base lg:text-5xl py-24">Page a propos</h1>
+            <IntroSection />
         </div>
     );
 }
