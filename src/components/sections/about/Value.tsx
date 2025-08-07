@@ -16,9 +16,7 @@ export default function ValueSection() {
 
             {/* Contenu principal */}
             <div className="relative z-10">
-                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
-                    À qui s’adresse Alchimiste Créations ?
-                </h2>
+                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">Mes valeurs sont mon moteur</h2>
                 <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <ValueCard title="Authenticité" color="ormat">
                         Je crée sans masque, avec sincérité et présence.
