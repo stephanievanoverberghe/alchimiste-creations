@@ -24,7 +24,6 @@ export default function OffersSection() {
             const data = await getPacks();
             setPacks(data);
         }
-
         fetchData();
     }, []);
 
@@ -33,10 +32,15 @@ export default function OffersSection() {
     return (
         <section className="relative py-10 md:py-28 px-6 md:px-12 lg:px-[100px] xl:px-[150px] bg-background">
             <div className="relative z-10 text-foreground">
-                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">Mes accompagnements</h2>
-                <p className="mb-5 md:mb-10 text-sm md:text-base text-center lg:text-start">
-                    Chaque projet est une rencontre. J’écoute, je ressens, je co-crée avec vous un site qui vous ressemble.
+                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
+                    Choisis la façon qui te ressemble pour créer ton site
+                </h2>
+
+                <p className="text-sm md:text-base text-center lg:text-start">
+                    Chaque projet est une rencontre. J’écoute ton histoire, je m’imprègne de ton univers et je conçois un site web qui allie esthétique et fonction.
                 </p>
+
+                <p className="mt-4 mb-5 md:mb-10 text-sm md:text-base text-center lg:text-start">Tu trouveras ici l’offre qui correspond à ton énergie et à tes besoins :</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-5 md:mb-10">
                     {packs.map((pack, index) => (
@@ -46,7 +50,7 @@ export default function OffersSection() {
 
                 <div className="text-center">
                     <Link href="/offres">
-                        <Button>Découvrir les offres</Button>
+                        <Button>Voir les détails des offres</Button>
                     </Link>
                 </div>
             </div>

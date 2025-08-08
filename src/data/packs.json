@@ -3,37 +3,148 @@
         "slug": "essentiel",
         "titre": "Pack Essentiel",
         "sousTitre": "Une page pour se poser",
-        "cible": "Idéal pour ceux qui débutent, veulent une présence simple et incarnée",
-        "inclus": ["1 page fluide (accueil)", "Design personnalisé et responsive", "Formulaire de contact", "Intégration légère SEO", "Prise en main guidée"],
-        "prix": "À partir de 750€ TTC"
+        "cible": "Idéal pour celles et ceux qui souhaitent poser une première empreinte en ligne, avec une présence claire, élégante et facile à parcourir.",
+        "inclus": [
+            "One-page (Accueil) fluide, responsive et épurée",
+            "SEO de base (titres, metas, structure)",
+            "Formulaire de contact simple",
+            "Design harmonisé à votre univers",
+            "Mise en ligne + guide de prise en main (PDF ou vidéo)"
+        ],
+        "prix": "À partir de 650€ TTC",
+        "technoChoix": true,
+        "versions": {
+            "wordpress": {
+                "prix": "À partir de 650€ TTC",
+                "delai": "1 à 2 semaines"
+            },
+            "react": {
+                "prix": "À partir de 750€ TTC",
+                "delai": "2 à 3 semaines"
+            }
+        },
+        "options": [
+            {
+                "label": "Blog / Actus",
+                "prix": {
+                    "wordpress": "+150€",
+                    "react": "+250€"
+                }
+            },
+            {
+                "label": "Formulaire avancé (logique, champs conditionnels)",
+                "prix": {
+                    "wordpress": "+50€",
+                    "react": "+120€"
+                }
+            },
+            {
+                "label": "SEO avancé (plan, maillage interne, données structurées)",
+                "prix": "+150€"
+            }
+        ],
+        "allersRetours": "Ouvert (dans la limite du raisonnable)",
+        "delaiNote": "Délais indicatifs, ajustés selon besoins et disponibilité (profil junior)."
     },
     {
         "slug": "croissance",
         "titre": "Pack Croissance",
         "sousTitre": "Déployer son univers",
-        "cible": "Idéal pour les thérapeutes ou artistes avec plusieurs pôles à présenter",
+        "cible": "Parfait pour développer une vitrine complète et fluide, mettre en valeur plusieurs aspects de votre activité et offrir une navigation engageante.",
         "inclus": [
-            "3 à 5 pages (Accueil, À propos, Offres, Contact, Projets)",
-            "Design complet et navigation fluide",
-            "Optimisation SEO",
-            "Intégration de tes textes ou aide à la rédaction",
-            "Formation à l’utilisation"
+            "3 à 5 pages (Accueil, À propos, Services, Contact, +1 au choix)",
+            "Design personnalisé + navigation fluide",
+            "Optimisation mobile et animations légères",
+            "Formulaire de contact",
+            "SEO de base (titres, metas, structure)",
+            "Mise en avant de témoignages / réalisations (si fournis)",
+            "Guide d’utilisation post-livraison"
         ],
-        "prix": "À partir de 1200€ TTC"
+        "prix": "À partir de 1100€ TTC",
+        "technoChoix": true,
+        "versions": {
+            "wordpress": {
+                "prix": "À partir de 1100€ TTC",
+                "delai": "2 à 3 semaines"
+            },
+            "react": {
+                "prix": "À partir de 1300€ TTC",
+                "delai": "3 à 4 semaines"
+            }
+        },
+        "options": [
+            {
+                "label": "Blog",
+                "prix": {
+                    "wordpress": "+200€",
+                    "react": "+350€"
+                }
+            },
+            {
+                "label": "Réservation en ligne",
+                "prix": {
+                    "wordpress": "+250€",
+                    "react": "—"
+                }
+            },
+            {
+                "label": "E-commerce basique (catalogue simple)",
+                "prix": {
+                    "wordpress": "Sur devis",
+                    "react": "—"
+                }
+            }
+        ],
+        "allersRetours": "Ouvert (dans la limite du raisonnable)",
+        "delaiNote": "Délais indicatifs, ajustés selon besoins et disponibilité (profil junior)."
     },
     {
         "slug": "signature",
         "titre": "Pack Signature",
         "sousTitre": "Créer avec profondeur",
-        "cible": "Idéal pour les entrepreneur·es sensibles avec un projet fort, vision claire",
+        "cible": "Conçu pour celles et ceux qui veulent un site hautement personnalisé, aligné à leur vision, avec un accompagnement stratégique et une finition soignée.",
         "inclus": [
-            "Site complet (5 à 7 pages) + accompagnement stratégique",
-            "Design sur mesure + identité visuelle si besoin",
-            "Refonte de contenu from scratch",
-            "SEO, accessibilité, performances",
-            "Maintenance + suivi 1 mois après mise en ligne",
-            "Éventuelle page de blog"
+            "Atelier de cadrage stratégique (1h visio)",
+            "5 à 7 pages sur mesure",
+            "Intégration sur mesure avec animations soignées",
+            "Design raffiné, aligné à votre univers visuel",
+            "Conseil rédactionnel (à partir de vos textes)",
+            "SEO optimisé (structure, contenus, performance)",
+            "Accessibilité et bonnes pratiques UX",
+            "Maintenance & support 1 mois après mise en ligne",
+            "Possibilité d'intégrer un blog ou un espace ressources"
         ],
-        "prix": "À partir de 1900€ TTC"
+        "prix": "À partir de 1700€ TTC",
+        "technoChoix": true,
+        "versions": {
+            "wordpress": {
+                "prix": "À partir de 1700€ TTC",
+                "delai": "3 à 4 semaines"
+            },
+            "react": {
+                "prix": "À partir de 2000€ TTC",
+                "delai": "4 à 6 semaines"
+            }
+        },
+        "options": [
+            {
+                "label": "E-commerce complet (WP / Prestashop)",
+                "prix": "Sur devis"
+            },
+            {
+                "label": "Multilingue",
+                "prix": {
+                    "wordpress": "+300€",
+                    "react": "+500€"
+                }
+            },
+            {
+                "label": "SEO avancé + stratégie de contenu",
+                "prix": "+400€"
+            }
+        ],
+        "allersRetours": "Ouvert (dans la limite du raisonnable)",
+        "delaiNote": "Délais indicatifs, ajustés selon la complexité et vos besoins.",
+        "exclusions": ["Pas de création de logo / identité visuelle complète (UI Web uniquement)"]
     }
 ]

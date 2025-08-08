@@ -17,27 +17,32 @@ export default function TargetAudienceSection() {
             {/* Contenu principal */}
             <div className="relative z-10">
                 <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
-                    À qui s’adresse Alchimiste Créations ?
+                    Pour qui je crée des sites uniques et alignés
                 </h2>
+
+                <p className="text-sm mb-5 md:mb-10 md:text-base text-center lg:text-start">
+                    Chaque métier a ses priorités : inspirer, rassurer, vendre ou créer du lien. Mon rôle est de traduire ton univers en une expérience digitale fidèle à ton
+                    public, que ce soit via WordPress ou du développement sur mesure.
+                </p>
 
                 <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-center">
                     <AudienceCard
                         icon="/deco/icon-artist.png"
                         alt="Artistes"
                         title="Artistes & créatif·ves"
-                        description="Vous avez besoin d’un site qui parle votre langage visuel et intérieur."
+                        description=" Un site qui reflète ton univers visuel, valorise tes créations et attire les bons regards."
                     />
                     <AudienceCard
                         icon="/deco/icon-therapy.png"
                         alt="Thérapeutes"
-                        title="Thérapeutes & praticien·nes du bien-être"
-                        description="Vous cherchez un site rassurant, clair, à l’image de votre approche humaine."
+                        title="Thérapeutes & bien-être"
+                        description="Un espace clair et rassurant, à l’image de ton approche humaine, qui inspire confiance et facilite les rendez-vous."
                     />
                     <AudienceCard
                         icon="/deco/icon-business.png"
                         alt="Entrepreneurs"
-                        title="Entrepreneurs du cœur"
-                        description="Vous voulez une présence digitale alignée, sensible, et simple à prendre en main."
+                        title="Entrepreneur·es du cœur"
+                        description="Une présence digitale alignée et sensible, simple à gérer, pour développer ton activité avec fluidité."
                     />
                 </div>
             </div>

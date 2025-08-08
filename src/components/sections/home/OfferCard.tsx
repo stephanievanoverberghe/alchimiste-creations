@@ -34,7 +34,7 @@ export default function OfferCard({ title, subtitle, items, centralIcon }: Offer
 
             {/* Liste */}
             <ul className="text-left flex flex-col gap-3 mt-2">
-                {items.slice(0, 2).map((item, idx) => (
+                {items.slice(0, 3).map((item, idx) => (
                     <li key={idx} className="flex gap-3 items-start">
                         <FontAwesomeIcon icon={faStarRegular} className="text-sauge mt-[2px] text-[10px] md:text-sm lg:text-base" />
                         <span className="text-xs md:text-sm lg:text-base">{item}</span>

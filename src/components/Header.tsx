@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
@@ -10,17 +10,27 @@ import { Menu, X } from 'lucide-react';
 const navLinks = [
     { href: '/a-propos', label: 'Me découvrir' },
     { href: '/offres', label: 'Créer ensemble' },
-    { href: '/methode', label: 'Ma manière de faire' },
+    { href: '/methode', label: 'Mon approche' },
     { href: '/projets', label: 'Projets vivants' },
 ];
 
-// pages sans background décoratif
 const simplePages = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq'];
+
+const ctaClasses = 'tracking-widest px-4 py-2 rounded-xl border border-ormat text-ormat font-semibold text-sm transition-colors duration-300 hover:bg-ormat hover:text-foreground';
 
 export default function Header() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
     const isSimplePage = simplePages.includes(pathname);
+
+    // Fermeture avec Escape
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setMenuOpen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     return (
         <header
@@ -30,19 +40,23 @@ export default function Header() {
             )}
         >
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 z-50">
-                <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={60} height={60} className="h-14 w-14 object-contain" priority />
+            <Link
+                href="/"
+                className="flex items-center gap-2 z-50"
+                onClick={() => setMenuOpen(false)} // ferme le menu si ouvert
+            >
+                <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={60} height={60} priority sizes="(max-width: 768px) 56px, 60px" className="h-14 w-14 object-contain" />
             </Link>
 
             {/* Burger icon */}
-            <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden z-50">
+            <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden z-50" aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={menuOpen}>
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
             {/* Mobile menu */}
             <nav
                 className={cn(
-                    'fixed inset-0 bg-foreground text-background flex flex-col items-center justify-center gap-8 text-lg font-semibold transition-transform duration-300 z-40',
+                    'fixed inset-0 bg-foreground/95 backdrop-blur text-background flex flex-col items-center justify-center gap-8 text-lg font-semibold transition-transform duration-300 z-40',
                     menuOpen ? 'translate-x-0' : 'translate-x-full'
                 )}
             >
@@ -57,11 +71,7 @@ export default function Header() {
                     </Link>
                 ))}
 
-                <Link
-                    href="/contact"
-                    onClick={() => setMenuOpen(false)}
-                    className="mt-4 px-6 py-2 border border-ormat text-ormat rounded-xl text-sm transition duration-300 hover:bg-ormat hover:text-foreground"
-                >
+                <Link href="/contact" onClick={() => setMenuOpen(false)} className={ctaClasses}>
                     Entrer en lien
                 </Link>
             </nav>
@@ -72,7 +82,11 @@ export default function Header() {
                     <Link
                         key={link.href}
                         href={link.href}
-                        className={cn('tracking-widest font-bold transition-colors duration-300 hover:text-ormat p-0.5', pathname === link.href && 'text-ormat after:w-full')}
+                        className={cn(
+                            'tracking-widest font-bold relative transition-colors duration-300 hover:text-ormat p-0.5',
+                            pathname === link.href &&
+                                "text-ormat after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-ormat after:transition-all after:duration-300"
+                        )}
                     >
                         {link.label}
                     </Link>
@@ -80,10 +94,7 @@ export default function Header() {
             </nav>
 
             {/* Desktop CTA */}
-            <Link
-                href="/contact"
-                className="hidden tracking-widest lg:inline-block px-4 py-2 rounded-xl border border-ormat text-ormat font-semibold text-sm transition-colors duration-300 hover:bg-ormat hover:text-foreground"
-            >
+            <Link href="/contact" className={`hidden lg:inline-block ${ctaClasses}`}>
                 Entrer en lien
             </Link>
         </header>

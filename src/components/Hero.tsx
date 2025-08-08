@@ -8,8 +8,9 @@ export default function Hero() {
 
     const textMap: Record<string, { title: string; paragraph: string }> = {
         '/': {
-            title: 'Transformer vos idées en expériences digitales vivantes',
-            paragraph: 'Je crée des sites web sensibles, intuitifs et porteurs de sens, pour celles et ceux qui veulent une présence digitale alignée avec leur énergie.',
+            title: 'Créer un site web sur mesure, sensible et aligné à ton énergie',
+            paragraph:
+                'Sites vitrines et boutiques en ligne, alliant esthétique, fluidité et sens. Que tu sois artiste, thérapeute, coach ou entrepreneur·e du cœur, je transforme tes idées en expériences digitales vivantes.',
         },
         '/a-propos': {
             title: 'Derrière Alchimiste Créations, une femme qui crée du lien',
