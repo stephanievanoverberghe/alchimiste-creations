@@ -28,9 +28,15 @@ const iconMap: Record<string, IconDefinition> = {
     signature: faFire,
 };
 
-export default async function PackPage({ params }: { params: { slug: string } }) {
+interface PackPageProps {
+    params: Promise<{ slug: string }>;
+}
+
+export default async function PackPage({ params }: PackPageProps) {
+    const { slug } = await params;
+
     const packs = await getPacks();
-    const pack = packs.find((p) => p.slug === params.slug);
+    const pack = packs.find((p) => p.slug === slug);
 
     if (!pack) return notFound();
 
