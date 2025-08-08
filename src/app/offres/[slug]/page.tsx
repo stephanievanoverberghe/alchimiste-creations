@@ -75,7 +75,7 @@ export default async function PackPage({ params }: PackPageProps) {
                     <div className="grid md:grid-cols-2 gap-4 md:gap-8">
                         {Object.entries(pack.versions).map(([tech, info]) => (
                             <div key={tech} className="border border-sauge rounded-xl p-4">
-                                <h3 className="capitalize font-semibold mb-1">{tech}</h3>
+                                <h3 className="first-letter:uppercase font-semibold mb-1">{tech}</h3>
                                 <p className="text-terracotta font-bold">{info.prix}</p>
                                 <p className="text-sm text-foreground/70">Délai : {info.delai}</p>
                             </div>
