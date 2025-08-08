@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 interface Pack {
     slug: string;
@@ -21,7 +22,7 @@ interface Pack {
     exclusions?: string[];
 }
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, IconDefinition> = {
     essentiel: faLeaf,
     croissance: faTint,
     signature: faFire,
