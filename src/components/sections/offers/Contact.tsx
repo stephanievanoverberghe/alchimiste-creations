@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import Button from '@/components/ui/Button';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function ContactSection() {
     return (
@@ -21,8 +21,13 @@ export default function ContactSection() {
                         Si tu ressens que c’est le bon moment, je t’invite à me partager ton projet. Juste un appel doux, sans engagement, pour faire connaissance.
                     </p>
                 </div>
-                <Link href="/contact">
-                    <Button>Entrer en lien</Button>
+                <Link
+                    href="/contact"
+                    className={cn(
+                        'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                    )}
+                >
+                    Entrer en lien
                 </Link>
             </div>
         </section>

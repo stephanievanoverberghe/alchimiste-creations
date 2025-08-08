@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import IntroSection from '@/components/sections/about/Intro';
 import ValueSection from '@/components/sections/about/Value';
 import ApproachSection from '@/components/sections/about/Approach';
-import QuoteSection from '@/components/sections/about/Quote';
+import VisionSection from '@/components/sections/about/Vision';
 
 export default function AboutPage() {
     useEffect(() => {
@@ -16,8 +16,8 @@ export default function AboutPage() {
         <div>
             <IntroSection />
             <ValueSection />
+            <VisionSection />
             <ApproachSection />
-            <QuoteSection />
         </div>
     );
 }

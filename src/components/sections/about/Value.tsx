@@ -16,19 +16,24 @@ export default function ValueSection() {
 
             {/* Contenu principal */}
             <div className="relative z-10">
-                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">Mes valeurs sont mon moteur</h2>
+                <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
+                    Mes valeurs, le moteur de mes créations
+                </h2>
+                <p className="mt-4 mb-5 md:mb-10 text-sm md:text-base text-center lg:text-start">
+                    Chaque site que je conçois est une rencontre. Voici les valeurs qui guident chacune de mes réalisations :
+                </p>
                 <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <ValueCard title="Authenticité" color="ormat">
-                        Je crée sans masque, avec sincérité et présence.
+                        Je crée sans masque, avec sincérité et présence, pour que ton site reflète ta véritable identité.
                     </ValueCard>
                     <ValueCard title="Simplicité" color="sauge">
-                        Je rends le web accessible, fluide et apaisant.
+                        Je rends le web accessible, fluide et apaisant, que ce soit sur ordinateur, tablette ou mobile.
                     </ValueCard>
                     <ValueCard title="Transformation" color="terracotta">
-                        Chaque projet est une métamorphose, de l&apos;idée au site.
+                        Chaque projet est une métamorphose, de l’idée au site final, avec un accompagnement humain à chaque étape.
                     </ValueCard>
                     <ValueCard title="Co-création" color="brun">
-                        Je marche avec toi, pas devant toi. On avance ensemble.
+                        Je marche avec toi, pas devant toi. Nous avançons ensemble pour construire un site qui te ressemble.
                     </ValueCard>
                 </div>
             </div>

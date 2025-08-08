@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 export default function CallToActionSection() {
@@ -9,8 +9,13 @@ export default function CallToActionSection() {
             <div className="space-y-8">
                 <p className="leading-relaxed">Et si on donnait vie à un site qui attire tes clients idéaux, raconte ton histoire et travaille pour toi 24/7 ?</p>
                 <p className="mt-4 leading-relaxed">📅 Réserve ton appel découverte offert pour me parler de ton projet et voir comment le concrétiser ensemble.</p>
-                <Link href="/contact">
-                    <Button>Réserver mon appel</Button>
+                <Link
+                    href="/contact"
+                    className={cn(
+                        'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                    )}
+                >
+                    Réserver mon appel
                 </Link>
             </div>
         </section>

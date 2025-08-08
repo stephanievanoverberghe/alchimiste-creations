@@ -14,21 +14,19 @@ export default function IntroSection() {
                 {/* Texte fluide */}
                 <div className="flex-1 flex flex-col justify-center py-10 md:py-28 px-6 md:px-12 lg:px-[100px] xl:px-[150px]">
                     <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-semibold tracking-widest text-terracotta mb-5 md:mb-10">
-                        Un parcours entre art, résilience et création
+                        Mon parcours — entre art, résilience et création
                     </h2>
                     <div className="text-sm md:text-base leading-relaxed font-light">
                         <p>
-                            Avant de devenir développeuse, j’étais une <strong className="font-bold">exploratrice du sensible</strong> : dessin, peinture, spiritualité, quête de
-                            sens.
+                            Avant de devenir développeuse, j’étais exploratrice du sensible : dessin, peinture, spiritualité, quête de sens. J’ai vécu une reconversion profonde,
+                            portée par l’envie de donner forme à l’invisible, de traduire une énergie en matière digitale.
                         </p>
                         <p className="mt-4">
-                            J’ai vécu une reconversion profonde, motivée par l’envie de donner <strong className="font-bold">forme à l’invisible</strong>, de transformer des idées
-                            en matière digitale.
+                            Formée au développement web à la Manu et sur OpenClassrooms (spécialisation React et Next.js), j’ai uni technique et sensibilité pour créer des sites
+                            qui ne sont pas que des outils, mais de véritables espaces vivants.
                         </p>
-                        <p className="mt-4">J’ai étudié à la Manu et à OpenClassrooms, avec une spécialisation front-end React/Next.js.</p>
                         <p className="mt-4">
-                            Mais ce n’est pas la technique qui me définit : <strong className="font-bold">c’est ma capacité à ressentir, à écouter, à créer du web</strong> comme on
-                            façonne un espace habité.
+                            Ce qui me définit avant tout : ma capacité à ressentir, à écouter, et à créer un site web comme un espace aligné et utile au quotidien.
                         </p>
                     </div>
                 </div>

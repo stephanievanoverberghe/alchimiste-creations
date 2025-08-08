@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '@/components/ui/Button';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function CallToActionSection() {
     return (
@@ -25,8 +25,13 @@ export default function CallToActionSection() {
                         Je propose aussi des accompagnements sur mesure, à partir d’une simple idée, d’un carnet ou d’un besoin intérieur. On part de toi, pas d’un modèle.
                     </p>
                 </div>
-                <Link href="/contact">
-                    <Button>Parlons-en</Button>
+                <Link
+                    href="/contact"
+                    className={cn(
+                        'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                    )}
+                >
+                    Parlons-en
                 </Link>
             </div>
         </section>

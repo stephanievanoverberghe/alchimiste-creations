@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import OfferCard from './OfferCard';
 import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
 import { getPacks } from '@/lib/getPacks';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import Button from '@/components/ui/Button';
 
 interface Pack {
     slug: string;
@@ -48,9 +48,14 @@ export default function OffersSection() {
                     ))}
                 </div>
 
-                <div className="text-center">
-                    <Link href="/offres">
-                        <Button>Voir les détails des offres</Button>
+                <div className="flex justify-center mt-8">
+                    <Link
+                        href="/offres"
+                        className={cn(
+                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                        )}
+                    >
+                        Voir les détails des offres
                     </Link>
                 </div>
             </div>
