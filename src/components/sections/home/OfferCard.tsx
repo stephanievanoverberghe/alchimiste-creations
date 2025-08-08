@@ -2,17 +2,24 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition, faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import Link from 'next/link';
 
 interface OfferCardProps {
+    slug: string;
     title: string;
     subtitle: string;
     items: string[];
     centralIcon: IconDefinition;
 }
 
-export default function OfferCard({ title, subtitle, items, centralIcon }: OfferCardProps) {
+export default function OfferCard({ slug, title, subtitle, items, centralIcon }: OfferCardProps) {
     return (
-        <div className="rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 md:px-6 md:py-10 flex flex-col items-center gap-3 bg-background">
+        <Link
+            href={`/offres/${slug}`}
+            className="rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 
+                       md:px-6 md:py-10 flex flex-col items-center gap-3 bg-background
+                       transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+        >
             {/* Titre */}
             <div className="text-center">
                 <h3 className="text-base lg:text-xl tracking-widest text-terracotta font-bold">
@@ -45,6 +52,6 @@ export default function OfferCard({ title, subtitle, items, centralIcon }: Offer
                     <span className="text-xs md:text-sm lg:text-base">… et bien plus encore</span>
                 </li>
             </ul>
-        </div>
+        </Link>
     );
 }

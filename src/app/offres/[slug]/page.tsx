@@ -3,7 +3,8 @@ import { getPacks } from '@/lib/getPacks';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconDefinition, faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
 
 interface Pack {
     slug: string;
@@ -20,6 +21,12 @@ interface Pack {
     exclusions?: string[];
 }
 
+const iconMap: Record<string, any> = {
+    essentiel: faLeaf,
+    croissance: faTint,
+    signature: faFire,
+};
+
 export default async function PackPage({ params }: { params: { slug: string } }) {
     const packs = await getPacks();
     const pack = packs.find((p) => p.slug === params.slug);
@@ -33,8 +40,13 @@ export default async function PackPage({ params }: { params: { slug: string } })
                 ← Retour aux packs
             </Link>
 
-            {/* Titre + description */}
-            <h1 className="text-center lg:text-start text-2xl lg:text-4xl font-title font-bold tracking-widest text-terracotta mb-6">{pack.titre}</h1>
+            {/* Icône + Titre */}
+            <div className="flex flex-col lg:flex-row items-center lg:items-start mb-6">
+                {iconMap[pack.slug] && <FontAwesomeIcon icon={iconMap[pack.slug]} className="text-terracotta text-4xl mb-4 lg:mr-3" />}
+                <h1 className="text-center lg:text-start text-2xl lg:text-4xl font-title font-bold tracking-widest text-terracotta">{pack.titre}</h1>
+            </div>
+
+            {/* Sous-titre + cible */}
             <p className="uppercase tracking-wider text-center lg:text-start text-sm md:text-base mb-4">{pack.sousTitre}</p>
             <p className="italic mb-10 text-sm md:text-base text-center lg:text-start">{pack.cible}</p>
 

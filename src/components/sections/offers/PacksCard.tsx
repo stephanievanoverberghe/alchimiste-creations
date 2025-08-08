@@ -19,9 +19,9 @@ export default function PackCard({ slug, title, subtitle, cible, items, prix, ce
     return (
         <Link
             href={`/offres/${slug}`}
-            className="block rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 md:px-6 md:py-10 
-               md:flex flex-col items-center gap-3 bg-background transition-all duration-300 
-               hover:scale-[1.02] cursor-pointer"
+            className="rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 
+                       md:px-6 md:py-10 flex flex-col items-center gap-3 bg-background
+                       transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
         >
             {/* Contenu principal */}
             <div className="flex flex-col gap-5 flex-grow">

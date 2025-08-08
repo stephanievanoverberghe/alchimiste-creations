@@ -44,7 +44,14 @@ export default function OffersSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-5 md:mb-10">
                     {packs.map((pack, index) => (
-                        <OfferCard key={pack.slug} title={pack.titre.replace('Pack ', '')} subtitle={pack.sousTitre} centralIcon={icons[index] || faLeaf} items={pack.inclus} />
+                        <OfferCard
+                            key={pack.slug}
+                            slug={pack.slug}
+                            title={pack.titre.replace('Pack ', '')}
+                            subtitle={pack.sousTitre}
+                            centralIcon={icons[index] || faLeaf}
+                            items={pack.inclus}
+                        />
                     ))}
                 </div>
 
