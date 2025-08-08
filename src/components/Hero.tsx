@@ -48,8 +48,8 @@ export default function Hero() {
 
     return (
         <section className="min-h-screen flex flex-col justify-center items-center pb-28 md:pb-12 text-center lg:items-end lg:text-right px-6 md:px-8 lg:pr-12 lg:pl-56 xl:px-[150px] overflow-hidden">
-            <h1 className="text-3xl md:text-6xl font-bold text-ormat leading-tight tracking-[0.16em]">{title}</h1>
-            <p className="mt-6 md:mt-10 text-lg md:text-2xl font-light text-background/80 tracking-widest whitespace-pre-line">{paragraph}</p>
+            <h1 className="text-2xl md:text-4xl font-bold text-ormat leading-tight tracking-[0.16em]">{title}</h1>
+            <p className="mt-6 md:mt-10 text-base md:text-xl font-light text-background/80 tracking-widest whitespace-pre-line">{paragraph}</p>
 
             {cta && (
                 <div className="mt-12 md:mt-16 flex flex-col sm:flex-row justify-center lg:justify-end gap-4">

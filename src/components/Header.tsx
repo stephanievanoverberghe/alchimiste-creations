@@ -21,7 +21,9 @@ const ctaClasses = 'tracking-widest px-4 py-2 rounded-xl border border-ormat tex
 export default function Header() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
-    const isSimplePage = simplePages.includes(pathname);
+
+    // ✅ Pages simples + slugs offres
+    const isSimplePage = simplePages.includes(pathname) || (pathname.startsWith('/offres/') && pathname !== '/offres');
 
     // Fermeture avec Escape
     useEffect(() => {
@@ -40,11 +42,7 @@ export default function Header() {
             )}
         >
             {/* Logo */}
-            <Link
-                href="/"
-                className="flex items-center gap-2 z-50"
-                onClick={() => setMenuOpen(false)} // ferme le menu si ouvert
-            >
+            <Link href="/" className="flex items-center gap-2 z-50" onClick={() => setMenuOpen(false)}>
                 <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={60} height={60} priority sizes="(max-width: 768px) 56px, 60px" className="h-14 w-14 object-contain" />
             </Link>
 
@@ -60,16 +58,20 @@ export default function Header() {
                     menuOpen ? 'translate-x-0' : 'translate-x-full'
                 )}
             >
-                {navLinks.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setMenuOpen(false)}
-                        className={cn('tracking-wider transition-colors duration-300 hover:text-ormat', pathname === link.href && 'text-ormat')}
-                    >
-                        {link.label}
-                    </Link>
-                ))}
+                {navLinks.map((link) => {
+                    const isActive = pathname === link.href || (link.href === '/offres' && pathname.startsWith('/offres/'));
+
+                    return (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setMenuOpen(false)}
+                            className={cn('tracking-wider transition-colors duration-300 hover:text-ormat', isActive && 'text-ormat')}
+                        >
+                            {link.label}
+                        </Link>
+                    );
+                })}
 
                 <Link href="/contact" onClick={() => setMenuOpen(false)} className={ctaClasses}>
                     Entrer en lien
@@ -78,19 +80,23 @@ export default function Header() {
 
             {/* Desktop nav */}
             <nav className="hidden lg:flex gap-6 text-sm">
-                {navLinks.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className={cn(
-                            'tracking-widest font-bold relative transition-colors duration-300 hover:text-ormat p-0.5',
-                            pathname === link.href &&
-                                "text-ormat after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-ormat after:transition-all after:duration-300"
-                        )}
-                    >
-                        {link.label}
-                    </Link>
-                ))}
+                {navLinks.map((link) => {
+                    const isActive = pathname === link.href || (link.href === '/offres' && pathname.startsWith('/offres/'));
+
+                    return (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={cn(
+                                'tracking-widest font-bold relative transition-colors duration-300 hover:text-ormat p-0.5',
+                                isActive &&
+                                    "text-ormat after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-ormat after:transition-all after:duration-300"
+                            )}
+                        >
+                            {link.label}
+                        </Link>
+                    );
+                })}
             </nav>
 
             {/* Desktop CTA */}

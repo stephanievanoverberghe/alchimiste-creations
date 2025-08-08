@@ -33,9 +33,9 @@ export default function ProcessSection() {
             <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-title font-bold tracking-widest text-terracotta mb-6">
                 Un accompagnement en 4 temps, du cœur à la création
             </h2>
-            <p className="mb-10 text-sm md:text-base text-center lg:text-start">
-                Chaque projet naît d’une rencontre. Je t’écoute, je clarifie avec toi l’essentiel, je crée un site vivant à ton image, puis je te transmets les clés. Parce que ton
-                site, c’est plus qu’une vitrine : c’est une extension de toi.
+            <p className="text-sm md:text-base text-center lg:text-start">Chaque projet naît d’une rencontre. J’écoute, je clarifie, je crée, puis je transmets.</p>
+            <p className="mb-10 text-sm md:text-base text-center lg:text-start mt-4">
+                Ce processus, je l’applique à chaque création de site web pour qu’il soit plus qu’un outil : un espace vivant qui évolue avec toi.
             </p>
             <div className="flex flex-col md:flex-row items-stretch justify-between gap-6 text-center md:text-left">
                 {steps

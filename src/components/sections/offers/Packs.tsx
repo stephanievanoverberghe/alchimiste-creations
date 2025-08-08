@@ -34,15 +34,20 @@ export default function PacksSection() {
                 <h2 className="text-center lg:text-start text-2xl lg:text-4xl font-title font-bold tracking-widest text-terracotta mb-6">
                     Trois façons d’incarner ce que tu portes
                 </h2>
-                <p className="mb-10 text-sm md:text-base text-center lg:text-start">
-                    Essentiel pour se poser, Croissance pour se déployer, Signature pour s’aligner profondément. Ces trois propositions sont là pour accueillir ton projet avec
-                    clarté et sens. Et si aucune ne te suffit, on co-crée la quatrième.
+                <p className="text-sm md:text-base text-center lg:text-start">
+                    Découvre mes trois formules de création web, pensées pour s’adapter à ton rythme, ton budget et ton énergie.
+                </p>
+                <p className="mb-10 mt-4 text-sm md:text-base text-center lg:text-start">
+                    Que tu veuilles poser les bases d’une présence en ligne, déployer ton univers ou créer un site complet et stratégique, nous choisirons ensemble le format qui
+                    servira le mieux ton activité.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     {packs.map((pack, index) => (
+                        // Packs.tsx
                         <PackCard
                             key={pack.slug}
+                            slug={pack.slug}
                             title={pack.titre.replace('Pack ', '')}
                             subtitle={pack.sousTitre}
                             cible={pack.cible}

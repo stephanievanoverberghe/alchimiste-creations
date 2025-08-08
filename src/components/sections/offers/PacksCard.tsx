@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface OfferCardProps {
+    slug: string;
     title: string;
     subtitle: string;
     cible: string;
@@ -14,9 +15,14 @@ interface OfferCardProps {
     centralIcon: IconDefinition;
 }
 
-export default function PackCard({ title, subtitle, cible, items, prix, centralIcon }: OfferCardProps) {
+export default function PackCard({ slug, title, subtitle, cible, items, prix, centralIcon }: OfferCardProps) {
     return (
-        <div className="rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 md:px-6 md:py-10 flex flex-col items-center gap-3 bg-background">
+        <Link
+            href={`/offres/${slug}`}
+            className="block rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 md:px-6 md:py-10 
+               md:flex flex-col items-center gap-3 bg-background transition-all duration-300 
+               hover:scale-[1.02] cursor-pointer"
+        >
             {/* Contenu principal */}
             <div className="flex flex-col gap-5 flex-grow">
                 {/* Titre */}
@@ -56,15 +62,16 @@ export default function PackCard({ title, subtitle, cible, items, prix, centralI
             {/* Prix + bouton toujours en bas */}
             <div className="mt-auto pt-6 flex flex-col items-center gap-2">
                 <p className="text-sm font-semibold text-terracotta pb-6">{prix}</p>
-                <Link
-                    href="/contact"
-                    className={cn(
-                        'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                    )}
-                >
-                    Commencer avec ce pack
+                <Link href={`/offres/${slug}`} onClick={(e) => e.stopPropagation()}>
+                    <span
+                        className={cn(
+                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                        )}
+                    >
+                        Découvrir ce pack
+                    </span>
                 </Link>
             </div>
-        </div>
+        </Link>
     );
 }

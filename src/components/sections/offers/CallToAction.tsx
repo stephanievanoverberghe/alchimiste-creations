@@ -19,10 +19,11 @@ export default function CallToActionSection() {
             </div>
 
             <div className="relative z-10 text-center tracking-wide space-y-2">
-                <div className="text-sm md:text-base leading-relaxed font-light mb-4 md:mb-10">
-                    <p>Tu ne sais pas exactement ce qu’il te faut ? Tu veux que l’on imagine ensemble une solution qui respecte ton rythme et ton énergie ?</p>
+                <div className="text-sm md:text-base leading-relaxed mb-4 md:mb-10">
+                    <p>Tu ne sais pas exactement ce qu’il te faut ?</p>
+                    <p className="mt-4">Tu veux un site internet totalement personnalisé, qui respecte ton rythme et ton énergie ?</p>
                     <p className="mt-4">
-                        Je propose aussi des accompagnements sur mesure, à partir d’une simple idée, d’un carnet ou d’un besoin intérieur. On part de toi, pas d’un modèle.
+                        Je propose aussi des créations sur mesure, à partir d’une simple idée ou d’un carnet rempli de croquis. Ici, on part de toi. Pas d’un modèle.
                     </p>
                 </div>
                 <Link
