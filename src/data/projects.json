@@ -20,30 +20,32 @@
         "resultat": "Un site minimaliste, poétique et structuré, à son image. Les visiteurs peuvent entrer dans son monde, ressentir l’émotion de ses œuvres, acheter en quelques clics, ou passer une commande sur mesure.",
         "temoignage": "Je ne pensais pas qu’un site pouvait me ressembler à ce point. C’est comme si tu avais traduit mes gestes en interface.",
         "collaboration": "Perrine Dassonville – Développeuse backend",
-        "image": "/images/projets/norel-art.jpg",
-        "lien": "/projets/norel-art"
+        "image": "/projects/norel-art.png",
+        "lien": "/projets/norel-art",
+        "status": "coded"
     },
     {
         "slug": "ania-sophro",
         "titre": "Ania Sophro",
-        "sousTitre": "Site vitrine doux pour sophrologue & infirmière",
+        "sousTitre": "Site vitrine doux pour sophrologue",
         "client": "Ania",
         "pourQui": "Ania, sophrologue professionnelle installée à Villeneuve-d’Ascq. Elle accompagne ses patient·es dans la régulation du stress, l’apaisement émotionnel et la reconnexion au corps.",
-        "besoin": "Un site clair et intuitif, qui donne confiance dès les premières secondes. Un espace rassurant pour les personnes stressées, en recherche de douceur, de sécurité et de cadre.",
+        "besoin": "Un site clair et intuitif, qui donne confiance dès les premières secondes...",
         "citationClient": "Je veux que les gens puissent déjà respirer un peu rien qu’en arrivant sur mon site.",
         "proposition": [
             "Création d’un site vitrine sur 3 pages (Accueil, À propos, Contact)",
-            "Mise en place d’un design sobre, doux et stable, en lien avec son rythme",
-            "Textes co-écrits : phrases inspirantes, respirables, en alternance avec les infos",
-            "Section dédiée à la prise de rendez-vous avec bouton clair + lien Calendly",
-            "Création d’une page À propos sensible, avec son parcours + sa posture d’accompagnement",
-            "Coordonnées accessibles + carte de localisation",
-            "Formation à l’autonomie pour modification de texte/image"
+            "Mise en place d’un design sobre, doux et stable",
+            "Textes co-écrits : phrases inspirantes et respirables",
+            "Prise de rendez-vous (bouton clair + Calendly)",
+            "Page À propos sensible",
+            "Coordonnées + carte",
+            "Formation à l’autonomie"
         ],
-        "resultat": "Un site clair, rassurant, chaleureux. Le site d’Ania inspire la confiance, la sécurité et le respect du rythme de chacun.",
+        "resultat": "Un site clair, rassurant, chaleureux…",
         "temoignage": "On ressent déjà le soin rien qu’en lisant les mots.",
-        "temoignage2": "Je n’ai pas eu besoin de tout dire. Tu as capté mon énergie. Le site est juste, vivant, et je me sens alignée à 100 % avec ce qu’il renvoie.",
-        "image": "/images/projets/ania-site.jpg",
-        "lien": "/projets/ania-sophro"
+        "temoignage2": "Je n’ai pas eu besoin de tout dire...",
+        "image": "",
+        "lien": "/projets/ania-sophro",
+        "status": "wip"
     }
 ]

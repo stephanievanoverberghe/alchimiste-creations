@@ -5,23 +5,14 @@ import { cn } from '@/lib/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-interface Pack {
-    slug: string;
-    titre: string;
-    sousTitre: string;
-    cible: string;
-    inclus: string[];
-    prix: string;
-    technoChoix?: boolean;
-    versions?: Record<string, { prix: string; delai: string }>;
-    options?: { label: string; prix: string | { wordpress: string; react: string } }[];
-    allersRetours?: string;
-    delaiNote?: string;
-    exclusions?: string[];
-}
+// Types locaux
+type PackVersion = { prix: string; delai: string };
+type VersionsDict = Record<string, PackVersion | undefined>;
+type Option = { label: string; prix: string | { wordpress?: string; react?: string } };
 
+// Icônes par slug
 const iconMap: Record<string, IconDefinition> = {
     essentiel: faLeaf,
     croissance: faTint,
@@ -29,16 +20,24 @@ const iconMap: Record<string, IconDefinition> = {
 };
 
 interface PackPageProps {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
+}
+
+// Type guard pour les versions (évite l'erreur TS1230)
+function hasVersion(entry: [string, PackVersion | undefined]): entry is [string, PackVersion] {
+    return entry[1] !== undefined;
 }
 
 export default async function PackPage({ params }: PackPageProps) {
-    const { slug } = await params;
+    const { slug } = params;
 
     const packs = await getPacks();
     const pack = packs.find((p) => p.slug === slug);
 
     if (!pack) return notFound();
+
+    const versions = (pack.versions ?? {}) as VersionsDict;
+    const options = (pack.options ?? []) as Option[];
 
     return (
         <section className="py-10 md:py-20 px-6 md:px-12 lg:px-[100px] xl:px-[150px] max-w-5xl mx-auto">
@@ -73,32 +72,34 @@ export default async function PackPage({ params }: PackPageProps) {
                 <div className="mb-8">
                     <h2 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest mb-3">Versions disponibles :</h2>
                     <div className="grid md:grid-cols-2 gap-4 md:gap-8">
-                        {Object.entries(pack.versions).map(([tech, info]) => (
-                            <div key={tech} className="border border-sauge rounded-xl p-4">
-                                <h3 className="first-letter:uppercase font-semibold mb-1">{tech}</h3>
-                                <p className="text-terracotta font-bold">{info.prix}</p>
-                                <p className="text-sm text-foreground/70">Délai : {info.delai}</p>
-                            </div>
-                        ))}
+                        {Object.entries(versions)
+                            .filter(hasVersion)
+                            .map(([tech, v]) => (
+                                <div key={tech} className="border border-sauge rounded-xl p-4">
+                                    <h3 className="first-letter:uppercase font-semibold mb-1">{tech}</h3>
+                                    <p className="text-terracotta font-bold">{v.prix}</p>
+                                    <p className="text-sm text-foreground/70">Délai : {v.delai}</p>
+                                </div>
+                            ))}
                     </div>
                     {pack.delaiNote && <p className="mt-4 text-sm italic">{pack.delaiNote}</p>}
                 </div>
             )}
 
             {/* Options */}
-            {pack.options && (
+            {options.length > 0 && (
                 <div className="mb-8">
                     <h2 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest mb-3">Options :</h2>
                     <ul className="space-y-3">
-                        {pack.options.map((opt, idx) => (
+                        {options.map((opt, idx) => (
                             <li key={idx} className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-sauge/30 pb-2">
                                 <span className="text-sm mb-1">{opt.label}</span>
                                 {typeof opt.prix === 'string' ? (
                                     <span className="font-medium">{opt.prix}</span>
                                 ) : (
                                     <div className="flex gap-6 text-sm justify-between">
-                                        <span>WP : {opt.prix.wordpress}</span>
-                                        <span>React : {opt.prix.react}</span>
+                                        <span>WP : {opt.prix.wordpress ?? '—'}</span>
+                                        <span>React : {opt.prix.react ?? '—'}</span>
                                     </div>
                                 )}
                             </li>
@@ -142,6 +143,6 @@ export default async function PackPage({ params }: PackPageProps) {
 }
 
 export async function generateStaticParams() {
-    const packs: Pack[] = await getPacks();
+    const packs = await getPacks();
     return packs.map((p) => ({ slug: p.slug }));
 }

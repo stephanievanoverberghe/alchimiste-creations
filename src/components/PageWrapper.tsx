@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Hero from './Hero';
-import BackgroundImageWrapper from './BackgroundImageWrapper';
 import Footer from './Footer';
 
 export default function PageWrapper({ children }: { children: React.ReactNode }) {
@@ -23,10 +22,11 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
                 </>
             ) : (
                 <>
-                    <BackgroundImageWrapper>
+                    <>
                         <Header />
                         <Hero />
-                    </BackgroundImageWrapper>
+                    </>
+
                     <main className="flex-1">{children}</main>
                 </>
             )}

@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-
-import IntroSection from '@/components/sections/home/Intro';
-import TargetAudienceSection from '@/components/sections/home/TargetAudience';
 import OffersSection from '@/components/sections/home/Offers';
-import QuoteSection from '@/components/sections/home/Quote';
 import CallToActionSection from '@/components/sections/home/CallToAction';
+import PromiseSection from '@/components/sections/home/Promise';
+import AboutPreviewSection from '@/components/sections/home/AboutPreview';
+import WhyChooseSection from '@/components/sections/home/WhyChoose';
+import ProjectsSection from '@/components/sections/home/ProjectsSection';
 
 export default function HomePage() {
     useEffect(() => {
@@ -14,10 +14,11 @@ export default function HomePage() {
     }, []);
     return (
         <div>
-            <IntroSection />
-            <TargetAudienceSection />
+            <PromiseSection />
+            <AboutPreviewSection />
             <OffersSection />
-            <QuoteSection />
+            <WhyChooseSection />
+            <ProjectsSection />
             <CallToActionSection />
         </div>
     );
