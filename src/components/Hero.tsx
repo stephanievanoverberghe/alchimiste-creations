@@ -37,6 +37,7 @@ export default function Hero() {
         '/offres': {
             title: 'Création de site internet — Packs WordPress & sur-mesure React',
             paragraph: 'Trois packs — Essentiel, Croissance, Signature. Responsive, SEO de base et accompagnement humain pour lancer ou faire évoluer ton site.',
+            cta: [{ label: 'Demander un devis', href: '/contact' }],
             bg: '/hero/hero-packs.png',
         },
         '/projets': {

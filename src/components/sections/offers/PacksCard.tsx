@@ -1,77 +1,94 @@
+// components/Offers/PackCard.tsx
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition, faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 
-interface OfferCardProps {
+interface PackCardProps {
     slug: string;
     title: string;
     subtitle: string;
-    cible: string;
     items: string[];
-    prix: string;
+    price: string;
+    delay?: string;
+    micro?: string;
     centralIcon: IconDefinition;
+    cible?: string;
 }
 
-export default function PackCard({ slug, title, subtitle, cible, items, prix, centralIcon }: OfferCardProps) {
+export default function PackCard({ slug, title, subtitle, items, price, delay, centralIcon, cible }: PackCardProps) {
     return (
         <Link
             href={`/offres/${slug}`}
-            className="rounded-[50px] h-full border-2 border-sauge text-center px-4 py-8 
-                       md:px-6 md:py-10 flex flex-col items-center gap-3 bg-background
-                       transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+            className="group h-auto flex flex-col justify-start bg-background border border-sauge/30 rounded-3xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2"
         >
-            {/* Contenu principal */}
-            <div className="flex flex-col gap-5 flex-grow">
+            <article>
                 {/* Titre */}
-                <h3 className="text-center text-base lg:text-xl tracking-widest text-terracotta font-bold">
-                    Pack
-                    <br />
-                    <span className="uppercase font-bold tracking-wide md:tracking-widest">{title}</span>
-                </h3>
+                <div className="text-center">
+                    <h3 className="text-base lg:text-xl tracking-widest text-terracotta font-bold">
+                        Pack
+                        <br />
+                        <span className="uppercase font-bold tracking-wide md:tracking-widest">{title}</span>
+                    </h3>
 
-                {/* Symbole central */}
-                <div className="flex items-center justify-center gap-3 w-full max-w-xs mx-auto">
-                    <span className="h-[1px] flex-1 bg-sauge" />
-                    <FontAwesomeIcon icon={centralIcon} className="text-sauge text-xl shrink-0" />
-                    <span className="h-[1px] flex-1 bg-sauge" />
+                    {/* Séparateur + icône */}
+                    <div className="flex items-center justify-center gap-3 w-full max-w-xs mx-auto mt-4 mb-3 group">
+                        <span className="h-[1px] flex-1 bg-sauge transition-colors duration-300 group-hover:bg-ormat" />
+                        <FontAwesomeIcon
+                            icon={centralIcon}
+                            className="text-sauge text-xl shrink-0 transition-all duration-300 group-hover:scale-150 group-hover:text-ormat"
+                            aria-hidden
+                        />
+                        <span className="h-[1px] flex-1 bg-sauge transition-colors duration-300 group-hover:bg-ormat" />
+                    </div>
+
+                    <p className="uppercase tracking-wider text-xs md:text-sm text-foreground/80">{subtitle}</p>
+                    {cible && <p className="mt-1 text-xs md:text-sm italic text-foreground/75">{cible}</p>}
                 </div>
 
-                {/* Sous-titre */}
-                <p className="uppercase tracking-wider text-xs md:text-sm lg:text-base text-center">{subtitle}</p>
+                {/* Inclus — étoiles */}
+                <ul className="mt-6 text-left flex flex-col gap-3">
+                    {items.map((item, idx) => (
+                        <li key={idx} className="flex gap-3 items-start">
+                            <FontAwesomeIcon icon={faStarRegular} className="text-sauge mt-1 text-xs md:text-sm" aria-hidden />
+                            <span className="text-xs md:text-sm leading-relaxed">{item}</span>
+                        </li>
+                    ))}
+                </ul>
 
-                {/* Cible */}
-                <p className="text-xs md:text-sm italic text-center">{cible}</p>
+                {/* Bas : prix / délai / CTA */}
+                <div className="mt-8">
+                    <div className="mb-5 flex flex-col items-center gap-1">
+                        <p className="text-xl font-semibold text-terracotta">{price}</p>
+                        {delay && <p className="text-xs tracking-wider uppercase text-foreground/70">Délai : {delay}</p>}
+                    </div>
 
-                {/* Liste complète */}
-                <div className="text-left">
-                    <p className="font-bold mb-2">Inclus :</p>
-                    <ul className="flex flex-col gap-2">
-                        {items.map((item, idx) => (
-                            <li key={idx} className="flex gap-3 items-start">
-                                <FontAwesomeIcon icon={faStarRegular} className="text-sauge mt-[2px] text-xs md:text-sm" />
-                                <span className="text-xs md:text-sm">{item}</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="flex justify-center">
+                        <Link
+                            href={`/offres/${slug}`}
+                            className="
+        inline-flex items-center gap-2 px-6 py-3 rounded-2xl
+        bg-terracotta hover:bg-terracotta/90 text-background
+        text-sm font-semibold tracking-widest uppercase
+        border-b-2 border-r-2 border-ormat
+        transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]
+      "
+                        >
+                            Découvrir ce pack
+                            <svg
+                                className="w-3.5 h-3.5 -mr-0.5 -translate-x-0.5 transition-transform group-hover:translate-x-0"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
-            </div>
-
-            {/* Prix + bouton toujours en bas */}
-            <div className="mt-auto pt-6 flex flex-col items-center gap-2">
-                <p className="text-sm font-semibold text-terracotta pb-6">{prix}</p>
-                <Link href={`/offres/${slug}`} onClick={(e) => e.stopPropagation()}>
-                    <span
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                        )}
-                    >
-                        Découvrir ce pack
-                    </span>
-                </Link>
-            </div>
+            </article>
         </Link>
     );
 }

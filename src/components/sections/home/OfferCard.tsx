@@ -20,7 +20,7 @@ export default function OfferCard({ slug, title, subtitle, items, price, central
             className="group flex flex-col justify-between bg-background border border-sauge/30 rounded-3xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2"
         >
             {/* En-tête */}
-            <div className="text-center">
+            <article className="text-center">
                 {/* Badge prix */}
                 <span
                     className="inline-flex items-center gap-2 mb-3 text-[11px] tracking-[0.15em] uppercase 
@@ -52,7 +52,7 @@ export default function OfferCard({ slug, title, subtitle, items, price, central
                 </div>
 
                 <p className="uppercase tracking-wider text-xs md:text-sm text-foreground/80">{subtitle}</p>
-            </div>
+            </article>
 
             {/* Liste des inclus */}
             <ul className="mt-6 text-left flex flex-col gap-3">

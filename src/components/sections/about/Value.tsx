@@ -30,7 +30,7 @@ export default function ValuesSection() {
                         <li key={title} className="group rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
                             <div className="flex items-center gap-3">
                                 <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
-                                    <Icon className="w-4 h-4" aria-hidden />
+                                    <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
                                 </span>
                                 <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>

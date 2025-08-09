@@ -51,7 +51,10 @@ export default function WhyChooseSection() {
                 {/* Cards */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {points.map(({ icon: Icon, label, desc }) => (
-                        <article key={label} className="group rounded-[24px] bg-background p-6  border border-sauge/30 shadow-sm hover:shadow-md hover:bg-ivory transition-all">
+                        <article
+                            key={label}
+                            className="group rounded-[24px] bg-background p-6  border border-sauge/30 shadow-sm hover:shadow-md hover:bg-background transition-all"
+                        >
                             {/* Badge de card */}
                             <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase rounded-md border border-sauge/40 bg-background px-3 py-1 mb-3 text-terracotta font-semibold">
                                 <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />

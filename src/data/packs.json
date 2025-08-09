@@ -18,7 +18,7 @@
                 "prix": "À partir de 650€ TTC",
                 "delai": "1 à 2 semaines"
             },
-            "sur-mesure — codé à la main (react)": {
+            "react": {
                 "prix": "À partir de 750€ TTC",
                 "delai": "2 à 3 semaines"
             }
@@ -67,7 +67,7 @@
                 "prix": "À partir de 1100€ TTC",
                 "delai": "2 à 3 semaines"
             },
-            "sur-mesure — codé à la main (react)": {
+            "react": {
                 "prix": "À partir de 1300€ TTC",
                 "delai": "3 à 4 semaines"
             }
@@ -121,7 +121,7 @@
                 "prix": "À partir de 1700€ TTC",
                 "delai": "3 à 4 semaines"
             },
-            "sur-mesure — codé à la main (react)": {
+            "react": {
                 "prix": "À partir de 2000€ TTC",
                 "delai": "4 à 6 semaines"
             }
