@@ -7,7 +7,7 @@ import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-// Types locaux
+// Types locaux (pas pour les props de page)
 type PackVersion = { prix: string; delai: string };
 type VersionsDict = Record<string, PackVersion | undefined>;
 type Option = { label: string; prix: string | { wordpress?: string; react?: string } };
@@ -19,16 +19,12 @@ const iconMap: Record<string, IconDefinition> = {
     signature: faFire,
 };
 
-interface PackPageProps {
-    params: { slug: string };
-}
-
-// Type guard pour les versions (évite l'erreur TS1230)
+// Type guard
 function hasVersion(entry: [string, PackVersion | undefined]): entry is [string, PackVersion] {
     return entry[1] !== undefined;
 }
 
-export default async function PackPage({ params }: PackPageProps) {
+export default async function PackPage({ params }: { params: { slug: string } }) {
     const { slug } = params;
 
     const packs = await getPacks();
@@ -41,25 +37,21 @@ export default async function PackPage({ params }: PackPageProps) {
 
     return (
         <section className="py-10 md:py-20 px-6 md:px-12 lg:px-[100px] xl:px-[150px] max-w-5xl mx-auto">
-            {/* Bouton retour */}
             <Link href="/offres" className="inline-block mb-8 text-sm text-sauge hover:underline">
                 ← Retour aux packs
             </Link>
 
-            {/* Icône + Titre */}
             <div className="flex flex-col lg:flex-row items-center lg:items-start mb-6">
                 {iconMap[pack.slug] && <FontAwesomeIcon icon={iconMap[pack.slug]} className="text-terracotta text-4xl mb-4 lg:mr-3" />}
                 <h1 className="text-center lg:text-start text-2xl lg:text-4xl font-title font-bold tracking-widest text-terracotta">{pack.titre}</h1>
             </div>
 
-            {/* Sous-titre + cible */}
             <p className="uppercase tracking-wider text-center lg:text-start text-sm md:text-base mb-4">{pack.sousTitre}</p>
             <p className="italic mb-10 text-sm md:text-base text-center lg:text-start">{pack.cible}</p>
 
-            {/* Inclus */}
             <h2 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest">Inclus :</h2>
             <ul className="list-disc space-y-2 mb-8 text-sm md:text-base mt-3">
-                {pack.inclus.map((item, idx) => (
+                {pack.inclus.map((item: string, idx: number) => (
                     <li key={idx} className="flex gap-3 items-start">
                         <FontAwesomeIcon icon={faStarRegular} className="text-sauge mt-[2px] text-xs md:text-sm" />
                         <span>{item}</span>
@@ -67,7 +59,6 @@ export default async function PackPage({ params }: PackPageProps) {
                 ))}
             </ul>
 
-            {/* Versions */}
             {pack.technoChoix && pack.versions && (
                 <div className="mb-8">
                     <h2 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest mb-3">Versions disponibles :</h2>
@@ -86,7 +77,6 @@ export default async function PackPage({ params }: PackPageProps) {
                 </div>
             )}
 
-            {/* Options */}
             {options.length > 0 && (
                 <div className="mb-8">
                     <h2 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest mb-3">Options :</h2>
@@ -108,7 +98,6 @@ export default async function PackPage({ params }: PackPageProps) {
                 </div>
             )}
 
-            {/* Infos pratiques */}
             <div className="space-y-2">
                 {pack.allersRetours && (
                     <p className="text-sm mb-5 md:text-base">
@@ -124,10 +113,8 @@ export default async function PackPage({ params }: PackPageProps) {
                 )}
             </div>
 
-            {/* Prix */}
             <p className="text-terracotta font-semibold mt-8 text-center">{pack.prix}</p>
 
-            {/* CTA */}
             <div className="mt-8 flex justify-center">
                 <Link
                     href="/contact"
@@ -142,6 +129,7 @@ export default async function PackPage({ params }: PackPageProps) {
     );
 }
 
+// ✅ rien à typer avec PageProps ici
 export async function generateStaticParams() {
     const packs = await getPacks();
     return packs.map((p) => ({ slug: p.slug }));
