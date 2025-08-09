@@ -69,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 <meta name="robots" content="noindex, nofollow" />
             </head>
-            <body className="min-h-screen">
+            <body className="">
                 <PageWrapper>{children}</PageWrapper>
             </body>
         </html>

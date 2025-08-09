@@ -7,14 +7,11 @@ import Footer from './Footer';
 
 export default function PageWrapper({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-
     const isSimplePage = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq'].includes(pathname);
-
-    // 👉 Détecter si c'est une page pack slug
     const isPackPage = pathname.startsWith('/offres/') && pathname !== '/offres';
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex min-h-screen flex-col">
             {isSimplePage || isPackPage ? (
                 <>
                     <Header />
@@ -22,15 +19,15 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
                 </>
             ) : (
                 <>
-                    <>
-                        <Header />
-                        <Hero />
-                    </>
-
+                    <Header />
+                    <Hero />
                     <main className="flex-1">{children}</main>
                 </>
             )}
-            <Footer />
+            {/* Footer collé en bas s'il n'y a pas assez de contenu */}
+            <div className="mt-auto">
+                <Footer />
+            </div>
         </div>
     );
 }
