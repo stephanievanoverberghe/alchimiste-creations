@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 
-export default function ProcessSection() {
+export default function ProcessShortSection() {
     const steps = [
         {
             title: 'Écoute & cadrage',
@@ -35,45 +37,58 @@ export default function ProcessSection() {
     return (
         <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             <div className="max-w-5xl mx-auto space-y-12">
-                {/* Titre */}
-                <div className="text-center">
+                {/* En-tête */}
+                <div className="text-center lg:text-left">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
-                        Ma méthode
+                        Méthode
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">4 étapes pour créer un site qui te ressemble</h2>
-                    <p className="mt-4 text-base md:text-lg text-foreground/80 max-w-3xl mx-auto leading-relaxed">
-                        Une méthode simple, humaine et créative pour transformer ton idée en un site sur-mesure qui reflète ton essence et attire les bonnes personnes.
-                    </p>
+                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">4 temps pour un site clair, vivant et durable</h2>
+                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">Une progression simple et humaine, du cadrage à la mise en ligne.</p>
                 </div>
 
-                {/* Étapes */}
+                {/* Frise courte */}
                 <div className="flex flex-col md:flex-row items-stretch justify-between gap-10 md:gap-6 text-center">
                     {steps
                         .map((step) => (
-                            <div key={step.title} className="flex flex-col items-center text-center group">
+                            <div key={step.title} className="group relative flex flex-col items-center text-center">
                                 {/* Image */}
                                 <div className="transition-transform duration-300 group-hover:scale-105">
-                                    <Image src={step.image} alt={step.alt} width={130} height={130} className="object-contain mb-4" />
+                                    <Image src={step.image} alt={step.alt} width={120} height={120} className="object-contain mb-4" />
                                 </div>
 
                                 {/* Titre */}
                                 <h3 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest text-terracotta mb-2">{step.title}</h3>
 
-                                {/* Description */}
-                                <p className="text-xs md:text-sm text-foreground/80 max-w-[200px]">{step.description}</p>
+                                {/* Description (≤ 2 lignes) */}
+                                <p className="text-xs md:text-sm text-foreground/80 max-w-[220px]">{step.description}</p>
                             </div>
                         ))
                         .flatMap((component, index, array) => {
                             if (index < array.length - 1) {
                                 return [
                                     component,
-                                    <div key={`arrow-${index}`} className="hidden md:flex items-center justify-center w-[60px]">
+                                    <div key={`arrow-${index}`} className="hidden md:flex items-center justify-center w-[50px]">
                                         <FontAwesomeIcon icon={faArrowRightLong} className="text-sauge text-lg" />
                                     </div>,
                                 ];
                             }
                             return [component];
                         })}
+                </div>
+
+                {/* Micro-note + CTA */}
+                <div className="flex flex-col items-center gap-4">
+                    <p className="text-sm text-foreground/70 italic">
+                        Je prends <span className="not-italic font-medium text-terracotta">1 projet à la fois</span> pour garder de la profondeur.
+                    </p>
+                    <Link
+                        href="/methode"
+                        className={cn(
+                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                        )}
+                    >
+                        Voir la méthode en détail
+                    </Link>
                 </div>
             </div>
         </section>

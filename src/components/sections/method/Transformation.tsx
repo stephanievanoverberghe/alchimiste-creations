@@ -15,7 +15,7 @@ export default function TransformationSection() {
     return (
         <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Liseré décoratif en haut */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sauge via-terracotta to-sauge" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
             {/* Fond or avec opacité 10% UNIQUEMENT sur mobile */}
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
 

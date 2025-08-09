@@ -22,23 +22,25 @@ export default function CallToActionSection() {
 
                 {/* Boutons */}
                 <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
-                    <Link
-                        href="/contact"
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                        )}
-                    >
-                        Réserver mon appel
-                    </Link>
-
-                    <Link
-                        href="/offres"
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-background text-terracotta hover:bg-terracotta/10 text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition'
-                        )}
-                    >
-                        Voir les offres
-                    </Link>
+                    {/* Micro-CTA */}
+                    <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                        <Link
+                            href="/contact"
+                            className={cn(
+                                'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            )}
+                        >
+                            Réserver mon appel
+                        </Link>
+                        <Link
+                            href="/offres"
+                            className={cn(
+                                'inline-block px-6 py-3 text-center rounded-2xl bg-ormat hover:bg-ormat/90 text-foreground text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            )}
+                        >
+                            Voir les offres
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>

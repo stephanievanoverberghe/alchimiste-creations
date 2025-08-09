@@ -9,9 +9,9 @@ export default function Hero() {
 
     const textMap: Record<string, { title: string; paragraph: string; cta?: { label: string; href: string }[]; bg?: string }> = {
         '/': {
-            title: 'Des sites qui capturent ton essence et la révèlent au monde',
+            title: 'Développeuse web — sites WordPress & React/Next.js',
             paragraph:
-                'J’allie design sensible et code précis pour créer des sites uniques, alignés à ton univers, qui attirent les bonnes personnes et soutiennent ta croissance.',
+                'Je crée des sites vitrine, portfolios et petites boutiques e-commerce qui te ressemblent : design sensible, code propre, SEO de base et performance. Pour artistes, thérapeutes et indépendants — à Lille et à distance.',
             cta: [
                 { label: 'Découvrir mes offres', href: '/offres' },
                 { label: 'Me contacter', href: '/contact' },
@@ -19,34 +19,29 @@ export default function Hero() {
             bg: '/hero/hero-accueil.png',
         },
         '/a-propos': {
-            title: 'Développeuse web à Lille — WordPress & React/Next.js sur mesure',
-            paragraph:
-                'Je suis Stéphanie, fondatrice d’Alchimiste Créations. J’accompagne artistes, thérapeutes et entrepreneurs du cœur à créer un site unique, esthétique et fonctionnel, aligné à leur univers et pensé pour attirer les bonnes personnes.',
+            title: 'Stéphanie — développeuse web à Lille (WordPress & React/Next.js)',
+            paragraph: 'Je crée des sites vivants, durables et alignés à ton univers, avec une approche humaine et claire.',
             cta: [{ label: 'Découvrir mes offres', href: '/offres' }],
             bg: '/hero/hero-apropos.png',
         },
         '/contact': {
-            title: 'Entrer en lien, en douceur',
-            paragraph:
-                'Tu n’as pas besoin d’avoir toutes les réponses. Parfois, il suffit d’un appel, d’un message, d’une impulsion... pour commencer à poser les bonnes questions. Si tu ressens que c’est le moment de créer un espace en ligne qui te ressemble vraiment, je t’écoute.',
+            title: 'Contact — parlons de ton site web (appel découverte gratuit)',
+            paragraph: 'Écris-moi pour un appel découverte gratuit : on clarifie besoin, budget et délais, puis on choisit la meilleure formule.',
             bg: '/hero/hero-contact.png',
         },
         '/methode': {
-            title: 'Ma méthode — créer un site qui te ressemble vraiment',
-            paragraph:
-                'Ma façon de travailler, c’est du sur-mesure, mais pas seulement dans le design. Je pars de toi, de ce que tu veux transmettre, pour créer un site fluide, beau et pensé pour durer.',
+            title: 'Méthode de création — de l’écoute à la mise en ligne',
+            paragraph: 'De l’intention à la mise en ligne : cadrage, design, dev, tests mobile, accessibilité et performance pour un site qui dure.',
             bg: '/hero/hero-methode.png',
         },
         '/offres': {
-            title: 'Création de site web sur mesure — une approche humaine et vivante',
-            paragraph:
-                'Créer un site vivant, c’est d’abord une rencontre. Chaque projet commence par une écoute. Une respiration. Chez Alchimiste Créations, je ne propose pas de solutions toutes faites, mais un accompagnement façonné pour incarner ce que tu portes.',
+            title: 'Création de site internet — Packs WordPress & sur-mesure React',
+            paragraph: 'Trois packs — Essentiel, Croissance, Signature. Responsive, SEO de base et accompagnement humain pour lancer ou faire évoluer ton site.',
             bg: '/hero/hero-packs.png',
         },
         '/projets': {
-            title: 'Chaque site est une rencontre, un reflet, une vibration',
-            paragraph:
-                'Je ne crée pas des sites à la chaîne. Chaque projet naît d’un échange, d’un besoin de faire émerger ce qui ne demande qu’à vivre. Ici, je partage quelques créations. Elles ne disent pas tout. Mais elles témoignent de ce que j’aime faire : incarner l’âme d’un projet dans une interface douce, claire et vivante.',
+            title: 'Portfolio — sites WordPress & React pour artistes, thérapeutes et indépendants',
+            paragraph: 'Vitrine, portfolio, e-commerce léger, prise de RDV : des sites sur-mesure WordPress & React pensés pour convertir en douceur.',
             bg: '/hero/hero-projets.png',
         },
     };
@@ -83,7 +78,7 @@ export default function Hero() {
                             <Link
                                 key={button.href}
                                 href={button.href}
-                                className={`px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-widest transition hover:scale-105 border-b-2 border-r-2 border-background ${
+                                className={`px-6 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-background transition hover:scale-105 ] ${
                                     button.label.includes('contact') ? 'bg-terracotta text-background hover:bg-terracotta/90' : 'bg-ormat text-foreground hover:bg-ormat/90'
                                 }`}
                             >

@@ -39,7 +39,7 @@ export default function Header() {
             className={cn(
                 // hauteur fixe + layout
                 'z-50 w-full h-20 md:h-24 px-6 md:px-8 lg:px-[100px] xl:px-[150px] flex items-center justify-between font-body transition-colors duration-300',
-                isSimplePage ? 'sticky top-0 bg-foreground text-background shadow-sm' : 'absolute top-0 left-0 text-background'
+                isSimplePage ? 'bg-foreground text-background shadow-sm' : 'absolute top-0 left-0 text-background'
             )}
         >
             {/* Logo */}

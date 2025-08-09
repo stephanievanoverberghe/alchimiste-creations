@@ -25,7 +25,7 @@ export default function ContactTeaserCard() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="flex items-center gap-3 rounded-full border border-ormat/40 bg-background/70 px-4 py-2 backdrop-blur-sm">
                         <FontAwesomeIcon icon={faWandMagicSparkles} className="text-terracotta" />
-                        <span className="text-xs tracking-[0.15em] uppercase text-terracotta font-semibold">Votre projet ici</span>
+                        <span className="text-xs tracking-[0.15em] uppercase text-terracotta font-semibold">Ton projet ici</span>
                     </div>
                 </div>
                 {/* dégradé bas pour cohérence */}
@@ -34,8 +34,8 @@ export default function ContactTeaserCard() {
 
             {/* Contenu */}
             <div className="p-4">
-                <h3 className="font-title text-[18px] text-brun">Et si on créait le vôtre ?</h3>
-                <p className="mt-1 text-sm text-foreground/70">Un site vivant, aligné, à votre image. Parlons de ce que vous voulez faire rayonner.</p>
+                <h3 className="font-title text-[18px] text-brun">Et si on créait le tien ?</h3>
+                <p className="mt-1 text-sm text-foreground/70">Un site vivant, aligné, à ton image. Parlons de ce que tu veux faire rayonner.</p>
             </div>
 
             {/* CTA fixé en bas (même style que les autres) */}

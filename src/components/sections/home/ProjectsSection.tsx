@@ -66,7 +66,7 @@ export default function ProjectsSection({ projects, ctaHref = '/projets' }: Prop
 
     return (
         <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sauge via-terracotta to-sauge" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
                 <Image src="/deco/about-wave.png" alt="Vague décorative" className="h-auto" fill priority />

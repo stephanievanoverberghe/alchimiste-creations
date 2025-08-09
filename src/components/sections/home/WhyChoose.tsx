@@ -53,10 +53,7 @@ export default function WhyChooseSection() {
                     {points.map(({ icon: Icon, label, desc }) => (
                         <article key={label} className="group rounded-[24px] bg-background p-6  border border-sauge/30 shadow-sm hover:shadow-md hover:bg-ivory transition-all">
                             {/* Badge de card */}
-                            <span
-                                className="inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase rounded-md
-                               border border-sauge/40 bg-ivory px-3 py-1 mb-3 text-terracotta font-semibold"
-                            >
+                            <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase rounded-md border border-sauge/40 bg-background px-3 py-1 mb-3 text-terracotta font-semibold">
                                 <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
                                 {label}
                             </span>
