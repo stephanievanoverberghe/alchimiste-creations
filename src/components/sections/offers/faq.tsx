@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { HelpCircle } from 'lucide-react';
-import FAQBareList from '@/components/Faq';
+import FAQBareList from '@/components/FaqBareList';
 
 export default function FaqSection({ tech }: { tech: 'wordpress' | 'react' }) {
     return (

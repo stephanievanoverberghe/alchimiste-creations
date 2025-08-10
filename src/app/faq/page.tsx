@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { HelpCircle } from 'lucide-react';
 import Image from 'next/image';
-import FAQBareList from '@/components/Faq';
+import FAQBareList from '@/components/FaqBareList';
 
 export default function FaqPage({ tech }: { tech: 'wordpress' | 'react' }) {
     useEffect(() => {
