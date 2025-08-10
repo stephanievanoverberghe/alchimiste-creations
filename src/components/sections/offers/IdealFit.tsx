@@ -28,7 +28,7 @@ export default function IdealFitSection() {
 
     return (
         <section aria-labelledby="audience-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">

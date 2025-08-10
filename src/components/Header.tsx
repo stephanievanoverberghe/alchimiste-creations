@@ -23,7 +23,7 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     // ✅ Pages simples + slugs offres
-    const isSimplePage = simplePages.includes(pathname) || (pathname.startsWith('/offres/') && pathname !== '/offres');
+    const isSimplePage = simplePages.includes(pathname);
 
     // Fermeture avec Escape
     useEffect(() => {

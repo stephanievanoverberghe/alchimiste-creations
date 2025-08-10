@@ -62,7 +62,7 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
                 <Image src="/deco/about-wave.png" alt="Vague décorative" className="h-auto" fill priority />
             </div>
 
-            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">

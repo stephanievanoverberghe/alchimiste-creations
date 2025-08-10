@@ -4,9 +4,12 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
+type PackSlug = 'essentiel' | 'croissance' | 'signature';
+
 export default function Hero() {
     const pathname = usePathname();
 
+    // 1) Pages "statiques"
     const textMap: Record<string, { title: string; paragraph: string; cta?: { label: string; href: string }[]; bg?: string }> = {
         '/': {
             title: 'Développeuse web — sites WordPress & React/Next.js',
@@ -47,11 +50,53 @@ export default function Hero() {
         },
     };
 
-    const { title, paragraph, cta, bg } = textMap[pathname] || textMap['/'];
+    // 2) Pages dynamiques /offres/[slug]
+    const packMatch = pathname.match(/^\/offres\/(essentiel|croissance|signature)\/?$/);
+    const slug = (packMatch?.[1] ?? '') as PackSlug | '';
+
+    const packMap: Record<
+        PackSlug,
+        {
+            title: string;
+            paragraph: string;
+            cta: { label: string; href: string }[];
+            bg: string;
+            badge: string; // nouveau
+        }
+    > = {
+        essentiel: {
+            title: 'Pack Essentiel',
+            paragraph: "Pour lancer une vitrine claire et efficace — l'essentiel, bien fait.",
+            cta: [{ label: 'Demander un devis', href: '/contact?pack=essentiel' }],
+            bg: '/hero/hero-essentiel.png',
+            badge: 'Lancement rapide',
+        },
+        croissance: {
+            title: 'Pack Croissance',
+            paragraph: 'Pour une vitrine complète, évolutive, pensée conversion & SEO de base.',
+            cta: [{ label: 'Demander un devis', href: '/contact?pack=croissance' }],
+            bg: '/hero/hero-croissance.png',
+            badge: 'Évolutif · orienté conversion',
+        },
+        signature: {
+            title: 'Pack Signature',
+            paragraph: 'Pour un site hautement personnalisé, sur-mesure et remarquable.',
+            cta: [{ label: 'Demander un devis', href: '/contact?pack=signature' }],
+            bg: '/hero/hero-signature.png',
+            badge: 'Haute personnalisation',
+        },
+    };
+
+    // Sélection du contenu : dynamique (pack) > statique > fallback home
+    const packContent = slug ? packMap[slug] : undefined;
+    const { title, paragraph, cta, bg } = packContent ?? textMap[pathname] ?? textMap['/'];
+
+    // Badge dynamique (utilise le micro-tag du pack)
+    const badgeLabel = slug ? packContent!.badge : pathname === '/' ? 'Développement web sur-mesure' : 'Alchimiste Créations';
 
     return (
         <section className="relative flex items-center pt-44 pb-28 lg:pt-56 lg:pb-36 px-6 md:px-8 lg:px-[100px] xl:px-[150px] overflow-hidden">
-            {/* Image de fond qui englobe le header */}
+            {/* BG pleine largeur */}
             {bg && (
                 <div className="absolute inset-0 -z-10">
                     <Image src={bg} alt="Section Hero" fill priority className="object-cover object-center" />
@@ -63,7 +108,7 @@ export default function Hero() {
             <div className="max-w-4xl text-center lg:text-left space-y-6">
                 {/* Badge */}
                 <span className="inline-block text-xs tracking-[0.25em] uppercase text-background bg-terracotta/20 border border-terracotta/40 rounded-full px-4 py-1">
-                    {pathname === '/' ? 'Développement web sur-mesure' : 'Alchimiste Créations'}
+                    {badgeLabel}
                 </span>
 
                 {/* Titre */}
@@ -72,15 +117,17 @@ export default function Hero() {
                 {/* Paragraphe */}
                 <p className="text-base md:text-lg text-background/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">{paragraph}</p>
 
-                {/* Boutons */}
+                {/* CTA(s) */}
                 {cta && (
                     <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         {cta.map((button) => (
                             <Link
                                 key={button.href}
                                 href={button.href}
-                                className={`px-6 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-background transition hover:scale-105 ] ${
-                                    button.label.includes('contact') ? 'bg-terracotta text-background hover:bg-terracotta/90' : 'bg-ormat text-foreground hover:bg-ormat/90'
+                                className={`px-6 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-background transition hover:scale-105 ${
+                                    button.label.toLowerCase().includes('contact') || button.label.toLowerCase().includes('devis')
+                                        ? 'bg-terracotta text-background hover:bg-terracotta/90'
+                                        : 'bg-ormat text-foreground hover:bg-ormat/90'
                                 }`}
                             >
                                 {button.label}
