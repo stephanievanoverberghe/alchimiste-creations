@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Search as SearchIcon } from 'lucide-react';
 
-type Tech = 'wordpress' | 'react';
-
 type FaqItem = {
     id: string;
     q: string;
@@ -25,7 +23,7 @@ const ALL: FaqItem[] = (rawFaq as FaqItem[]).map((f) => ({
     ...f,
 }));
 
-/** Dictionnaire de synonymes (ajoute/ajuste à volonté) */
+/** Synonymes “fr” – complète librement */
 const SYNONYMS_GROUPS: Record<string, string[]> = {
     paiement: ['payer', 'paiements', 'règlement', 'reglement', 'acompte', 'échelonné', 'echelonne', 'échelonnable', 'versement', 'facture', 'facturation', 'régler', 'regler'],
     delai: ['délais', 'delais', 'deadline', 'temps', 'planning', 'timeline', 'livraison'],
@@ -43,7 +41,7 @@ const SYNONYMS_GROUPS: Record<string, string[]> = {
 const strip = (s: string) =>
     s
         .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // supprime les accents
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
 
 const buildSynIndex = () => {
@@ -67,37 +65,34 @@ const canonWords = (s: string) =>
 const canonString = (s: string) => canonWords(s).join(' ');
 
 /**
- * - mode 'compact' : 6 entrées (featured d’abord, sinon fallback).
+ * - mode 'compact' : 6 items (featured d’abord sinon fallback), lien “Voir toutes…”.
  * - mode 'full'    : tout, recherche + tags.
- * ⚠️ Accordéon forcé partout (un seul item ouvert) : openId unique.
+ * Accordéon forcé partout → 1 seule FAQ ouverte à la fois (openId unique).
  */
 export default function FAQBareList({
-    tech,
     mode = 'compact',
     withJsonLd = false,
     limit = 6,
     className = '',
 }: {
-    tech: Tech;
     mode?: 'compact' | 'full';
     withJsonLd?: boolean;
     limit?: number;
     className?: string;
 }) {
-    // Accordéon global : 1 seule ouverte
+    // Accordéon global
     const [openId, setOpenId] = useState<string | null>(null);
 
-    // Recherche + tags (en mode full)
+    // Recherche + tags (full)
     const [query, setQuery] = useState('');
     const [activeTag, setActiveTag] = useState<string | null>(null);
 
-    // Tri + filtre techno
+    // Tri
     const items = useMemo(() => {
-        const techFiltered = ALL.filter((f) => f.tech === 'any' || f.tech === tech);
-        return techFiltered.slice().sort((a, b) => Number(b.featured) - Number(a.featured) || (a.order ?? 999) - (b.order ?? 999) || a.q.localeCompare(b.q, 'fr'));
-    }, [tech]);
+        return ALL.slice().sort((a, b) => Number(b.featured) - Number(a.featured) || (a.order ?? 999) - (b.order ?? 999) || a.q.localeCompare(b.q, 'fr'));
+    }, []);
 
-    // Pré-calcule un “haystack canonique” par item pour une recherche robuste
+    // Prépare un “haystack” canonique par item (robuste aux accents/synonymes)
     const itemsWithCanon = useMemo(
         () =>
             items.map((f) => ({
@@ -107,7 +102,7 @@ export default function FAQBareList({
         [items]
     );
 
-    // Tags (uniquement en full, limités)
+    // Tags (full uniquement)
     const tags = useMemo(() => {
         if (mode !== 'full') return [];
         const set = new Set<string>();
@@ -115,7 +110,7 @@ export default function FAQBareList({
         return Array.from(set).sort().slice(0, 8);
     }, [items, mode]);
 
-    // Filtrage avec synonymes (FULL)
+    // Filtrage (full) avec synonymes
     const filtered = useMemo(() => {
         if (mode !== 'full') return itemsWithCanon;
         const qTokens = canonWords(query);
@@ -123,24 +118,23 @@ export default function FAQBareList({
             const matchTag = activeTag ? (f.tags ?? []).includes(activeTag) : true;
             if (!matchTag) return false;
             if (qTokens.length === 0) return true;
-            // on demande que chaque token de la requête existe dans le haystack canonique
             return qTokens.every((t) => f.hay.includes(t));
         });
     }, [itemsWithCanon, mode, query, activeTag]);
 
-    // Liste visible
+    // Visible
     const visible = useMemo(() => {
         if (mode === 'full') return filtered;
         const onlyFeatured = filtered.filter((f) => f.featured);
         return (onlyFeatured.length ? onlyFeatured : filtered).slice(0, limit);
     }, [filtered, mode, limit]);
 
-    // Reset l’item ouvert si on change la recherche / les tags
+    // Reset l’élément ouvert si recherche/tag change
     useEffect(() => {
         setOpenId(null);
-    }, [query, activeTag, mode, tech]);
+    }, [query, activeTag, mode]);
 
-    // JSON-LD optionnel
+    // JSON-LD (facultatif)
     const jsonLd = useMemo(() => {
         if (!withJsonLd) return null;
         const mainEntity = visible.slice(0, 10).map((f) => ({
@@ -153,7 +147,6 @@ export default function FAQBareList({
 
     return (
         <>
-            {/* Recherche + tags uniquement en FULL */}
             {mode === 'full' && (
                 <div className="mb-4 md:mb-6 flex flex-col gap-3">
                     <label className="relative block">
@@ -214,7 +207,6 @@ export default function FAQBareList({
                         >
                             <h3 className="text-[14px] md:text-base font-semibold text-foreground/90">{f.q}</h3>
 
-                            {/* Panneau animé (grid rows) */}
                             <div
                                 id={`faq-panel-${f.id}`}
                                 className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr] mt-2' : 'grid-rows-[0fr] mt-0'}`}
@@ -224,7 +216,6 @@ export default function FAQBareList({
                                 </div>
                             </div>
 
-                            {/* Ligne animée fixée en bas */}
                             <div className="absolute left-5 right-5 bottom-5 h-[2px] overflow-hidden">
                                 <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                                 <div

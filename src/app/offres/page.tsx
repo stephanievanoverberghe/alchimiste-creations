@@ -30,7 +30,7 @@ export default function OffresPage() {
             <MiniProcessSection />
             <GuaranteesSection />
             <IdealFitSection />
-            <FaqSection tech={tech} />
+            <FaqSection />
         </>
     );
 }
