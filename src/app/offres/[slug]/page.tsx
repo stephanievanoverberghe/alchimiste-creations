@@ -1,15 +1,33 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import IdealFitSection from '@/components/sections/offers/offer/IdealFit';
+import IncludedSection from '@/components/sections/offers/offer/Icluded'; // <-- corrige "Icluded"
+import OptionsGridSection from '@/components/sections/offers/offer/OptionsGrid';
 
-export default function ContactPage() {
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-    }, []);
+type Tech = 'wordpress' | 'react';
+
+export default function OfferPage() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    // état local + init depuis ?tech=react|wordpress (fallback wordpress)
+    const [tech, setTech] = useState<Tech>(() => (searchParams.get('tech') === 'react' ? 'react' : 'wordpress'));
+
+    const onTechChange = (t: Tech) => {
+        setTech(t);
+        const qs = new URLSearchParams(searchParams.toString());
+        qs.set('tech', t);
+        router.replace(`${pathname}?${qs.toString()}`, { scroll: false });
+    };
 
     return (
         <div>
-            <h1 className="text-center text-base lg:text-5xl py-24">Page contact</h1>
+            <IdealFitSection />
+            <IncludedSection />
+            <OptionsGridSection tech={tech} onTechChange={onTechChange} />
         </div>
     );
 }
