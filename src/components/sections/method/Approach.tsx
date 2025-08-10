@@ -33,7 +33,7 @@ export default function ApproachSection() {
                 {/* Grille contenu */}
                 <div className="grid md:grid-cols-2 gap-10">
                     {/* Texte principal */}
-                    <div className="space-y-5 text-base md:text-lg leading-relaxed">
+                    <div className="space-y-5 text-center md:text-left text-base md:text-lg leading-relaxed">
                         <p>
                             Chez <strong>Alchimiste Créations</strong>, pas de modèles préfabriqués, ni de solutions impersonnelles. Je conçois{' '}
                             <strong>des sites web sur-mesure</strong> — esthétiques, fluides, alignés à ce que tu veux transmettre — pour qu’ils deviennent un véritable

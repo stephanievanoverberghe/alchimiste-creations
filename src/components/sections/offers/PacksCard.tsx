@@ -67,13 +67,7 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                     <div className="flex justify-center">
                         <Link
                             href={`/offres/${slug}`}
-                            className="
-        inline-flex items-center gap-2 px-6 py-3 rounded-2xl
-        bg-terracotta hover:bg-terracotta/90 text-background
-        text-sm font-semibold tracking-widest uppercase
-        border-b-2 border-r-2 border-ormat
-        transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]
-      "
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
                         >
                             Découvrir ce pack
                             <svg

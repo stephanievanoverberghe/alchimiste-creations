@@ -3,148 +3,145 @@
         "slug": "essentiel",
         "titre": "Pack Essentiel",
         "sousTitre": "Une page pour se poser",
-        "cible": "Idéal pour celles et ceux qui souhaitent poser une première empreinte en ligne, avec une présence claire, élégante et facile à parcourir.",
+        "cible": "Idéal pour poser une première empreinte en ligne, claire et pro.",
         "inclus": [
-            "One-page (Accueil) fluide, responsive et épurée",
-            "SEO de base (titres, metas, structure)",
+            "One-page (Accueil) fluide et responsive",
+            "Identité web mini (palette + duo typo)",
+            "Header/footer simples",
             "Formulaire de contact simple",
-            "Design harmonisé à votre univers",
-            "Mise en ligne + guide de prise en main (PDF ou vidéo)"
+            "SEO de base (titres & metas)",
+            "Mise en ligne + mini-guide (PDF ou vidéo)",
+            "Support 7 jours (corrections mineures)"
         ],
         "prix": "À partir de 650€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": {
-                "prix": "À partir de 650€ TTC",
-                "delai": "1 à 2 semaines"
-            },
-            "react": {
-                "prix": "À partir de 750€ TTC",
-                "delai": "2 à 3 semaines"
-            }
+            "wordpress": { "prix": "À partir de 650€ TTC", "delai": "2 à 3 semaines" },
+            "react": { "prix": "À partir de 750€ TTC", "delai": "3 à 4 semaines" }
         },
         "options": [
-            {
-                "label": "Blog / Actus",
-                "prix": {
-                    "wordpress": "+150€",
-                    "react": "+250€"
-                }
-            },
-            {
-                "label": "Formulaire avancé (logique, champs conditionnels)",
-                "prix": {
-                    "wordpress": "+50€",
-                    "react": "+120€"
-                }
-            },
-            {
-                "label": "SEO avancé (plan, maillage interne, données structurées)",
-                "prix": "+150€"
-            }
+            { "label": "Blog / Actus", "prix": { "wordpress": "+200€", "react": "+350€" } },
+            { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
+            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } }
         ],
-        "allersRetours": "Ouvert (dans la limite du raisonnable)",
-        "delaiNote": "Délais indicatifs, ajustés selon besoins et disponibilité."
+        "allersRetours": "1 aller-retour (puis ajustements mineurs)",
+        "paiement": {
+            "etapes": [
+                { "pourcentage": 40, "quand": "Signature du devis" },
+                { "pourcentage": 40, "quand": "Validation de la maquette / version de pré-prod" },
+                { "pourcentage": 20, "quand": "Avant mise en ligne" }
+            ],
+            "echelonnable": true,
+            "moyens": ["Virement bancaire"],
+            "notes": "Échelonnage possible pour projets > 1 500€ • Facturation TTC • Cession des livrables à réception du solde."
+        },
+        "exclusions": ["Hébergement et nom de domaine non inclus", "Textes et photos fournis par vos soins", "Pas d’e-commerce", "Pas de back-office React inclus"],
+        "delaiNote": "Délais indicatifs, démarrant à réception des contenus (textes/images), ajustés selon besoins et disponibilité."
     },
     {
         "slug": "croissance",
         "titre": "Pack Croissance",
         "sousTitre": "Déployer son univers",
-        "cible": "Parfait pour développer une vitrine complète et fluide, mettre en valeur plusieurs aspects de votre activité et offrir une navigation engageante.",
+        "cible": "Pour une vitrine complète avec navigation fluide.",
         "inclus": [
-            "3 à 5 pages (Accueil, À propos, Services, Contact, +1 au choix)",
-            "Design personnalisé + navigation fluide",
-            "Optimisation mobile et animations légères",
+            "4 à 6 pages (Accueil, À propos, Services, Contact, +1/2 au choix)",
+            "Moodboard + bases UI (boutons, blocs, grilles)",
+            "Design personnalisé + navigation claire",
+            "Animations légères",
+            "Section témoignages ou galerie simple",
             "Formulaire de contact",
             "SEO de base (titres, metas, structure)",
-            "Mise en avant de témoignages / réalisations (si fournis)",
-            "Guide d’utilisation post-livraison"
+            "Accessibilité de bon sens (contrastes/labels)",
+            "Guide d’utilisation post-livraison",
+            "Support 30 jours"
         ],
-        "prix": "À partir de 1100€ TTC",
+        "prix": "À partir de 1400€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": {
-                "prix": "À partir de 1100€ TTC",
-                "delai": "2 à 3 semaines"
-            },
-            "react": {
-                "prix": "À partir de 1300€ TTC",
-                "delai": "3 à 4 semaines"
-            }
+            "wordpress": { "prix": "À partir de 1400€ TTC", "delai": "4 à 6 semaines" },
+            "react": { "prix": "À partir de 1700€ TTC", "delai": "5 à 7 semaines" }
         },
         "options": [
-            {
-                "label": "Blog",
-                "prix": {
-                    "wordpress": "+200€",
-                    "react": "+350€"
-                }
-            },
-            {
-                "label": "Réservation en ligne",
-                "prix": {
-                    "wordpress": "+250€",
-                    "react": "—"
-                }
-            },
-            {
-                "label": "E-commerce basique (catalogue simple)",
-                "prix": {
-                    "wordpress": "Sur devis",
-                    "react": "—"
-                }
-            }
+            { "label": "Blog", "prix": { "wordpress": "+200€", "react": "+350€" } },
+            { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
+            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } },
+            { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
+            { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } }
         ],
-        "allersRetours": "Ouvert (dans la limite du raisonnable)",
-        "delaiNote": "Délais indicatifs, ajustés selon besoins et disponibilité."
+        "allersRetours": "2 allers-retours (design/structure + final)",
+        "paiement": {
+            "etapes": [
+                { "pourcentage": 40, "quand": "Signature du devis" },
+                { "pourcentage": 40, "quand": "Validation de la maquette / version de pré-prod" },
+                { "pourcentage": 20, "quand": "Avant mise en ligne" }
+            ],
+            "echelonnable": true,
+            "moyens": ["Virement bancaire"],
+            "notes": "Échelonnage possible pour projets > 1 500€ • Facturation TTC • Cession des livrables à réception du solde."
+        },
+        "exclusions": [
+            "Hébergement et nom de domaine non inclus",
+            "Textes et photos fournis par vos soins",
+            "Pas d’e-commerce (possible via option sur Signature uniquement)",
+            "Pas de back-office React inclus"
+        ],
+        "delaiNote": "Délais indicatifs, démarrant à réception des contenus (textes/images), ajustés selon besoins et disponibilité."
     },
     {
         "slug": "signature",
         "titre": "Pack Signature",
         "sousTitre": "Créer avec profondeur",
-        "cible": "Conçu pour celles et ceux qui veulent un site hautement personnalisé, aligné à leur vision, avec un accompagnement stratégique et une finition soignée.",
+        "cible": "Pour un site sur-mesure, soigné et aligné à ta vision, avec identité visuelle renforcée.",
         "inclus": [
             "Atelier de cadrage stratégique (1h visio)",
-            "5 à 7 pages sur mesure",
-            "Intégration sur mesure avec animations soignées",
-            "Design raffiné, aligné à votre univers visuel",
-            "Conseil rédactionnel (à partir de vos textes)",
-            "SEO optimisé (structure, contenus, performance)",
+            "6 à 9 pages sur mesure",
+            "Charte graphique web courte (4–6 pages PDF) + UI kit",
+            "Logo essentiel inclus (wordmark/monogramme simple), 2 pistes → 1 final + mini guide (2 pages)",
+            "Ton éditorial (1 page) + micro-copies clés",
+            "Blog inclus (structure + 1 gabarit d’article)",
+            "Intégration sur-mesure avec micro-animations soignées",
+            "Optimisations perfs (images, fonts) + baseline Lighthouse",
+            "SEO optimisé (structure, contenus, maillage interne)",
             "Accessibilité et bonnes pratiques UX",
-            "Maintenance & support 1 mois après mise en ligne",
-            "Possibilité d'intégrer un blog ou un espace ressources"
+            "Migration & mise en forme du contenu (jusqu’à 6 pages)",
+            "Formation 1h + livret de passation",
+            "Maintenance 1 mois incluse + support 60 jours"
         ],
-        "prix": "À partir de 1700€ TTC",
+        "prix": "À partir de 2 500€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": {
-                "prix": "À partir de 1700€ TTC",
-                "delai": "3 à 4 semaines"
-            },
-            "react": {
-                "prix": "À partir de 2000€ TTC",
-                "delai": "4 à 6 semaines"
-            }
+            "wordpress": { "prix": "À partir de 2 500€ TTC", "delai": "8 à 12 semaines" },
+            "react": { "prix": "À partir de 3 000€ TTC", "delai": "10 à 14 semaines" }
         },
         "options": [
-            {
-                "label": "E-commerce complet (WP / Prestashop)",
-                "prix": "Sur devis"
-            },
-            {
-                "label": "Multilingue",
-                "prix": {
-                    "wordpress": "+300€",
-                    "react": "+500€"
-                }
-            },
-            {
-                "label": "SEO avancé + stratégie de contenu",
-                "prix": "+400€"
-            }
+            { "label": "Logo avancé (3 pistes + variantes + guide 6–8 pages)", "prix": "+500€" },
+            { "label": "Brand kit étendu (≈10 pages : usages, icônes, bannières)", "prix": "+350€" },
+            { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+600€" } },
+            { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
+            { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } },
+            { "label": "Réservation en ligne (WP via plugin / React via embed Calendly)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Copywriting long (par page, jusqu’à 800 mots)", "prix": "+200€ / page" },
+            { "label": "E-commerce (WooCommerce sur WordPress / non proposé en React)", "prix": { "wordpress": "Sur devis", "react": "—" } }
         ],
-        "allersRetours": "Ouvert (dans la limite du raisonnable)",
-        "delaiNote": "Délais indicatifs, ajustés selon la complexité et vos besoins.",
-        "exclusions": ["Pas de création de logo / identité visuelle complète (UI Web uniquement)"]
+        "allersRetours": "4 allers-retours site + 2 allers-retours logo (dont 1 passe micro-typos)",
+        "paiement": {
+            "etapes": [
+                { "pourcentage": 40, "quand": "Signature du devis" },
+                { "pourcentage": 40, "quand": "Validation de la maquette / version de pré-prod" },
+                { "pourcentage": 20, "quand": "Avant mise en ligne" }
+            ],
+            "echelonnable": true,
+            "moyens": ["Virement bancaire"],
+            "notes": "Échelonnage possible pour projets > 1 500€ • Facturation TTC • Cession des livrables à réception du solde."
+        },
+        "exclusions": [
+            "Hébergement et nom de domaine non inclus",
+            "Textes et photos fournis par vos soins",
+            "Pas d’e-commerce custom (intégration WooCommerce sur devis uniquement)",
+            "Pas de back-office React/Headless CMS inclus (chiffrable à part si besoin)"
+        ],
+        "delaiNote": "Délais indicatifs, démarrant à réception des contenus (textes/images), ajustés selon la complexité, la disponibilité et la livraison des contenus."
     }
 ]

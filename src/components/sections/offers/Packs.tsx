@@ -1,23 +1,22 @@
 // components/Offers/PacksSection.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import PackCard from './PacksCard';
 import { getVersion, type Tech } from '@/lib/packs';
-import { getPacks } from '@/lib/getPacks';
 import { cn } from '@/lib/utils';
-import { Atom, FileText, Gauge, Clock, GitBranch, Edit3 } from 'lucide-react';
+import { Atom, FileText, Gauge, Clock, GitBranch, Edit3, Wallet } from 'lucide-react';
+
 import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-// Type minimal aligné avec packs.json
+// Type minimal aligné avec packs.json (seulement ce qu'on lit ici)
 type PackVersion = { prix: string; delai: string };
 type Pack = {
     slug: string;
     titre: string;
     sousTitre: string;
-    cible: string;
+    cible?: string;
     inclus: string[];
     prix: string;
     technoChoix?: boolean;
@@ -34,28 +33,24 @@ const iconBySlug: Record<string, IconDefinition> = {
 const TECH_COPY = {
     wordpress: {
         label: 'WordPress',
-        pitch: 'Idéal si tu veux un site éditable facilement (texte/images) via une interface. Rapide à mettre en place, évolutif avec des extensions.',
-        bullets: ['Éditeur visuel (Gutenberg)', 'Bon pour vitrines/blogs', 'Budget contenu / délais courts'],
+        pitch: 'Idéal si tu veux éditer facilement ton site (textes/images) via une interface. Délais plus courts, budget maîtrisé, écosystème mature.',
+        bullets: ['Plugins éprouvés (SEO, formulaires, réservations)', 'Délais courts / mise en ligne rapide', 'Parfait pour vitrines & blogs'],
     },
     react: {
         label: 'Sur-mesure (React/Next.js)',
-        pitch: 'Code fait à la main, très léger et performant. Parfait si tu veux un rendu unique, des animations fines ou une base solide pour évoluer.',
-        bullets: ['Performance & sur-mesure', 'Design/animations au cordeau', 'Admin en option (CMS headless)'],
-        note: 'Concrètement : c’est construit brique par brique. On peut brancher un CMS « headless » pour éditer le contenu facilement.',
+        pitch: 'Code léger et très performant. UI/animations au cordeau. Variante sans back-office : je prends en charge les mises à jour de contenu sur demande.',
+        bullets: ['Performance & sur-mesure', 'Design/animations fines et uniques', 'Site statique (pas de back-office)'],
+        note: 'Pas de back-office inclus. Les modifications de contenu se font par mes soins, à la demande.',
     },
 } as const;
 
-export default function PacksSection() {
-    const [tech, setTech] = useState<Tech>('wordpress');
-    const [packs, setPacks] = useState<Pack[] | null>(null);
+type PacksSectionProps = {
+    tech: Tech;
+    onTechChange: (t: Tech) => void;
+    packs: Pack[] | null;
+};
 
-    useEffect(() => {
-        (async () => {
-            const data = await getPacks();
-            setPacks(data as unknown as Pack[]);
-        })();
-    }, []);
-
+export default function PacksSection({ tech, onTechChange, packs }: PacksSectionProps) {
     return (
         <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Liseré décoratif en haut */}
@@ -86,9 +81,9 @@ export default function PacksSection() {
                             <button
                                 role="tab"
                                 aria-selected={tech === 'wordpress'}
-                                onClick={() => setTech('wordpress')}
+                                onClick={() => onTechChange('wordpress')}
                                 className={cn(
-                                    'px-4 py-1.5 text-sm font-semibold rounded-full transition',
+                                    'px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer',
                                     tech === 'wordpress' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
                                 )}
                             >
@@ -97,9 +92,9 @@ export default function PacksSection() {
                             <button
                                 role="tab"
                                 aria-selected={tech === 'react'}
-                                onClick={() => setTech('react')}
+                                onClick={() => onTechChange('react')}
                                 className={cn(
-                                    'px-4 py-1.5 text-sm font-semibold rounded-full transition',
+                                    'px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer',
                                     tech === 'react' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
                                 )}
                             >
@@ -110,23 +105,21 @@ export default function PacksSection() {
 
                     {/* Micro-explication techno — version visuelle */}
                     <div className="relative overflow-hidden rounded-3xl border border-sauge/30 bg-background/70 p-5 md:p-6">
-                        {/* tache décorative douce */}
+                        {/* taches douces */}
                         <div className="pointer-events-none absolute -top-16 -right-10 w-64 h-64 rounded-full bg-terracotta/10 blur-2xl" aria-hidden />
                         <div className="pointer-events-none absolute -bottom-20 -left-16 w-56 h-56 rounded-full bg-sauge/10 blur-2xl" aria-hidden />
 
-                        {/* En-tête : badge techno + pitch */}
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <span className="inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-terracotta">
                                 {tech === 'wordpress' ? <FileText className="w-4 h-4" /> : <Atom className="w-4 h-4" />}
                                 {tech === 'wordpress' ? TECH_COPY.wordpress.label : TECH_COPY.react.label}
                             </span>
-
                             <p className="text-sm md:text-[15px] leading-relaxed text-foreground/85 sm:max-w-[70%]">
                                 {tech === 'wordpress' ? TECH_COPY.wordpress.pitch : TECH_COPY.react.pitch}
                             </p>
                         </div>
 
-                        {/* Bullets en “chips” iconées */}
+                        {/* Journal en chips */}
                         <ul className="mt-4 sm:flex gap-2">
                             {(tech === 'wordpress' ? TECH_COPY.wordpress.bullets : TECH_COPY.react.bullets).map((b) => (
                                 <li key={b}>
@@ -138,9 +131,14 @@ export default function PacksSection() {
                             ))}
                         </ul>
 
-                        {/* Mini comparatif visuel */}
+                        {/* Mini KPI barres */}
                         {(() => {
-                            const KPI = tech === 'wordpress' ? { autonomie: 95, performance: 75, delais: 90, evol: 72 } : { autonomie: 76, performance: 95, delais: 65, evol: 94 };
+                            // 0–100 (plus haut = meilleur)
+                            // WP : rapide/abordable, autonomie forte ; React : perf/évolutif, un peu plus long/coûteux
+                            const KPI =
+                                tech === 'wordpress'
+                                    ? { autonomie: 92, performance: 78, delais: 90, evol: 72, budget: 88 }
+                                    : { autonomie: 60, performance: 95, delais: 65, evol: 92, budget: 65 };
 
                             const Metric = ({ icon: Icon, label, value }: { icon: React.ComponentType<{ className?: string }>; label: string; value: number }) => (
                                 <div className="space-y-1.5">
@@ -158,16 +156,17 @@ export default function PacksSection() {
                             );
 
                             return (
-                                <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                <div className="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-4">
                                     <Metric icon={Edit3} label="Autonomie" value={KPI.autonomie} />
                                     <Metric icon={Gauge} label="Performance" value={KPI.performance} />
                                     <Metric icon={Clock} label="Délais" value={KPI.delais} />
                                     <Metric icon={GitBranch} label="Évolutivité" value={KPI.evol} />
+                                    {/* Nouvel indicateur */}
+                                    <Metric icon={Wallet} label="Budget" value={KPI.budget} />
                                 </div>
                             );
                         })()}
 
-                        {/* Note React optionnelle */}
                         {tech === 'react' && <p className="mt-3 text-xs text-foreground/70">{TECH_COPY.react.note}</p>}
                     </div>
                 </div>
@@ -185,7 +184,7 @@ export default function PacksSection() {
                                       subtitle={pack.sousTitre}
                                       items={pack.inclus}
                                       price={v?.prix ?? pack.prix}
-                                      delay={v?.delai} // affiché "Délai : ..." dans la card
+                                      delay={v?.delai}
                                       centralIcon={iconBySlug[pack.slug] || faLeaf}
                                   />
                               );
