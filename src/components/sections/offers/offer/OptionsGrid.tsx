@@ -127,10 +127,13 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                             >
                                 {/* Header (icône + titre) */}
                                 <div className="flex items-center gap-3">
-                                    <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
-                                        <Icon className="w-4 h-4" aria-hidden />
+                                    <span
+                                        className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge
+                               shrink-0 flex-none aspect-square"
+                                    >
+                                        <Icon className="w-4 h-4 flex-none" aria-hidden />
                                     </span>
-                                    <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{o.label}</h3>
+                                    <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta leading-none">{o.label}</h3>
                                 </div>
 
                                 {/* Séparateur animé */}
@@ -167,7 +170,7 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                         href="/contact"
                         className="inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
                     >
-                        Réserver un appel
+                        Réserver mon appel
                     </Link>
                 </div>
 

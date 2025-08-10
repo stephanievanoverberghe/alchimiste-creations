@@ -75,7 +75,7 @@ export default function IncludedSection({ slug, max = 8 }: { slug?: PackSlug; ma
                         <button
                             type="button"
                             onClick={() => setExpanded((v) => !v)}
-                            className="rounded-2xl border border-sauge/40 px-4 py-2 text-xs md:text-sm font-semibold tracking-widest uppercase hover:bg-sauge/10 transition"
+                            className="rounded-2xl cursor-pointer border border-sauge/40 px-4 py-2 text-xs md:text-sm font-semibold tracking-widest uppercase hover:bg-sauge/10 transition"
                             aria-expanded={expanded}
                             aria-controls="included"
                         >
