@@ -22,7 +22,12 @@
         "collaboration": "Perrine Dassonville – Développeuse backend",
         "image": "/projects/norel-art.png",
         "lien": "/projets/norel-art",
-        "status": "coded"
+        "status": "coded",
+        "stack": "react",
+        "kind": "ecommerce",
+        "year": 2024,
+        "city": "Lille",
+        "external": false
     },
     {
         "slug": "ania-sophro",
@@ -46,6 +51,11 @@
         "temoignage2": "Je n’ai pas eu besoin de tout dire...",
         "image": "",
         "lien": "/projets/ania-sophro",
-        "status": "wip"
+        "status": "wip",
+        "stack": "wordpress",
+        "kind": "vitrine",
+        "year": 2025,
+        "city": "Villeneuve-d’Ascq",
+        "external": false
     }
 ]

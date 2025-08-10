@@ -72,7 +72,7 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                         >
                             Découvrir ce pack
                             <svg
-                                className="w-3.5 h-3.5 -mr-0.5 -translate-x-0.5 transition-transform group-hover:translate-x-0"
+                                className="w-4 h-4 -mr-0.5 -translate-x-1 transition-transform group-hover:translate-0"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"

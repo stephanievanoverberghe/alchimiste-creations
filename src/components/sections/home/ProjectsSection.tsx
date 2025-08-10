@@ -1,9 +1,11 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import rawData from '@/data/projects.json';
-import ProjectCard from './ProjectCard';
+import ProjectCard, { ProjectUI } from './ProjectCard';
 import ContactTeaserCard from './ContactTeaserCard';
 
 type RawProject = {
@@ -21,21 +23,17 @@ type RawProject = {
     link?: string;
     lien?: string;
     status?: 'coded' | 'wip';
-};
-
-export type ProjectUI = {
-    key: string;
-    title: string;
-    description: string;
-    imageSrc: string;
-    link: string;
-    status?: 'coded' | 'wip';
+    stack?: 'wordpress' | 'react' | 'mixte';
+    kind?: 'vitrine' | 'portfolio' | 'ecommerce';
+    year?: number;
+    city?: string;
+    external?: boolean;
 };
 
 function normalizeProject(p: RawProject, idx: number): ProjectUI {
     const title = p.title ?? p.titre ?? p.name ?? `Projet ${idx + 1}`;
     const description = p.description ?? p.sousTitre ?? p.subtitle ?? '';
-    const imageSrc = p.imageSrc || p.image || p.cover || ''; // "" si vide
+    const imageSrc = p.imageSrc || p.image || p.cover || '';
     const link =
         p.link ??
         p.lien ??
@@ -49,19 +47,29 @@ function normalizeProject(p: RawProject, idx: number): ProjectUI {
 
     const status = p.status ?? (p.slug === 'norel-art' ? 'coded' : p.slug === 'ania-sophro' ? 'wip' : undefined);
 
-    return { key: (p.slug ?? p.id ?? title).toString(), title, description, imageSrc, link, status };
+    // external: true si explicitement fourni, sinon déduit si lien absolu http(s)
+    const external = typeof p.external === 'boolean' ? p.external : /^https?:\/\//i.test(link);
+
+    return {
+        key: (p.slug ?? p.id ?? title).toString(),
+        title,
+        description,
+        imageSrc,
+        link,
+        status,
+        stack: p.stack,
+        kind: p.kind,
+        year: p.year,
+        city: p.city,
+        external,
+    };
 }
 
-type Props = { projects?: RawProject[]; ctaHref?: string };
-
-export default function ProjectsSection({ projects, ctaHref = '/projets' }: Props) {
+export default function ProjectsSection({ projects, ctaHref = '/projets' }: { projects?: RawProject[]; ctaHref?: string }) {
     const source: RawProject[] = Array.isArray(projects) && projects.length ? projects : (rawData as RawProject[]);
     const mapped: ProjectUI[] = source.map(normalizeProject);
 
-    // On affiche les 3 DERNIERS si disponibles
-    const finalData: ProjectUI[] = mapped.slice(-3);
-
-    // Nombre de teasers à ajouter pour compléter à 3
+    const finalData: ProjectUI[] = mapped.slice(-3); // derniers
     const missing = Math.max(0, 3 - finalData.length);
 
     return (
@@ -73,7 +81,6 @@ export default function ProjectsSection({ projects, ctaHref = '/projets' }: Prop
             </div>
 
             <div className="relative mx-auto w-full max-w-5xl">
-                {/* En-tête */}
                 <div className="text-center lg:text-left mb-12">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
                         Réalisations
@@ -84,8 +91,7 @@ export default function ProjectsSection({ projects, ctaHref = '/projets' }: Prop
                     </h2>
 
                     <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                        Voici un aperçu de mes derniers projets&nbsp;: du <em>sur-mesure codé</em> et des vitrines sensibles, créés en co-création et pensés pour inspirer confiance
-                        dès les premières secondes.
+                        Voici un aperçu de mes derniers projets : du <em>sur-mesure codé</em> et des vitrines sensibles.
                     </p>
                 </div>
 
