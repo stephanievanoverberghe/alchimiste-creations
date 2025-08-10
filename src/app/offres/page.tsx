@@ -11,6 +11,7 @@ import GuaranteesSection from '@/components/sections/offers/Guarantees';
 import IdealFitSection from '@/components/sections/offers/IdealFit';
 import FaqSection from '@/components/sections/offers/FaqOffers';
 import ProjectsTeaserSection from '@/components/sections/offers/ProjectsTeaser';
+import CallToActionSection from '@/components/sections/offers/CallToAction';
 
 // On infère le type des packs directement depuis la fonction
 type Packs = Awaited<ReturnType<typeof getPacks>>;
@@ -33,6 +34,7 @@ export default function OffresPage() {
             <IdealFitSection />
             <FaqSection />
             <ProjectsTeaserSection limit={3} />
+            <CallToActionSection />
         </>
     );
 }

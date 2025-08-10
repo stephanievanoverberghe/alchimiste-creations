@@ -52,8 +52,8 @@
         "image": "",
         "lien": "/projets/ania-sophro",
         "status": "wip",
-        "stack": "wordpress",
-        "kind": "vitrine",
+        "stack": "react",
+        "kind": "rdv",
         "year": 2025,
         "city": "Villeneuve-d’Ascq",
         "external": false
