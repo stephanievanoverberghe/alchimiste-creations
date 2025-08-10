@@ -44,7 +44,7 @@ export default async function PackPage({ params }: PackPageProps) {
     return (
         <section className="py-10 md:py-20 px-6 md:px-12 lg:px-[100px] xl:px-[150px] max-w-5xl mx-auto">
             {/* Bouton retour */}
-            <Link href="/offres" className="inline-block mb-8 text-sm text-sauge hover:underline">
+            <Link href="/offres" className={cn('inline-block mb-8 text-sm text-sauge hover:underline')}>
                 ← Retour aux packs
             </Link>
 
