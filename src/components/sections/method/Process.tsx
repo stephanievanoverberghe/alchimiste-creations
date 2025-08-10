@@ -1,34 +1,28 @@
 'use client';
 
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { Ear, Palette, Code2, Rocket } from 'lucide-react';
 
 export default function ProcessSection() {
     const steps = [
         {
-            title: 'Écoute & cadrage',
-            description: 'On pose l’intention, l’arborescence et le cap en visio (30–60 min).',
-            image: '/process/ecoute.png',
-            alt: 'Écoute et cadrage du projet',
+            icon: Ear,
+            label: 'Écoute & cadrage',
+            desc: 'On pose l’intention, les besoins et le périmètre. Tu n’as pas besoin d’avoir tout clair : on le fait ensemble.',
         },
         {
-            title: 'Ambiance & design',
-            description: 'Univers visuel léger, UI claire et cohérente avec ton énergie.',
-            image: '/process/clarte.png',
-            alt: 'Ambiance et design',
+            icon: Palette,
+            label: 'Ambiance & design',
+            desc: 'Moodboard léger, bases UI/UX, structure des pages. On valide l’univers avant d’avancer.',
         },
         {
-            title: 'Développement',
-            description: 'WordPress ou React/Next.js, responsive + SEO de base.',
-            image: '/process/creations.png',
-            alt: 'Développement du site',
+            icon: Code2,
+            label: 'Développement',
+            desc: 'Intégration WordPress ou React/Next, responsive, SEO de base et micro-animations utiles.',
         },
         {
-            title: 'Tests & mise en ligne',
-            description: 'Recettes, accessibilité, perfs, tutoriel et passation.',
-            image: '/process/transmission.png',
-            alt: 'Tests et mise en ligne',
+            icon: Rocket,
+            label: 'Tests & mise en ligne',
+            desc: 'Contrôles finaux, corrections, mise en ligne accompagnée + petit guide de prise en main.',
         },
     ];
 
@@ -46,34 +40,40 @@ export default function ProcessSection() {
                     </p>
                 </div>
 
-                {/* Étapes */}
-                <div className="flex flex-col md:flex-row items-stretch justify-between gap-10 md:gap-6 text-center">
-                    {steps
-                        .map((step) => (
-                            <div key={step.title} className="flex flex-col items-center text-center group">
-                                {/* Image */}
-                                <div className="transition-transform duration-300 group-hover:scale-105">
-                                    <Image src={step.image} alt={step.alt} width={130} height={130} className="object-contain mb-4" />
-                                </div>
-
-                                {/* Titre */}
-                                <h3 className="text-base lg:text-xl font-bold tracking-wide md:tracking-widest text-terracotta mb-2">{step.title}</h3>
-
-                                {/* Description */}
-                                <p className="text-xs md:text-sm text-foreground/80 max-w-[200px]">{step.description}</p>
+                {/* Les 4 étapes */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-fr">
+                    {steps.map(({ icon: Icon, label, desc }, i) => (
+                        <article
+                            key={label}
+                            className="group h-full flex flex-col rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                        >
+                            {/* Header (badge n° + icône) */}
+                            <div className="flex items-center gap-3">
+                                <span className="inline-flex items-center justify-center size-7 rounded-full border border-ormat/30 bg-ormat/10 text-[11px] font-semibold text-ormat">
+                                    {String(i + 1).padStart(2, '0')}
+                                </span>
+                                <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
+                                    <Icon className="w-4 h-4" aria-hidden />
+                                </span>
                             </div>
-                        ))
-                        .flatMap((component, index, array) => {
-                            if (index < array.length - 1) {
-                                return [
-                                    component,
-                                    <div key={`arrow-${index}`} className="hidden md:flex items-center justify-center w-[60px]">
-                                        <FontAwesomeIcon icon={faArrowRightLong} className="text-sauge text-lg" />
-                                    </div>,
-                                ];
-                            }
-                            return [component];
-                        })}
+
+                            <h3 className="mt-3 text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{label}</h3>
+
+                            {/* Séparateur animé */}
+                            <div className="mt-3 relative h-[2px] overflow-hidden">
+                                <div className="absolute inset-0 bg-sauge/20" aria-hidden />
+                                <div
+                                    className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                                    aria-hidden
+                                />
+                            </div>
+
+                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{desc}</p>
+
+                            {/* Pied (poussé en bas) */}
+                            <div className="mt-auto pt-4" />
+                        </article>
+                    ))}
                 </div>
             </div>
         </section>

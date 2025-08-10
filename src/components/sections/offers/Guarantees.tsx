@@ -1,36 +1,34 @@
 'use client';
 
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { ShieldCheck, Smartphone, Accessibility, Search, FileCheck } from 'lucide-react';
+import { ShieldCheck, Smartphone, Accessibility, Search, BookOpen } from 'lucide-react';
 
 export default function GuaranteesSection() {
     const items = [
         {
             icon: Smartphone,
-            title: 'Rapide & mobile-first',
-            desc: 'Un site fluide, optimisé pour tous les écrans.',
+            title: 'Mobile-first rapide',
+            desc: 'Performance soignée et chargement fluide sur tous les écrans.',
         },
         {
             icon: Accessibility,
             title: 'Accessibilité & bonnes pratiques',
-            desc: 'Couleurs, contrastes, sémantique et navigation clairs.',
+            desc: 'Structure sémantique, navigation clavier et contrastes vérifiés.',
         },
         {
             icon: Search,
-            title: 'SEO de base inclus',
-            desc: 'Titres, metas, structure propre et performances.',
+            title: 'SEO de base',
+            desc: 'Titres et metas, Open Graph, sitemap et robots configurés.',
         },
         {
-            icon: FileCheck,
-            title: 'Passation soignée',
-            desc: 'Tutoriel simple + remise des accès en fin de projet.',
+            icon: BookOpen,
+            title: 'Passation + mini-guide',
+            desc: 'Remise des accès, guide simple et conseils d’usage pour être autonome.',
         },
     ];
 
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
+        <section aria-labelledby="guarantees-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Liseré décoratif en haut */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
             {/* Fond or mobile only */}
@@ -40,15 +38,19 @@ export default function GuaranteesSection() {
                 <Image src="/deco/about-wave.png" alt="" fill priority className="h-auto object-cover" />
             </div>
 
-            <div className="relative max-w-5xl mx-auto">
+            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
-                <div className="text-center lg:text-left mb-10 md:mb-12">
+                <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
                         <ShieldCheck className="w-3.5 h-3.5" aria-hidden />
-                        Ce que je garantis
+                        Mes engagements
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">Des engagements concrets, pas des promesses</h2>
-                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">L’objectif : un site beau, clair et fiable — qui tient dans le temps.</p>
+                    <h2 id="guarantees-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
+                        Ce que je garantis, concrètement
+                    </h2>
+                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
+                        Des bases solides et durables, sans promesses creuses : un site rapide, accessible, prêt pour le SEO — et une passation claire.
+                    </p>
                 </div>
 
                 {/* Cartes garanties */}
@@ -81,25 +83,10 @@ export default function GuaranteesSection() {
                     ))}
                 </ul>
 
-                {/* Micro-CTA */}
-                <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                    <Link
-                        href="/offres"
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-ormat hover:bg-ormat/90 text-foreground text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                        )}
-                    >
-                        Voir les offres
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                        )}
-                    >
-                        Me contacter
-                    </Link>
-                </div>
+                {/* Micro-note rassurante */}
+                <p className="text-xs text-foreground/70">
+                    Les objectifs de performance et d’accessibilité sont ajustés au contenu et à l’hébergement. On vise le meilleur équilibre vitesse / qualité / design.
+                </p>
             </div>
         </section>
     );

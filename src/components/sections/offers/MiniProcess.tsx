@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Ear, Palette, Code2, Rocket } from 'lucide-react';
 
-export default function ProcessShortSection() {
+export default function MiniProcessSection() {
     const steps = [
         {
             icon: Ear,
@@ -29,15 +29,19 @@ export default function ProcessShortSection() {
     ];
 
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="max-w-5xl mx-auto space-y-12">
+        <section aria-labelledby="process-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
+            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
-                        Méthode
+                        Comment ça se passe ?
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">4 temps pour un site clair, vivant et durable</h2>
-                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">Une progression simple et humaine, du cadrage à la mise en ligne.</p>
+                    <h2 id="process-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
+                        Un processus clair, doux et structuré
+                    </h2>
+                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
+                        Quatre étapes simples pour créer un site aligné : on écoute, on pose l’ambiance, on développe, on met en ligne — sans jargon, sans pression.
+                    </p>
                 </div>
 
                 {/* Les 4 étapes */}
@@ -76,8 +80,8 @@ export default function ProcessShortSection() {
                     ))}
                 </div>
 
-                {/* Micro-note + CTA */}
-                <div className="flex flex-col items-center gap-4">
+                {/* Micro-note + lien méthode */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <p className="text-sm text-foreground/70 italic">
                         Je prends <span className="not-italic font-medium text-terracotta">1 projet par mois</span> pour garder de la profondeur.
                     </p>

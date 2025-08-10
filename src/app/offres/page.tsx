@@ -6,6 +6,8 @@ import type { Tech } from '@/lib/packs';
 import PacksSection from '@/components/sections/offers/Packs';
 import PacksComparison from '@/components/sections/offers/PacksComparison';
 import AddonsGridSection from '@/components/sections/offers/AddonsGrid';
+import MiniProcessSection from '@/components/sections/offers/MiniProcess';
+import GuaranteesSection from '@/components/sections/offers/Guarantees';
 
 // On infère le type des packs directement depuis la fonction
 type Packs = Awaited<ReturnType<typeof getPacks>>;
@@ -23,6 +25,8 @@ export default function OffresPage() {
             <PacksSection tech={tech} onTechChange={setTech} packs={packs} />
             <PacksComparison packs={packs} tech={tech} onTechChange={setTech} />
             <AddonsGridSection tech={tech} onTechChange={setTech} />
+            <MiniProcessSection />
+            <GuaranteesSection />
         </>
     );
 }
