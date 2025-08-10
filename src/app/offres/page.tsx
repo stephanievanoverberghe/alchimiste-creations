@@ -9,7 +9,7 @@ import AddonsGridSection from '@/components/sections/offers/AddonsGrid';
 import MiniProcessSection from '@/components/sections/offers/MiniProcess';
 import GuaranteesSection from '@/components/sections/offers/Guarantees';
 import IdealFitSection from '@/components/sections/offers/IdealFit';
-import FaqSection from '@/components/sections/offers/Faq';
+import FaqSection from '@/components/sections/offers/FaqOffers';
 
 // On infère le type des packs directement depuis la fonction
 type Packs = Awaited<ReturnType<typeof getPacks>>;
