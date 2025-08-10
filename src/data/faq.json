@@ -61,7 +61,7 @@
     {
         "id": "reservation",
         "q": "Proposes-tu la prise de rendez-vous en ligne ?",
-        "a": "Oui via intégration de Calendly/Cal.com (option). C’est fiable, RGPD-friendly et ça évite un gros back-office.",
+        "a": "Oui via intégration de Calendly (option). C’est fiable, RGPD-friendly et ça évite un gros back-office.",
         "tags": ["reservation", "calendly"],
         "tech": "any",
         "order": 8
