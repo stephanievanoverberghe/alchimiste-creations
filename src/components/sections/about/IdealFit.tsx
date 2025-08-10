@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Stethoscope, Palette, HeartHandshake } from 'lucide-react';
+import { Stethoscope, Palette, Briefcase } from 'lucide-react';
 
 export default function IdealFitSection() {
     const audience = [
@@ -18,8 +18,8 @@ export default function IdealFitSection() {
             line: 'Portfolio esthétique, mise en valeur des œuvres.',
         },
         {
-            icon: HeartHandshake,
-            title: 'Indépendants du cœur',
+            icon: Briefcase,
+            title: 'Indépendants & coachs',
             line: 'Vitrine claire, alignée et évolutive.',
         },
     ];
@@ -66,7 +66,7 @@ export default function IdealFitSection() {
                                 <span className="grid place-content-center size-10 rounded-xl border border-ormat/30 bg-ormat/10 text-ormat">
                                     <Icon className="w-4 h-4" aria-hidden />
                                 </span>
-                                <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
+                                <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>
 
                             <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{line}</p>

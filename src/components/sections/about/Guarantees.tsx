@@ -62,7 +62,7 @@ export default function GuaranteesSection() {
                                 <span className="grid place-content-center size-10 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                     <Icon className="w-5 h-5" aria-hidden />
                                 </span>
-                                <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
+                                <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>
 
                             <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{desc}</p>

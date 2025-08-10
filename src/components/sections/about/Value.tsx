@@ -32,7 +32,7 @@ export default function ValuesSection() {
                                 <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                     <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
                                 </span>
-                                <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
+                                <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>
 
                             {/* Séparateur animé (remplissage gauche→droite) */}

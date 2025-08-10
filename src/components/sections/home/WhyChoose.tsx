@@ -8,27 +8,27 @@ export default function WhyChooseSection() {
     const points = [
         {
             icon: Ear,
-            label: 'Écoute vraie',
+            title: 'Écoute vraie',
             desc: 'On part de ce que tu ressens, même si c’est flou.',
         },
         {
             icon: HeartHandshake,
-            label: 'Co‑création rassurante',
+            title: 'Co‑création rassurante',
             desc: 'Jamais seule : je guide, j’explique, j’avance avec toi.',
         },
         {
             icon: Palette,
-            label: 'Esthétique & sens',
+            title: 'Esthétique & sens',
             desc: 'Du beau qui raconte, pas du trend pour du trend.',
         },
         {
             icon: Code2,
-            label: 'Technique soignée',
+            title: 'Technique soignée',
             desc: 'Code propre, responsive, SEO de base, animations légères.',
         },
         {
             icon: Leaf,
-            label: 'Rythme aligné',
+            title: 'Rythme aligné',
             desc: 'Qualité > vitesse, avec un cadre clair et humain.',
         },
     ];
@@ -47,27 +47,30 @@ export default function WhyChooseSection() {
                         et qui parle à ceux que tu veux toucher.
                     </p>
                 </div>
+                {/* Mini-cartes */}
+                <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {points.map(({ icon: Icon, title, desc }) => (
+                        <li key={title} className="group rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+                            <div className="flex items-center gap-3">
+                                <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
+                                    <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
+                                </span>
+                                <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
+                            </div>
 
-                {/* Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {points.map(({ icon: Icon, label, desc }) => (
-                        <article
-                            key={label}
-                            className="group rounded-[24px] bg-background p-6  border border-sauge/30 shadow-sm hover:shadow-md hover:bg-background transition-all"
-                        >
-                            {/* Badge de card */}
-                            <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase rounded-md border border-sauge/40 bg-background px-3 py-1 mb-3 text-terracotta font-semibold">
-                                <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
-                                {label}
-                            </span>
+                            {/* Séparateur animé (remplissage gauche→droite) */}
+                            <div className="mt-3 relative h-[2px] overflow-hidden">
+                                <div className="absolute inset-0 bg-sauge/20" aria-hidden />
+                                <div
+                                    className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full group-focus-within:w-1/2"
+                                    aria-hidden
+                                />
+                            </div>
 
-                            <p className="text-sm md:text-base leading-relaxed text-foreground/80">{desc}</p>
-
-                            {/* Liseré hover subtil */}
-                            <div className="mt-4 h-[2px] w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-all duration-300 group-hover:w-1/2" />
-                        </article>
+                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed line-clamp-2">{desc}</p>
+                        </li>
                     ))}
-                </div>
+                </ul>
 
                 {/* CTA */}
                 <div className="text-center">

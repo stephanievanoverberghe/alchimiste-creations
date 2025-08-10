@@ -1,0 +1,101 @@
+[
+    {
+        "id": "brief-flou",
+        "q": "Je n’ai pas tout clair, on peut commencer quand même ?",
+        "a": "Oui. On pose d’abord l’intention, l’arborescence et le style. Je t’aide à cadrer l’essentiel pour avancer sereinement.",
+        "tags": ["process", "onboarding"],
+        "tech": "any",
+        "featured": true,
+        "order": 1
+    },
+    {
+        "id": "wp-vs-react",
+        "q": "Je choisis WordPress ou React/Next.js ?",
+        "a": "WordPress si tu veux éditer facilement ton site via une interface et aller vite. React/Next.js si tu veux du sur-mesure très performant, sans back-office (je gère les mises à jour de contenu sur demande).",
+        "tags": ["wordpress", "react", "choix-tech"],
+        "tech": "any",
+        "featured": true,
+        "order": 2
+    },
+    {
+        "id": "delais",
+        "q": "Quels sont les délais ?",
+        "a": "En général 2 à 6 semaines selon le pack et la matière disponible. Je prends 1 projet par mois pour garder de la profondeur.",
+        "tags": ["delais", "planning"],
+        "tech": "any",
+        "featured": true,
+        "order": 3
+    },
+    {
+        "id": "paiement",
+        "q": "Peut-on payer en plusieurs fois ?",
+        "a": "Oui. Je propose un échelonnement simple défini ensemble au devis (ex : acompte, jalon, solde).",
+        "tags": ["paiement", "devis"],
+        "tech": "any",
+        "order": 4
+    },
+    {
+        "id": "hebergement-domaine",
+        "q": "Qui gère l’hébergement et le nom de domaine ?",
+        "a": "Tu peux garder ton hébergeur actuel ou je t’accompagne dans le choix et la mise en place (DNS, SSL, emails).",
+        "tags": ["hebergement", "domaine"],
+        "tech": "any",
+        "order": 5
+    },
+    {
+        "id": "contenus",
+        "q": "Qui écrit les textes et fournit les photos ?",
+        "a": "Tu fournis la matière. Je peux t’aider à cadrer, reformuler et structurer. Je partage aussi des ressources pour les visuels.",
+        "tags": ["contenu", "redaction"],
+        "tech": "any",
+        "order": 6
+    },
+    {
+        "id": "blog-react",
+        "q": "Et le blog si je pars sur React/Next.js sans back-office ?",
+        "a": "Possible avec du contenu sérialisé (Markdown/MDX) ou un CMS headless léger (option). On choisit la solution la plus simple pour toi.",
+        "tags": ["blog", "react"],
+        "tech": "react",
+        "order": 7
+    },
+    {
+        "id": "reservation",
+        "q": "Proposes-tu la prise de rendez-vous en ligne ?",
+        "a": "Oui via intégration de Calendly/Cal.com (option). C’est fiable, RGPD-friendly et ça évite un gros back-office.",
+        "tags": ["reservation", "calendly"],
+        "tech": "any",
+        "order": 8
+    },
+    {
+        "id": "ecommerce",
+        "q": "Et l’e-commerce ?",
+        "a": "Je le propose côté WordPress (WooCommerce/Presta) uniquement pour le moment. En React, pas d’e-commerce natif.",
+        "tags": ["ecommerce", "wordpress"],
+        "tech": "wordpress",
+        "order": 9
+    },
+    {
+        "id": "maintenance",
+        "q": "Y a-t-il une maintenance après la mise en ligne ?",
+        "a": "Oui, un mois de support doux est inclus sur le pack Signature. Sinon, je peux proposer un forfait maintenance à la demande.",
+        "tags": ["maintenance", "support"],
+        "tech": "any",
+        "order": 10
+    },
+    {
+        "id": "seo",
+        "q": "Qu’est-ce qui est inclus côté SEO ?",
+        "a": "Toujours : bases SEO (titres, metas, balisage propre, Open Graph, sitemap/robots). L’option “SEO avancé” ajoute plan sémantique, maillage et données structurées.",
+        "tags": ["seo"],
+        "tech": "any",
+        "order": 11
+    },
+    {
+        "id": "retours",
+        "q": "Combien de cycles de retours prévois-tu ?",
+        "a": "1 à 2 phases de retours selon le pack, toujours dans un cadre clair et simple. On garde de la souplesse si besoin.",
+        "tags": ["process", "retours"],
+        "tech": "any",
+        "order": 12
+    }
+]

@@ -57,7 +57,7 @@ export default function ProcessShortSection() {
                                 </span>
                             </div>
 
-                            <h3 className="mt-3 text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{label}</h3>
+                            <h3 className="mt-3 text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{label}</h3>
 
                             {/* Séparateur animé */}
                             <div className="mt-3 relative h-[2px] overflow-hidden">
