@@ -21,7 +21,8 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
     return (
         <Link
             href={`/offres/${slug}`}
-            className="group h-auto flex flex-col justify-start bg-background border border-sauge/30 rounded-3xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2"
+            className="group h-auto flex flex-col justify-start bg-background border border-sauge/30 rounded-3xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
+            aria-label={`Découvrir le pack ${title}`}
         >
             <article>
                 {/* Titre */}
@@ -57,7 +58,7 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                     ))}
                 </ul>
 
-                {/* Bas : prix / délai / CTA */}
+                {/* Bas : prix / délai / CTA visuel (pas un lien) */}
                 <div className="mt-8">
                     <div className="mb-5 flex flex-col items-center gap-1">
                         <p className="text-xl font-semibold text-terracotta">{price}</p>
@@ -65,9 +66,9 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                     </div>
 
                     <div className="flex justify-center">
-                        <Link
-                            href={`/offres/${slug}`}
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
+                        <span
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-terracotta group-hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition group-hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
+                            aria-hidden="true"
                         >
                             Découvrir ce pack
                             <svg
@@ -79,7 +80,7 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
-                        </Link>
+                        </span>
                     </div>
                 </div>
             </article>
