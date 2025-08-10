@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { HelpCircle } from 'lucide-react';
-import FAQSections from '@/components/Faq';
+import FAQBareList from '@/components/Faq';
 
 export default function FaqSection({ tech }: { tech: 'wordpress' | 'react' }) {
     return (
@@ -30,7 +30,7 @@ export default function FaqSection({ tech }: { tech: 'wordpress' | 'react' }) {
                         On clarifie l’essentiel : techno, délais, paiement, contenus et SEO — sans jargon.
                     </p>
                 </div>
-                <FAQSections tech={tech} mode="compact" />
+                <FAQBareList tech={tech} mode="compact" />
             </div>
         </section>
     );

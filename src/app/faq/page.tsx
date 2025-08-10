@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { HelpCircle } from 'lucide-react';
 import Image from 'next/image';
-import FAQSections from '@/components/Faq';
+import FAQBareList from '@/components/Faq';
 
 export default function FaqPage({ tech }: { tech: 'wordpress' | 'react' }) {
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function FaqPage({ tech }: { tech: 'wordpress' | 'react' }) {
                         Toutes les réponses pour y voir clair : packs, WordPress vs React, délais, SEO, paiements, maintenance…
                     </p>
                 </div>
-                <FAQSections tech={tech} mode="full" />
+                <FAQBareList tech={tech} mode="full" />
             </div>
         </section>
     );
