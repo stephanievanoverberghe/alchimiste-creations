@@ -147,7 +147,7 @@ function featureMatrix(tech: Tech) {
         { key: 'maint', label: 'Maintenance 1 mois', value: (p) => (has(p.inclus, /Maintenance 1 mois incluse/i) ? { kind: 'inc' } : { kind: 'na' }) },
 
         // Options (tech-aware)
-        { key: 'formAdv', label: 'Formulaire avancé', value: (p) => optionCell(p, /Formulaire.*avanc/i, tech) },
+        { key: 'formAdv', label: 'Formulaire avancé', value: (p) => (has(p.inclus, /Formulaire.*avanc/i) ? { kind: 'inc' } : optionCell(p, /Formulaire.*avanc/i, tech)) },
         { key: 'booking', label: 'Réservation en ligne', value: (p) => optionCell(p, /Réservation/i, tech) },
         { key: 'i18n', label: 'Multilingue', value: (p) => optionCell(p, /Multilingue/i, tech) },
         { key: 'seoPlus', label: 'SEO avancé + stratégie', value: (p) => optionCell(p, /SEO avancé/i, tech) },
@@ -225,7 +225,7 @@ export default function PacksComparisonSection({ packs, tech, onTechChange }: { 
             <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         Comparateur
                     </span>
                     <h2 id="packs-compare-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
@@ -287,8 +287,8 @@ export default function PacksComparisonSection({ packs, tech, onTechChange }: { 
                                 <tr
                                     key={f.key}
                                     className={[
-                                        i % 2 ? 'bg-ivory/30' : 'bg-transparent',
-                                        'hover:bg-ivory/50 transition-colors',
+                                        i % 2 ? 'bg-gray-400/5' : 'bg-transparent',
+                                        'hover:bg-gray-900/5 transition-colors',
                                         '[&>td:not(:first-child)]:border-l [&>td:not(:first-child)]:border-sauge/20',
                                     ].join(' ')}
                                 >

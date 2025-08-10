@@ -22,7 +22,7 @@
         "options": [
             { "label": "Blog / Actus", "prix": { "wordpress": "+200€", "react": "+350€" } },
             { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
-            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "+180€" } },
             { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } }
         ],
         "allersRetours": "1 aller-retour (puis ajustements mineurs)",
@@ -65,7 +65,7 @@
         "options": [
             { "label": "Blog", "prix": { "wordpress": "+200€", "react": "+350€" } },
             { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
-            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "+180€" } },
             { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } },
             { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
             { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } }
@@ -121,7 +121,7 @@
             { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+600€" } },
             { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
             { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } },
-            { "label": "Réservation en ligne (WP via plugin / React via embed Calendly)", "prix": { "wordpress": "+250€", "react": "—" } },
+            { "label": "Réservation en ligne (WP via plugin / React via embed Calendly)", "prix": { "wordpress": "+250€", "react": "+180€" } },
             { "label": "Copywriting long (par page, jusqu’à 800 mots)", "prix": "+200€ / page" },
             { "label": "E-commerce (WooCommerce sur WordPress / non proposé en React)", "prix": { "wordpress": "Sur devis", "react": "—" } }
         ],
