@@ -45,7 +45,6 @@ function getPages(pack: Pack) {
     return '—';
 }
 
-// Déclare le type AVANT tout usage
 type Cell = { kind: 'inc'; text?: string } | { kind: 'opt'; text: string } | { kind: 'na' };
 
 // Renvoie directement une Cell pour une option (centralise les règles)
@@ -162,7 +161,6 @@ function featureMatrix(tech: Tech) {
             label: 'E-commerce',
             value: (p) => {
                 if (has(p.inclus, /e-?commerce/i)) return { kind: 'inc' };
-                // capte e-commerce/woocommerce ; cas React + libellé Woo/WP => NA même si prix string
                 return optionCell(p, /e-?commerce|woocommerce/i, tech);
             },
         },

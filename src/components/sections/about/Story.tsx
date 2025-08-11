@@ -36,7 +36,7 @@ export default function StorySection() {
                         Une développeuse qui crée des sites vivants, alignés à ton univers
                     </h2>
 
-                    {/* Pitch court (≤ ~2 lignes) */}
+                    {/* Pitch court */}
                     <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
                         Je suis Stéphanie, fondatrice d’Alchimiste Créations. J’allie design sensible et code précis (WordPress & React/Next.js) pour transformer ton essence en
                         présence digitale claire, fluide et durable.

@@ -61,7 +61,7 @@ export default function ProjectsNearbySection({ limit = 2 }: { limit?: number })
             <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <Sparkles className="w-3.5 h-3.5" aria-hidden />
                         Projets proches
                     </span>

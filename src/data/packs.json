@@ -3,7 +3,7 @@
         "slug": "essentiel",
         "titre": "Pack Essentiel",
         "sousTitre": "Une page pour se poser",
-        "cible": "Idéal pour poser une première empreinte en ligne, claire et pro.",
+        "cible": "Vitrine claire pour démarrer",
         "inclus": [
             "One-page (Accueil) fluide et responsive",
             "Identité web mini (palette + duo typo)",
@@ -16,8 +16,8 @@
         "prix": "À partir de 650€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": { "prix": "À partir de 650€ TTC", "delai": "2 à 3 semaines" },
-            "react": { "prix": "À partir de 750€ TTC", "delai": "3 à 4 semaines" }
+            "wordpress": { "prix": "À partir de 650€ TTC", "delai": "2 à 3 sem." },
+            "react": { "prix": "À partir de 750€ TTC", "delai": "3 à 4 sem." }
         },
         "options": [
             { "label": "Blog / Actus", "prix": { "wordpress": "+200€", "react": "+350€" } },
@@ -43,7 +43,7 @@
         "slug": "croissance",
         "titre": "Pack Croissance",
         "sousTitre": "Déployer son univers",
-        "cible": "Pour une vitrine complète avec navigation fluide.",
+        "cible": "Structure évolutive + RDV, blog…",
         "inclus": [
             "4 à 6 pages (Accueil, À propos, Services, Contact, +1/2 au choix)",
             "Moodboard + bases UI (boutons, blocs, grilles)",
@@ -59,8 +59,8 @@
         "prix": "À partir de 1400€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": { "prix": "À partir de 1400€ TTC", "delai": "4 à 6 semaines" },
-            "react": { "prix": "À partir de 1700€ TTC", "delai": "5 à 7 semaines" }
+            "wordpress": { "prix": "À partir de 1400€ TTC", "delai": "4 à 6 sem." },
+            "react": { "prix": "À partir de 1700€ TTC", "delai": "5 à 7 sem." }
         },
         "options": [
             { "label": "Blog", "prix": { "wordpress": "+200€", "react": "+350€" } },
@@ -93,12 +93,12 @@
         "slug": "signature",
         "titre": "Pack Signature",
         "sousTitre": "Créer avec profondeur",
-        "cible": "Pour un site sur-mesure, soigné et aligné à ta vision, avec identité visuelle renforcée.",
+        "cible": "Sur-mesure, identité forte",
         "inclus": [
             "Atelier de cadrage stratégique (1h visio)",
             "6 à 9 pages sur mesure",
             "Charte graphique web courte (4–6 pages PDF) + UI kit",
-            "Logo essentiel inclus (wordmark/monogramme simple), 2 pistes → 1 final + mini guide (2 pages)",
+            "Logo inclus",
             "Ton éditorial (1 page) + micro-copies clés",
             "Blog inclus (structure + 1 gabarit d’article)",
             "Intégration sur-mesure avec micro-animations soignées",
@@ -112,8 +112,8 @@
         "prix": "À partir de 2 500€ TTC",
         "technoChoix": true,
         "versions": {
-            "wordpress": { "prix": "À partir de 2 500€ TTC", "delai": "8 à 12 semaines" },
-            "react": { "prix": "À partir de 3 000€ TTC", "delai": "10 à 14 semaines" }
+            "wordpress": { "prix": "À partir de 2 500€ TTC", "delai": "8 à 12 sem." },
+            "react": { "prix": "À partir de 3 000€ TTC", "delai": "10 à 14 sem." }
         },
         "options": [
             { "label": "Logo avancé (3 pistes + variantes + guide 6–8 pages)", "prix": "+500€" },

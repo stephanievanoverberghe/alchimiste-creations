@@ -1,4 +1,3 @@
-// components/sections/offers/offer/PricingTerms.tsx
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -33,7 +32,6 @@ function getPack(slug: PackSlug): Pack | undefined {
 }
 
 function findMaintenance(inclus: string[]): string | undefined {
-    // Cherche une ligne qui parle de "Support" ou "Maintenance"
     return inclus.find((s) => /support|maintenance/i.test(s));
 }
 

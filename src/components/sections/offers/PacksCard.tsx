@@ -1,4 +1,3 @@
-// components/Offers/PackCard.tsx
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -58,7 +57,7 @@ export default function PackCard({ slug, title, subtitle, items, price, delay, c
                     ))}
                 </ul>
 
-                {/* Bas : prix / délai / CTA visuel (pas un lien) */}
+                {/* Bas : prix / délai / CTA visuel */}
                 <div className="mt-8">
                     <div className="mb-5 flex flex-col items-center gap-1">
                         <p className="text-xl font-semibold text-terracotta">{price}</p>

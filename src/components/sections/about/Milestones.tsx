@@ -30,7 +30,6 @@ export default function MilestonesSlider() {
     const startXRef = useRef<number | null>(null);
     const autoplayMs = 4500;
 
-    // Respecte "réduire les animations"
     const [reduceMotion, setReduceMotion] = useState(false);
     useEffect(() => {
         if (typeof window === 'undefined') return;

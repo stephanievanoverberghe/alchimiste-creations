@@ -99,7 +99,7 @@ export default function CardProject({ project }: { project: CardProjectData }) {
                 {project.description && <p className="mt-1 text-sm text-foreground/80 line-clamp-2">{project.description}</p>}
             </div>
 
-            {/* Séparateur animé aligné en bas (comme CardContactTeaser) */}
+            {/* Séparateur animé aligné en bas */}
             <div className="pointer-events-none absolute left-4 right-4 bottom-4 h-[2px] overflow-hidden">
                 <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                 <div

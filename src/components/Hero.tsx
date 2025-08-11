@@ -61,7 +61,7 @@ export default function Hero() {
             paragraph: string;
             cta: { label: string; href: string }[];
             bg: string;
-            badge: string; // nouveau
+            badge: string;
         }
     > = {
         essentiel: {

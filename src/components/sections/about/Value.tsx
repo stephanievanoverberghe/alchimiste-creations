@@ -35,7 +35,7 @@ export default function ValuesSection() {
                                 <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>
 
-                            {/* Séparateur animé (remplissage gauche→droite) */}
+                            {/* Séparateur animé */}
                             <div className="mt-3 relative h-[2px] overflow-hidden">
                                 <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                                 <div

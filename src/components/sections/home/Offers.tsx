@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Type minimal aligné avec packs.json (on n'utilise que ces champs ici)
+// Type minimal aligné avec packs.json
 interface Pack {
     slug: string;
     titre: string;
@@ -28,7 +28,7 @@ export default function OffersSection() {
         })();
     }, []);
 
-    // Icônes par slug (fiable même si l’ordre des packs change)
+    // Icônes par slug
     const iconBySlug: Record<string, IconDefinition> = {
         essentiel: faLeaf,
         croissance: faTint,

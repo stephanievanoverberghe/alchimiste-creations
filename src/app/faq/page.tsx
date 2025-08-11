@@ -14,7 +14,6 @@ export default function FaqPage() {
             </div>
 
             <div className="relative max-w-3xl mx-auto space-y-8 md:space-y-10">
-                {/* Bouton retour */}
                 <Link href="/offres" className={cn('inline-block mb-8 text-sm text-sauge hover:underline')}>
                     ← Retour aux packs
                 </Link>

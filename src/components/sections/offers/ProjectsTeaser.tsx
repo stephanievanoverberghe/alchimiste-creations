@@ -1,4 +1,3 @@
-// components/sections/home/ProjectsTeaserSection.tsx
 'use client';
 
 import Link from 'next/link';

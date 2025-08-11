@@ -105,7 +105,6 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
 
                     {/* Micro-explication techno — version visuelle */}
                     <div className="relative overflow-hidden rounded-3xl border border-sauge/30 bg-background/70 p-5 md:p-6">
-                        {/* taches douces */}
                         <div className="pointer-events-none absolute -top-16 -right-10 w-64 h-64 rounded-full bg-terracotta/10 blur-2xl" aria-hidden />
                         <div className="pointer-events-none absolute -bottom-20 -left-16 w-56 h-56 rounded-full bg-sauge/10 blur-2xl" aria-hidden />
 
@@ -133,8 +132,6 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
 
                         {/* Mini KPI barres */}
                         {(() => {
-                            // 0–100 (plus haut = meilleur)
-                            // WP : rapide/abordable, autonomie forte ; React : perf/évolutif, un peu plus long/coûteux
                             const KPI =
                                 tech === 'wordpress'
                                     ? { autonomie: 92, performance: 78, delais: 90, evol: 72, budget: 88 }
@@ -161,7 +158,6 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
                                     <Metric icon={Gauge} label="Performance" value={KPI.performance} />
                                     <Metric icon={Clock} label="Délais" value={KPI.delais} />
                                     <Metric icon={GitBranch} label="Évolutivité" value={KPI.evol} />
-                                    {/* Nouvel indicateur */}
                                     <Metric icon={Wallet} label="Budget" value={KPI.budget} />
                                 </div>
                             );
