@@ -83,7 +83,7 @@ export default function Hero() {
             paragraph: 'Pour un site hautement personnalisé, sur-mesure et remarquable.',
             cta: [{ label: 'Demander un devis', href: '/contact?pack=signature' }],
             bg: '/hero/hero-signature.png',
-            badge: 'Haute personnalisation',
+            badge: 'Sur-mesure premium',
         },
     };
 

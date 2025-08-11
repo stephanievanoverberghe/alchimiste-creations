@@ -1,10 +1,12 @@
+// components/sections/home/ProjectsTeaserSection.tsx
 'use client';
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Sparkles } from 'lucide-react';
 import rawProjects from '@/data/projects.json';
-import ProjectCard, { type ProjectUI } from '@/components/sections/home/ProjectCard';
+import CardProject, { type CardProjectData } from '@/components/cards/CardProject';
+import CardContactTeaser from '@/components/cards/CardContactTeaser';
 
 type RawProject = {
     slug?: string;
@@ -16,20 +18,23 @@ type RawProject = {
     image?: string;
     imageSrc?: string;
     cover?: string;
+    logo?: string;
     lien?: string;
     link?: string;
     status?: 'coded' | 'wip';
-    stack?: 'wordpress' | 'react' | 'mixte';
-    kind?: 'vitrine' | 'portfolio' | 'ecommerce';
+    stack?: 'wordpress' | 'react' | 'mixte' | string;
+    kind?: 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv' | string;
     year?: number;
     city?: string;
     external?: boolean;
 };
 
-function normalize(p: RawProject, idx: number): ProjectUI {
+function normalize(p: RawProject, idx: number): CardProjectData {
     const title = p.title ?? p.titre ?? `Projet ${idx + 1}`;
     const description = p.description ?? p.sousTitre ?? '';
     const imageSrc = p.image || p.imageSrc || p.cover || '';
+    const logoSrc = p.logo || undefined;
+
     const link =
         p.link ??
         p.lien ??
@@ -47,21 +52,31 @@ function normalize(p: RawProject, idx: number): ProjectUI {
         title,
         description,
         imageSrc,
+        logoSrc,
         link,
         status: p.status,
         stack: p.stack,
         kind: p.kind,
-        year: p.year,
-        city: p.city,
         external,
     };
 }
 
-const PROJECTS: ProjectUI[] = ((rawProjects as RawProject[]) ?? []).map(normalize);
+const ALL: (CardProjectData & { year?: number })[] = ((rawProjects as RawProject[]) ?? []).map((p, i) => Object.assign(normalize(p, i), { year: p.year }));
 
 export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number }) {
-    // les plus récents d’abord (prend les N derniers puis reverse)
-    const items = PROJECTS.slice(-limit).reverse();
+    // Tri "derniers en date"
+    const sorted = [...ALL].sort((a, b) => {
+        const ay = typeof a.year === 'number' ? a.year! : -Infinity;
+        const by = typeof b.year === 'number' ? b.year! : -Infinity;
+        if (by !== ay) return by - ay;
+        if ((b.status === 'wip') !== (a.status === 'wip')) {
+            return (b.status === 'wip' ? 1 : 0) - (a.status === 'wip' ? 1 : 0);
+        }
+        return String(a.title).localeCompare(String(b.title));
+    });
+
+    const items = sorted.slice(0, limit);
+    const missing = Math.max(0, limit - items.length);
 
     return (
         <section aria-labelledby="projects-teaser-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
@@ -80,37 +95,20 @@ export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number })
                     </p>
                 </div>
 
-                {/* Grille projets */}
-                {items.length > 0 ? (
-                    <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {items.map((p) => (
-                            <li key={p.key}>
-                                <ProjectCard project={p} />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    // Fallback si pas encore de projets
-                    <div className="rounded-3xl border border-sauge/30 p-8 text-center">
-                        <p className="text-sm md:text-base text-foreground/80">
-                            Les études de cas arrivent bientôt. En attendant, parle-moi de ton projet — on voit ensemble ce qui est juste pour toi.
-                        </p>
-                        <div className="mt-4 flex justify-center gap-3">
-                            <Link
-                                href="/contact"
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
-                            >
-                                M’écrire
-                            </Link>
-                            <Link
-                                href="/offres"
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-sauge/40 text-sm font-semibold tracking-widest uppercase hover:bg-sauge/10"
-                            >
-                                Voir les packs
-                            </Link>
-                        </div>
-                    </div>
-                )}
+                {/* Grille projets (+ teaser si pas assez) */}
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {items.map((p) => (
+                        <li key={p.key}>
+                            <CardProject project={p} />
+                        </li>
+                    ))}
+
+                    {Array.from({ length: missing }).map((_, i) => (
+                        <li key={`contact-teaser-${i}`}>
+                            <CardContactTeaser />
+                        </li>
+                    ))}
+                </ul>
 
                 {/* CTA bas de section */}
                 <div className="flex flex-col sm:flex-row gap-3">

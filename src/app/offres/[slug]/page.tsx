@@ -5,6 +5,9 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import IdealFitSection from '@/components/sections/offers/offer/IdealFit';
 import IncludedSection from '@/components/sections/offers/offer/Icluded'; // <-- corrige "Icluded"
 import OptionsGridSection from '@/components/sections/offers/offer/OptionsGrid';
+import MiniProcessSection from '@/components/sections/offers/offer/MiniProcess';
+import PricingTermsSection from '@/components/sections/offers/offer/PricingTerms';
+import ProjectsNearbySection from '@/components/sections/offers/offer/ProjectsNearby';
 
 type Tech = 'wordpress' | 'react';
 
@@ -28,6 +31,9 @@ export default function OfferPage() {
             <IdealFitSection />
             <IncludedSection />
             <OptionsGridSection tech={tech} onTechChange={onTechChange} />
+            <MiniProcessSection />
+            <PricingTermsSection />
+            <ProjectsNearbySection />
         </div>
     );
 }

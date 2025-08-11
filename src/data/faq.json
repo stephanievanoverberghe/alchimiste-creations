@@ -3,7 +3,7 @@
         "id": "brief-flou",
         "q": "Je n’ai pas tout clair, on peut commencer quand même ?",
         "a": "Oui. On pose d’abord l’intention, l’arborescence et le style. Je t’aide à cadrer l’essentiel pour avancer sereinement.",
-        "tags": ["process", "onboarding"],
+        "tags": ["process"],
         "tech": "any",
         "featured": true,
         "order": 1
@@ -12,7 +12,7 @@
         "id": "wp-vs-react",
         "q": "Je choisis WordPress ou React/Next.js ?",
         "a": "WordPress si tu veux éditer facilement ton site via une interface et aller vite. React/Next.js si tu veux du sur-mesure très performant, sans back-office (je gère les mises à jour de contenu sur demande).",
-        "tags": ["wordpress", "react", "choix-tech"],
+        "tags": ["tech"],
         "tech": "any",
         "featured": true,
         "order": 2
@@ -21,7 +21,7 @@
         "id": "delais",
         "q": "Quels sont les délais ?",
         "a": "En général 2 à 6 semaines selon le pack et la matière disponible. Je prends 1 projet par mois pour garder de la profondeur.",
-        "tags": ["delais", "planning"],
+        "tags": ["delais"],
         "tech": "any",
         "featured": true,
         "order": 3
@@ -30,7 +30,7 @@
         "id": "paiement",
         "q": "Peut-on payer en plusieurs fois ?",
         "a": "Oui. Je propose un échelonnement simple défini ensemble au devis (ex : acompte, jalon, solde).",
-        "tags": ["paiement", "devis"],
+        "tags": ["paiement"],
         "tech": "any",
         "order": 4
     },
@@ -38,7 +38,7 @@
         "id": "hebergement-domaine",
         "q": "Qui gère l’hébergement et le nom de domaine ?",
         "a": "Tu peux garder ton hébergeur actuel ou je t’accompagne dans le choix et la mise en place (DNS, SSL, emails).",
-        "tags": ["hebergement", "domaine"],
+        "tags": ["hebergement"],
         "tech": "any",
         "order": 5
     },
@@ -46,41 +46,33 @@
         "id": "contenus",
         "q": "Qui écrit les textes et fournit les photos ?",
         "a": "Tu fournis la matière. Je peux t’aider à cadrer, reformuler et structurer. Je partage aussi des ressources pour les visuels.",
-        "tags": ["contenu", "redaction"],
+        "tags": ["contenu"],
         "tech": "any",
         "order": 6
-    },
-    {
-        "id": "blog-react",
-        "q": "Et le blog si je pars sur React/Next.js sans back-office ?",
-        "a": "Possible avec du contenu sérialisé (Markdown/MDX) ou un CMS headless léger (option). On choisit la solution la plus simple pour toi.",
-        "tags": ["blog", "react"],
-        "tech": "react",
-        "order": 7
     },
     {
         "id": "reservation",
         "q": "Proposes-tu la prise de rendez-vous en ligne ?",
         "a": "Oui via intégration de Calendly (option). C’est fiable, RGPD-friendly et ça évite un gros back-office.",
-        "tags": ["reservation", "calendly"],
+        "tags": ["tech"],
         "tech": "any",
-        "order": 8
+        "order": 7
     },
     {
         "id": "ecommerce",
         "q": "Et l’e-commerce ?",
-        "a": "Je le propose côté WordPress (WooCommerce/Presta) uniquement pour le moment. En React, pas d’e-commerce natif.",
-        "tags": ["ecommerce", "wordpress"],
+        "a": "Je le propose côté WordPress (WooCommerce) uniquement pour le moment. En React, pas d’e-commerce natif.",
+        "tags": ["ecommerce"],
         "tech": "wordpress",
-        "order": 9
+        "order": 8
     },
     {
         "id": "maintenance",
         "q": "Y a-t-il une maintenance après la mise en ligne ?",
         "a": "Oui, un mois de support doux est inclus sur le pack Signature. Sinon, je peux proposer un forfait maintenance à la demande.",
-        "tags": ["maintenance", "support"],
+        "tags": ["maintenance"],
         "tech": "any",
-        "order": 10
+        "order": 9
     },
     {
         "id": "seo",
@@ -88,14 +80,102 @@
         "a": "Toujours : bases SEO (titres, metas, balisage propre, Open Graph, sitemap/robots). L’option “SEO avancé” ajoute plan sémantique, maillage et données structurées.",
         "tags": ["seo"],
         "tech": "any",
-        "order": 11
+        "order": 10
     },
     {
         "id": "retours",
         "q": "Combien de cycles de retours prévois-tu ?",
         "a": "1 à 2 phases de retours selon le pack, toujours dans un cadre clair et simple. On garde de la souplesse si besoin.",
-        "tags": ["process", "retours"],
+        "tags": ["process"],
+        "tech": "any",
+        "order": 11
+    },
+    {
+        "id": "propriete-code",
+        "q": "Qui possède le code, les maquettes et les accès ?",
+        "a": "Tu es propriétaire de ton site : code source, accès admin et livrables (maquettes/export). Je fournis les accès et le dépôt si besoin.",
+        "tags": ["process"],
         "tech": "any",
         "order": 12
+    },
+    {
+        "id": "formation-handoff",
+        "q": "Y a-t-il une formation pour prendre en main le site ?",
+        "a": "Oui : mini-guide + session de 45–60 min (visio) avec replay. On voit l’essentiel pour être autonome au quotidien.",
+        "tags": ["process"],
+        "tech": "any",
+        "order": 13
+    },
+    {
+        "id": "accessibilite-performance",
+        "q": "Quelle attention est portée à l’accessibilité et aux performances ?",
+        "a": "Base AA (bon contraste, structure sémantique, focus visibles) et budget de performance pour de bons Core Web Vitals.",
+        "tags": ["tech"],
+        "tech": "any",
+        "order": 14
+    },
+    {
+        "id": "migration-ancien-site",
+        "q": "Et si j’ai déjà un site — peux-tu migrer le contenu et préserver le SEO ?",
+        "a": "Oui : reprise de contenu prioritaire, redirections 301, sitemap et vérifs Search Console pour conserver le référencement.",
+        "tags": ["seo"],
+        "tech": "any",
+        "order": 15
+    },
+    {
+        "id": "licences-images-fontes",
+        "q": "Qui gère les images, icônes et polices (licences) ?",
+        "a": "On privilégie tes visuels. Sinon, je propose des banques adaptées. Les licences payantes sont achetées en ton nom.",
+        "tags": ["contenu"],
+        "tech": "any",
+        "order": 16
+    },
+    {
+        "id": "rgpd-cookies-analytics",
+        "q": "Côté RGPD : cookies, analytics et consentement, comment ça se passe ?",
+        "a": "Bannière de consentement, Consent Mode compatible et pages légales. On paramètre Analytics sans collecter plus que nécessaire.",
+        "tags": ["rgpd"],
+        "tech": "any",
+        "order": 17
+    },
+    {
+        "id": "petites-evolutions-post-lancement",
+        "q": "Après la mise en ligne, peux-tu faire de petites évolutions ?",
+        "a": "Oui : au forfait ou à la carte (TMA légère). Idéal pour ajustements, nouvelles sections ou intégrations ponctuelles.",
+        "tags": ["maintenance"],
+        "tech": "any",
+        "order": 18
+    },
+    {
+        "id": "projet-urgent",
+        "q": "Et si c’est urgent — fais-tu des « rush » ?",
+        "a": "Possible selon le calendrier (majoration). On réduit la portée, on priorise l’essentiel et on cale un planning serré.",
+        "tags": ["delais"],
+        "tech": "any",
+        "order": 19
+    },
+    {
+        "id": "retards-contenus-impact",
+        "q": "Que se passe-t-il si je prends du retard sur les contenus ?",
+        "a": "On garde un cadre souple mais le planning peut glisser. On peut proposer un gel du périmètre ou un jalon intermédiaire.",
+        "tags": ["delais"],
+        "tech": "any",
+        "order": 20
+    },
+    {
+        "id": "react-cms-headless",
+        "q": "Et un blog si je pars sur React/Next.js ?",
+        "a": "On peut démarrer simple en Markdown/MDX (statique, rapide). Si tu veux éditer toi-même via une interface, je peux brancher un CMS headless léger (ex. Hygraph/Contentful) en option. Pour un back-office complet dès le départ, je recommande WordPress.",
+        "tags": ["tech"],
+        "tech": "react",
+        "order": 21
+    },
+    {
+        "id": "emails-formulaires-deliverabilite",
+        "q": "Les emails des formulaires arrivent bien ?",
+        "a": "On configure SPF/DKIM si besoin et un service d’envoi fiable. Anti-spam actif pour éviter les faux positifs.",
+        "tags": ["tech"],
+        "tech": "any",
+        "order": 22
     }
 ]
