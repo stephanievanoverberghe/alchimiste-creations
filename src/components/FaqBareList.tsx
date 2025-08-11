@@ -4,10 +4,11 @@ import { useMemo, useState, useEffect } from 'react';
 import rawFaq from '@/data/faq.json';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Search as SearchIcon, X as ClearIcon, Tag as TagIcon } from 'lucide-react';
+import { Search as SearchIcon, X as ClearIcon, Tag as TagIcon, ChevronDown, HelpCircle } from 'lucide-react';
 
+/* -------------------------------- Types ---------------------------------- */
 type Tech = 'any' | 'wordpress' | 'react';
-type Surface = 'offers' | 'offer' | 'projects' | 'faq';
+type Surface = 'offers' | 'offer' | 'projects' | 'faq' | 'method'; // ← + method
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
 
 type FaqItem = {
@@ -20,6 +21,7 @@ type FaqItem = {
     order?: number;
 };
 
+/* -------------------------- Dataset + defaults --------------------------- */
 const ALL: FaqItem[] = (rawFaq as FaqItem[]).map((f) => ({
     tech: 'any',
     featured: false,
@@ -27,16 +29,13 @@ const ALL: FaqItem[] = (rawFaq as FaqItem[]).map((f) => ({
     ...f,
 }));
 
-/** Heuristiques de préférence par surface / pack (sans toucher au JSON) */
+/** Heuristiques par surface / pack (sans toucher au JSON) */
 const SURFACE_TAGS: Record<Surface, string[]> = {
-    // Page /offres (3 packs) : auto-qualification rapide & objections courantes
     offers: ['process', 'delais', 'paiement', 'tech', 'contenu', 'maintenance'],
-    // Page /offres/[slug] (pack spécifique) : plus concret (tech, SEO, options, maintenance)
     offer: ['tech', 'seo', 'maintenance', 'ecommerce', 'reservation', 'contenu', 'delais'],
-    // Page projets : on garde assez général
     projects: ['process', 'tech', 'seo', 'maintenance', 'contenu'],
-    // Page /faq : tout
     faq: [],
+    method: ['process', 'delais', 'contenu', 'seo', 'maintenance', 'paiement'],
 };
 
 const PACK_TAGS: Record<PackSlug, string[]> = {
@@ -45,7 +44,7 @@ const PACK_TAGS: Record<PackSlug, string[]> = {
     signature: ['tech', 'ecommerce', 'seo', 'maintenance', 'contenu'],
 };
 
-/** Synonymes FR */
+/* ----------------------------- Recherche FR ------------------------------ */
 const SYNONYMS_GROUPS: Record<string, string[]> = {
     paiement: [
         'payer',
@@ -105,7 +104,6 @@ const canonWords = (s: string) =>
 
 const canonString = (s: string) => canonWords(s).join(' ');
 
-/** Levenshtein light */
 function editDistance(a: string, b: string) {
     const m = a.length,
         n = b.length;
@@ -126,7 +124,6 @@ function editDistance(a: string, b: string) {
     return dp[m][n];
 }
 
-/** Match d’un token dans l’ITEM (pas tout le dataset) */
 function tokenMatches(hayWords: string[], t: string) {
     if (hayWords.includes(t)) return true;
     const tol = t.length >= 6 ? 2 : t.length >= 4 ? 1 : 0;
@@ -135,21 +132,16 @@ function tokenMatches(hayWords: string[], t: string) {
     return false;
 }
 
-/** Scoring (pas de bonus featured quand il y a une requête) */
 function scoreItem(item: FaqItem & { hay: string; hayWords: string[]; tagsCanon: string[] }, tokens: string[], activeTag: string | null, surface: Surface, packSlug?: PackSlug) {
-    // Pas de requête -> on pousse featured + ordre + pertinence surface/pack
     if (tokens.length === 0 && !activeTag) {
         let s = (item.featured ? 100 : 0) + (100 - Math.min(item.order ?? 999, 100));
-        // bonus surface/pack via tags
         const allow = new Set<string>([...SURFACE_TAGS[surface], ...(surface === 'offer' && packSlug ? PACK_TAGS[packSlug] : [])].map(strip));
         const hasPref = item.tagsCanon.some((t) => allow.has(t));
         if (hasPref) s += 10;
         return s;
     }
-
     let score = 0;
     if (activeTag && item.tagsCanon.includes(strip(activeTag))) score += 30;
-
     for (const t of tokens) {
         if (item.hayWords.includes(t)) {
             score += 12;
@@ -168,6 +160,27 @@ function scoreItem(item: FaqItem & { hay: string; hayWords: string[]; tagsCanon:
     return score;
 }
 
+/* ----------------------- Highlight (simple & propre) --------------------- */
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function highlight(text: string, raw: string) {
+    const q = raw.trim();
+    if (!q || q.length < 2) return text;
+    const parts = q.split(/\s+/).filter(Boolean);
+    if (!parts.length) return text;
+    const re = new RegExp(`(${parts.map(escapeRegExp).join('|')})`, 'gi');
+    const tokens = text.split(re);
+    return tokens.map((t, i) =>
+        re.test(t) ? (
+            <mark key={i} className="bg-ormat/20 rounded px-0.5">
+                {t}
+            </mark>
+        ) : (
+            <span key={i}>{t}</span>
+        )
+    );
+}
+
+/* ------------------------------ Composant ------------------------------- */
 export default function FAQBareList({
     mode = 'compact',
     withJsonLd = false,
@@ -198,27 +211,25 @@ export default function FAQBareList({
     // Tag actif
     const [activeTag, setActiveTag] = useState<string | null>(null);
 
-    /** 1) Filtre techno (inclut toujours 'any') */
+    /** 1) Filtre techno */
     const byTech = useMemo(() => {
         if (techFilter === 'any') return ALL;
         return ALL.filter((f) => (f.tech ?? 'any') === 'any' || f.tech === techFilter);
     }, [techFilter]);
 
-    /** 2) Heuristique surface/pack (par TAGS préférés) */
+    /** 2) Heuristique surface/pack */
     const bySurface = useMemo(() => {
-        if (surface === 'faq') return byTech; // tout
+        if (surface === 'faq') return byTech;
         const allow = new Set<string>([...SURFACE_TAGS[surface], ...(surface === 'offer' && packSlug ? PACK_TAGS[packSlug] : [])]);
         const filtered = byTech.filter((it) => {
             const its = it.tags ?? [];
-            // s'il n'a pas de tags, on le garde (ne pas perdre d'items)
             if (its.length === 0) return true;
             return its.some((t) => allow.has(t));
         });
-        // si ça filtre tout (rare), on retombe sur byTech
         return filtered.length ? filtered : byTech;
     }, [byTech, surface, packSlug]);
 
-    /** 3) Tri de base (featured, order, alpha) */
+    /** 3) Tri de base */
     const baseSorted = useMemo(
         () => bySurface.slice().sort((a, b) => Number(b.featured) - Number(a.featured) || (a.order ?? 999) - (b.order ?? 999) || a.q.localeCompare(b.q, 'fr')),
         [bySurface]
@@ -239,17 +250,11 @@ export default function FAQBareList({
         [baseSorted]
     );
 
-    /** 5) Tags affichés (tous ceux présents après filtre surface/tech) */
+    /** 5) Tags visibles */
     const allTags = useMemo(() => {
         if (mode !== 'full') return [] as { tag: string; count: number }[];
         const counts = new Map<string, number>();
-        for (const it of itemsCanon) {
-            for (const t of it.tags ?? []) {
-                const key = t.trim();
-                if (!key) continue;
-                counts.set(key, (counts.get(key) ?? 0) + 1);
-            }
-        }
+        for (const it of itemsCanon) for (const t of it.tags ?? []) counts.set(t, (counts.get(t) ?? 0) + 1);
         return Array.from(counts.entries())
             .map(([tag, count]) => ({ tag, count }))
             .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag, 'fr'));
@@ -273,7 +278,7 @@ export default function FAQBareList({
             .map((x) => x.item);
     }, [itemsCanon, query, activeTag, surface, packSlug]);
 
-    /** 7) Visible : FULL = tout ; COMPACT = featured d’abord puis on complète jusqu’à `limit` */
+    /** 7) Visible */
     const visible = useMemo(() => {
         if (mode === 'full') return filteredScored;
         const featured = filteredScored.filter((f) => f.featured);
@@ -300,7 +305,7 @@ export default function FAQBareList({
         <>
             {mode === 'full' && (
                 <div className="mb-4 md:mb-6 flex flex-col gap-3">
-                    {/* Search */}
+                    {/* Barre de recherche */}
                     <label className="relative block">
                         <span className="sr-only">Rechercher dans la FAQ</span>
                         <input
@@ -331,7 +336,7 @@ export default function FAQBareList({
                             <button
                                 onClick={() => setActiveTag(null)}
                                 className={cn(
-                                    'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border',
+                                    'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition',
                                     activeTag === null ? 'bg-sauge/15 border-sauge/40 cursor-default' : 'border-sauge/30 hover:bg-sauge/10 cursor-pointer'
                                 )}
                             >
@@ -343,7 +348,7 @@ export default function FAQBareList({
                                     key={tag}
                                     onClick={() => setActiveTag((cur) => (cur === tag ? null : tag))}
                                     className={cn(
-                                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border',
+                                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition',
                                         activeTag === tag ? 'bg-sauge/15 border-sauge/40 cursor-default' : 'border-sauge/30 hover:bg-sauge/10 cursor-pointer'
                                     )}
                                     aria-pressed={activeTag === tag}
@@ -358,45 +363,66 @@ export default function FAQBareList({
                 </div>
             )}
 
+            {/* Liste des questions */}
             <ul className={`grid grid-cols-1 gap-4 md:gap-5 ${className}`}>
                 {visible.map((f) => {
                     const isOpen = openId === f.id;
                     return (
-                        <li
-                            key={f.id}
-                            role="button"
-                            tabIndex={0}
-                            aria-expanded={isOpen}
-                            aria-controls={`faq-panel-${f.id}`}
-                            onClick={() => setOpenId((prev) => (prev === f.id ? null : f.id))}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    setOpenId((prev) => (prev === f.id ? null : f.id));
-                                }
-                            }}
-                            className="group relative rounded-[20px] border border-sauge/30 bg-background p-5 pb-10 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 cursor-pointer"
-                        >
-                            <h3 className="text-[14px] md:text-base font-semibold text-foreground/90">{f.q}</h3>
-
+                        <li key={f.id} className="relative">
                             <div
-                                id={`faq-panel-${f.id}`}
-                                className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr] mt-2' : 'grid-rows-[0fr] mt-0'}`}
+                                className={cn(
+                                    'group relative rounded-[20px] border bg-background p-0 shadow-sm transition-all',
+                                    'border-sauge/30 hover:-translate-y-0.5 hover:shadow-md'
+                                )}
                             >
-                                <div className="overflow-hidden">
-                                    <p className="text-sm text-foreground/80 leading-relaxed">{f.a}</p>
-                                </div>
-                            </div>
+                                {/* Header cliquable */}
+                                <button
+                                    type="button"
+                                    aria-expanded={isOpen}
+                                    aria-controls={`faq-panel-${f.id}`}
+                                    onClick={() => setOpenId((prev) => (prev === f.id ? null : f.id))}
+                                    className="w-full flex items-start gap-3 px-5 py-4 text-left cursor-pointer"
+                                >
+                                    <span className="grid place-content-center size-8 shrink-0 rounded-full border border-sauge/40 bg-sauge/10 text-sauge mt-0.5">
+                                        <HelpCircle className="w-4 h-4" aria-hidden />
+                                    </span>
 
-                            {/* Séparateur animé */}
-                            <div className="absolute left-5 right-5 bottom-5 h-[2px] overflow-hidden">
-                                <div className="absolute inset-0 bg-sauge/20" aria-hidden />
+                                    <h3 className="flex-1 text-[14px] md:text-base font-semibold text-foreground/90 leading-snug">{highlight(f.q, rawQuery)}</h3>
+
+                                    <span
+                                        className={cn(
+                                            'ml-2 inline-flex items-center justify-center size-8 rounded-full border transition',
+                                            'border-ormat/30 bg-ormat/10 text-ormat',
+                                            'group-hover:scale-105'
+                                        )}
+                                        aria-hidden
+                                    >
+                                        <ChevronDown className={cn('w-4 h-4 transition-transform duration-300 ease-out', isOpen ? 'rotate-180' : 'rotate-0')} />
+                                    </span>
+                                </button>
+
+                                {/* Réponse (accordéon) */}
                                 <div
-                                    className={`absolute inset-y-0 left-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out ${
-                                        isOpen ? 'w-1/2' : 'w-0'
-                                    } group-hover:w-full`}
-                                    aria-hidden
-                                />
+                                    id={`faq-panel-${f.id}`}
+                                    className={cn('grid transition-[grid-template-rows] duration-300 ease-out px-5', isOpen ? 'grid-rows-[1fr] pb-6' : 'grid-rows-[0fr] pb-0')}
+                                >
+                                    <div className="overflow-hidden">
+                                        <p className="text-sm text-foreground/80 leading-relaxed">{highlight(f.a, rawQuery)}</p>
+                                    </div>
+                                </div>
+
+                                {/* Séparateur animé en bas */}
+                                <div className="pointer-events-none absolute left-5 right-5 bottom-3 h-[2px] overflow-hidden">
+                                    <div className="absolute inset-0 bg-sauge/20" aria-hidden />
+                                    <div
+                                        className={cn(
+                                            'absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out',
+                                            'group-hover:w-full',
+                                            isOpen ? 'w-1/2' : 'w-0'
+                                        )}
+                                        aria-hidden
+                                    />
+                                </div>
                             </div>
                         </li>
                     );
@@ -409,6 +435,7 @@ export default function FAQBareList({
                 )}
             </ul>
 
+            {/* CTA + micro-confiance */}
             <div className="mt-10 flex flex-col items-center lg:items-start gap-3">
                 {mode === 'compact' && (
                     <Link
@@ -432,6 +459,7 @@ export default function FAQBareList({
                     et je t’aide avec plaisir.
                 </p>
             </div>
+
             {withJsonLd && jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
         </>
     );
