@@ -31,7 +31,7 @@ export default function FaqPage() {
                     </p>
                 </div>
 
-                <FAQBareList mode="full" withJsonLd />
+                <FAQBareList surface="faq" mode="full" techFilter="any" />
             </div>
         </section>
     );

@@ -1,3 +1,4 @@
+// components/FaqBareList.tsx
 'use client';
 
 import { useMemo, useState, useEffect } from 'react';
@@ -6,12 +7,16 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Search as SearchIcon, X as ClearIcon, Tag as TagIcon } from 'lucide-react';
 
+type Tech = 'any' | 'wordpress' | 'react';
+type Surface = 'offers' | 'offer' | 'projects' | 'faq';
+type PackSlug = 'essentiel' | 'croissance' | 'signature';
+
 type FaqItem = {
     id: string;
     q: string;
     a: string;
     tags?: string[];
-    tech?: 'any' | 'wordpress' | 'react';
+    tech?: Tech;
     featured?: boolean;
     order?: number;
 };
@@ -22,6 +27,24 @@ const ALL: FaqItem[] = (rawFaq as FaqItem[]).map((f) => ({
     order: 999,
     ...f,
 }));
+
+/** Heuristiques de préférence par surface / pack (sans toucher au JSON) */
+const SURFACE_TAGS: Record<Surface, string[]> = {
+    // Page /offres (3 packs) : auto-qualification rapide & objections courantes
+    offers: ['process', 'delais', 'paiement', 'tech', 'contenu', 'maintenance'],
+    // Page /offres/[slug] (pack spécifique) : plus concret (tech, SEO, options, maintenance)
+    offer: ['tech', 'seo', 'maintenance', 'ecommerce', 'reservation', 'contenu', 'delais'],
+    // Page projets : on garde assez général
+    projects: ['process', 'tech', 'seo', 'maintenance', 'contenu'],
+    // Page /faq : tout
+    faq: [],
+};
+
+const PACK_TAGS: Record<PackSlug, string[]> = {
+    essentiel: ['process', 'delais', 'contenu', 'tech', 'maintenance'],
+    croissance: ['tech', 'reservation', 'contenu', 'seo', 'delais'],
+    signature: ['tech', 'ecommerce', 'seo', 'maintenance', 'contenu'],
+};
 
 /** Synonymes FR */
 const SYNONYMS_GROUPS: Record<string, string[]> = {
@@ -64,15 +87,14 @@ const strip = (s: string) =>
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
 
-const buildSynIndex = () => {
+const SYN_INDEX = (() => {
     const index: Record<string, string> = {};
     for (const [canon, variants] of Object.entries(SYNONYMS_GROUPS)) {
         index[strip(canon)] = strip(canon);
         for (const v of variants) index[strip(v)] = strip(canon);
     }
     return index;
-};
-const SYN_INDEX = buildSynIndex();
+})();
 
 const canonWords = (s: string) =>
     strip(s)
@@ -88,8 +110,8 @@ const canonString = (s: string) => canonWords(s).join(' ');
 function editDistance(a: string, b: string) {
     const m = a.length,
         n = b.length;
-    if (m === 0) return n;
-    if (n === 0) return m;
+    if (!m) return n;
+    if (!n) return m;
     const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
     for (let i = 0; i <= m; i++) dp[i][0] = i;
     for (let j = 0; j <= n; j++) dp[0][j] = j;
@@ -105,31 +127,25 @@ function editDistance(a: string, b: string) {
     return dp[m][n];
 }
 
-/** Teste si un token matche (exact/fuzzy/prefix) le haystack d'un item */
+/** Match d’un token dans l’ITEM (pas tout le dataset) */
 function tokenMatches(hayWords: string[], t: string) {
     if (hayWords.includes(t)) return true;
-
-    // fuzzy: distance 1 pour 4–5 lettres, 2 pour >=6 (à ajuster si tu veux)
     const tol = t.length >= 6 ? 2 : t.length >= 4 ? 1 : 0;
-    if (tol > 0) {
-        for (const w of hayWords) {
-            if (editDistance(w, t) <= tol) return true;
-        }
-    }
-
+    if (tol > 0 && hayWords.some((w) => editDistance(w, t) <= tol)) return true;
     if (t.length >= 3 && hayWords.some((w) => w.startsWith(t))) return true;
     return false;
 }
 
-/** Scoring (le bonus featured ne s'applique que sans requête) */
-function scoreItem(
-    _ignored: unknown, // (supprimé dans l’appel, on garde le slot si tu veux éviter de tout renommer)
-    item: FaqItem & { hay: string; hayWords: string[]; tagsCanon: string[] },
-    tokens: string[],
-    activeTag: string | null
-) {
+/** Scoring (pas de bonus featured quand il y a une requête) */
+function scoreItem(item: FaqItem & { hay: string; hayWords: string[]; tagsCanon: string[] }, tokens: string[], activeTag: string | null, surface: Surface, packSlug?: PackSlug) {
+    // Pas de requête -> on pousse featured + ordre + pertinence surface/pack
     if (tokens.length === 0 && !activeTag) {
-        return (item.featured ? 100 : 0) + (100 - Math.min(item.order ?? 999, 100));
+        let s = (item.featured ? 100 : 0) + (100 - Math.min(item.order ?? 999, 100));
+        // bonus surface/pack via tags
+        const allow = new Set<string>([...SURFACE_TAGS[surface], ...(surface === 'offer' && packSlug ? PACK_TAGS[packSlug] : [])].map(strip));
+        const hasPref = item.tagsCanon.some((t) => allow.has(t));
+        if (hasPref) s += 10;
+        return s;
     }
 
     let score = 0;
@@ -140,19 +156,16 @@ function scoreItem(
             score += 12;
             continue;
         }
-
         const tol = t.length >= 4 ? 1 : 0;
         if (tol > 0 && item.hayWords.some((w) => editDistance(w, t) <= tol)) {
             score += 7;
             continue;
         }
-
         if (t.length >= 3 && item.hayWords.some((w) => w.startsWith(t))) {
             score += 4;
             continue;
         }
     }
-
     return score;
 }
 
@@ -161,15 +174,21 @@ export default function FAQBareList({
     withJsonLd = false,
     limit = 6,
     className = '',
+    techFilter = 'any',
+    surface = 'faq',
+    packSlug,
 }: {
     mode?: 'compact' | 'full';
     withJsonLd?: boolean;
     limit?: number;
     className?: string;
+    techFilter?: Tech;
+    surface?: Surface;
+    packSlug?: PackSlug;
 }) {
     const [openId, setOpenId] = useState<string | null>(null);
 
-    // Recherche debounced
+    // Recherche (debounced)
     const [rawQuery, setRawQuery] = useState('');
     const [query, setQuery] = useState('');
     useEffect(() => {
@@ -180,13 +199,33 @@ export default function FAQBareList({
     // Tag actif
     const [activeTag, setActiveTag] = useState<string | null>(null);
 
-    // Tri de base
+    /** 1) Filtre techno (inclut toujours 'any') */
+    const byTech = useMemo(() => {
+        if (techFilter === 'any') return ALL;
+        return ALL.filter((f) => (f.tech ?? 'any') === 'any' || f.tech === techFilter);
+    }, [techFilter]);
+
+    /** 2) Heuristique surface/pack (par TAGS préférés) */
+    const bySurface = useMemo(() => {
+        if (surface === 'faq') return byTech; // tout
+        const allow = new Set<string>([...SURFACE_TAGS[surface], ...(surface === 'offer' && packSlug ? PACK_TAGS[packSlug] : [])]);
+        const filtered = byTech.filter((it) => {
+            const its = it.tags ?? [];
+            // s'il n'a pas de tags, on le garde (ne pas perdre d'items)
+            if (its.length === 0) return true;
+            return its.some((t) => allow.has(t));
+        });
+        // si ça filtre tout (rare), on retombe sur byTech
+        return filtered.length ? filtered : byTech;
+    }, [byTech, surface, packSlug]);
+
+    /** 3) Tri de base (featured, order, alpha) */
     const baseSorted = useMemo(
-        () => ALL.slice().sort((a, b) => Number(b.featured) - Number(a.featured) || (a.order ?? 999) - (b.order ?? 999) || a.q.localeCompare(b.q, 'fr')),
-        []
+        () => bySurface.slice().sort((a, b) => Number(b.featured) - Number(a.featured) || (a.order ?? 999) - (b.order ?? 999) || a.q.localeCompare(b.q, 'fr')),
+        [bySurface]
     );
 
-    // Pré-canonisation
+    /** 4) Canonisation */
     const itemsCanon = useMemo(
         () =>
             baseSorted.map((f) => {
@@ -201,11 +240,11 @@ export default function FAQBareList({
         [baseSorted]
     );
 
-    // Tous les tags (full) avec compteur
+    /** 5) Tags affichés (tous ceux présents après filtre surface/tech) */
     const allTags = useMemo(() => {
         if (mode !== 'full') return [] as { tag: string; count: number }[];
         const counts = new Map<string, number>();
-        for (const it of baseSorted) {
+        for (const it of itemsCanon) {
             for (const t of it.tags ?? []) {
                 const key = t.trim();
                 if (!key) continue;
@@ -215,41 +254,37 @@ export default function FAQBareList({
         return Array.from(counts.entries())
             .map(([tag, count]) => ({ tag, count }))
             .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag, 'fr'));
-    }, [baseSorted, mode]);
+    }, [itemsCanon, mode]);
 
-    // Filtrage + scoring (NE renvoie rien si aucun token ne matche)
+    /** 6) Filtrage + scoring */
     const filteredScored = useMemo(() => {
         const tokens = canonWords(query);
 
         const hasRealMatch = (it: (typeof itemsCanon)[number]) => {
             if (tokens.length === 0) return true;
-            // chaque token doit matcher sur l’ITEM (pas le dataset)
             return tokens.every((t) => tokenMatches(it.hayWords, t));
         };
 
-        const prefiltered = itemsCanon.filter((it) => (activeTag ? it.tagsCanon.includes(strip(activeTag)) : true));
-
-        const base =
-            tokens.length > 0
-                ? prefiltered.filter(hasRealMatch) // si rien ne matche, on renvoie vide
-                : prefiltered;
+        const pre = itemsCanon.filter((it) => (activeTag ? it.tagsCanon.includes(strip(activeTag)) : true));
+        const base = tokens.length > 0 ? pre.filter(hasRealMatch) : pre;
 
         return base
-            .map((f) => ({ item: f, score: scoreItem(undefined, f, tokens, activeTag) }))
+            .map((f) => ({ item: f, score: scoreItem(f, tokens, activeTag, surface, packSlug) }))
             .sort((a, b) => b.score - a.score || a.item.q.localeCompare(b.item.q, 'fr'))
             .map((x) => x.item);
-    }, [itemsCanon, query, activeTag]);
+    }, [itemsCanon, query, activeTag, surface, packSlug]);
 
-    // Visible
+    /** 7) Visible : FULL = tout ; COMPACT = featured d’abord puis on complète jusqu’à `limit` */
     const visible = useMemo(() => {
         if (mode === 'full') return filteredScored;
-        const onlyFeatured = filteredScored.filter((f) => f.featured);
-        return (onlyFeatured.length ? onlyFeatured : filteredScored).slice(0, limit);
+        const featured = filteredScored.filter((f) => f.featured);
+        const others = filteredScored.filter((f) => !f.featured);
+        return [...featured, ...others].slice(0, limit);
     }, [filteredScored, mode, limit]);
 
     useEffect(() => {
         setOpenId(null);
-    }, [query, activeTag, mode]);
+    }, [query, activeTag, mode, techFilter, surface, packSlug]);
 
     // JSON-LD
     const jsonLd = useMemo(() => {
@@ -266,6 +301,7 @@ export default function FAQBareList({
         <>
             {mode === 'full' && (
                 <div className="mb-4 md:mb-6 flex flex-col gap-3">
+                    {/* Search */}
                     <label className="relative block">
                         <span className="sr-only">Rechercher dans la FAQ</span>
                         <input
@@ -290,7 +326,7 @@ export default function FAQBareList({
                         )}
                     </label>
 
-                    {/* Tous les tags avec compteur */}
+                    {/* Tags */}
                     {allTags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                             <button

@@ -6,7 +6,8 @@
         "tags": ["process"],
         "tech": "any",
         "featured": true,
-        "order": 1
+        "order": 1,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "wp-vs-react",
@@ -15,7 +16,8 @@
         "tags": ["tech"],
         "tech": "any",
         "featured": true,
-        "order": 2
+        "order": 2,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "delais",
@@ -24,7 +26,8 @@
         "tags": ["delais"],
         "tech": "any",
         "featured": true,
-        "order": 3
+        "order": 3,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "paiement",
@@ -32,7 +35,8 @@
         "a": "Oui. Je propose un échelonnement simple défini ensemble au devis (ex : acompte, jalon, solde).",
         "tags": ["paiement"],
         "tech": "any",
-        "order": 4
+        "order": 4,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "hebergement-domaine",
@@ -40,7 +44,8 @@
         "a": "Tu peux garder ton hébergeur actuel ou je t’accompagne dans le choix et la mise en place (DNS, SSL, emails).",
         "tags": ["hebergement"],
         "tech": "any",
-        "order": 5
+        "order": 5,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "contenus",
@@ -48,7 +53,8 @@
         "a": "Tu fournis la matière. Je peux t’aider à cadrer, reformuler et structurer. Je partage aussi des ressources pour les visuels.",
         "tags": ["contenu"],
         "tech": "any",
-        "order": 6
+        "order": 6,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "reservation",
@@ -56,7 +62,8 @@
         "a": "Oui via intégration de Calendly (option). C’est fiable, RGPD-friendly et ça évite un gros back-office.",
         "tags": ["tech"],
         "tech": "any",
-        "order": 7
+        "order": 7,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "ecommerce",
@@ -64,7 +71,9 @@
         "a": "Je le propose côté WordPress (WooCommerce) uniquement pour le moment. En React, pas d’e-commerce natif.",
         "tags": ["ecommerce"],
         "tech": "wordpress",
-        "order": 8
+        "order": 8,
+        "surfaces": ["offer", "project", "faq"],
+        "packs": ["signature"]
     },
     {
         "id": "maintenance",
@@ -72,7 +81,8 @@
         "a": "Oui, un mois de support doux est inclus sur le pack Signature. Sinon, je peux proposer un forfait maintenance à la demande.",
         "tags": ["maintenance"],
         "tech": "any",
-        "order": 9
+        "order": 9,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "seo",
@@ -80,7 +90,8 @@
         "a": "Toujours : bases SEO (titres, metas, balisage propre, Open Graph, sitemap/robots). L’option “SEO avancé” ajoute plan sémantique, maillage et données structurées.",
         "tags": ["seo"],
         "tech": "any",
-        "order": 10
+        "order": 10,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "retours",
@@ -88,7 +99,8 @@
         "a": "1 à 2 phases de retours selon le pack, toujours dans un cadre clair et simple. On garde de la souplesse si besoin.",
         "tags": ["process"],
         "tech": "any",
-        "order": 11
+        "order": 11,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "propriete-code",
@@ -96,7 +108,8 @@
         "a": "Tu es propriétaire de ton site : code source, accès admin et livrables (maquettes/export). Je fournis les accès et le dépôt si besoin.",
         "tags": ["process"],
         "tech": "any",
-        "order": 12
+        "order": 12,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "formation-handoff",
@@ -104,7 +117,8 @@
         "a": "Oui : mini-guide + session de 45–60 min (visio) avec replay. On voit l’essentiel pour être autonome au quotidien.",
         "tags": ["process"],
         "tech": "any",
-        "order": 13
+        "order": 13,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "accessibilite-performance",
@@ -112,7 +126,8 @@
         "a": "Base AA (bon contraste, structure sémantique, focus visibles) et budget de performance pour de bons Core Web Vitals.",
         "tags": ["tech"],
         "tech": "any",
-        "order": 14
+        "order": 14,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "migration-ancien-site",
@@ -120,7 +135,8 @@
         "a": "Oui : reprise de contenu prioritaire, redirections 301, sitemap et vérifs Search Console pour conserver le référencement.",
         "tags": ["seo"],
         "tech": "any",
-        "order": 15
+        "order": 15,
+        "surfaces": ["offer", "project", "faq"]
     },
     {
         "id": "licences-images-fontes",
@@ -128,7 +144,8 @@
         "a": "On privilégie tes visuels. Sinon, je propose des banques adaptées. Les licences payantes sont achetées en ton nom.",
         "tags": ["contenu"],
         "tech": "any",
-        "order": 16
+        "order": 16,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "rgpd-cookies-analytics",
@@ -136,7 +153,8 @@
         "a": "Bannière de consentement, Consent Mode compatible et pages légales. On paramètre Analytics sans collecter plus que nécessaire.",
         "tags": ["rgpd"],
         "tech": "any",
-        "order": 17
+        "order": 17,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "petites-evolutions-post-lancement",
@@ -144,7 +162,8 @@
         "a": "Oui : au forfait ou à la carte (TMA légère). Idéal pour ajustements, nouvelles sections ou intégrations ponctuelles.",
         "tags": ["maintenance"],
         "tech": "any",
-        "order": 18
+        "order": 18,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "projet-urgent",
@@ -152,7 +171,8 @@
         "a": "Possible selon le calendrier (majoration). On réduit la portée, on priorise l’essentiel et on cale un planning serré.",
         "tags": ["delais"],
         "tech": "any",
-        "order": 19
+        "order": 19,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "retards-contenus-impact",
@@ -160,7 +180,8 @@
         "a": "On garde un cadre souple mais le planning peut glisser. On peut proposer un gel du périmètre ou un jalon intermédiaire.",
         "tags": ["delais"],
         "tech": "any",
-        "order": 20
+        "order": 20,
+        "surfaces": ["packs", "offer", "project", "faq"]
     },
     {
         "id": "react-cms-headless",
@@ -168,7 +189,8 @@
         "a": "On peut démarrer simple en Markdown/MDX (statique, rapide). Si tu veux éditer toi-même via une interface, je peux brancher un CMS headless léger (ex. Hygraph/Contentful) en option. Pour un back-office complet dès le départ, je recommande WordPress.",
         "tags": ["tech"],
         "tech": "react",
-        "order": 21
+        "order": 21,
+        "surfaces": ["offer", "project", "faq"]
     },
     {
         "id": "emails-formulaires-deliverabilite",
@@ -176,6 +198,7 @@
         "a": "On configure SPF/DKIM si besoin et un service d’envoi fiable. Anti-spam actif pour éviter les faux positifs.",
         "tags": ["tech"],
         "tech": "any",
-        "order": 22
+        "order": 22,
+        "surfaces": ["packs", "offer", "project", "faq"]
     }
 ]

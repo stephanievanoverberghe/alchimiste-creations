@@ -80,10 +80,10 @@ export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number })
 
     return (
         <section aria-labelledby="projects-teaser-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <Sparkles className="w-3.5 h-3.5" aria-hidden />
                         Projets récents
                     </span>
@@ -126,7 +126,7 @@ export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number })
                             'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
                         )}
                     >
-                        Parler de votre projet
+                        Parler de ton projet
                     </Link>
                 </div>
             </div>

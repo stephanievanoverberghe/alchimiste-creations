@@ -27,7 +27,7 @@ export default function FaqSection() {
                     </p>
                 </div>
 
-                <FAQBareList mode="compact" />
+                <FAQBareList surface="offers" mode="compact" limit={4} techFilter="any" />
             </div>
         </section>
     );

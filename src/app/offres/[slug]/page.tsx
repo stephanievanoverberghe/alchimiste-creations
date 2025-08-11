@@ -8,6 +8,7 @@ import OptionsGridSection from '@/components/sections/offers/offer/OptionsGrid';
 import MiniProcessSection from '@/components/sections/offers/offer/MiniProcess';
 import PricingTermsSection from '@/components/sections/offers/offer/PricingTerms';
 import ProjectsNearbySection from '@/components/sections/offers/offer/ProjectsNearby';
+import FAQSection from '@/components/sections/offers/offer/FaqOffer';
 
 type Tech = 'wordpress' | 'react';
 
@@ -34,6 +35,7 @@ export default function OfferPage() {
             <MiniProcessSection />
             <PricingTermsSection />
             <ProjectsNearbySection />
+            <FAQSection />
         </div>
     );
 }
