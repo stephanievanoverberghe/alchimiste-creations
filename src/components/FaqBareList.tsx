@@ -433,7 +433,6 @@ export default function FAQBareList({
                     et je t’aide avec plaisir.
                 </p>
             </div>
-
             {withJsonLd && jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
         </>
     );
