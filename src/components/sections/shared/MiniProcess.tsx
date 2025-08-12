@@ -41,7 +41,7 @@ export default function MiniProcessSection() {
             <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <CalendarDays className="w-3.5 h-3.5" aria-hidden />
                         <span>Comment ça se passe ?</span>
                     </span>
@@ -61,7 +61,7 @@ export default function MiniProcessSection() {
                             key={label}
                             className="group h-full flex flex-col rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                         >
-                            {/* Header (badge n° + icône) */}
+                            {/* Header (n° + icône + titre) */}
                             <div className="flex items-center gap-3">
                                 <span className="inline-flex items-center justify-center size-7 rounded-full border border-ormat/30 bg-ormat/10 text-[11px] font-semibold text-ormat">
                                     {String(i + 1).padStart(2, '0')}
@@ -72,10 +72,13 @@ export default function MiniProcessSection() {
                                 <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{label}</h3>
                             </div>
 
-                            {/* Fine barre (comme la timeline) */}
+                            {/* Fine barre (timeline) */}
                             <div className="mt-3 relative h-[2px] overflow-hidden">
                                 <div className="absolute inset-0 bg-sauge/20" aria-hidden />
-                                <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full" />
+                                <div
+                                    className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                                    aria-hidden
+                                />
                             </div>
 
                             <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{desc}</p>
@@ -95,7 +98,7 @@ export default function MiniProcessSection() {
                     ))}
                 </div>
 
-                {/* Micro-note + lien méthode */}
+                {/* Micro-note + CTA cohérent */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <p className="text-sm text-foreground/70 italic">
                         * Je prends <span className="not-italic font-medium text-terracotta">1 projet par mois</span> pour garder de la profondeur.

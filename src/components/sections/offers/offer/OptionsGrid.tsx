@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import packsRaw from '@/data/packs.json';
 import type { ComponentType } from 'react';
-import { CalendarClock, BookOpen, Languages, FileCog, Search, ShoppingBag, FilePlus, PenTool, Palette, Type as TypeIcon, Puzzle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CalendarClock, BookOpen, Languages, FileCog, Search, ShoppingBag, FilePlus, PenTool, Palette, Type as TypeIcon, Puzzle, Boxes, Code2, FileText } from 'lucide-react';
 
 type Tech = 'wordpress' | 'react';
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
@@ -64,40 +65,46 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                 <Image src="/deco/about-wave.png" alt="" fill loading="lazy" className="h-auto object-cover" />
             </div>
 
-            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
-                        {tech === 'wordpress' ? 'Options (WordPress)' : 'Options (React/Next.js)'}
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                        <Boxes className="w-3.5 h-3.5" aria-hidden />
+                        Options {tech === 'wordpress' ? '(WordPress)' : '(React/Next.js)'}
                     </span>
                     <h2 id="addons-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
                         Options à la carte
                     </h2>
                     <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">On ajoute ce qu’il faut — seulement si c’est utile à ton projet.</p>
 
-                    {/* Switch techno */}
+                    {/* Switch techno — même design que PacksSection */}
                     <div className="mt-4 flex justify-center lg:justify-start">
-                        <div role="tablist" aria-label="Technologie" className="inline-flex items-center rounded-full border border-sauge/40 bg-background p-1 shadow-sm">
-                            <button
-                                role="tab"
-                                aria-selected={tech === 'wordpress'}
-                                onClick={() => onTechChange('wordpress')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    tech === 'wordpress' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                WordPress
-                            </button>
-                            <button
-                                role="tab"
-                                aria-selected={tech === 'react'}
-                                onClick={() => onTechChange('react')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    tech === 'react' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                React / Next.js
-                            </button>
+                        <div className="w-full grid grid-cols-2 sm:inline-flex rounded-2xl border border-sauge/30 bg-background p-1 sm:w-auto">
+                            {(['wordpress', 'react'] as Tech[]).map((t) => {
+                                const active = t === tech;
+                                const label = t === 'wordpress' ? 'WP' : 'React';
+                                const aria = t === 'wordpress' ? 'WordPress (éditeur visuel)' : 'React/Next.js (sur-mesure)';
+                                return (
+                                    <button
+                                        key={t}
+                                        type="button"
+                                        onClick={() => onTechChange(t)}
+                                        aria-pressed={active}
+                                        aria-current={active ? 'true' : undefined}
+                                        aria-label={aria}
+                                        title={aria}
+                                        className={cn(
+                                            'inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl',
+                                            'text-xs tracking-[0.14em] uppercase font-semibold transition transform',
+                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2',
+                                            active ? 'bg-sauge text-background shadow-sm' : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-[1px] hover:shadow-sm'
+                                        )}
+                                    >
+                                        {t === 'wordpress' ? <FileText className="w-4 h-4" aria-hidden /> : <Code2 className="w-4 h-4" aria-hidden />}
+                                        {label}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -106,7 +113,7 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                     <p className="text-xs text-foreground/70">E-commerce : disponible uniquement sous WordPress.</p>
                 </div>
 
-                {/* Grid options (depuis packs.json) */}
+                {/* Grid options */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr">
                     {options.map((o, idx) => {
                         const { key: k, icon: Icon, desc } = metaFor(o.label);
@@ -119,19 +126,16 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                             <div
                                 key={`${k}-${idx}`}
                                 aria-disabled={isUnavailableReactEcom}
-                                className={[
+                                className={cn(
                                     'group h-full flex flex-col rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all',
                                     'hover:-translate-y-0.5 hover:shadow-md',
-                                    isUnavailableReactEcom ? 'opacity-60' : '',
-                                ].join(' ')}
+                                    isUnavailableReactEcom && 'opacity-60'
+                                )}
                             >
                                 {/* Header (icône + titre) */}
                                 <div className="flex items-center gap-3">
-                                    <span
-                                        className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge
-                               shrink-0 flex-none aspect-square"
-                                    >
-                                        <Icon className="w-4 h-4 flex-none" aria-hidden />
+                                    <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge shrink-0">
+                                        <Icon className="w-4 h-4" aria-hidden />
                                     </span>
                                     <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta leading-none">{o.label}</h3>
                                 </div>
@@ -142,18 +146,18 @@ export default function OptionsGridSection({ tech, onTechChange, slug }: { tech:
                                     <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full group-focus-within:w-1/2" />
                                 </div>
 
-                                {/* Description (mini-bénéfice) */}
+                                {/* Description */}
                                 <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{isUnavailableReactEcom ? 'Disponible en WordPress uniquement.' : desc}</p>
 
                                 {/* Footer (prix + techno) */}
                                 <div className="mt-auto pt-4 flex items-center justify-between">
                                     <span
-                                        className={[
+                                        className={cn(
                                             'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-wider',
                                             isUnavailableReactEcom || isDevis
                                                 ? 'border-foreground/25 text-foreground/70 bg-foreground/5'
-                                                : 'border-terracotta/30 text-terracotta bg-terracotta/10',
-                                        ].join(' ')}
+                                                : 'border-terracotta/30 text-terracotta bg-terracotta/10'
+                                        )}
                                     >
                                         {display}
                                     </span>

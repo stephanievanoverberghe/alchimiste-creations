@@ -3,94 +3,127 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Stethoscope, Palette, Briefcase } from 'lucide-react';
+import { Stethoscope, Palette, Briefcase, BadgeCheck, Mail, CalendarDays, Images, Target, Users } from 'lucide-react';
 
 export default function IdealFitSection() {
-    const audience = [
+    const items = [
         {
             icon: Stethoscope,
             title: 'Thérapeutes & praticiens',
-            line: 'Présence rassurante, prise de RDV simple.',
+            desc: 'Une présence apaisante qui inspire confiance, avec un parcours clair jusqu’à la prise de RDV.',
+            bullets: ['Ton & visuels rassurants', 'Séances / tarifs lisibles', 'Réservation (Calendly)'],
+            objective: { icon: CalendarDays, label: 'Objectif : RDV' },
         },
         {
             icon: Palette,
             title: 'Artistes & créatifs',
-            line: 'Portfolio esthétique, mise en valeur des œuvres.',
+            desc: 'Un portfolio vivant qui met l’intention et l’œuvre au centre, prêt à évoluer avec ta pratique.',
+            bullets: ['Grilles harmonieuses et modulables', 'Fiches œuvre / projet soignées', 'Gabarits prêts pour nouvelles séries'],
+            objective: { icon: Images, label: 'Objectif : Portfolio vivant' },
         },
         {
             icon: Briefcase,
             title: 'Indépendants & coachs',
-            line: 'Vitrine claire, alignée et évolutive.',
+            desc: 'Une vitrine claire, alignée et évolutive, avec des appels à l’action doux et assumés.',
+            bullets: ['Pages services structurées', 'Offres lisibles + FAQ', 'Formulaire simple / lead magnet'],
+            objective: { icon: Target, label: 'Objectif : Demandes qualifiées' },
         },
-    ];
+    ] as const;
+
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            {/* Liseré décoratif en haut */}
+        <section id="audience" aria-labelledby="audience-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px] overflow-hidden">
+            {/* Liseré décoratif */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
-            {/* Fond or mobile only */}
+            {/* Fond or (mobile only) */}
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
             {/* Vague décorative (md+) */}
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
                 <Image src="/deco/about-wave.png" alt="" fill priority className="h-auto object-cover" />
             </div>
+            {/* Motif discret */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
+            />
 
-            <div className="relative max-w-5xl mx-auto">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
-                <div className="text-center lg:text-left mb-10 md:mb-12">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
-                        Pour qui je suis la bonne personne
+                <div className="text-center lg:text-left">
+                    <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                        <Users className="w-3.5 h-3.5" aria-hidden />
+                        <span>Pour qui c’est fait ?</span>
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">Les personnes avec qui mon approche résonne</h2>
+
+                    <h2 id="audience-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
+                        Tu te reconnais ici ?
+                    </h2>
                     <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                        Si tu veux un site clair, vivant et durable, sans te perdre dans le jargon, on est au bon endroit.
+                        J’accompagne surtout des profils sensibles et engagés. On pose un site clair, vivant et aligné — sans jargon, avec des étapes lisibles.
                     </p>
                 </div>
 
-                {/* Cartouches */}
-                <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    {audience.map(({ icon: Icon, title, line }) => (
+                {/* Cards audiences */}
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-stretch">
+                    {items.map(({ icon: Icon, title, desc, bullets, objective }) => (
                         <li
                             key={title}
-                            className="group relative h-full rounded-b-2xl border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col"
+                            className="group relative h-full flex flex-col rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
                         >
-                            {/* Ruban animé en haut */}
-                            <div className="absolute left-0 right-0 top-0 h-[2px]">
-                                <div className="h-full w-full bg-sauge/20" aria-hidden />
+                            {/* En-tête card */}
+                            <div className="relative flex items-center gap-3">
+                                <span className="grid place-content-center size-10 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
+                                    <Icon className="w-5 h-5" aria-hidden />
+                                </span>
+                                <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
+                            </div>
+
+                            {/* Séparateur fin animé */}
+                            <div className="mt-3 relative h-[2px] overflow-hidden">
+                                <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                                 <div
-                                    className="absolute inset-y-0 left-0 h-full w-1/4 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                                    className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
                                     aria-hidden
                                 />
                             </div>
 
-                            <div className="flex items-center gap-3 mt-1">
-                                <span className="grid place-content-center size-10 rounded-xl border border-ormat/30 bg-ormat/10 text-ormat">
-                                    <Icon className="w-4 h-4" aria-hidden />
-                                </span>
-                                <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
-                            </div>
+                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{desc}</p>
 
-                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{line}</p>
+                            {/* Bullets compacts */}
+                            <ul className="mt-3 space-y-2">
+                                {bullets.map((b) => (
+                                    <li key={b} className="flex items-start gap-2">
+                                        <BadgeCheck className="w-4 h-4 mt-0.5 text-sauge" aria-hidden />
+                                        <span className="text-sm text-foreground/85 leading-relaxed">{b}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Footer — chip objectif */}
+                            <div className="mt-auto pt-4">
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider">
+                                    <objective.icon className="w-3.5 h-3.5" aria-hidden />
+                                    {objective.label}
+                                </span>
+                            </div>
                         </li>
                     ))}
                 </ul>
 
-                {/* Micro-CTA */}
-                <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                    <Link
-                        href="/offres"
-                        className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-ormat hover:bg-ormat/90 text-foreground text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
-                        )}
-                    >
-                        Voir les offres
-                    </Link>
+                {/* Micro-note + CTA doux */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <p className="text-xs text-foreground/70">* Tu n’es pas exactement dans ces catégories ? L’important, c’est un projet humain et aligné.</p>
                     <Link
                         href="/contact"
                         className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
+                            'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
+                            'border-b-2 border-r-2 border-ormat transition hover:scale-105',
+                            'shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
                         )}
                     >
-                        Me contacter
+                        <Mail className="w-4 h-4" aria-hidden />
+                        M’écrire
                     </Link>
                 </div>
             </div>

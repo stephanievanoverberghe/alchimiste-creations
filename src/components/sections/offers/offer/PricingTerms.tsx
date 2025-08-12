@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import packsRaw from '@/data/packs.json';
-import { CreditCard, Receipt, ShieldCheck, Info } from 'lucide-react';
+import { CreditCard, Receipt, ShieldCheck, Info, BadgeEuro } from 'lucide-react';
 
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
 
@@ -66,7 +66,8 @@ export default function PricingTermsSection() {
             <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                        <BadgeEuro className="h-3.5 w-3.5" aria-hidden />
                         Tarifs & modalités
                     </span>
                     <h2 id="pricing-terms-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">

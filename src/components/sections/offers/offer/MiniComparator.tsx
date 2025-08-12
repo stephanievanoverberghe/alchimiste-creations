@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Check } from 'lucide-react';
+import { BadgeCheck, Clock, FileText, Code2, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import packsRaw from '@/data/packs.json';
 
@@ -44,10 +44,8 @@ export default function MiniComparatorSection() {
     const current = (match?.[1] as PackSlug) ?? 'essentiel';
 
     const techParam = (searchParams.get('tech') ?? '').toLowerCase();
-    // 👉 WP par défaut
     const activeTech: Tech = techParam === 'react' ? 'react' : 'wordpress';
 
-    // 👉 si pas de ?tech=, on l’ajoute (sans scroll)
     useEffect(() => {
         if (!techParam) {
             const params = new URLSearchParams(searchParams);
@@ -67,116 +65,139 @@ export default function MiniComparatorSection() {
     return (
         <section aria-labelledby="mini-compare-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             <div className="relative max-w-7xl mx-auto">
+                {/* En-tête */}
                 <div className="text-center lg:text-left mb-10">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
+                        <SlidersHorizontal className="w-3.5 h-3.5 inline mr-2" aria-hidden />
                         Comparer les packs
                     </span>
                     <h2 id="mini-compare-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
                         Quel pack te convient le mieux&nbsp;?
                     </h2>
-                    <p className="mt-3 text-foreground/80">Un coup d’œil rapide : prix “à partir de”, délais ({techLabel}), pour qui, et ce qui est inclus.</p>
+                    <p className="mt-3 text-foreground/80">Un coup d’œil rapide : prix «&nbsp;à partir de&nbsp;», délais ({techLabel}), pour qui, et ce qui est inclus.</p>
 
-                    {/* Switch techno */}
+                    {/* Switch techno — harmonisé (WP / React) */}
                     <div className="mt-5 flex justify-center lg:justify-start">
-                        <div role="tablist" aria-label="Technologie" className="inline-flex items-center rounded-full border border-sauge/40 bg-background p-1 shadow-sm">
-                            <button
-                                role="tab"
-                                aria-selected={activeTech === 'wordpress'}
-                                onClick={() => setTech('wordpress')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    activeTech === 'wordpress' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                WordPress
-                            </button>
-                            <button
-                                role="tab"
-                                aria-selected={activeTech === 'react'}
-                                onClick={() => setTech('react')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    activeTech === 'react' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                React / Next.js
-                            </button>
+                        <div className="w-full grid grid-cols-2 sm:inline-flex rounded-2xl border border-sauge/30 bg-background p-1 sm:w-auto">
+                            {(['wordpress', 'react'] as Tech[]).map((t) => {
+                                const active = t === activeTech;
+                                const label = t === 'wordpress' ? 'WP' : 'React';
+                                const aria = t === 'wordpress' ? 'WordPress (éditeur visuel)' : 'React/Next.js (sur-mesure)';
+                                return (
+                                    <button
+                                        key={t}
+                                        type="button"
+                                        onClick={() => setTech(t)}
+                                        aria-pressed={active}
+                                        aria-current={active ? 'true' : undefined}
+                                        aria-label={aria}
+                                        title={aria}
+                                        className={cn(
+                                            'inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl',
+                                            'text-xs tracking-[0.14em] uppercase font-semibold transition transform',
+                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2',
+                                            active ? 'bg-sauge text-background shadow-sm' : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-[1px] hover:shadow-sm'
+                                        )}
+                                    >
+                                        {t === 'wordpress' ? <FileText className="w-4 h-4" aria-hidden /> : <Code2 className="w-4 h-4" aria-hidden />}
+                                        {label}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
 
+                {/* Cartes comparatives — design aligné aux cards d’offres */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     {PACKS.map((p) => {
                         const isCurrent = p.slug === current;
                         const href = `/offres/${p.slug}?tech=${activeTech}`;
-                        // 👉 on lit toujours la version de la techno active
-                        const prixMain = p.versions[activeTech].prix;
-                        const delaiMain = p.versions[activeTech].delai;
+                        const { prix: prixMain, delai: delaiMain } = p.versions[activeTech];
 
                         const cardClasses = cn(
-                            'group relative flex h-full flex-col overflow-hidden rounded-3xl border bg-background shadow-sm transition-all',
-                            !isCurrent && 'hover:-translate-y-1 hover:shadow-md',
-                            isCurrent ? 'border-terracotta/50 ring-2 ring-terracotta/30' : 'border-sauge/30'
-                        );
-
-                        const IconSeparator = ({ isCurrent }: { isCurrent: boolean }) => (
-                            <div className="flex items-center justify-center gap-3 w-full max-w-xs mx-auto mt-4 mb-1 group">
-                                <span className={cn('h-[1px] flex-1 bg-sauge', !isCurrent && 'transition-colors duration-300 group-hover:bg-ormat')} />
-                                <FontAwesomeIcon
-                                    icon={ICONS[p.slug]}
-                                    className={cn('text-sauge text-xl shrink-0 transition-all duration-300', !isCurrent && 'group-hover:scale-150 group-hover:text-ormat')}
-                                    aria-hidden
-                                />
-                                <span className={cn('h-[1px] flex-1 bg-sauge', !isCurrent && 'transition-colors duration-300 group-hover:bg-ormat')} />
-                            </div>
+                            'group relative h-full flex flex-col rounded-[22px] border bg-background p-6 md:p-7 shadow-sm transition-all',
+                            isCurrent ? 'border-terracotta/50 ring-2 ring-terracotta/30' : 'border-sauge/30 hover:-translate-y-0.5 hover:shadow-md'
                         );
 
                         const Inner = (
                             <>
+                                {/* motif discret */}
+                                <div
+                                    className="pointer-events-none absolute inset-0 opacity-10"
+                                    style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
+                                    aria-hidden
+                                />
+
+                                {/* micro-badge “pack actuel” */}
                                 {isCurrent && (
-                                    <div className="absolute top-0 left-0 right-0 z-[1] flex justify-center">
-                                        <div className="mt-2 rounded-full border border-terracotta/40 bg-terracotta/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-terracotta">
-                                            Pack actuel
-                                        </div>
-                                    </div>
+                                    <span className="absolute right-4 top-4 z-[1] inline-flex items-center gap-1.5 rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider">
+                                        Pack actuel
+                                    </span>
                                 )}
 
-                                <div className="px-5 pt-10 text-center">
-                                    <h3 className="text-lg font-semibold tracking-wide text-foreground">{p.titre}</h3>
-                                    <p className="mt-1 text-sm text-foreground/80">{prixMain}</p>
-                                    <IconSeparator isCurrent={isCurrent} />
-                                </div>
+                                {/* Header */}
+                                <header className="relative z-[1] text-center mt-6">
+                                    <span className="inline-flex items-center gap-2 rounded-xl border border-sauge/30 bg-sauge/10 text-sauge px-3 py-1.5">
+                                        <FontAwesomeIcon icon={ICONS[p.slug]} className="text-[14px]" aria-hidden />
+                                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em]">Pack {p.titre.replace(/^Pack\s+/i, '')}</span>
+                                    </span>
 
-                                <div className="p-5 space-y-4 text-sm">
-                                    <div className="grid grid-cols-[auto,1fr] items-center gap-x-4">
-                                        <p className="text-foreground/70 text-center">Délais</p>
-                                        <p className="text-foreground font-medium text-center">{delaiMain}</p>
+                                    <h3 className="mt-3 text-terracotta font-title text-xl md:text-2xl font-bold tracking-widest leading-tight">{p.sousTitre ?? p.titre}</h3>
+
+                                    {/* Séparateur animé */}
+                                    <div className="mt-4 relative h-[2px] overflow-hidden">
+                                        <div className="absolute inset-0 bg-sauge/20" aria-hidden />
+                                        <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full" />
+                                    </div>
+                                </header>
+
+                                {/* Contenu */}
+                                <div className="relative z-[1] mt-4 flex-1 space-y-4">
+                                    {/* Prix + Délai + Cible */}
+                                    <div className="flex flex-wrap items-center justify-center gap-2">
+                                        <span className="inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta px-3 py-1.5 text-sm font-semibold">
+                                            {prixMain}
+                                        </span>
+                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-sauge/30 bg-sauge/10 text-sauge px-3 py-1.5 text-xs">
+                                            <Clock className="w-3.5 h-3.5" aria-hidden />
+                                            Délai&nbsp;: {delaiMain}
+                                        </span>
                                     </div>
 
-                                    <div className="grid grid-cols-[auto,1fr] items-start gap-x-4 border-b border-b-sauge/30">
-                                        <p className="text-foreground/70 text-center ">Idéal pour</p>
-                                        <p className="text-foreground font-medium text-center mb-5">{p.cible}</p>
+                                    <div className="grid grid-cols-1 gap-2 border-y border-sauge/20 py-3">
+                                        <p className="text-foreground/70 text-center text-sm leading-relaxed">Idéal pour</p>
+                                        <p className="text-foreground font-medium text-center">{p.cible}</p>
                                     </div>
 
+                                    {/* Inclus (aperçu) */}
                                     <div>
-                                        <div className="text-foreground/70 mb-2">Inclus</div>
-                                        <div>
-                                            <ul className="space-y-2">
-                                                {p.inclus.slice(0, 4).map((it, i) => (
-                                                    <li key={i} className="flex items-start gap-2">
-                                                        <Check className="w-4 h-4 mt-0.5 shrink-0 text-sauge" />
-                                                        <span className="text-foreground/90">{it}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            {p.inclus.length > 4 && <div className="mt-2 text-xs text-foreground/60">…et d’autres éléments selon le pack.</div>}
-                                        </div>
+                                        <div className="text-foreground/70 mb-2 text-sm">Inclus</div>
+                                        <ul className="grid gap-2.5 text-left">
+                                            {p.inclus.slice(0, 4).map((it, i) => (
+                                                <li key={i} className="flex items-start gap-2.5">
+                                                    <BadgeCheck className="size-4 shrink-0 text-sauge translate-y-[1px]" strokeWidth={2.25} aria-hidden />
+                                                    <span className="text-sm leading-relaxed text-foreground/85">{it}</span>
+                                                </li>
+                                            ))}
+                                            {p.inclus.length > 4 && (
+                                                <li className="flex items-start gap-2.5 italic text-foreground/75">
+                                                    <BadgeCheck className="size-4 shrink-0 text-sauge opacity-60 translate-y-[1px]" strokeWidth={2.25} aria-hidden />
+                                                    <span className="text-sm leading-relaxed">… et d’autres éléments selon le pack</span>
+                                                </li>
+                                            )}
+                                        </ul>
                                     </div>
                                 </div>
 
-                                <div className="mt-auto p-5 pt-2">
-                                    {!isCurrent ? (
+                                {/* Footer */}
+                                <footer className="relative z-[1] mt-6">
+                                    {isCurrent ? (
+                                        <div className="text-[11px] text-foreground/60 text-center">(Vous consultez ce pack)</div>
+                                    ) : (
                                         <span
                                             className={cn(
-                                                'inline-block px-4 py-2 rounded-2xl text-center mb-2',
+                                                'inline-block w-full text-center px-4 py-2 rounded-2xl',
                                                 'bg-terracotta group-hover:bg-terracotta/90 text-background text-xs font-semibold tracking-widest uppercase',
                                                 'border-b-2 border-r-2 border-ormat transition group-hover:scale-105',
                                                 'shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
@@ -184,20 +205,8 @@ export default function MiniComparatorSection() {
                                         >
                                             Voir ce pack
                                         </span>
-                                    ) : (
-                                        <div className="text-[11px] text-foreground/60">(Vous consultez ce pack)</div>
                                     )}
-                                </div>
-
-                                {!isCurrent && (
-                                    <div className="pointer-events-none absolute left-5 right-5 bottom-4 h-[2px] overflow-hidden">
-                                        <div className="absolute inset-0 bg-sauge/20" aria-hidden />
-                                        <div
-                                            className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
-                                            aria-hidden
-                                        />
-                                    </div>
-                                )}
+                                </footer>
                             </>
                         );
 

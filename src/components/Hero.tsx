@@ -33,7 +33,7 @@ type PackSlug = 'essentiel' | 'croissance' | 'signature';
 type CTA = { label: string; href: string };
 type PageContent = { title: string; paragraph: string; cta?: CTA[]; bg?: string };
 
-// — Styles boutons (identiques aux autres sections)
+// — Styles boutons
 const btnBase =
     'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30';
 const btnPrimary = `${btnBase} bg-terracotta hover:bg-terracotta/90 text-background border-b-2 border-r-2 border-ormat shadow-[0px_2px_6px_rgba(164,75,52,0.25)]`;
@@ -199,8 +199,7 @@ export default function Hero() {
 
                 <h1 className="mt-4 font-title text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-tight tracking-wide">{title}</h1>
 
-                {/* Séparateur animé : va jusqu'au bout puis repart du début */}
-                {/* Séparateur animé : va jusqu’au bout puis restart */}
+                {/* Séparateur animé */}
                 <div className="mt-4 relative h-[2px] overflow-hidden">
                     <div className="absolute inset-0 bg-white/20" aria-hidden />
                     <span
@@ -248,7 +247,7 @@ export default function Hero() {
 
                 <p className="mt-5 text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">{paragraph}</p>
 
-                {/* CTA(s) cohérents : 1er = Primary, 2e = Secondary sur fond sombre */}
+                {/* CTA */}
                 {cta && (
                     <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         {cta.map((button, i) => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Pause, Play, Milestone, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -47,6 +47,7 @@ export default function MilestonesSlider() {
         if (bar) {
             bar.style.transition = 'none';
             bar.style.width = '0%';
+            // force reflow
             void bar.offsetWidth;
             bar.style.transition = `width ${autoplayMs}ms linear`;
             bar.style.width = '100%';
@@ -87,22 +88,32 @@ export default function MilestonesSlider() {
     };
 
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="relative max-w-5xl mx-auto">
+        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px] overflow-hidden">
+            {/* Motif discret */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
+            />
+
+            <div className="relative max-w-6xl mx-auto">
                 {/* En-tête */}
                 <div className="text-center lg:text-left mb-8 md:mb-10">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
+                        <Milestone className="w-3.5 h-3.5" aria-hidden />
                         Mon chemin
                     </span>
+
                     <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
                         Une trajectoire qui relie le sensible et le code
                     </h2>
-                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                        Défilement automatique, propre et lisible. Tu peux aussi cliquer sur les points.
+
+                    <p className="mt-3 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
+                        Défilement automatique, propre et lisible. Tu peux aussi swiper ou utiliser les points pour naviguer.
                     </p>
                 </div>
 
-                {/* Barre de progression */}
+                {/* Barre de progression autoplay */}
                 <div className="relative mb-4" aria-hidden>
                     <div className="h-1 w-full rounded-full bg-sauge/20" />
                     <div ref={progressRef} className="h-1 -mt-1 rounded-full bg-gradient-to-r from-sauge via-terracotta to-sauge w-0" />
@@ -110,7 +121,7 @@ export default function MilestonesSlider() {
 
                 {/* Slider */}
                 <div
-                    className="relative overflow-hidden rounded-[24px]"
+                    className="relative overflow-hidden rounded-[22px] border border-sauge/30 bg-background/70 shadow-sm"
                     onMouseEnter={() => setPaused(true)}
                     onMouseLeave={() => setPaused(false)}
                     onKeyDown={onKeyDown}
@@ -119,7 +130,7 @@ export default function MilestonesSlider() {
                     aria-label="Parcours"
                     tabIndex={0}
                 >
-                    {/* Tracker */}
+                    {/* Track */}
                     <div
                         ref={trackRef}
                         className="flex transition-transform duration-500 ease-out"
@@ -127,28 +138,35 @@ export default function MilestonesSlider() {
                         onPointerDown={onPointerDown}
                         onPointerUp={onPointerUp}
                     >
-                        {items.map((it) => {
-                            return (
-                                <article key={it.date + it.title} className="w-full shrink-0 p-5 md:p-8 relative">
-                                    {/* carte */}
-                                    <div className="relative rounded-[20px] border border-sauge/30 bg-ormat/10 p-5 md:p-6 shadow-sm">
-                                        {/* barre verticale colorée */}
-                                        <time className="inline-block text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta bg-background border border-terracotta/30 rounded-md px-2.5 py-1">
-                                            {it.date}
-                                        </time>
-                                        <h3 className="mt-3 text-sm md:text-base font-bold tracking-widest text-foreground">{it.title}</h3>
-                                        <p className="mt-1 text-sm text-foreground/80">{it.desc}</p>
-                                    </div>
-                                </article>
-                            );
-                        })}
+                        {items.map((it) => (
+                            <article key={it.date + it.title} className="w-full shrink-0 p-5 md:p-7 relative">
+                                {/* motif discret */}
+                                <div
+                                    className="pointer-events-none absolute inset-0 opacity-10"
+                                    style={{
+                                        backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
+                                        backgroundSize: '16px 16px',
+                                        color: 'var(--color-ormat)',
+                                    }}
+                                    aria-hidden
+                                />
+                                {/* Carte milestone */}
+                                <div className="relative rounded-[18px] border border-sauge/30 bg-ormat/10 p-5 md:p-6 shadow-sm">
+                                    <time className="inline-block text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta bg-background border border-terracotta/30 rounded-md px-2.5 py-1">
+                                        {it.date}
+                                    </time>
+                                    <h3 className="mt-3 text-sm md:text-base font-bold tracking-widest text-foreground">{it.title}</h3>
+                                    <p className="mt-1 text-sm text-foreground/80">{it.desc}</p>
+                                </div>
+                            </article>
+                        ))}
                     </div>
 
-                    {/* Controles */}
+                    {/* Contrôles */}
                     <button
                         type="button"
                         onClick={prev}
-                        className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 size-10 items-center justify-center rounded-full border border-sauge/30 bg-background shadow-sm hover:scale-105 transition"
+                        className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 size-10 items-center justify-center rounded-full border border-sauge/30 bg-background/90 backdrop-blur shadow-sm hover:scale-105 transition"
                         aria-label="Slide précédent"
                     >
                         <ChevronLeft className="w-5 h-5" />
@@ -156,7 +174,7 @@ export default function MilestonesSlider() {
                     <button
                         type="button"
                         onClick={next}
-                        className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 size-10 items-center justify-center rounded-full border border-sauge/30 bg-background shadow-sm hover:scale-105 transition"
+                        className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 size-10 items-center justify-center rounded-full border border-sauge/30 bg-background/90 backdrop-blur shadow-sm hover:scale-105 transition"
                         aria-label="Slide suivant"
                     >
                         <ChevronRight className="w-5 h-5" />
@@ -166,7 +184,7 @@ export default function MilestonesSlider() {
                     <button
                         type="button"
                         onClick={() => setPaused((p) => !p)}
-                        className="absolute right-3 bottom-3 lg:inline-flex items-center gap-2 rounded-full border border-sauge/30 bg-background/90 px-3 py-1.5 text-xs font-semibold hidden"
+                        className="hidden lg:inline-flex absolute right-3 bottom-3 items-center gap-2 rounded-full border border-sauge/30 bg-background/90 px-3 py-1.5 text-xs font-semibold"
                         aria-pressed={paused}
                         aria-label={paused ? 'Relancer le défilement' : 'Mettre en pause le défilement'}
                     >
@@ -175,7 +193,7 @@ export default function MilestonesSlider() {
                     </button>
                 </div>
 
-                {/* Journal */}
+                {/* Bullets */}
                 <div className="mt-6 flex items-center justify-center gap-2">
                     {items.map((_, i) => (
                         <button
@@ -192,20 +210,36 @@ export default function MilestonesSlider() {
                     <Link
                         href="/contact"
                         className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
+                            'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
+                            'border-b-2 border-r-2 border-ormat transition hover:scale-105',
+                            'shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
                         )}
                     >
+                        <Mail className="w-4 h-4" aria-hidden />
                         Discuter de ton projet
                     </Link>
                 </div>
             </div>
+
+            {/* Animations locales */}
             <style jsx>{`
-                @keyframes grow {
-                    from {
-                        width: 0%;
+                @keyframes hero-scan-loop {
+                    0% {
+                        transform: translateX(-100%);
                     }
-                    to {
-                        width: 66%;
+                    100% {
+                        transform: translateX(100%);
+                    }
+                }
+                .hero-scan {
+                    animation: hero-scan-loop 2.8s linear infinite;
+                    will-change: transform;
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .hero-scan {
+                        animation: none;
+                        transform: translateX(0);
                     }
                 }
             `}</style>

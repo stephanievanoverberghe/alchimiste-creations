@@ -1,26 +1,55 @@
 'use client';
 
-import { Users, ListChecks, Sparkles, Gauge } from 'lucide-react';
+import { Leaf, HeartHandshake, ListChecks, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function ValuesSection() {
     const pillars = [
-        { icon: Users, title: 'Chaleur humaine', desc: 'On co-crée, sans jargon ni pression.' },
-        { icon: ListChecks, title: 'Clarté & structure', desc: 'Étapes lisibles, délais posés.' },
-        { icon: Sparkles, title: 'Intuition & profondeur', desc: 'Un site qui te ressemble vraiment.' },
-        { icon: Gauge, title: 'Accessibilité & perfs', desc: 'Mobile, rapide, SEO de base.' },
+        {
+            icon: HeartHandshake,
+            title: 'Écoute & sécurité',
+            desc: 'On prend le temps. Tu peux arriver avec du flou : je pose un cadre doux et on clarifie ensemble.',
+        },
+        {
+            icon: ListChecks,
+            title: 'Clarté qui libère',
+            desc: 'Des étapes lisibles, des deadlines réalistes, des retours guidés. Tu sais toujours où on va.',
+        },
+        {
+            icon: Sparkles,
+            title: 'Sens avant tendance',
+            desc: 'Un design qui respire, fidèle à ton univers. Pas d’effets gratuits : de la justesse.',
+        },
+        {
+            icon: ShieldCheck,
+            title: 'Technique qui tient',
+            desc: 'Accessibilité, performance, responsive, base SEO. Un socle propre qui dure et évolue.',
+        },
     ];
 
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="max-w-5xl mx-auto space-y-12">
+        <section aria-labelledby="values-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px] overflow-hidden">
+            {/* Motif discret */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
+            />
+
+            <div className="relative max-w-7xl mx-auto space-y-10 md:space-y-12">
                 {/* En-tête */}
-                <div className="text-center lg:text-left mb-10 md:mb-12">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
-                        Vision & valeurs
+                <div className="text-center lg:text-left">
+                    <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
+                        <Leaf className="w-3.5 h-3.5" aria-hidden />
+                        <span>Vision & valeurs</span>
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">Le cadre qui guide chaque projet</h2>
+
+                    <h2 id="values-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
+                        Le cadre qui te rassure — et fait avancer ton projet
+                    </h2>
+
                     <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                        Un cap simple et humain : créer beau, clair et durable — sans te perdre en route.
+                        Mon objectif : que tu te sentes compris, guidé et soulagé. On garde le sens, on simplifie la technique, et on construit un site qui te ressemble — clair,
+                        vivant et durable.
                     </p>
                 </div>
 
@@ -30,12 +59,12 @@ export default function ValuesSection() {
                         <li key={title} className="group rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
                             <div className="flex items-center gap-3">
                                 <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
-                                    <Icon className="w-3.5 h-3.5 text-sauge" aria-hidden />
+                                    <Icon className="w-3.5 h-3.5" aria-hidden />
                                 </span>
                                 <h3 className="text-xs tracking-[0.14em] uppercase font-semibold text-terracotta">{title}</h3>
                             </div>
 
-                            {/* Séparateur animé */}
+                            {/* Séparateur animé (cohérent site) */}
                             <div className="mt-3 relative h-[2px] overflow-hidden">
                                 <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                                 <div
@@ -44,7 +73,7 @@ export default function ValuesSection() {
                                 />
                             </div>
 
-                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed line-clamp-2">{desc}</p>
+                            <p className="mt-3 text-sm text-foreground/80 leading-relaxed">{desc}</p>
                         </li>
                     ))}
                 </ul>

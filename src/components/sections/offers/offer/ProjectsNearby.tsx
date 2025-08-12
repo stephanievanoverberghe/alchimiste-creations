@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles } from 'lucide-react';
+import { GalleryVerticalEnd, LayoutGrid } from 'lucide-react';
 import projectsRaw from '@/data/projects.json';
 import CardProject from '@/components/cards/CardProject';
 import CardContactTeaser from '@/components/cards/CardContactTeaser';
@@ -29,7 +29,7 @@ type Project = {
 
 const PROJECTS = projectsRaw as unknown as Project[];
 
-export default function ProjectsNearbySection({ limit = 2 }: { limit?: number }) {
+export default function ProjectsNearbySection({ limit = 3 }: { limit?: number }) {
     const pathname = usePathname();
     const match = pathname.match(/^\/offres\/(essentiel|croissance|signature)\/?$/);
     const currentPack = (match?.[1] as PackSlug) ?? 'essentiel';
@@ -58,11 +58,11 @@ export default function ProjectsNearbySection({ limit = 2 }: { limit?: number })
 
     return (
         <section id="nearby-projects" aria-labelledby="nearby-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
+            <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
-                        <Sparkles className="w-3.5 h-3.5" aria-hidden />
+                        <GalleryVerticalEnd className="w-3.5 h-3.5" aria-hidden />
                         Projets proches
                     </span>
                     <h2 id="nearby-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
@@ -74,7 +74,7 @@ export default function ProjectsNearbySection({ limit = 2 }: { limit?: number })
                 </div>
 
                 {/* Cartes (projets + fallback CardContactTeaser) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {selected.map((p) => (
                         <CardProject
                             key={p.slug}
@@ -82,7 +82,6 @@ export default function ProjectsNearbySection({ limit = 2 }: { limit?: number })
                                 key: p.slug,
                                 title: p.titre,
                                 description: p.sousTitre,
-                                // CardProject utilise le logo avec motif; image ignorée
                                 imageSrc: p.image || undefined,
                                 logoSrc: p.logo || undefined,
                                 link: p.lien,
@@ -100,9 +99,16 @@ export default function ProjectsNearbySection({ limit = 2 }: { limit?: number })
                     ))}
                 </div>
 
-                {/* Lien global discret */}
+                {/* Bouton cohérent */}
                 <div className="flex justify-center lg:justify-start">
-                    <Link href="/projets" className="text-sm text-foreground/70 underline underline-offset-4 hover:text-foreground">
+                    <Link
+                        href="/projets"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold
+           tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105
+           shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
+                    >
+                        <LayoutGrid className="w-4 h-4" aria-hidden />
                         Voir tous les projets
                     </Link>
                 </div>
