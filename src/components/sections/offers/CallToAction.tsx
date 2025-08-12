@@ -2,11 +2,19 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { CalendarClock, FileText, ShieldCheck, Clock, Mail } from 'lucide-react';
 
 export default function CallToActionSection({ note = 'Réponse sous 24–48h ouvrées — échange sans pression.' }: { note?: string }) {
     return (
         <section id="contact-home" aria-labelledby="cta-home-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
+            {/* Fond or avec opacité 10% UNIQUEMENT sur mobile */}
+            <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
+
+            {/* Vague décorative visible uniquement à partir de md */}
+            <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
+                <Image src="/deco/home-wave.png" alt="Vague décorative" className="h-auto" fill priority />
+            </div>
             <div className="relative max-w-7xl mx-auto">
                 {/* Card CTA */}
                 <div className="group relative overflow-hidden rounded-[22px] border border-sauge/30 bg-background/70 p-6 md:p-10 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">

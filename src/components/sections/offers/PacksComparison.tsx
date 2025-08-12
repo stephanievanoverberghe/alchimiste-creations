@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf, faTint, faFire, faCheck, faMinus, faTag } from '@fortawesome/free-solid-svg-icons';
+import { FileText, Code2, SlidersHorizontal } from 'lucide-react';
 
 type Tech = 'wordpress' | 'react';
 
@@ -224,35 +225,40 @@ export default function PacksComparisonSection({ packs, tech, onTechChange }: { 
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
+                        <SlidersHorizontal className="w-3.5 h-3.5 inline mr-2" aria-hidden />
                         Comparateur
                     </span>
+
                     <h2 id="packs-compare-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
                         Comparer les packs
                     </h2>
 
-                    {/* Switch techno (local) */}
+                    {/* Switch techno — même design que les autres */}
                     <div className="mt-4 flex justify-center lg:justify-start">
-                        <div role="tablist" aria-label="Technologie" className="inline-flex items-center rounded-full border border-sauge/40 bg-background p-1 shadow-sm">
-                            <button
-                                role="tab"
-                                aria-selected={tech === 'wordpress'}
-                                onClick={() => onTechChange('wordpress')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    tech === 'wordpress' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                WordPress
-                            </button>
-                            <button
-                                role="tab"
-                                aria-selected={tech === 'react'}
-                                onClick={() => onTechChange('react')}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    tech === 'react' ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                React / Next.js
-                            </button>
+                        <div className="w-full grid grid-cols-2 sm:inline-flex rounded-2xl border border-sauge/30 bg-background p-1 sm:w-auto">
+                            {(['wordpress', 'react'] as Tech[]).map((t) => {
+                                const active = t === tech;
+                                const label = t === 'wordpress' ? 'WP' : 'React';
+                                const aria = t === 'wordpress' ? 'WordPress (éditeur visuel)' : 'React/Next.js (sur-mesure)';
+                                return (
+                                    <button
+                                        key={t}
+                                        type="button"
+                                        onClick={() => onTechChange(t)}
+                                        aria-pressed={active}
+                                        aria-current={active ? 'true' : undefined}
+                                        aria-label={aria}
+                                        title={aria}
+                                        className={`inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl
+                      text-xs tracking-[0.14em] uppercase font-semibold transition transform
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2
+                      ${active ? 'bg-sauge text-background shadow-sm' : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-[1px] hover:shadow-sm'}`}
+                                    >
+                                        {t === 'wordpress' ? <FileText className="w-4 h-4" aria-hidden /> : <Code2 className="w-4 h-4" aria-hidden />}
+                                        {label}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 

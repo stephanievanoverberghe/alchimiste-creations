@@ -441,12 +441,13 @@ export default function FAQBareList({
                     <Link
                         href="/faq"
                         className={cn(
-                            'mt-2 w-auto self-center lg:self-start px-6 py-3 rounded-2xl text-center',
+                            'inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-center',
                             'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
                             'border-b-2 border-r-2 border-ormat transition hover:scale-105',
                             'shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
                         )}
                     >
+                        <HelpCircle className="w-4 h-4" aria-hidden />
                         Voir toutes les questions
                     </Link>
                 )}

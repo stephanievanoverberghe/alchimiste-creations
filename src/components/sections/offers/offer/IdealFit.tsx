@@ -5,9 +5,19 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import packsRaw from '@/data/packs.json';
-import { Check } from 'lucide-react';
+import { ListChecks, BadgeCheck, CalendarClock } from 'lucide-react';
+
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLeaf, faTint, faFire } from '@fortawesome/free-solid-svg-icons';
 
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
+
+const PACK_FA_ICONS: Record<PackSlug, IconDefinition> = {
+    essentiel: faLeaf,
+    croissance: faTint,
+    signature: faFire,
+};
 
 type Pack = {
     slug: PackSlug;
@@ -140,26 +150,40 @@ export default function IdealFitSection({ slug }: { slug?: PackSlug }) {
 
                 {/* Switch packs (en-tête de section) */}
                 <div className="flex justify-center lg:justify-start">
-                    <div role="tablist" aria-label="Choisir un pack" className="inline-flex items-center rounded-full border border-sauge/40 bg-background p-1 shadow-sm">
-                        {(['essentiel', 'croissance', 'signature'] as PackSlug[]).map((s) => (
-                            <button
-                                key={s}
-                                role="tab"
-                                aria-selected={key === s}
-                                onClick={() => onPackChange(s)}
-                                className={`px-4 py-1.5 text-sm font-semibold rounded-full transition cursor-pointer ${
-                                    key === s ? 'bg-sauge/15 text-foreground' : 'text-foreground/70 hover:text-foreground'
-                                }`}
-                            >
-                                {s === 'essentiel' ? 'Essentiel' : s === 'croissance' ? 'Croissance' : 'Signature'}
-                            </button>
-                        ))}
+                    <div
+                        role="tablist"
+                        aria-label="Choisir un pack"
+                        className="inline-grid grid-cols-3 sm:inline-flex rounded-2xl border border-sauge/30 bg-background p-1 w-full sm:w-auto"
+                    >
+                        {(['essentiel', 'croissance', 'signature'] as PackSlug[]).map((p) => {
+                            const active = key === p;
+                            const label = p === 'essentiel' ? 'Essentiel' : p === 'croissance' ? 'Croissance' : 'Signature';
+                            return (
+                                <button
+                                    key={p}
+                                    type="button"
+                                    onClick={() => onPackChange(p)}
+                                    aria-pressed={active}
+                                    aria-current={active ? 'true' : undefined}
+                                    aria-label={label}
+                                    title={label}
+                                    className={`inline-flex items-center justify-center gap-2 w-full px-2 py-2 sm:px-3 sm:py-2 rounded-xl
+                    text-xs tracking-[0.14em] uppercase font-semibold transition transform
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 focus-visible:ring-offset-2
+                    ${active ? 'bg-terracotta text-background shadow-sm' : 'cursor-pointer text-terracotta hover:bg-terracotta/10 hover:-translate-y-[1px] hover:shadow-sm'}`}
+                                >
+                                    <FontAwesomeIcon icon={PACK_FA_ICONS[p]} className="text-[18px] sm:text-[14px]" aria-hidden />
+                                    <span className="hidden sm:inline">{label}</span>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
 
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-block text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                        <ListChecks className="w-3.5 h-3.5" aria-hidden />
                         Idéal si…
                     </span>
                     <h2 id="ideal-fit-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
@@ -168,15 +192,50 @@ export default function IdealFitSection({ slug }: { slug?: PackSlug }) {
                     {fit.subtitle && <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">{fit.subtitle}</p>}
                 </div>
 
-                {/* Puces */}
-                <ul className="grid gap-3 md:gap-4">
-                    {fit.items.slice(0, 5).map((txt, i) => (
-                        <li key={i} className="flex items-start gap-3 rounded-xl border border-sauge/30 bg-background px-4 py-3 shadow-sm">
-                            <Check aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-terracotta" strokeWidth={2.5} />
-                            <span className="text-sm md:text-base leading-relaxed text-foreground/90" dangerouslySetInnerHTML={{ __html: txt }} />
-                        </li>
-                    ))}
-                </ul>
+                {/* Carte "fit" avec motif discret + puces */}
+                <div className="group relative overflow-hidden rounded-[22px] border border-sauge/30 bg-background/70 p-5 md:p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+                    {/* motif discret */}
+                    <div
+                        className="pointer-events-none absolute inset-0 opacity-10"
+                        style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
+                        aria-hidden
+                    />
+
+                    {/* chips header */}
+                    <div className="relative z-[1] mb-4 flex flex-wrap items-center gap-2">
+                        <span className="inline-flex items-center gap-2 rounded-xl border border-sauge/30 bg-sauge/10 text-sauge px-3 py-1.5 text-sm">
+                            <FontAwesomeIcon icon={PACK_FA_ICONS[key]} className="text-[14px]" aria-hidden />
+                            {pack.titre.replace(/^Pack\s+/i, '')}
+                        </span>
+                        {pack.delaiNote && (
+                            <span className="inline-flex items-center gap-2 rounded-xl border border-ormat/30 bg-ormat/10 text-ormat px-3 py-1.5 text-xs">{pack.delaiNote}</span>
+                        )}
+                    </div>
+
+                    {/* Liste des points */}
+                    <ul className="relative z-[1] grid gap-3 md:gap-3">
+                        {fit.items.slice(0, 5).map((txt, i) => (
+                            <li key={i} className="flex items-start gap-3 rounded-xl border border-sauge/30 bg-background/70 px-4 py-3">
+                                <BadgeCheck aria-hidden="true" className="mt-0.5 h-4 w-4 flex-none text-sauge" />
+                                <span className="text-sm md:text-base leading-relaxed text-foreground/90" dangerouslySetInnerHTML={{ __html: txt }} />
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* CTA doux */}
+                    <div className="relative z-[1] mt-5 flex justify-center lg:justify-start">
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+                bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase
+                border-b-2 border-r-2 border-ormat transition hover:scale-105
+                shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
+                        >
+                            <CalendarClock className="w-4 h-4" aria-hidden />
+                            Discuter de ton contexte
+                        </Link>
+                    </div>
+                </div>
             </div>
         </section>
     );

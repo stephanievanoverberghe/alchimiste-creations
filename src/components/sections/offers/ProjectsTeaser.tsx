@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Mail } from 'lucide-react'; // ⟵ Mail ajouté ici
 import rawProjects from '@/data/projects.json';
 import CardProject, { type CardProjectData } from '@/components/cards/CardProject';
 import CardContactTeaser from '@/components/cards/CardContactTeaser';
@@ -63,7 +63,6 @@ function normalize(p: RawProject, idx: number): CardProjectData {
 const ALL: (CardProjectData & { year?: number })[] = ((rawProjects as RawProject[]) ?? []).map((p, i) => Object.assign(normalize(p, i), { year: p.year }));
 
 export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number }) {
-    // Tri "derniers en date"
     const sorted = [...ALL].sort((a, b) => {
         const ay = typeof a.year === 'number' ? a.year! : -Infinity;
         const by = typeof b.year === 'number' ? b.year! : -Infinity;
@@ -109,22 +108,29 @@ export default function ProjectsTeaserSection({ limit = 3 }: { limit?: number })
                     ))}
                 </ul>
 
-                {/* CTA bas de section */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                {/* CTA bas de section — styles cohérents CTA */}
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <Link
                         href="/projets"
                         className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-ormat hover:bg-ormat/90 text-foreground text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-center',
+                            'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
+                            'border-b-2 border-r-2 border-ormat transition hover:scale-105',
+                            'shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
                         )}
                     >
+                        <Sparkles className="w-4 h-4" aria-hidden />
                         Voir tous les projets
                     </Link>
+
                     <Link
                         href="/contact"
                         className={cn(
-                            'inline-block px-6 py-3 text-center rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-center',
+                            'border border-sauge/40 bg-background hover:bg-sauge/10 text-sm font-semibold tracking-widest uppercase transition hover:scale-105'
                         )}
                     >
+                        <Mail className="w-4 h-4" aria-hidden />
                         Parler de ton projet
                     </Link>
                 </div>
