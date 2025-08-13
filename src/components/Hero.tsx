@@ -23,6 +23,7 @@ import {
     BadgeCheck,
     ArrowRight,
 } from 'lucide-react';
+import projectsData from '@/data/projects.json';
 
 type HeroScanStyle = React.CSSProperties & {
     ['--scanW']?: string;
@@ -47,6 +48,77 @@ function IconForLabel(label: string) {
     if (/méthode|methode|process/.test(l)) return ListChecks;
     if (/propos|approche/.test(l)) return IdCard;
     return ArrowRight;
+}
+
+// Helpers
+function labelStack(s?: string) {
+    const v = (s ?? '').toLowerCase();
+    if (v.includes('react')) return 'React';
+    if (v.includes('wordpress')) return 'WordPress';
+    return s || 'Stack';
+}
+function labelKind(k?: string) {
+    switch ((k ?? '').toLowerCase()) {
+        case 'ecommerce':
+            return 'E-commerce';
+        case 'vitrine':
+            return 'Site vitrine';
+        case 'portfolio':
+            return 'Portfolio';
+        case 'rdv':
+            return 'Prise de RDV';
+        default:
+            return 'Projet';
+    }
+}
+function labelSector(s?: string) {
+    switch ((s ?? '').toLowerCase()) {
+        case 'artistes':
+            return 'Artistes';
+        case 'therapeutes':
+            return 'Thérapeutes';
+        case 'independants':
+            return 'Indépendants';
+        default:
+            return undefined;
+    }
+}
+
+type RawProject = {
+    slug?: string;
+    titre?: string;
+    title?: string;
+    sousTitre?: string;
+    sector?: string;
+    kind?: string;
+    stack?: string;
+    year?: number;
+    location?: { city?: string };
+    status?: 'coded' | 'wip' | string;
+    logo?: string;
+};
+
+// Badge helper
+function badgeForPath(path: string, s?: PackSlug) {
+    if (s === 'essentiel') return { label: 'Lancement rapide', Icon: Leaf };
+    if (s === 'croissance') return { label: 'Évolutif • conversion douce', Icon: TrendingUp };
+    if (s === 'signature') return { label: 'Sur-mesure', Icon: Gem };
+    switch (path) {
+        case '/':
+            return { label: 'Développement web sur-mesure', Icon: Sparkles };
+        case '/a-propos':
+            return { label: 'Approche humaine & précise', Icon: IdCard };
+        case '/methode':
+            return { label: 'Process clair et jalonné', Icon: ListChecks };
+        case '/offres':
+            return { label: 'Packs WordPress & React', Icon: Layers3 };
+        case '/projets':
+            return { label: 'Réalisations récentes', Icon: LayoutGrid };
+        case '/contact':
+            return { label: 'Réponse sous 24–48h', Icon: CalendarClock };
+        default:
+            return { label: 'Alchimiste Créations', Icon: Sparkles };
+    }
 }
 
 export default function Hero() {
@@ -122,34 +194,21 @@ export default function Hero() {
     };
 
     const packContent = slug ? packMap[slug] : undefined;
-    const { title, paragraph, cta, bg } = packContent ?? textMap[pathname] ?? textMap['/'];
 
-    type Badge = { label: string; Icon: React.ComponentType<{ className?: string }> };
-    const badgeForPath = (path: string, slug?: PackSlug): Badge => {
-        if (slug === 'essentiel') return { label: packMap.essentiel.badge, Icon: Leaf };
-        if (slug === 'croissance') return { label: packMap.croissance.badge, Icon: TrendingUp };
-        if (slug === 'signature') return { label: packMap.signature.badge, Icon: Gem };
-        switch (path) {
-            case '/':
-                return { label: 'Développement web sur-mesure', Icon: Sparkles };
-            case '/a-propos':
-                return { label: 'Approche humaine & précise', Icon: IdCard };
-            case '/methode':
-                return { label: 'Process clair et jalonné', Icon: ListChecks };
-            case '/offres':
-                return { label: 'Packs WordPress & React', Icon: Layers3 };
-            case '/projets':
-                return { label: 'Réalisations récentes', Icon: LayoutGrid };
-            case '/contact':
-                return { label: 'Réponse sous 24–48h', Icon: CalendarClock };
-            default:
-                return { label: 'Alchimiste Créations', Icon: Sparkles };
-        }
-    };
-    const { label: badgeLabel, Icon: BadgeIcon } = badgeForPath(pathname, slug || undefined);
+    // ===== Personnalisation /projets/[slug] (fond générique projet conservé) =====
+    const isProjectDetail = /^\/projets\/[^\/?#]+\/?$/.test(pathname);
+    const projectSlug = isProjectDetail ? pathname.split('/')[2] : undefined;
+    const project: RawProject | undefined = isProjectDetail && Array.isArray(projectsData) ? (projectsData as RawProject[]).find((p) => (p.slug ?? '') === projectSlug) : undefined;
 
-    // chips (optionnel – inchangé)
-    const chips: { label: string; Icon: React.ComponentType<{ className?: string }>; tone: 'sauge' | 'terracotta' | 'ormat' }[] =
+    // Base de contenu + séparation de bg pour prefer-const
+    const base = packContent ?? textMap[pathname] ?? textMap['/'];
+    let { title, paragraph, cta } = base; // réassignables
+    const { bg } = base; // jamais réassigné
+
+    let { label: badgeLabel, Icon: BadgeIcon } = badgeForPath(pathname, slug || undefined);
+
+    // Chips par défaut
+    let chips: { label: string; Icon: React.ComponentType<{ className?: string }>; tone: 'sauge' | 'terracotta' | 'ormat' }[] =
         slug === 'essentiel'
             ? [
                   { label: 'One-page / mini-site', Icon: FileText, tone: 'sauge' },
@@ -174,6 +233,44 @@ export default function Hero() {
                   { label: 'Clair • durable', Icon: ShieldCheck, tone: 'ormat' },
               ];
 
+    // Si on est sur un projet : personnalisation texte/CTA/badge/chips (pas de logo)
+    if (project) {
+        const t = project.titre || project.title || 'Étude de cas';
+        const kindL = labelKind(project.kind);
+        const stackL = labelStack(project.stack);
+        const sectorL = labelSector(project.sector);
+        const metaBits = [
+            sectorL ? `${sectorL}` : undefined,
+            project.location?.city ? project.location.city : undefined,
+            typeof project.year === 'number' ? String(project.year) : undefined,
+        ].filter(Boolean);
+
+        title = t;
+        paragraph = project.sousTitre || `${kindL}${sectorL ? ` — ${sectorL}` : ''}. ${stackL}${metaBits.length ? ` • ${metaBits.join(' • ')}` : ''}.`;
+
+        cta = [
+            { label: 'Voir tous les projets', href: '/projets' },
+            { label: 'Discuter de mon projet', href: '/contact' },
+        ];
+
+        badgeLabel = `${kindL} • ${stackL}`;
+        BadgeIcon = LayoutGrid;
+
+        const chip3 =
+            (project.status ?? '').toLowerCase() === 'wip'
+                ? { label: 'En cours', Icon: BadgeCheck, tone: 'ormat' as const }
+                : {
+                      label: [project.location?.city, project.year].filter(Boolean).join(' • ') || 'En ligne',
+                      Icon: ClockIcon,
+                      tone: 'ormat' as const,
+                  };
+
+        chips = [{ label: stackL, Icon: stackL.includes('WordPress') ? FileText : Code2, tone: 'sauge' }, { label: kindL, Icon: LayoutGrid, tone: 'terracotta' }, chip3];
+    }
+
+    // Fond : toujours l’image générique projets pour le détail
+    const heroBg = isProjectDetail ? '/hero/hero-projets.png' : bg;
+
     const toneCls = {
         sauge: 'border-sauge/30 bg-sauge/10 text-sauge',
         terracotta: 'border-terracotta/30 bg-terracotta/10 text-terracotta',
@@ -182,9 +279,9 @@ export default function Hero() {
 
     return (
         <section className="relative flex items-center pt-28 md:pt-44 pb-28 lg:pt-56 lg:pb-36 px-6 md:px-8 lg:px-[100px] xl:px-[150px] overflow-hidden">
-            {bg && (
+            {heroBg && (
                 <div className="absolute inset-0 -z-10">
-                    <Image src={bg} alt="" fill priority className="object-cover object-center" />
+                    <Image src={heroBg} alt="" fill priority className="object-cover object-center" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20" />
                     <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>

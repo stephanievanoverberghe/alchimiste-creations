@@ -51,7 +51,7 @@ export default function ProjectQuickView({ open, onClose, project, className }: 
                     type="button"
                     onClick={onClose}
                     aria-label="Fermer"
-                    className="absolute right-3 top-3 inline-flex items-center justify-center rounded-xl border border-ormat/30 bg-ormat/10 p-1.5 text-ormat hover:bg-ormat/15"
+                    className="absolute cursor-pointer right-3 top-3 inline-flex items-center justify-center rounded-xl border border-ormat/30 bg-ormat/10 p-1.5 text-ormat hover:bg-ormat/15"
                 >
                     <X className="w-4 h-4" />
                 </button>
