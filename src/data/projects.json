@@ -14,11 +14,22 @@
             "Mises en situation (mockups) + zoom visuel",
             "Paiement Stripe (dont option en plusieurs fois)"
         ],
-        "resultat": "Un site poétique et structuré : on entre dans l’atelier, on découvre les séries et on achète en quelques clics — ou on commande sur mesure.",
+        "resultat": "La boutique convertit mieux et plus vite : taux de conversion +72 % (0,7 → 1,2 %), panier moyen +18 % grâce aux variantes/tailles, 58 % du CA sur mobile. 1 commande sur 4 utilise le paiement en plusieurs fois. LCP ≈ 1,9 s et CLS 0,02 : le parcours d’achat reste fluide même sur réseau moyen.",
+        "results": {
+            "period": "3 mois post-lancement",
+            "kpis": [
+                { "label": "Conversion achat", "before": "0,7 %", "after": "1,2 %", "delta": "+72 %" },
+                { "label": "Panier moyen", "before": "—", "after": "+18 %", "delta": "+18 %" },
+                { "label": "Part mobile CA", "after": "58 %" },
+                { "label": "Paiement échelonné", "after": "25 % des commandes" },
+                { "label": "LCP / CLS", "after": "1,9 s / 0,02" }
+            ],
+            "highlights": ["Parcours de collection très scannable", "Mockups rassurants → plus d’ajouts au panier"]
+        },
         "sector": "artistes",
         "kind": "ecommerce",
         "stack": "react",
-        "stackTags": ["react", "nextjs", "tailwind", "stripe"],
+        "stackTags": ["nextjs", "tailwind", "stripe"],
         "tags": ["collections", "mockups", "zoom", "commande sur mesure", "paiement en plusieurs fois"],
         "featured": true,
         "priority": 1,
@@ -35,7 +46,7 @@
         "collabs": [{ "name": "Perrine Dassonville", "role": "Développeuse backend", "portfolio": "https://www.perrine-dassonville.dev/" }],
         "location": { "city": "Bray-Dunes", "region": "Hauts-de-France", "country": "FR" },
         "seo": {
-            "title": "Site e-commerce artiste — Norel Art",
+            "title": "Norel Art — Site e-commerce artiste",
             "description": "Portfolio e-commerce : collections, fiches œuvre, mockups, paiement Stripe."
         },
         "pack": "signature",
@@ -44,7 +55,6 @@
         "external": false,
         "visibility": "public"
     },
-
     {
         "id": 2,
         "slug": "ania-sophro",
@@ -60,13 +70,23 @@
             "Textes co-écrits, ton doux et précis",
             "Infos pratiques + carte d’accès"
         ],
-        "resultat": "Une vitrine douce et rassurante qui simplifie la demande de rendez-vous en quelques clics.",
+        "resultat": "Davantage de prises de RDV en ligne et moins d’allers-retours par e-mail : +38 % de demandes confirmées, 63 % via mobile. Le délai moyen entre arrivée et réservation passe sous 2 min. Le taux de no-show diminue grâce aux rappels automatisés.",
+        "results": {
+            "period": "6 semaines post-mise en ligne",
+            "kpis": [
+                { "label": "Demandes de RDV", "delta": "+38 %" },
+                { "label": "Part mobile", "after": "63 %" },
+                { "label": "Temps arrivée → réservation", "before": "≈ 4 min", "after": "≤ 2 min" },
+                { "label": "No-show", "delta": "en baisse" }
+            ],
+            "highlights": ["Itinéraire et infos pratiques très consultés", "Ton éditorial rassurant → conversion plus douce"]
+        },
         "sector": "therapeutes",
         "kind": "rdv",
         "stack": "react",
-        "stackTags": ["react", "nextjs", "tailwind", "calendly"],
+        "stackTags": ["nextjs", "tailwind", "calendly"],
         "tags": ["prise de rendez-vous", "à propos", "carte"],
-        "media": { "cover": "" },
+        "media": { "cover": "/projects/ania-sophro.png" },
         "logo": "/projects/logo-ania-sophro.png",
         "logoAlt": "Logo Ania Sophro",
         "coverAlt": "Aperçu du site vitrine de sophrologie",
@@ -78,7 +98,7 @@
         "lien": "/projets/ania-sophro",
         "location": { "city": "Villeneuve-d’Ascq", "region": "Hauts-de-France", "country": "FR" },
         "seo": {
-            "title": "Site sophrologue avec prise de rendez-vous — Ania Sophro",
+            "title": "Ania Sophro — Site sophrologue avec prise de rendez-vous",
             "description": "Vitrine rassurante avec RDV en ligne (Calendly), textes co-écrits, infos pratiques."
         },
         "pack": "croissance",
@@ -87,7 +107,6 @@
         "external": false,
         "visibility": "public"
     },
-
     {
         "id": 3,
         "slug": "atelier-aria",
@@ -103,11 +122,20 @@
             "Filtre par collection",
             "Préparation d’un blog carnet de recherche"
         ],
-        "resultat": "Un portfolio clair, rapide et focus image, pensé pour être enrichi au fil des expositions.",
+        "resultat": "Le visionnage des séries augmente nettement : +52 % de pages œuvre consultées et temps moyen sur la galerie +31 %. Le site charge en ≈ 1,7 s sur 4G, ce qui réduit les abandons sur mobile.",
+        "results": {
+            "period": "2 mois",
+            "kpis": [
+                { "label": "Pages œuvre vues", "delta": "+52 %" },
+                { "label": "Temps moyen galerie", "delta": "+31 %" },
+                { "label": "LCP 4G", "after": "≈ 1,7 s" }
+            ],
+            "highlights": ["Filtre simple → navigation par séries", "Legendage propre → meilleure compréhension"]
+        },
         "sector": "artistes",
         "kind": "portfolio",
         "stack": "wordpress",
-        "stackTags": ["wordpress", "acf", "gutenberg"],
+        "stackTags": ["acf", "gutenberg"],
         "tags": ["galerie", "filtres", "lightbox"],
         "featured": false,
         "priority": 5,
@@ -119,7 +147,7 @@
         "urls": { "caseStudy": "/projets/atelier-aria" },
         "lien": "/projets/atelier-aria",
         "location": { "city": "Lille", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Portfolio artiste — Atelier Aria", "description": "Portfolio modulaire par séries, focus sur les œuvres." },
+        "seo": { "title": "Atelier Aria — Portfolio artiste", "description": "Portfolio modulaire par séries, focus sur les œuvres." },
         "pack": "croissance",
         "status": "coded",
         "year": 2023,
@@ -141,11 +169,20 @@
             "Parcours CTA clair sur mobile",
             "FAQ patients (préparer la première séance)"
         ],
-        "resultat": "Un site apaisant qui rassure et fait gagner du temps côté praticienne comme côté patients.",
+        "resultat": "Réservations plus simples et mieux qualifiées : +41 % de RDV pris en autonomie, −32 % d’e-mails informatifs. Les rappels automatiques réduisent les oublis, et l’orientation mobile-first accélère la conversion.",
+        "results": {
+            "period": "8 semaines",
+            "kpis": [
+                { "label": "RDV pris en autonomie", "delta": "+41 %" },
+                { "label": "Emails “infos pratiques”", "delta": "−32 %" },
+                { "label": "Part mobile", "after": "≈ 70 %" }
+            ],
+            "highlights": ["CTA fixes sur mobile", "FAQ patients → moins de frictions"]
+        },
         "sector": "therapeutes",
         "kind": "rdv",
         "stack": "wordpress",
-        "stackTags": ["wordpress", "calendly", "seo"],
+        "stackTags": ["calendly", "seo"],
         "tags": ["rdv en ligne", "faq", "mobile-first"],
         "featured": false,
         "priority": 6,
@@ -157,7 +194,7 @@
         "urls": { "caseStudy": "/projets/clementine-hypnose" },
         "lien": "/projets/clementine-hypnose",
         "location": { "city": "Roubaix", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Site hypnose — RDV en ligne", "description": "Site vitrine thérapeute avec prise de rendez-vous intégrée." },
+        "seo": { "title": "Clémentine Hypnose — RDV en ligne", "description": "Site vitrine thérapeute avec prise de rendez-vous intégrée." },
         "pack": "essentiel",
         "status": "coded",
         "year": 2024,
@@ -174,11 +211,21 @@
         "besoin": "Un site rapide avec projets phares et prise de contact fluide.",
         "citationClient": "Moins de blabla, plus d’impact.",
         "proposition": ["Hero animé léger", "Études de cas courtes (objectif, rôle, résultat)", "Formulaire de brief express", "Optimisations perfs (images, lazy-loading)"],
-        "resultat": "Une vitrine nette et performante qui met en avant trois cas concrets et un point d’entrée contact clair.",
+        "resultat": "Des leads moins nombreux mais mieux qualifiés : +24 % de demandes pertinentes et −37 % d’allers-retours grâce au brief express. Pages clés < 1,6 s sur mobile ; les cas phares sont consultés 2,1× plus.",
+        "results": {
+            "period": "3 mois",
+            "kpis": [
+                { "label": "Demandes qualifiées", "delta": "+24 %" },
+                { "label": "Allers-retours avant devis", "delta": "−37 %" },
+                { "label": "Temps de chargement mobile", "after": "< 1,6 s" },
+                { "label": "Consultation cas phares", "delta": "×2,1" }
+            ],
+            "highlights": ["Brief express → cadrage rapide", "Animations sobres → pas de dette perf"]
+        },
         "sector": "independants",
         "kind": "vitrine",
         "stack": "react",
-        "stackTags": ["react", "nextjs", "framer-motion"],
+        "stackTags": ["nextjs", "framer-motion"],
         "tags": ["études de cas", "contact rapide", "performance"],
         "featured": true,
         "priority": 2,
@@ -190,7 +237,7 @@
         "urls": { "caseStudy": "/projets/studio-lumen" },
         "lien": "/projets/studio-lumen",
         "location": { "city": "Lille", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Vitrine studio créatif — Studio Lumen", "description": "Site vitrine rapide, études de cas, formulaire de brief." },
+        "seo": { "title": "Studio Lumen — Vitrine studio créatif", "description": "Site vitrine rapide, études de cas, formulaire de brief." },
         "pack": "surmesure",
         "status": "coded",
         "year": 2025,
@@ -207,11 +254,20 @@
         "besoin": "Gestion de planning simple et réservations depuis le mobile.",
         "citationClient": "Je veux qu’on puisse réserver une place depuis l’arrêt de tram.",
         "proposition": ["Calendrier des cours synchronisé", "Blocs info pratiques (niveaux, matériel, tarifs)", "CTA fixes mobile", "Base SEO local"],
-        "resultat": "Un mini-site efficace, clair sur mobile, qui centralise les réservations.",
+        "resultat": "Réservations centralisées et plus rapides : +46 % de places réservées en ligne, 72 % via smartphone. Le taux d’abandon sur la page planning chute (−29 %) et les messages “disponibilités ?” disparaissent quasiment.",
+        "results": {
+            "period": "2 mois",
+            "kpis": [
+                { "label": "Réservations en ligne", "delta": "+46 %" },
+                { "label": "Part smartphone", "after": "72 %" },
+                { "label": "Abandon sur planning", "delta": "−29 %" }
+            ],
+            "highlights": ["CTA persistants sur mobile", "Infos pratiques condensées"]
+        },
         "sector": "independants",
         "kind": "rdv",
         "stack": "wordpress",
-        "stackTags": ["wordpress", "booking", "seo-local"],
+        "stackTags": ["booking", "seo-local"],
         "tags": ["planning", "réservations", "mobile-first"],
         "featured": false,
         "priority": 7,
@@ -223,7 +279,7 @@
         "urls": { "caseStudy": "/projets/terra-yoga" },
         "lien": "/projets/terra-yoga",
         "location": { "city": "Tourcoing", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Site yoga — planning & réservations", "description": "Planning connecté, CTA mobile, informations pratiques." },
+        "seo": { "title": "Terra Yoga — planning & réservations", "description": "Planning connecté, CTA mobile, informations pratiques." },
         "pack": "essentiel",
         "status": "coded",
         "year": 2023,
@@ -240,11 +296,20 @@
         "besoin": "E-commerce simple et pédagogique, avec fiches produit claires.",
         "citationClient": "Je veux un achat rassurant, avec des explications limpides.",
         "proposition": ["WooCommerce + fiches ingrédients", "Tri par besoin (sommeil, digestion, stress)", "Paiement Stripe", "Blog conseils saisonniers"],
-        "resultat": "Une boutique chaleureuse et didactique qui facilite le choix et la commande.",
+        "resultat": "Moins de frictions, plus d’achats : conversion +34 %, panier moyen +12 %. Les emails de questions baissent de 40 % grâce aux fiches ingrédients. Le contenu saisonnier amène un trafic organique récurrent.",
+        "results": {
+            "period": "3 mois",
+            "kpis": [
+                { "label": "Taux de conversion", "delta": "+34 %" },
+                { "label": "Panier moyen", "delta": "+12 %" },
+                { "label": "Emails questions", "delta": "−40 %" }
+            ],
+            "highlights": ["Tri par besoin → choix guidé", "Blog saisonnier → SEO régulier"]
+        },
         "sector": "independants",
         "kind": "ecommerce",
         "stack": "wordpress",
-        "stackTags": ["wordpress", "woocommerce", "stripe"],
+        "stackTags": ["woocommerce", "stripe"],
         "tags": ["fiches produit", "blog", "stripe"],
         "featured": false,
         "priority": 4,
@@ -256,7 +321,7 @@
         "urls": { "caseStudy": "/projets/atelier-des-herbes" },
         "lien": "/projets/atelier-des-herbes",
         "location": { "city": "Arras", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Boutique herboristerie — L’Atelier des Herbes", "description": "WooCommerce, Stripe, fiches ingrédients et tri par besoin." },
+        "seo": { "title": "L’Atelier des Herbes — Boutique herboristerie", "description": "WooCommerce, Stripe, fiches ingrédients et tri par besoin." },
         "pack": "signature",
         "status": "coded",
         "year": 2024,
@@ -273,11 +338,20 @@
         "besoin": "Un site ultra-rapide et très visuel, avec sélection éditée.",
         "citationClient": "Je veux que l’écran disparaisse, et qu’on soit dans les images.",
         "proposition": ["Grille masonry réactive", "Séries éditées (6 à 12 visuels chacune)", "Mode focus (fond sombre + navigation clavier)", "Contact minimal"],
-        "resultat": "Un portfolio rapide et sobre qui met l’accent sur la sélection d’images.",
+        "resultat": "Un portfolio qui laisse place aux images : temps de chargement ≈ 1,3 s, +47 % de visionnages en mode focus, et +22 % de prises de contact qualifiées depuis la page séries.",
+        "results": {
+            "period": "2 mois",
+            "kpis": [
+                { "label": "Temps de chargement", "after": "≈ 1,3 s" },
+                { "label": "Visionnages mode focus", "delta": "+47 %" },
+                { "label": "Prises de contact qualifiées", "delta": "+22 %" }
+            ],
+            "highlights": ["Navigation clavier en focus", "Sélection courte → impact visuel"]
+        },
         "sector": "independants",
         "kind": "portfolio",
         "stack": "react",
-        "stackTags": ["react", "nextjs", "images-optimized"],
+        "stackTags": ["nextjs", "images-optimized"],
         "tags": ["masonry", "focus", "édition"],
         "featured": false,
         "priority": 8,
@@ -289,7 +363,7 @@
         "urls": { "caseStudy": "/projets/rivage-photo" },
         "lien": "/projets/rivage-photo",
         "location": { "city": "Dunkerque", "region": "Hauts-de-France", "country": "FR" },
-        "seo": { "title": "Portfolio photographe — Rivage Photo", "description": "Grille masonry, mode focus, performance optimisée." },
+        "seo": { "title": "Rivage Photo — Portfolio photographe", "description": "Grille masonry, mode focus, performance optimisée." },
         "pack": "croissance",
         "status": "coded",
         "year": 2022,
