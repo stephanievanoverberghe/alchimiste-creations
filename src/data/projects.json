@@ -29,7 +29,7 @@
         "sector": "artistes",
         "kind": "ecommerce",
         "stack": "react",
-        "stackTags": ["nextjs", "tailwind", "stripe"],
+        "stackTags": ["nextjs", "tailwind", "Symfony", "stripe"],
         "tags": ["collections", "mockups", "zoom", "commande sur mesure", "paiement en plusieurs fois"],
         "featured": true,
         "priority": 1,

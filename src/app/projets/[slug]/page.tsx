@@ -9,6 +9,7 @@ import ResultSection from '@/components/sections/projects/project/Result';
 import TestimonialSection from '@/components/sections/projects/project/Testimonial';
 import StackSection from '@/components/sections/projects/project/Stack';
 import CollabsSection from '@/components/sections/projects/project/Collabs';
+import NavSection from '@/components/sections/projects/project/Nav';
 
 type KPI = { label: string; before?: string; after?: string; delta?: string };
 type Testi = { quote?: string; author?: string };
@@ -42,6 +43,9 @@ type Project = {
     stack?: string;
     stackTags?: string[];
     tags?: string[];
+
+    // Nav
+    priority?: number;
 
     // Meta
     sector?: string;
@@ -86,6 +90,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     const p = getProject(slug);
     if (!p) notFound();
 
+    // ordre d’affichage pour la nav : priority ASC, puis year DESC, sinon ordre source
+    const ordered = [...ALL].sort((a, b) => {
+        const pa = a.priority ?? Number.MAX_SAFE_INTEGER;
+        const pb = b.priority ?? Number.MAX_SAFE_INTEGER;
+        if (pa !== pb) return pa - pb;
+        const ya = a.year ?? 0;
+        const yb = b.year ?? 0;
+        if (ya !== yb) return yb - ya;
+        return 0;
+    });
+
+    const idx = ordered.findIndex((x) => String(x.slug) === slug);
+    const prev = idx > 0 ? ordered[idx - 1] : undefined;
+    const next = idx >= 0 && idx < ordered.length - 1 ? ordered[idx + 1] : undefined;
+
     return (
         <>
             <ContextSection project={{ pourQui: p.pourQui, besoin: p.besoin }} />
@@ -94,6 +113,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <TestimonialSection project={{ testimonials: p.testimonials, citationClient: p.citationClient, client: p.client, logo: p.logo }} />
             <StackSection project={{ stack: p.stack, stackTags: p.stackTags, tags: p.tags }} />
             <CollabsSection project={{ collabs: (p as { collabs?: { name?: string; role?: string; portfolio?: string; site?: string; link?: string }[] }).collabs }} />
+            <NavSection
+                prev={prev ? { slug: String(prev.slug), titre: prev.titre, title: prev.title, logo: prev.logo } : undefined}
+                next={next ? { slug: String(next.slug), titre: next.titre, title: next.title, logo: next.logo } : undefined}
+            />
         </>
     );
 }
