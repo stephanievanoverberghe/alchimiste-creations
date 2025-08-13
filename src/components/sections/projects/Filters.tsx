@@ -24,7 +24,7 @@ type RawProject = {
     status?: 'coded' | 'wip';
     stack?: 'wordpress' | 'react' | 'mixte' | string;
     kind?: 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv' | string;
-    sector?: 'artistes' | 'therapeutes' | string;
+    sector?: 'artistes' | 'therapeutes' | 'independants' | string;
     year?: number;
     location?: { city?: string };
     external?: boolean;
