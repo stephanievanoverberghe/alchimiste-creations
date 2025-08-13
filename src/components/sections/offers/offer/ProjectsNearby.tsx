@@ -1,59 +1,93 @@
-// components/sections/offers/offer/ProjectsNearby.tsx
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GalleryVerticalEnd, LayoutGrid } from 'lucide-react';
-import projectsRaw from '@/data/projects.json';
-import CardProject from '@/components/cards/CardProject';
-import CardContactTeaser from '@/components/cards/CardContactTeaser';
+import projectsData from '@/data/projects.json';
+import CardProject, { type CardProjectData } from '@/components/cards/CardProject';
+import ContactTeaserCard from '@/components/cards/CardContactTeaser';
 
-type PackName = 'essentiel' | 'croissance' | 'signature' | 'surmesure';
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
 
-type Project = {
-    slug: string;
-    titre: string;
+// JSON brut (souple)
+type RawProject = {
+    slug?: string;
+    titre?: string;
+    title?: string;
     sousTitre?: string;
+    description?: string;
     image?: string;
     logo?: string;
-    lien: string;
-    status?: 'coded' | 'wip';
+    lien?: string;
+    urls?: { caseStudy?: string };
+    status?: string;
     stack?: 'react' | 'wordpress' | string;
     kind?: 'ecommerce' | 'rdv' | 'vitrine' | 'portfolio' | string;
-    pack?: PackName;
+    pack?: 'essentiel' | 'croissance' | 'signature' | 'surmesure' | string;
     year?: number;
-    city?: string;
+    location?: { city?: string };
     external?: boolean;
+    media?: { cover?: string };
 };
 
-const PROJECTS = projectsRaw as unknown as Project[];
+const slugify = (s: string) =>
+    s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+function toCard(p: RawProject): CardProjectData {
+    const title = p.titre ?? p.title ?? 'Projet';
+    const rawLink = p.lien ?? p.urls?.caseStudy ?? (p.slug ? `/projets/${p.slug}` : `/projets/${slugify(title)}`);
+    const external = typeof p.external === 'boolean' ? p.external : /^https?:\/\//i.test(String(rawLink));
+    const statusNorm = (p.status ?? '').toLowerCase();
+    const status: CardProjectData['status'] | undefined = statusNorm === 'wip' ? 'wip' : statusNorm === 'coded' ? 'coded' : undefined;
+
+    return {
+        key: String(p.slug ?? title),
+        title,
+        description: p.sousTitre ?? p.description,
+        imageSrc: p.image ?? p.media?.cover ?? undefined,
+        logoSrc: p.logo ?? undefined,
+        link: String(rawLink),
+        status,
+        stack: p.stack,
+        kind: p.kind,
+        pack: p.pack,
+        external,
+    };
+}
 
 export default function ProjectsNearbySection({ limit = 3 }: { limit?: number }) {
     const pathname = usePathname();
     const match = pathname.match(/^\/offres\/(essentiel|croissance|signature)\/?$/);
     const currentPack = (match?.[1] as PackSlug) ?? 'essentiel';
 
-    // 1) Filtrer par pack courant
-    const byPack = PROJECTS.filter((p) => p.pack === currentPack);
+    // 0) sécuriser la lecture du JSON
+    const RAW: RawProject[] = Array.isArray(projectsData) ? (projectsData as RawProject[]) : [];
 
-    // 2) Trier par "derniers en date" => year desc (ceux sans year en dernier), petit tie-breaker
-    const sorted = [...byPack].sort((a, b) => {
+    // 1) Filtrer par pack courant
+    const byPack = RAW.filter((p) => p.pack === currentPack);
+
+    // 2) Trier par année desc, puis wip en premier, puis alpha
+    const sorted = byPack.slice().sort((a, b) => {
         const ay = typeof a.year === 'number' ? a.year : -Infinity;
         const by = typeof b.year === 'number' ? b.year : -Infinity;
         if (by !== ay) return by - ay;
-        // wip d’abord à égalité d’année
-        if ((b.status === 'wip') !== (a.status === 'wip')) {
-            return (b.status === 'wip' ? 1 : 0) - (a.status === 'wip' ? 1 : 0);
-        }
-        // fallback alpha
-        return String(a.titre ?? a.slug).localeCompare(String(b.titre ?? b.slug));
+
+        const aw = (a.status ?? '').toLowerCase() === 'wip' ? 1 : 0;
+        const bw = (b.status ?? '').toLowerCase() === 'wip' ? 1 : 0;
+        if (bw !== aw) return bw - aw;
+
+        return String(a.titre ?? a.slug ?? '').localeCompare(String(b.titre ?? b.slug ?? ''));
     });
 
-    // 3) Prendre jusqu'à `limit`
-    const selected = sorted.slice(0, limit);
+    // 3) Mapper → CardProjectData et limiter
+    const selected: CardProjectData[] = sorted.slice(0, limit).map(toCard);
 
-    // 4) Compléter avec des teasers si pas assez de projets
+    // 4) Slots manquants (si pas assez de projets)
     const missing = Math.max(0, limit - selected.length);
 
     return (
@@ -73,29 +107,15 @@ export default function ProjectsNearbySection({ limit = 3 }: { limit?: number })
                     </p>
                 </div>
 
-                {/* Cartes (projets + fallback CardContactTeaser) */}
+                {/* Cartes */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    {selected.map((p) => (
-                        <CardProject
-                            key={p.slug}
-                            project={{
-                                key: p.slug,
-                                title: p.titre,
-                                description: p.sousTitre,
-                                imageSrc: p.image || undefined,
-                                logoSrc: p.logo || undefined,
-                                link: p.lien,
-                                status: p.status,
-                                stack: p.stack,
-                                kind: p.kind,
-                                pack: p.pack,
-                                external: p.external,
-                            }}
-                        />
+                    {selected.map((project) => (
+                        <CardProject key={project.key} project={project} />
                     ))}
 
+                    {/* Fallbacks éventuels (si tu as un composant teaser) */}
                     {Array.from({ length: missing }).map((_, i) => (
-                        <CardContactTeaser key={`contact-teaser-${i}`} />
+                        <ContactTeaserCard key={`contact-teaser-${i}`} />
                     ))}
                 </div>
 

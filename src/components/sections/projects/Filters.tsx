@@ -1,9 +1,25 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Filter, X, Search as SearchIcon, LayoutGrid, FileText, Code2, Monitor, Image as ImageIcon, ShoppingBag, CalendarClock, Palette, Heart, Briefcase } from 'lucide-react';
+import {
+    Filter,
+    X,
+    Search as SearchIcon,
+    LayoutGrid,
+    FileText,
+    Code2,
+    Monitor,
+    Image as ImageIcon,
+    ShoppingBag,
+    CalendarClock,
+    Palette,
+    Heart,
+    Briefcase,
+    ChevronLeft,
+    ChevronRight,
+} from 'lucide-react';
 import rawProjects from '@/data/projects.json';
 import CardProject, { type CardProjectData } from '@/components/cards/CardProject';
 
@@ -78,18 +94,22 @@ type Tech = 'any' | 'wordpress' | 'react';
 type Kind = 'any' | 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv';
 type Sector = 'any' | 'artistes' | 'therapeutes' | 'independants';
 
+const PER_PAGE = 6;
+
 export default function FiltersSection() {
     const ALL = useMemo(() => ((rawProjects as RawProject[]) ?? []).map(normalize), []);
     const [tech, setTech] = useState<Tech>('any');
     const [kind, setKind] = useState<Kind>('any');
     const [sector, setSector] = useState<Sector>('any');
     const [q, setQ] = useState('');
+    const [page, setPage] = useState(1); // ⬅️ pagination
 
     const resetAll = () => {
         setTech('any');
         setKind('any');
         setSector('any');
         setQ('');
+        setPage(1); // reset page
     };
 
     const norm = (v?: string) =>
@@ -126,10 +146,27 @@ export default function FiltersSection() {
 
     const count = filtered.length;
 
+    // Revenir à la page 1 dès qu’un filtre/recherche change
+    useEffect(() => {
+        setPage(1);
+    }, [tech, kind, sector, q]);
+
+    // Clamp si on dépasse le nombre de pages après filtrage
+    const totalPages = Math.max(1, Math.ceil(count / PER_PAGE));
+    useEffect(() => {
+        if (page > totalPages) setPage(totalPages);
+    }, [totalPages, page]);
+
+    // Slice de la page courante
+    const start = (page - 1) * PER_PAGE;
+    const pageItems = filtered.slice(start, start + PER_PAGE);
+
     // === Styles===
     const switchGroup = 'rounded-2xl border border-sauge/30 bg-background p-1 shrink-0 grid gap-1.5 w-full sm:inline-flex sm:flex-wrap sm:items-center sm:gap-1.5 sm:w-auto';
     const switchBtn =
         'inline-flex items-center justify-center gap-2 w-full sm:w-auto px-2 sm:px-3 py-2 rounded-xl text-xs tracking-[0.14em] uppercase font-semibold transition transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2 whitespace-nowrap';
+
+    const pagerBtnBase = 'inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold uppercase tracking-[0.14em] border transition';
 
     // Icônes par type et secteur
     const kindIcon: Record<Kind, React.ComponentType<{ className?: string }>> = {
@@ -310,13 +347,52 @@ export default function FiltersSection() {
                             </button>
                         </div>
                     ) : (
-                        <ul id="projects-results" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {filtered.map((p) => (
-                                <li key={p.key}>
-                                    <CardProject project={p} />
-                                </li>
-                            ))}
-                        </ul>
+                        <>
+                            <ul id="projects-results" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {pageItems.map((p) => (
+                                    <li key={p.key}>
+                                        <CardProject project={p} />
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Pagination */}
+                            {totalPages > 1 && (
+                                <nav className="mt-6 flex items-center justify-center gap-3" aria-label="Pagination">
+                                    <button
+                                        type="button"
+                                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                                        disabled={page <= 1}
+                                        className={cn(
+                                            pagerBtnBase,
+                                            page <= 1
+                                                ? 'opacity-50 cursor-not-allowed border-sauge/20 text-foreground/40'
+                                                : 'border-sauge/30 cursor-pointer text-sauge hover:bg-sauge/10'
+                                        )}
+                                    >
+                                        <ChevronLeft className="w-4 h-4" aria-hidden /> Précédent
+                                    </button>
+
+                                    <span className="text-xs text-foreground/70">
+                                        Page {page} / {totalPages}
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                                        disabled={page >= totalPages}
+                                        className={cn(
+                                            pagerBtnBase,
+                                            page >= totalPages
+                                                ? 'opacity-50 cursor-not-allowed border-sauge/20 text-foreground/40'
+                                                : 'border-sauge/30 cursor-pointer  text-sauge hover:bg-sauge/10'
+                                        )}
+                                    >
+                                        Suivant <ChevronRight className="w-4 h-4" aria-hidden />
+                                    </button>
+                                </nav>
+                            )}
+                        </>
                     )}
                 </div>
             </div>

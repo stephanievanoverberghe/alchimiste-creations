@@ -1,4 +1,3 @@
-// components/cards/CardProject.tsx
 'use client';
 
 import Link from 'next/link';
@@ -10,7 +9,7 @@ export type CardProjectData = {
     description?: string;
     imageSrc?: string;
     logoSrc?: string;
-    link: string;
+    link?: string; // ← rendu optionnel (on fabrique un fallback)
     status?: 'coded' | 'wip';
     stack?: 'wordpress' | 'react' | 'mixte' | string;
     kind?: 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv' | string;
@@ -46,16 +45,28 @@ const stackLabel = (s?: string) => {
     }
 };
 
+const slugify = (s: string) =>
+    s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
 export default function CardProject({ project }: { project: CardProjectData }) {
     const isWip = project.status === 'wip';
 
+    const safeTitle = project.title || 'Projet';
+    const href = project.link ?? `/projets/${slugify(safeTitle)}`;
+    const isExternal = project.external ?? /^https?:\/\//i.test(href);
+
     return (
         <Link
-            href={project.link}
-            aria-label={`Voir le projet : ${project.title}`}
-            prefetch={project.external ? false : undefined}
-            target={project.external ? '_blank' : undefined}
-            rel={project.external ? 'noopener noreferrer' : undefined}
+            href={href}
+            aria-label={`Voir le projet : ${safeTitle}`}
+            prefetch={isExternal ? false : undefined}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
             className="group relative flex h-full flex-col rounded-[20px] overflow-hidden border border-sauge/30 bg-background shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 pb-8"
         >
             {/* Media : toujours logo + motif */}
@@ -64,7 +75,7 @@ export default function CardProject({ project }: { project: CardProjectData }) {
                     {/* Motif de fond */}
                     <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(currentColor_1px,transparent_1px)] [background-size:16px_16px]" aria-hidden />
                     {project.logoSrc ? (
-                        <Image src={project.logoSrc} alt={`${project.title} — logo`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain p-8" priority={false} />
+                        <Image src={project.logoSrc} alt={`${safeTitle} — logo`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain p-8" priority={false} />
                     ) : (
                         <div className="relative z-[1] px-6 py-4 rounded-md border border-ormat/30 bg-background/60 text-ormat text-xs tracking-wider uppercase">Logo à venir</div>
                     )}
@@ -95,7 +106,7 @@ export default function CardProject({ project }: { project: CardProjectData }) {
 
             {/* Contenu */}
             <div className="p-5">
-                <h3 className="text-lg font-semibold tracking-wide text-foreground">{project.title}</h3>
+                <h3 className="text-lg font-semibold tracking-wide text-foreground">{safeTitle}</h3>
                 {project.description && <p className="mt-1 text-sm text-foreground/80 line-clamp-2">{project.description}</p>}
             </div>
 
