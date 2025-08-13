@@ -18,18 +18,30 @@
             "Préparation du terrain pour témoignages automatisés"
         ],
         "resultat": "Un site minimaliste, poétique et structuré, à son image. Les visiteurs peuvent entrer dans son monde, ressentir l’émotion de ses œuvres, acheter en quelques clics, ou passer une commande sur mesure.",
-        "temoignage": "Je ne pensais pas qu’un site pouvait me ressembler à ce point. C’est comme si tu avais traduit mes gestes en interface.",
-        "collaboration": "Perrine Dassonville – Développeuse backend",
-        "logo": "/projects/logo-norel-art.png",
-        "image": "/projects/norel-art.png",
-        "lien": "/projets/norel-art",
-        "status": "coded",
-        "stack": "react",
+        "sector": "artistes",
         "kind": "ecommerce",
+        "stack": "react",
+        "stackTags": ["react", "nextjs", "tailwind", "stripe"],
+        "tags": ["collections", "mockups", "zoom", "commande sur mesure", "paiement en plusieurs fois"],
+        "featured": true,
+        "priority": 1,
+        "media": { "cover": "/projects/norel-art.png" },
+        "logo": "/projects/logo-norel-art.png",
+        "logoAlt": "Signature Norel — logo",
+        "coverAlt": "Aperçu du site e-commerce Norel Art",
+        "testimonials": [
+            { "quote": "Je ne pensais pas qu’un site pouvait me ressembler à ce point. C’est comme si tu avais traduit mes gestes en interface.", "author": "Norel" },
+            { "quote": "Je veux que les gens aient l’impression d’entrer dans mon atelier, même à distance.", "author": "Norel" }
+        ],
+        "urls": { "caseStudy": "/projets/norel-art" },
+        "collabs": [{ "name": "Perrine Dassonville", "role": "Développeuse backend", "portfolio": "/https://www.perrine-dassonville.dev/" }],
+        "location": { "city": "Bray-Dunes", "region": "Hauts-de-France", "country": "FR" },
+        "seo": { "title": "Site e-commerce artiste — Norel Art", "description": "Portfolio e-commerce sensible et expressif : collections, mises en situation, paiement Stripe." },
         "pack": "signature",
+        "status": "coded",
         "year": 2024,
-        "city": "Bray-Dunes",
-        "external": false
+        "external": false,
+        "visibility": "public"
     },
     {
         "slug": "ania-sophro",
@@ -49,17 +61,26 @@
             "Formation à l’autonomie"
         ],
         "resultat": "Un site clair, rassurant, chaleureux…",
-        "temoignage": "On ressent déjà le soin rien qu’en lisant les mots.",
-        "temoignage2": "Je n’ai pas eu besoin de tout dire...",
-        "logo": "/projects/logo-ania-sophro.png",
-        "image": "",
-        "lien": "/projets/ania-sophro",
-        "status": "wip",
-        "stack": "react",
+        "sector": "therapeutes",
         "kind": "rdv",
+        "stack": "react",
+        "stackTags": ["react", "nextjs", "tailwind", "calendly"],
+        "tags": ["prise de rendez-vous", "à propos", "carte"],
+        "media": { "cover": "" },
+        "logo": "/projects/logo-ania-sophro.png",
+        "logoAlt": "Logo Ania Sophro",
+        "coverAlt": "Aperçu du site vitrine de sophrologie",
+        "testimonials": [{ "quote": "On ressent déjà le soin rien qu’en lisant les mots." }, { "quote": "Je n’ai pas eu besoin de tout dire..." }],
+        "urls": { "caseStudy": "/projets/ania-sophro" },
+        "location": { "city": "Villeneuve-d’Ascq", "region": "Hauts-de-France", "country": "FR" },
+        "seo": {
+            "title": "Site vitrine sophrologue — Ania Sophro (Villeneuve-d’Ascq)",
+            "description": "Site vitrine doux et rassurant, prise de rendez-vous intégrée, textes respirables."
+        },
         "pack": "croissance",
+        "status": "wip",
         "year": 2025,
-        "city": "Villeneuve-d’Ascq",
-        "external": false
+        "external": false,
+        "visibility": "public"
     }
 ]

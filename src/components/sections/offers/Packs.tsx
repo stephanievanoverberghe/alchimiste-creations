@@ -106,7 +106,7 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
                     </div>
                 </div>
 
-                {/* Micro-explication techno — card harmonisée + séparateur animé bas */}
+                {/* Micro-explication techno */}
                 <div className="group relative overflow-hidden rounded-[22px] border border-sauge/30 bg-background/70 p-5 md:p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
                     {/* motif discret */}
                     <div
