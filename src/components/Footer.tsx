@@ -34,6 +34,9 @@ export default function Footer() {
                     <Link href="/offres" className="hover:text-ormat transition">
                         Créer ensemble
                     </Link>
+                    <Link href="/projets" className="hover:text-ormat transition">
+                        Projets vivants
+                    </Link>
                     <Link href="/contact" className="hover:text-ormat transition">
                         Entrer en lien
                     </Link>

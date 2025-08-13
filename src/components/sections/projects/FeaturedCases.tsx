@@ -1,20 +1,21 @@
 // components/sections/projects/FeaturedCases.tsx
+
 import Link from 'next/link';
 import { Sparkles, BadgeCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getProjects } from '@/lib/getProjects'; // ← garde ton import actuel
+import { getProjects } from '@/lib/getProjects';
 import CardFeaturedCases, { type RawProject } from '@/components/cards/projects/CardFeaturedCases';
 
 type Props = {
-    max?: number; // nombre de cartes (défaut 3)
-    slugs?: string[]; // optionnel : forcer certains projets
+    max?: number;
+    slugs?: string[];
 };
 
 export default async function FeaturedCases({ max = 3, slugs }: Props) {
     const rawUnknown: unknown = await getProjects();
     const all: RawProject[] = Array.isArray(rawUnknown) ? (rawUnknown as RawProject[]) : [];
 
-    // Sélection : slugs d’abord (si fournis), puis tri featured → priority → year desc
+    // Sélection
     const bySlug = (s: string) => all.find((p) => (p.slug ?? '').toString() === s);
     const manual = (slugs ?? []).map(bySlug).filter((p): p is RawProject => Boolean(p));
     const pool = all.filter((p) => !slugs || !slugs.includes(p.slug ?? ''));
@@ -39,7 +40,7 @@ export default async function FeaturedCases({ max = 3, slugs }: Props) {
     return (
         <section id="featured-cases" aria-labelledby="featured-cases-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             <div className="relative max-w-7xl mx-auto space-y-8 md:space-y-10">
-                {/* En-tête — structure et ton identiques à ton exemple */}
+                {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <Sparkles className="w-3.5 h-3.5" aria-hidden />
@@ -54,7 +55,7 @@ export default async function FeaturedCases({ max = 3, slugs }: Props) {
                     </p>
                 </div>
 
-                {/* Grille de cards (logo en visuel principal, design proche de CardProject) */}
+                {/* Grille de cards */}
                 <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {items.map((p, i) => (
                         <li key={p.slug ?? `featured-${i}`}>
@@ -63,7 +64,7 @@ export default async function FeaturedCases({ max = 3, slugs }: Props) {
                     ))}
                 </ul>
 
-                {/* Micro-note + CTA (même pattern que ton exemple) */}
+                {/* Micro-note + CTA */}
                 <div className="flex flex-col md:flex-row sm:items-center sm:justify-between gap-3">
                     <p className="text-sm text-foreground/70 italic">
                         * Je prends <span className="not-italic font-medium text-terracotta">1 projet par mois</span> pour garder de la profondeur.

@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import rawProjects from '@/data/projects.json';
 import CardProject, { type CardProjectData } from '@/components/cards/CardProject';
+import ProjectQuickView, { type ProjectQuickViewData } from '@/components/modals/ProjectQuickView';
 
 // ---- Normalisation -----------------
 type RawProject = {
@@ -31,12 +32,24 @@ type RawProject = {
     title?: string;
     sousTitre?: string;
     description?: string;
+
+    // éditorial pour Quick view
+    pourQui?: string;
+    besoin?: string;
+    proposition?: string[];
+    resultat?: string;
+    citationClient?: string;
+    testimonials?: { quote?: string; author?: string }[];
+
+    // visuels / liens
     image?: string;
     imageSrc?: string;
     cover?: string;
     logo?: string;
     lien?: string;
     link?: string;
+
+    // tags / meta
     status?: 'coded' | 'wip';
     stack?: 'wordpress' | 'react' | 'mixte' | string;
     kind?: 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv' | string;
@@ -46,17 +59,24 @@ type RawProject = {
     external?: boolean;
 };
 
-function normalize(
-    p: RawProject,
-    idx: number
-): CardProjectData & {
+type ProjectForView = CardProjectData & {
     year?: number;
     status?: 'coded' | 'wip';
     city?: string;
     stack?: string;
     kind?: string;
     sector?: string;
-} {
+
+    // champs éditoriaux utilisés par l’aperçu
+    pourQui?: string;
+    besoin?: string;
+    proposition?: string[];
+    resultat?: string;
+    citationClient?: string;
+    testimonials?: { quote?: string; author?: string }[];
+};
+
+function normalize(p: RawProject, idx: number): ProjectForView {
     const title = p.title ?? p.titre ?? `Projet ${idx + 1}`;
     const description = p.description ?? p.sousTitre ?? '';
     const imageSrc = p.image || p.imageSrc || p.cover || '';
@@ -86,6 +106,14 @@ function normalize(
         year: p.year,
         city: p.location?.city,
         sector: p.sector,
+
+        // éditorial
+        pourQui: p.pourQui,
+        besoin: p.besoin,
+        proposition: p.proposition,
+        resultat: p.resultat,
+        citationClient: p.citationClient,
+        testimonials: p.testimonials,
     };
 }
 // ------------------------------------------------------------------
@@ -102,14 +130,17 @@ export default function FiltersSection() {
     const [kind, setKind] = useState<Kind>('any');
     const [sector, setSector] = useState<Sector>('any');
     const [q, setQ] = useState('');
-    const [page, setPage] = useState(1); // ⬅️ pagination
+    const [page, setPage] = useState(1);
+
+    // Quick view state
+    const [preview, setPreview] = useState<ProjectForView | null>(null);
 
     const resetAll = () => {
         setTech('any');
         setKind('any');
         setSector('any');
         setQ('');
-        setPage(1); // reset page
+        setPage(1);
     };
 
     const norm = (v?: string) =>
@@ -146,7 +177,7 @@ export default function FiltersSection() {
 
     const count = filtered.length;
 
-    // Revenir à la page 1 dès qu’un filtre/recherche change
+    // Remettre page à 1 dès qu’un filtre/recherche change
     useEffect(() => {
         setPage(1);
     }, [tech, kind, sector, q]);
@@ -185,11 +216,8 @@ export default function FiltersSection() {
 
     return (
         <section aria-labelledby="projects-filters-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            {/* Liseré décoratif en haut */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
-            {/* Fond or mobile only */}
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
-            {/* Vague décorative (md+) */}
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
                 <Image src="/deco/about-wave.png" alt="Vague décorative" className="h-auto" fill priority />
             </div>
@@ -351,7 +379,7 @@ export default function FiltersSection() {
                             <ul id="projects-results" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {pageItems.map((p) => (
                                     <li key={p.key}>
-                                        <CardProject project={p} />
+                                        <CardProject project={p} onPreview={() => setPreview(p)} />
                                     </li>
                                 ))}
                             </ul>
@@ -396,6 +424,29 @@ export default function FiltersSection() {
                     )}
                 </div>
             </div>
+
+            {/* Modal Quick view */}
+            <ProjectQuickView
+                open={!!preview}
+                onClose={() => setPreview(null)}
+                project={
+                    preview
+                        ? ({
+                              title: preview.title,
+                              subtitle: preview.description,
+                              logoSrc: preview.logoSrc,
+                              link: preview.link,
+                              isExternal: preview.external,
+                              pourQui: preview.pourQui,
+                              besoin: preview.besoin,
+                              proposition: preview.proposition,
+                              resultat: preview.resultat,
+                              citationClient: preview.citationClient,
+                              testimonials: preview.testimonials,
+                          } as ProjectQuickViewData)
+                        : null
+                }
+            />
         </section>
     );
 }

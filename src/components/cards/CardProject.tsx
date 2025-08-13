@@ -53,7 +53,7 @@ const slugify = (s: string) =>
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
 
-export default function CardProject({ project }: { project: CardProjectData }) {
+export default function CardProject({ project, onPreview }: { project: CardProjectData; onPreview?: () => void }) {
     const isWip = project.status === 'wip';
 
     const safeTitle = project.title || 'Projet';
@@ -99,6 +99,23 @@ export default function CardProject({ project }: { project: CardProjectData }) {
                         </span>
                     )}
                 </div>
+
+                {/* Bouton Aperçu (overlay) */}
+                {onPreview && (
+                    <button
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onPreview();
+                        }}
+                        className="absolute cursor-pointer right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-sauge/30 bg-background/80 backdrop-blur px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-sauge hover:bg-sauge/10"
+                        aria-label={`Aperçu : ${project.title}`}
+                    >
+                        Aperçu
+                    </button>
+                )}
 
                 {/* Gradient bas pour cohérence visuelle */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background via-background/0 to-transparent" />
