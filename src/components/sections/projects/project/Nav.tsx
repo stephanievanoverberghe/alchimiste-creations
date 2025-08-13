@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowLeft, ArrowRight, LayoutGrid } from 'lucide-react';
 
 type Neighbor = {
@@ -35,18 +34,13 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
 
     return (
         <section className="relative py-12 md:py-16 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
-            <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
-            <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
-                <Image src="/deco/about-wave.png" alt="" fill priority className="h-auto object-cover" />
-            </div>
             <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {/* Précédent */}
                     {prev ? (
                         <Link
                             href={`/projets/${prev.slug}`}
-                            className="group relative rounded-[20px] border border-foreground/15 bg-background p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+                            className="group relative rounded-[20px] border border-foreground/15 bg-ormat/10 p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
                             aria-label={`Projet précédent : ${label(prev)}`}
                         >
                             {/* motif discret */}
@@ -60,7 +54,7 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
                                 aria-hidden
                             />
                             <div className="relative z-[1] text-left">
-                                <span className="inline-flex items-center gap-2 rounded-full border border-ormat/30 bg-ormat/10 text-ormat px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-ormat/30 bg-background text-ormat px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
                                     <ArrowLeft className="w-4 h-4" />
                                     Précédent
                                 </span>
@@ -92,7 +86,7 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
                     {next ? (
                         <Link
                             href={`/projets/${next.slug}`}
-                            className="group relative rounded-[20px] border border-foreground/15 bg-background p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+                            className="group relative rounded-[20px] border border-foreground/15 bg-ormat/10 p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
                             aria-label={`Projet suivant : ${label(next)}`}
                         >
                             {/* motif discret */}
@@ -106,7 +100,7 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
                                 aria-hidden
                             />
                             <div className="relative z-[1] text-right">
-                                <span className="inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-background text-terracotta px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
                                     Suivant
                                     <ArrowRight className="w-4 h-4" />
                                 </span>
