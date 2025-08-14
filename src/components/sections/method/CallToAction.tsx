@@ -39,7 +39,7 @@ export default function CTASection({ note = 'Réponse sous 24–48h ouvrées —
                         {/* boutons */}
                         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0">
                             <Link
-                                href="/contact"
+                                href="/devis"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
                             >
                                 <FileText className="w-4 h-4" aria-hidden />

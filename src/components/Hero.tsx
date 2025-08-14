@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { CSSProperties, ComponentType } from 'react';
 import {
     Sparkles,
     IdCard,
@@ -25,16 +26,11 @@ import {
 } from 'lucide-react';
 import projectsData from '@/data/projects.json';
 
-type HeroScanStyle = React.CSSProperties & {
-    ['--scanW']?: string;
-    ['--scanDur']?: string;
-};
-
+type HeroScanStyle = CSSProperties & { ['--scanW']?: string; ['--scanDur']?: string };
 type PackSlug = 'essentiel' | 'croissance' | 'signature';
 type CTA = { label: string; href: string };
 type PageContent = { title: string; paragraph: string; cta?: CTA[]; bg?: string };
 
-// — Styles boutons
 const btnBase =
     'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30';
 const btnPrimary = `${btnBase} bg-terracotta hover:bg-terracotta/90 text-background border-b-2 border-r-2 border-ormat shadow-[0px_2px_6px_rgba(164,75,52,0.25)]`;
@@ -50,7 +46,6 @@ function IconForLabel(label: string) {
     return ArrowRight;
 }
 
-// Helpers
 function labelStack(s?: string) {
     const v = (s ?? '').toLowerCase();
     if (v.includes('react')) return 'React';
@@ -98,7 +93,6 @@ type RawProject = {
     logo?: string;
 };
 
-// Badge helper
 function badgeForPath(path: string, s?: PackSlug) {
     if (s === 'essentiel') return { label: 'Lancement rapide', Icon: Leaf };
     if (s === 'croissance') return { label: 'Évolutif • conversion douce', Icon: TrendingUp };
@@ -116,6 +110,8 @@ function badgeForPath(path: string, s?: PackSlug) {
             return { label: 'Réalisations récentes', Icon: LayoutGrid };
         case '/contact':
             return { label: 'Réponse sous 24–48h', Icon: CalendarClock };
+        case '/devis':
+            return { label: 'Devis transparent', Icon: FileText };
         default:
             return { label: 'Alchimiste Créations', Icon: Sparkles };
     }
@@ -143,8 +139,17 @@ export default function Hero() {
         },
         '/contact': {
             title: 'Contact — appel découverte gratuit',
-            paragraph: 'Partage ton besoin, ton budget et ton délai. Je te propose la formule la plus adaptée (WordPress ou React) et un devis sous 24–48h.',
+            paragraph: 'Partage ton besoin, ton budget et ton délai. Je te propose la formule la plus adaptée et un devis sous 24–48h.',
             cta: [{ label: 'Demander un devis', href: '/devis' }],
+            bg: '/hero/hero-contact.png',
+        },
+        '/devis': {
+            title: 'Devis — estimation rapide et transparente',
+            paragraph: 'Explique ton contexte et ton périmètre, je te réponds sous 24–48h avec une proposition claire (WordPress ou React) et un planning réaliste.',
+            cta: [
+                { label: 'Réserver un appel', href: '/contact' },
+                { label: 'Voir les packs', href: '/offres' },
+            ],
             bg: '/hero/hero-contact.png',
         },
         '/methode': {
@@ -156,13 +161,13 @@ export default function Hero() {
         '/offres': {
             title: 'Création de site internet — packs WordPress & React',
             paragraph: 'Essentiel, Croissance, Signature : trois niveaux pour lancer ou refondre ton site. Responsive, base SEO et accompagnement humain à chaque étape.',
-            cta: [{ label: 'Demander un devis', href: '/contact' }],
+            cta: [{ label: 'Demander un devis', href: '/devis' }],
             bg: '/hero/hero-packs.png',
         },
         '/projets': {
             title: 'Portfolio — réalisations WordPress & React',
             paragraph: 'Vitrines, portfolios et boutiques légères pensés pour convertir sans pression : design qui respire, fondations techniques solides.',
-            cta: [{ label: 'Demander un devis', href: '/contact' }],
+            cta: [{ label: 'Demander un devis', href: '/devis' }],
             bg: '/hero/hero-projets.png',
         },
     };
@@ -173,21 +178,21 @@ export default function Hero() {
         essentiel: {
             title: 'Pack Essentiel — site vitrine one-page ou mini-site',
             paragraph: 'Démarre vite avec une vitrine claire et efficace. Parcours simple, base SEO, design soigné et délai court.',
-            cta: [{ label: 'Demander un devis', href: '/contact?pack=essentiel' }],
+            cta: [{ label: 'Demander un devis', href: '/devis?pack=essentiel' }],
             bg: '/hero/hero-essentiel.png',
             badge: 'Lancement rapide',
         },
         croissance: {
             title: 'Pack Croissance — site vitrine complet et évolutif',
             paragraph: 'Navigation structurée, pages clés, options blog/RDV/multilingue et SEO de base. Idéal pour développer ta visibilité.',
-            cta: [{ label: 'Demander un devis', href: '/contact?pack=croissance' }],
+            cta: [{ label: 'Demander un devis', href: '/devis?pack=croissance' }],
             bg: '/hero/hero-croissance.png',
             badge: 'Évolutif • conversion douce',
         },
         signature: {
             title: 'Pack Signature — site sur-mesure premium',
             paragraph: 'Identité renforcée, micro-interactions, performance et accessibilité avancées. Un site remarquable et durable.',
-            cta: [{ label: 'Demander un devis', href: '/contact?pack=signature' }],
+            cta: [{ label: 'Demander un devis', href: '/devis?pack=signature' }],
             bg: '/hero/hero-signature.png',
             badge: 'Sur-mesure',
         },
@@ -195,20 +200,18 @@ export default function Hero() {
 
     const packContent = slug ? packMap[slug] : undefined;
 
-    // ===== Personnalisation /projets/[slug] (fond générique projet conservé) =====
+    // Détail projet → personnalisation
     const isProjectDetail = /^\/projets\/[^\/?#]+\/?$/.test(pathname);
     const projectSlug = isProjectDetail ? pathname.split('/')[2] : undefined;
     const project: RawProject | undefined = isProjectDetail && Array.isArray(projectsData) ? (projectsData as RawProject[]).find((p) => (p.slug ?? '') === projectSlug) : undefined;
 
-    // Base de contenu + séparation de bg pour prefer-const
     const base = packContent ?? textMap[pathname] ?? textMap['/'];
-    let { title, paragraph, cta } = base; // réassignables
-    const { bg } = base; // jamais réassigné
+    let { title, paragraph, cta } = base;
+    const { bg } = base;
 
     let { label: badgeLabel, Icon: BadgeIcon } = badgeForPath(pathname, slug || undefined);
 
-    // Chips par défaut
-    let chips: { label: string; Icon: React.ComponentType<{ className?: string }>; tone: 'sauge' | 'terracotta' | 'ormat' }[] =
+    let chips: { label: string; Icon: ComponentType<{ className?: string }>; tone: 'sauge' | 'terracotta' | 'ormat' }[] =
         slug === 'essentiel'
             ? [
                   { label: 'One-page / mini-site', Icon: FileText, tone: 'sauge' },
@@ -233,7 +236,6 @@ export default function Hero() {
                   { label: 'Clair • durable', Icon: ShieldCheck, tone: 'ormat' },
               ];
 
-    // Si on est sur un projet : personnalisation texte/CTA/badge/chips (pas de logo)
     if (project) {
         const t = project.titre || project.title || 'Étude de cas';
         const kindL = labelKind(project.kind);
@@ -268,7 +270,6 @@ export default function Hero() {
         chips = [{ label: stackL, Icon: stackL.includes('WordPress') ? FileText : Code2, tone: 'sauge' }, { label: kindL, Icon: LayoutGrid, tone: 'terracotta' }, chip3];
     }
 
-    // Fond : toujours l’image générique projets pour le détail
     const heroBg = isProjectDetail ? '/hero/hero-projets.png' : bg;
 
     const toneCls = {
@@ -288,7 +289,6 @@ export default function Hero() {
             )}
 
             <div className="max-w-5xl text-center lg:text-left">
-                {/* Badge haut cohérent + icône */}
                 <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-background bg-terracotta/20 border border-terracotta/40 rounded-full px-4 py-1">
                     <BadgeIcon className="w-3.5 h-3.5" aria-hidden />
                     {badgeLabel}
@@ -296,7 +296,6 @@ export default function Hero() {
 
                 <h1 className="mt-4 font-title text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-tight tracking-wide">{title}</h1>
 
-                {/* Séparateur animé */}
                 <div className="mt-4 relative h-[2px] overflow-hidden">
                     <div className="absolute inset-0 bg-white/20" aria-hidden />
                     <span
@@ -330,7 +329,6 @@ export default function Hero() {
                     }
                 `}</style>
 
-                {/* chips contextuels */}
                 <ul className="mt-5 flex flex-wrap items-center gap-2.5 justify-center lg:justify-start">
                     {chips.map(({ label, Icon, tone }) => (
                         <li key={label}>
@@ -344,8 +342,7 @@ export default function Hero() {
 
                 <p className="mt-5 text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">{paragraph}</p>
 
-                {/* CTA */}
-                {cta && (
+                {Array.isArray(cta) && cta.length > 0 && (
                     <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         {cta.map((button, i) => {
                             const Icon = IconForLabel(button.label);
