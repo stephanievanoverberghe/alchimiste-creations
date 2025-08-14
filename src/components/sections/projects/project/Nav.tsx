@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight, LayoutGrid } from 'lucide-react';
 
 type Neighbor = {
@@ -20,8 +21,12 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
                     <div className="grid grid-cols-1 place-items-center">
                         <Link
                             href="/projets"
-                            className="group inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-background px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/80 hover:-translate-y-0.5 hover:shadow-sm transition"
-                            aria-label="Tous les projets"
+                            className={cn(
+                                'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
+                                'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
+                                'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            )}
+                            aria-label="Voir tous les projets"
                         >
                             <LayoutGrid className="w-4 h-4" aria-hidden />
                             Tous les projets
@@ -34,7 +39,7 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
 
     return (
         <section className="relative py-12 md:py-16 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-5xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {/* Précédent */}
                     {prev ? (
@@ -74,8 +79,12 @@ export default function NavSection({ prev, next }: { prev?: Neighbor; next?: Nei
                     <div className="grid place-items-center">
                         <Link
                             href="/projets"
-                            className="relative group inline-flex cursor-pointer items-center gap-2 rounded-full border border-foreground/15 bg-background px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/80 hover:-translate-y-0.5 hover:shadow-sm transition"
-                            aria-label="Tous les projets"
+                            className={cn(
+                                'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
+                                'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
+                                'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                            )}
+                            aria-label="Voir tous les projets"
                         >
                             <LayoutGrid className="w-4 h-4" aria-hidden />
                             Tous les projets

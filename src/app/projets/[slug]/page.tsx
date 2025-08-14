@@ -10,6 +10,8 @@ import TestimonialSection from '@/components/sections/projects/project/Testimoni
 import StackSection from '@/components/sections/projects/project/Stack';
 import CollabsSection from '@/components/sections/projects/project/Collabs';
 import NavSection from '@/components/sections/projects/project/Nav';
+import RelatedSection from '@/components/sections/projects/project/Related';
+import CallToActionSection from '@/components/sections/projects/project/CallToAction';
 
 type KPI = { label: string; before?: string; after?: string; delta?: string };
 type Testi = { quote?: string; author?: string };
@@ -53,6 +55,7 @@ type Project = {
     status?: string;
     year?: number;
     location?: { city?: string };
+    pack?: 'essentiel' | 'croissance' | 'signature' | 'surmesure' | string;
 };
 
 const ALL: Project[] = Array.isArray(projectsData) ? (projectsData as Project[]) : [];
@@ -117,6 +120,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 prev={prev ? { slug: String(prev.slug), titre: prev.titre, title: prev.title, logo: prev.logo } : undefined}
                 next={next ? { slug: String(next.slug), titre: next.titre, title: next.title, logo: next.logo } : undefined}
             />
+            <RelatedSection currentSlug={p.slug as string} sector={p.sector} kind={p.kind} />
+            <CallToActionSection project={p} note="Réponse sous 24–48h — on fait le point en 30 min." />
         </>
     );
 }

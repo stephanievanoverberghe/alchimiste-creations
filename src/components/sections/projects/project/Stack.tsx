@@ -51,7 +51,7 @@ export default function StackSection({ project }: { project?: Project }) {
         <section id="projet-stack" aria-labelledby="projet-stack-title" className="relative py-16 md:py-24 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
             {/* Fond or avec opacité 10% UNIQUEMENT sur mobile */}
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
-
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
             {/* Vague décorative visible uniquement à partir de md */}
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
                 <Image src="/deco/home-wave.png" alt="Vague décorative" className="h-auto" fill priority />
