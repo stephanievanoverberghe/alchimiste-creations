@@ -142,9 +142,9 @@ export default function Hero() {
             bg: '/hero/hero-apropos.png',
         },
         '/contact': {
-            title: 'Contact — devis site internet et appel découverte gratuit',
+            title: 'Contact — appel découverte gratuit',
             paragraph: 'Partage ton besoin, ton budget et ton délai. Je te propose la formule la plus adaptée (WordPress ou React) et un devis sous 24–48h.',
-            cta: [{ label: 'Réserver un appel', href: '/contact' }],
+            cta: [{ label: 'Demander un devis', href: '/devis' }],
             bg: '/hero/hero-contact.png',
         },
         '/methode': {

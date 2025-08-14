@@ -1,15 +1,9 @@
-'use client';
+import CalendlySection from '@/components/sections/contact/Calendly';
 
-import { useEffect } from 'react';
-
-export default function ContactPage() {
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-    }, []);
-
+export default function CguPage() {
     return (
-        <div>
-            <h1 className="text-center text-base lg:text-5xl py-24">Page contact</h1>
-        </div>
+        <>
+            <CalendlySection />
+        </>
     );
 }
