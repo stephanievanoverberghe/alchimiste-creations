@@ -166,14 +166,14 @@ export default function CalendlyGate(props: Props) {
                         onClick={allowFunctionalAndLoad}
                         className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
                        bg-terracotta text-background text-sm font-semibold
-                       border-b-2 border-r-2 border-ormat hover:bg-terracotta/90 transition"
+                       border-b-2 border-r-2 border-ormat hover:bg-terracotta/90 transition cursor-pointer"
                     >
                         Autoriser &amp; charger Calendly
                     </button>
                     <Link
                         href="/preferences-cookies"
                         className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
-                       border border-sauge/40 bg-background hover:bg-sauge/10 text-sm font-semibold"
+                       border border-sauge/40 bg-background hover:bg-sauge/10 text-sm font-semibold cursor-pointer"
                     >
                         Gérer mes préférences
                     </Link>
@@ -182,7 +182,7 @@ export default function CalendlyGate(props: Props) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
-                       border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/20 text-sm font-semibold"
+                       border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/20 text-sm font-semibold cursor-pointer"
                     >
                         Ouvrir Calendly dans un onglet
                     </a>
