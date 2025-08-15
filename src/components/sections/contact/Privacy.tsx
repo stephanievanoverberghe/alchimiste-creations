@@ -12,7 +12,7 @@ type PrivacyProps = {
 };
 
 export default function PrivacySection({
-    privacyUrl = '/legal/politique-de-confidentialite',
+    privacyUrl = 'politique-de-confidentialite',
     cookiePrefsUrl = '/preferences-cookies',
     dpoEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'orangestreet@live.fr',
 }: PrivacyProps) {
@@ -21,7 +21,7 @@ export default function PrivacySection({
             <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         RGPD & confidentialité
                     </span>
                     <h2 id="contact-privacy-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">

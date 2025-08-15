@@ -7,6 +7,7 @@ import TestimonialSection from '@/components/sections/contact/Testimonials';
 import FaqSection from '@/components/sections/contact/FaqContact';
 import InfosSection from '@/components/sections/contact/Infos';
 import PrivacySection from '@/components/sections/contact/Privacy';
+import CallToActionSection from '@/components/sections/contact/CallToAction';
 
 export const metadata: Metadata = {
     title: 'Contact — Réserver un appel découverte (30 min)',
@@ -35,6 +36,7 @@ export default async function ContactPage({ searchParams }: { searchParams?: Sea
             <FaqSection />
             <InfosSection />
             <PrivacySection privacyUrl="/politique-confidentialite" cookiePrefsUrl="/preferences-cookies" />
+            <CallToActionSection />
         </>
     );
 }
