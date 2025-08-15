@@ -190,7 +190,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             <div className="mt-1 text-[11px] text-foreground/50">{chars}/5000</div>
                         </div>
 
-                        <label className="flex items-start gap-2 text-xs text-foreground/70">
+                        <label className="flex items-start gap-2 text-xs text-foreground/70 cursor-pointer">
                             <input type="checkbox" name="consent" className="mt-0.5" />
                             J’accepte que mes informations soient utilisées pour être recontacté·e au sujet de ma demande.
                         </label>

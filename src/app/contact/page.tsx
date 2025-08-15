@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import CalendlySection from '@/components/sections/contact/Calendly';
 import AlternativesSection from '@/components/sections/contact/Alternatives';
 import AgendaSection from '@/components/sections/contact/Agenda';
+import OffersSection from '@/components/sections/contact/Offers';
 
 export const metadata: Metadata = {
     title: 'Contact — Réserver un appel découverte (30 min)',
@@ -25,6 +26,7 @@ export default async function ContactPage({ searchParams }: { searchParams?: Sea
             <CalendlySection />
             <AlternativesSection id="contact-alternatives" name={prefillName} email={prefillEmail} />
             <AgendaSection briefUrl="/brief-express.pdf" />
+            <OffersSection />
         </>
     );
 }
