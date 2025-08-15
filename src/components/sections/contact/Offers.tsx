@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { MoveRight, Check, Clock, FileText, Code2 } from 'lucide-react';
+import { ChevronRight, Check, Clock, FileText, Code2 } from 'lucide-react';
 import packsData from '@/data/packs.json';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -220,7 +220,7 @@ export default function ContactOffers({ id = 'contact-offres', className, ctaHre
                                     )}
                                 >
                                     {ctaLabel}
-                                    <MoveRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
+                                    <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
                                 </a>
                             </div>
                         </article>
@@ -236,7 +236,7 @@ export default function ContactOffers({ id = 'contact-offres', className, ctaHre
                                 )}
                             >
                                 {ctaLabel}
-                                <MoveRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
+                                <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
                             </a>
                             <span className="text-xs text-foreground/60">Sélectionne un pack pour voir un périmètre type.</span>
                         </div>
