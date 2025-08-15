@@ -1,5 +1,4 @@
 // src/components/sections/contact/Privacy.tsx
-import Image from 'next/image';
 import Link from 'next/link';
 import { ShieldCheck, Lock, Cookie, Mail } from 'lucide-react';
 
@@ -19,15 +18,6 @@ export default function PrivacySection({
 }: PrivacyProps) {
     return (
         <section id="contact-privacy" aria-labelledby="contact-privacy-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            {/* Liseré décoratif en haut */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" aria-hidden />
-            {/* Fond or mobile only */}
-            <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" aria-hidden />
-            {/* Vague décorative (md+) */}
-            <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0" aria-hidden>
-                <Image src="/deco/about-wave.png" alt="" fill priority className="object-cover h-auto" />
-            </div>
-
             <div className="relative max-w-5xl mx-auto space-y-8 md:space-y-10">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">

@@ -61,10 +61,29 @@ function writeCookie(name: string, value: string, maxAge = COOKIE_MAX_AGE) {
     document.cookie = `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 }
 
-function eraseCookie(name: string) {
+/** Efface un cookie sur plusieurs combinaisons Path/Domain (best effort) */
+function deleteCookieEverywhere(name: string) {
     if (typeof document === 'undefined') return;
-    const secure = typeof location !== 'undefined' && location.protocol === 'https:' ? '; Secure' : '';
-    document.cookie = `${name}=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
+    const past = 'Thu, 01 Jan 1970 00:00:00 GMT';
+    const base = `${encodeURIComponent(name)}=; Expires=${past}; SameSite=Lax`;
+    const paths = ['/', '/app', '/']; // ajoute d’autres chemins si nécessaire
+    const host = typeof location !== 'undefined' ? location.hostname : '';
+    const domains: Array<string | null> = [null];
+
+    if (host && host.includes('.')) {
+        const parts = host.split('.');
+        const root = '.' + parts.slice(-2).join('.');
+        domains.push(root, '.' + host);
+    }
+
+    for (const p of paths) {
+        // Sans Domain
+        document.cookie = `${base}; Path=${p}`;
+        // Avec Domain(s)
+        for (const d of domains) {
+            if (d) document.cookie = `${base}; Path=${p}; Domain=${d}`;
+        }
+    }
 }
 
 /* ------------------------- Construction du consent ------------------------- */
@@ -106,31 +125,6 @@ function updateGtagConsent(c: Consent) {
 const COOKIE_PREFIXES = ['_ga', '_gid', '_gat', '_gcl_', '_fbp', '_cl', '_hj', '_pk_id', '_pk_ses'];
 const STORAGE_PREFIXES = ['_ga', 'ga_', 'amp_', 'ajs_', '_hj', 'matomo_', 'clarity_', 'fb_'];
 
-/** Essaye d'effacer un cookie sur plusieurs chemins/domaines. */
-function deleteCookieEverywhere(name: string) {
-    if (typeof document === 'undefined') return;
-    const past = 'Thu, 01 Jan 1970 00:00:00 GMT';
-    const base = `${encodeURIComponent(name)}=; Expires=${past}; SameSite=Lax`;
-    const paths = ['/', '/app', '/'];
-    const host = typeof location !== 'undefined' ? location.hostname : '';
-    const domains: Array<string | null> = [null];
-
-    if (host && host.includes('.')) {
-        const parts = host.split('.');
-        const root = '.' + parts.slice(-2).join('.');
-        domains.push(root, '.' + host);
-    }
-
-    for (const p of paths) {
-        // Sans Domain
-        document.cookie = `${base}; Path=${p}`;
-        // Avec Domain
-        for (const d of domains) {
-            if (d) document.cookie = `${base}; Path=${p}; Domain=${d}`;
-        }
-    }
-}
-
 function purgeNonEssentialStorage() {
     // Cookies 1st-party usuels (GA, FB, etc.)
     try {
@@ -161,8 +155,9 @@ function purgeNonEssentialStorage() {
     } catch {}
 }
 
+/** Purge “legacy” avec deleteCookieEverywhere */
 function nukeLegacyConsentCookies() {
-    LEGACY_COOKIES.forEach(eraseCookie);
+    LEGACY_COOKIES.forEach(deleteCookieEverywhere);
 }
 
 /* --------------------------------- Page --------------------------------- */
@@ -177,7 +172,7 @@ export default function CookiePreferencesPage() {
     const [functional, setFunctional] = useState(false);
     const [marketing, setMarketing] = useState(false);
 
-    // Lecture initiale + migration ancien cookie
+    // Lecture initiale + migration ancien cookie + purge legacy
     useEffect(() => {
         try {
             // 1) Migration de consent_v2 -> ac_consent si présent et pas encore migré
@@ -198,7 +193,10 @@ export default function CookiePreferencesPage() {
                 }
             }
 
-            // 2) Lecture de la source officielle
+            // 2) Purge des vieux cookies de consentement (domain/path variables)
+            nukeLegacyConsentCookies();
+
+            // 3) Lecture de la source officielle
             const raw = readCookie(COOKIE_NAME);
             if (raw) {
                 const parsed = JSON.parse(raw) as Consent;
@@ -208,9 +206,7 @@ export default function CookiePreferencesPage() {
                 setMarketing(!!parsed.marketing);
             }
 
-            // 3) Nettoyage des vieux cookies de consentement
-            nukeLegacyConsentCookies();
-            // (optionnel) si analytics est refusé, purge de sûreté
+            // 4) Sûreté : si analytics refusé, purge des stockages non essentiels
             if (!(JSON.parse(raw ?? 'null') as Consent | null)?.analytics) {
                 purgeNonEssentialStorage();
             }
@@ -221,14 +217,15 @@ export default function CookiePreferencesPage() {
     // Modèle de consent courant (pour debug/affichage)
     const current = useMemo(() => toConsent({ preferences, analytics, functional, marketing }), [preferences, analytics, functional, marketing]);
 
-    // Persistance + MAJ Consent Mode + purge si tout refusé
+    // Persistance + MAJ Consent Mode + purge si tout refusé + purge legacy
     function persist(c: Consent) {
         writeCookie(COOKIE_NAME, JSON.stringify(c));
         updateGtagConsent(c);
+
         if (!c.preferences && !c.analytics && !c.functional && !c.marketing) {
             purgeNonEssentialStorage();
         }
-        // Toujours retirer d’anciens cookies de consentement
+
         nukeLegacyConsentCookies();
 
         setSaved('ok');
@@ -251,8 +248,7 @@ export default function CookiePreferencesPage() {
         setAnalytics(false);
         setFunctional(false);
         setMarketing(false);
-        // purge immédiate + persist
-        purgeNonEssentialStorage();
+        purgeNonEssentialStorage(); // nettoyage immédiat
         persist(c);
     };
 
