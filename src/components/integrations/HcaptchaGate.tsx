@@ -1,10 +1,10 @@
 // src/components/integrations/HcaptchaGate.tsx
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 
 type Props = {
     sitekey: string;
-    enabled: boolean; // true si "Contenus tiers" accepté
+    enabled: boolean;
     onVerify?: (token: string) => void;
     className?: string;
 };
@@ -30,12 +30,15 @@ declare global {
     }
 }
 
-export default function HcaptchaGate({ sitekey, enabled, onVerify, className }: Props) {
-    const boxRef = useRef<HTMLDivElement | null>(null);
-    const widgetIdRef = useRef<string | number | null>(null);
-    const [ready, setReady] = useState(false);
+// 👉 interface exposée au parent
+export type HcaptchaHandle = { reset: () => void };
 
-    // Charge le script uniquement quand enabled = true
+const HcaptchaGate = forwardRef<HcaptchaHandle, Props>(function HcaptchaGate({ sitekey, enabled, onVerify, className }: Props, ref) {
+    const boxRef = useRef<HTMLDivElement | null>(null);
+    const [ready, setReady] = useState(false);
+    const widgetIdRef = useRef<string | number | null>(null);
+
+    // Charger le script uniquement si enabled = true
     useEffect(() => {
         if (!enabled) return;
 
@@ -55,30 +58,38 @@ export default function HcaptchaGate({ sitekey, enabled, onVerify, className }: 
         document.head.appendChild(s);
     }, [enabled]);
 
-    // Rend / re-rend le widget quand prêt (et si la sitekey change)
+    // Rendu / (re)initialisation du widget
     useEffect(() => {
         if (!enabled || !ready || !boxRef.current || !window.hcaptcha) return;
 
-        // ✅ copie la valeur du ref pour l’utiliser dans le cleanup
-        const el = boxRef.current;
-
-        // Clean le conteneur si déjà rempli (évite les doubles iframes)
-        el.innerHTML = '';
-
-        widgetIdRef.current = window.hcaptcha.render(el, {
-            sitekey,
-            callback: (token) => onVerify?.(token),
-            'expired-callback': () => onVerify?.(''),
-            'error-callback': () => onVerify?.(''),
-            theme: 'light',
-        });
-
-        // Cleanup : utilise la variable `el` (et pas boxRef.current)
-        return () => {
-            el.innerHTML = '';
-            widgetIdRef.current = null;
-        };
+        // Ne rend qu'une fois ; si déjà rendu, on reset juste
+        if (widgetIdRef.current == null) {
+            widgetIdRef.current = window.hcaptcha.render(boxRef.current, {
+                sitekey,
+                callback: (token) => onVerify?.(token),
+                'expired-callback': () => onVerify?.(''),
+                'error-callback': () => onVerify?.(''),
+                theme: 'light',
+            });
+        } else {
+            window.hcaptcha.reset(widgetIdRef.current);
+            onVerify?.('');
+        }
     }, [enabled, ready, onVerify, sitekey]);
+
+    // 👉 Méthode impérative reset() pour le parent
+    useImperativeHandle(
+        ref,
+        () => ({
+            reset() {
+                if (window.hcaptcha && widgetIdRef.current != null) {
+                    window.hcaptcha.reset(widgetIdRef.current);
+                    onVerify?.(''); // vide aussi le token côté parent
+                }
+            },
+        }),
+        [onVerify]
+    );
 
     if (!enabled) {
         return (
@@ -95,4 +106,6 @@ export default function HcaptchaGate({ sitekey, enabled, onVerify, className }: 
     }
 
     return <div ref={boxRef} className={className} aria-label="Vérification anti-spam" />;
-}
+});
+
+export default HcaptchaGate;

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { Mail, MessageSquareText, MessageCircle, Copy, CheckCircle2, X, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import HcaptchaGate from '@/components/integrations/HcaptchaGate'; // 👈 AJOUT
+import HcaptchaGate, { HcaptchaHandle } from '@/components/integrations/HcaptchaGate';
 
 type ApiResponse = { success: boolean; error?: string };
 
@@ -15,16 +15,15 @@ export type AlternativesProps = {
     email?: string;
     contactEmail?: string;
     linkedinUrl?: string;
-    /** WhatsApp au format international SANS + ni espaces : ex. 33612345678 */
     whatsapp?: string;
     className?: string;
 };
 
 export default function AlternativesSection({ id = 'contact-alternatives', name, email, contactEmail, linkedinUrl, whatsapp, className }: AlternativesProps) {
-    const EMAIL = contactEmail || process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@alchimistecreations.fr';
+    const EMAIL = contactEmail || process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'orangestreet@live.fr';
     const LINKEDIN = linkedinUrl || process.env.NEXT_PUBLIC_LINKEDIN_URL || '';
     const WHATSAPP = whatsapp || process.env.NEXT_PUBLIC_WHATSAPP || '';
-    const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY || ''; // 👈 AJOUT
+    const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY || '';
 
     const [sending, setSending] = useState(false);
     const [status, setStatus] = useState<'idle' | 'ok' | 'error'>('idle');
@@ -33,7 +32,8 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
 
     // hCaptcha
     const [captchaToken, setCaptchaToken] = useState('');
-    const [functionalAllowed, setFunctionalAllowed] = useState(false); // 👈 ON/OFF selon consent
+    const [functionalAllowed, setFunctionalAllowed] = useState(false);
+    const captchaRef = useRef<HcaptchaHandle | null>(null); // 👈 ref vers le widget
 
     // ——— Modal de succès
     const [successOpen, setSuccessOpen] = useState(false);
@@ -126,7 +126,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                     message: msg,
                     consent,
                     confirm_email: '',
-                    hcaptcha: captchaToken, // 👈 AJOUT — à vérifier côté serveur si tu veux durcir
+                    hcaptcha: captchaToken,
                 }),
             });
 
@@ -139,7 +139,8 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                 setStatus('ok');
                 form.reset();
                 setChars(0);
-                setCaptchaToken('');
+                setCaptchaToken(''); // vide le token (désactive le bouton si contenus tiers = ON)
+                captchaRef.current?.reset(); // 👈 réinitialise visuellement le widget hCaptcha
                 setSuccessOpen(true);
             } else {
                 setStatus('error');
@@ -228,7 +229,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
 
                         {/* hCaptcha : chargé uniquement si “Contenus tiers” autorisé */}
                         <input type="hidden" name="h-captcha-response" value={captchaToken} />
-                        <HcaptchaGate sitekey={HCAPTCHA_SITEKEY} enabled={functionalAllowed} onVerify={setCaptchaToken} className="mt-1" />
+                        <HcaptchaGate ref={captchaRef} sitekey={HCAPTCHA_SITEKEY} enabled={functionalAllowed} onVerify={setCaptchaToken} className="mt-1" />
 
                         {/* Boutons */}
                         <div className="flex flex-wrap items-center gap-3">
@@ -390,7 +391,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                     aria-describedby="contact-success-desc"
                 >
                     <button aria-label="Fermer la fenêtre" className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity" onClick={() => setSuccessOpen(false)} />
-                    <div className="relative mx-4 w-full max-w-md rounded-2xl border border-sauge/30 bg-background shadow-xl">
+                    <div className="relative mx-4 w/full max-w-md rounded-2xl border border-sauge/30 bg-background shadow-xl">
                         <div className="absolute right-2 top-2">
                             <button
                                 ref={closeBtnRef}
