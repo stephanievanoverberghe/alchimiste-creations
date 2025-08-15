@@ -1,5 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Cormorant_Garamond, Raleway } from 'next/font/google';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -7,6 +8,7 @@ config.autoAddCss = false;
 
 import './globals.css';
 import PageWrapper from '@/components/PageWrapper';
+import ConsentBanner from '@/components/legal/ConsentBanner';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
@@ -46,7 +48,8 @@ export const metadata: Metadata = {
         siteName: 'Alchimiste Créations',
         images: [
             {
-                url: '/public/images/og-default.jpg',
+                // ⚠️ Pas besoin de /public dans le chemin des images OG
+                url: '/images/og-default.jpg',
                 width: 1200,
                 height: 630,
                 alt: 'Alchimiste Créations — Développeuse web à Lille',
@@ -59,7 +62,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'Alchimiste Créations — Développeuse web à Lille',
         description: 'Sites WordPress et React/Next.js sur mesure, alliant esthétique, fluidité et sens.',
-        images: ['/public/images/og-default.jpg'],
+        images: ['/images/og-default.jpg'],
     },
 };
 
@@ -67,10 +70,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
             <head>
+                {/* (optionnel) retire ce noindex en prod */}
                 <meta name="robots" content="noindex, nofollow" />
+
+                {/* Consent Mode par défaut = denied (avant tout script analytics/ads) */}
+                <Script id="consent-default" strategy="beforeInteractive">
+                    {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent','default',{
+              'ad_storage':'denied',
+              'ad_user_data':'denied',
+              'ad_personalization':'denied',
+              'analytics_storage':'denied',
+              'functionality_storage':'denied',
+              'security_storage':'granted'
+            });
+          `}
+                </Script>
+
+                {/* Si tu as GA/GTM, insère leurs scripts APRÈS ce bloc */}
             </head>
             <body>
                 <PageWrapper>{children}</PageWrapper>
+
+                {/* Bannière de consentement (client) – s’affiche si pas de choix ou expiré */}
+                <ConsentBanner />
             </body>
         </html>
     );

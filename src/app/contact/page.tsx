@@ -4,6 +4,9 @@ import AlternativesSection from '@/components/sections/contact/Alternatives';
 import AgendaSection from '@/components/sections/contact/Agenda';
 import OffersSection from '@/components/sections/contact/Offers';
 import TestimonialSection from '@/components/sections/contact/Testimonials';
+import FaqSection from '@/components/sections/contact/FaqContact';
+import InfosSection from '@/components/sections/contact/Infos';
+import PrivacySection from '@/components/sections/contact/Privacy';
 
 export const metadata: Metadata = {
     title: 'Contact — Réserver un appel découverte (30 min)',
@@ -29,6 +32,9 @@ export default async function ContactPage({ searchParams }: { searchParams?: Sea
             <AgendaSection briefUrl="/brief-express.pdf" />
             <OffersSection />
             <TestimonialSection />
+            <FaqSection />
+            <InfosSection />
+            <PrivacySection privacyUrl="/politique-confidentialite" cookiePrefsUrl="/preferences-cookies" />
         </>
     );
 }

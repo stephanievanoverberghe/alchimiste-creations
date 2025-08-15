@@ -83,7 +83,7 @@ export default function ContactOffers({ id = 'contact-offres', className, ctaHre
                                 onClick={() => setActive((prev) => (prev === p.slug ? null : p.slug))}
                                 aria-pressed={isActive}
                                 className={cn(
-                                    'group inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition',
+                                    'group inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition cursor-pointer',
                                     'border bg-background',
                                     isActive ? 'bg-terracotta text-background border-terracotta/50 hover:bg-terracotta/90' : 'border-sauge/30 text-foreground hover:bg-sauge/10',
                                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background'

@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 export default function PageWrapper({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const isSimplePage = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq'].includes(pathname);
+    const isSimplePage = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq', '/preferences-cookies'].includes(pathname);
 
     return (
         <div className="flex min-h-screen flex-col">

@@ -53,14 +53,8 @@ export default function ContactTestimonial({ id = 'contact-temoignage', slug, ta
         <section id={id} aria-labelledby="contact-temoignage-title" className={cn('relative py-16 md:py-24 px-6 md:px-8 lg:px-[100px] xl:px-[150px]', className)}>
             {/* Liseré décoratif en haut */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background pointer-events-none" aria-hidden />
-
             {/* Fond or avec opacité 10% UNIQUEMENT sur mobile */}
-            <div className="absolute inset-0 bg-ormat/10 md:hidden z-0 pointer-events-none" aria-hidden />
-
-            {/* Vague décorative visible uniquement à partir de md */}
-            <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0 pointer-events-none" aria-hidden>
-                <Image src="/deco/about-wave.png" alt="" role="presentation" fill priority className="object-cover" sizes="100vw" />
-            </div>
+            <div className="absolute inset-0 bg-ormat/10 z-0 pointer-events-none" aria-hidden />
             <div className="relative max-w-5xl mx-auto">
                 <article className="group relative overflow-hidden rounded-[20px] border border-sauge/30 bg-background p-5 md:p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                     {/* motif discret */}

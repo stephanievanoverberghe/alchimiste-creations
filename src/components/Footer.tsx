@@ -84,6 +84,10 @@ export default function Footer() {
                         Politique de confidentialité
                     </Link>
                     <span className="text-ormat">|</span>
+                    <Link href="/preferences-cookies" className="hover:text-ormat transition">
+                        Cookies
+                    </Link>
+                    <span className="text-ormat">|</span>
                     <Link href="/cgu" className="hover:text-ormat transition">
                         CGU
                     </Link>

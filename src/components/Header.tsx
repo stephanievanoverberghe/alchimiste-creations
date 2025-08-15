@@ -14,7 +14,7 @@ const navLinks = [
     { href: '/projets', label: 'Projets vivants' },
 ];
 
-const simplePages = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq'];
+const simplePages = ['/mentions-legales', '/politique-confidentialite', '/cgu', '/faq', '/preferences-cookies'];
 
 const ctaClasses = 'tracking-widest px-4 py-2 rounded-xl border border-ormat text-ormat font-semibold text-sm transition-colors duration-300 hover:bg-ormat hover:text-foreground';
 
