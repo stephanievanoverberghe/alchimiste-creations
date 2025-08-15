@@ -26,6 +26,8 @@ Ce projet n’est pas seulement technique. Il est avant tout humain, sensible, i
 -   [Tailwind CSS 4.1](https://tailwindcss.com/)
 -   [Google Fonts via `next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
 -   JSON local (fichiers dans `src/data/`) pour gérer les contenus dynamiques
+-   [Calendly](https://calendly.com/app/scheduling/meeting_types/user/me)
+-   [Web3form](https://web3forms.com/)
 -   Déploiement prévu sur [Vercel](https://vercel.com/)
 
 ---
@@ -90,7 +92,8 @@ src/
 | Méthode  | `/methode`        | Étapes de mon accompagnement fluide            |
 | Projets  | `/projets`        | Portfolio vivant (données JSON)                |
 | Projet   | `/projets/[slug]` | Page projet individuelle (route dynamique)     |
-| Contact  | `/contact`        | Formulaire, zone libre, message doux           |
+| Contact  | `/contact`        | Formulaire, prise de RDV                       |
+| Devis    | `/devis`          | Devis, fichier PDF                             |
 
 ---
 
