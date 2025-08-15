@@ -104,6 +104,7 @@ function toConsent(v?: Partial<Consent>): Consent {
 
 function updateGtagConsent(c: Consent) {
     if (typeof window === 'undefined') return;
+
     const w = window as WindowWithConsent;
 
     const payload: GtagConsentUpdate = {
@@ -115,9 +116,15 @@ function updateGtagConsent(c: Consent) {
         security_storage: 'granted',
     };
 
-    if (typeof w.gtag === 'function') w.gtag('consent', 'update', payload);
+    if (typeof w.gtag === 'function') {
+        w.gtag('consent', 'update', payload);
+    }
+
     w.dataLayer = w.dataLayer ?? [];
     w.dataLayer.push({ event: 'consent_update', consent: payload });
+
+    // 👇 NEW: préviens l’app que le consentement a changé (CalendlyGate va écouter)
+    window.dispatchEvent(new CustomEvent('ac:consent:update', { detail: { consent: c, payload } }));
 }
 
 /* ---------------- Purge cookies/stockages non essentiels ---------------- */

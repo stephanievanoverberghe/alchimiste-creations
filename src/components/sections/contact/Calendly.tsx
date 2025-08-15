@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { CalendarClock, ShieldCheck, LayoutGrid, Layers3 } from 'lucide-react';
-import CalendlyIframe from '@/components/integrations/CalendlyIframe';
+import CalendlyGate from '@/components/integrations/CalendlyGate';
 
 type Search = { name?: string; email?: string; source?: string };
 
@@ -59,15 +59,11 @@ export default function ContactPage({ searchParams }: { searchParams?: Search })
                 >
                     <div
                         className="pointer-events-none absolute inset-0 opacity-10"
-                        style={{
-                            backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
-                            backgroundSize: '16px 16px',
-                            color: 'var(--color-ormat)',
-                        }}
+                        style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
                         aria-hidden
                     />
                     <div className="relative z-[1]">
-                        <CalendlyIframe
+                        <CalendlyGate
                             url="https://calendly.com/alchimiste-creations/appel-decouverte?hide_event_type_details=1"
                             height={0}
                             name={name}
@@ -75,18 +71,6 @@ export default function ContactPage({ searchParams }: { searchParams?: Search })
                             source={source}
                             className="w-full"
                         />
-                        <p className="mt-3 text-center text-xs text-foreground/60">
-                            Si l’embed ne s’affiche pas,&nbsp;
-                            <Link
-                                href="https://calendly.com/alchimiste-creations/appel-decouverte"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 rounded"
-                            >
-                                ouvre Calendly dans un nouvel onglet
-                            </Link>
-                            .
-                        </p>
                     </div>
                 </div>
 
