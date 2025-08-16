@@ -1,10 +1,10 @@
 // src/components/sections/devis/PacksReminder.tsx
 'use client';
 
-import { useMemo, useState, useEffect, type CSSProperties, type MouseEvent, type KeyboardEvent } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useMemo, useState, type CSSProperties, type MouseEvent, type KeyboardEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { ChevronRight, Check, Clock, FileText, Code2, Boxes } from 'lucide-react';
 import packsData from '@/data/packs.json';
@@ -30,10 +30,16 @@ type RawPack = {
 type Props = {
     id?: string;
     className?: string;
+    /** Lien de l’en-tête (ex: "/offres") */
     ctaHref?: string;
     ctaLabel?: string;
+    /** Label du bouton primaire (pré-sélection) */
     presetLabel?: string;
+    /** Active le switch WP/React dans la carte (par défaut false) */
     enableSwitch?: boolean;
+    /** Sélections initiales injectées par la page serveur */
+    initialPack?: PackSlug;
+    initialTech?: TechKey;
 };
 
 const iconBySlug: Record<PackSlug, IconDefinition> = {
@@ -84,43 +90,30 @@ export default function PacksReminder({
     ctaLabel = 'Voir les packs',
     presetLabel = 'Pré-sélectionner dans le brief',
     enableSwitch = false,
+    initialPack,
+    initialTech,
 }: Props) {
     const router = useRouter();
-    const sp = useSearchParams();
 
     const packs = useMemo<RawPack[]>(() => (Array.isArray(packsData) ? (packsData as RawPack[]).filter((p) => ['essentiel', 'croissance', 'signature'].includes(p.slug)) : []), []);
 
-    const [active, setActive] = useState<string | null>(packs[0]?.slug ?? null);
+    const [active, setActive] = useState<string | null>(initialPack ?? packs[0]?.slug ?? null);
 
-    // Tech sélectionnée par pack (par défaut WP, ou paramètre d’URL ?tech=)
-    const techFromParam = ((): TechKey => {
-        const t = sp.get('tech');
-        return t === 'react' ? 'react' : 'wordpress';
-    })();
-    const [techBySlug, setTechBySlug] = useState<Record<string, TechKey>>(() => Object.fromEntries(packs.map((p) => [p.slug, techFromParam])));
-
-    // Auto-sélection depuis ?pack=
-    useEffect(() => {
-        const q = sp.get('pack');
-        if (q && ['essentiel', 'croissance', 'signature'].includes(q) && q !== active) {
-            setActive(q);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sp]);
+    // Tech par pack : par défaut WP, ou `initialTech` si fourni
+    const [techBySlug, setTechBySlug] = useState<Record<string, TechKey>>(() => Object.fromEntries(packs.map((p) => [p.slug, initialTech ?? 'wordpress'])));
 
     const activePack = packs.find((p) => p.slug === active) || null;
     const selectedTech: TechKey = activePack?.technoChoix ? techBySlug[activePack.slug] : 'wordpress';
 
-    // Affichage prix/délai : si switch OFF → on montre WP par défaut, sinon la techno sélectionnée
+    // Prix/délai
     const displayPrice = (() => {
         if (!activePack) return undefined;
         if (activePack.technoChoix) {
-            const techForDisplay: TechKey = enableSwitch ? selectedTech : 'wordpress';
+            const techForDisplay: TechKey = enableSwitch ? selectedTech : initialTech ?? 'wordpress';
             return cleanPrice(activePack.versions?.[techForDisplay]?.prix || activePack.prix);
         }
         return cleanPrice(activePack.prix);
     })();
-
     const displayDelay = activePack ? delayRange(activePack.versions) : undefined;
 
     const toDetail = activePack ? `/offres/${activePack.slug}` : ctaHref;
@@ -133,9 +126,8 @@ export default function PacksReminder({
         color: 'var(--color-ormat)',
     };
 
+    // Clic card → pré-sélection
     const stop = (e: MouseEvent<HTMLElement>) => e.stopPropagation();
-
-    // Clic card → pré-sélection dans le brief (cohérent avec CTA primaire)
     const goCard = () => {
         if (activePack) router.push(toPreset);
     };
@@ -155,7 +147,7 @@ export default function PacksReminder({
                 <Image src="/deco/about-wave.png" alt="" role="presentation" fill priority className="object-cover" sizes="100vw" />
             </div>
             <div className="relative max-w-7xl mx-auto space-y-8">
-                {/* En-tête + lien Voir les packs (hors card) */}
+                {/* En-tête + lien Voir les packs */}
                 <div className="flex items-center justify-between gap-4 text-center lg:text-left">
                     <div>
                         <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
@@ -170,7 +162,6 @@ export default function PacksReminder({
                             sans engagement.
                         </p>
                     </div>
-
                     <Link
                         href={ctaHref}
                         className="hidden sm:inline-flex items-center gap-2 rounded-2xl border border-sauge/30 bg-background px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] hover:bg-sauge/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
@@ -243,7 +234,6 @@ export default function PacksReminder({
                                         )}
                                     </div>
                                 </div>
-
                                 <div className="flex items-center gap-2">
                                     {displayPrice && (
                                         <span className="inline-flex items-center rounded-full border border-ormat/30 bg-ormat/10 text-ormat px-2.5 py-1 text-[11px]">
@@ -266,7 +256,7 @@ export default function PacksReminder({
                                 />
                             </div>
 
-                            {/* Bullets “Portée / Délai type” */}
+                            {/* Bullets */}
                             <ul className="relative z-[1] mt-4 space-y-1.5 text-sm text-foreground/85">
                                 {scopeLabel(activePack) && (
                                     <li className="flex items-start gap-2">
@@ -288,7 +278,7 @@ export default function PacksReminder({
                                     <div className="flex justify-start">
                                         <div className="w-full grid grid-cols-2 sm:inline-flex rounded-2xl border border-sauge/30 bg-background p-1 sm:w-auto">
                                             {(['wordpress', 'react'] as TechKey[]).map((t) => {
-                                                const isOn = selectedTech === t;
+                                                const on = selectedTech === t;
                                                 const label = t === 'wordpress' ? 'WP' : 'React';
                                                 const aria = t === 'wordpress' ? 'WordPress (éditeur visuel)' : 'React/Next.js (sur-mesure)';
                                                 return (
@@ -296,15 +286,15 @@ export default function PacksReminder({
                                                         key={t}
                                                         type="button"
                                                         onClick={() => setTechBySlug((s) => ({ ...s, [activePack.slug]: t }))}
-                                                        aria-pressed={isOn}
-                                                        aria-current={isOn ? 'true' : undefined}
+                                                        aria-pressed={on}
+                                                        aria-current={on ? 'true' : undefined}
                                                         aria-label={aria}
                                                         title={aria}
                                                         className={cn(
                                                             'inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl',
                                                             'text-xs tracking-[0.14em] uppercase font-semibold transition transform',
                                                             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2',
-                                                            isOn
+                                                            on
                                                                 ? 'bg-sauge text-background shadow-sm'
                                                                 : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-[1px] hover:shadow-sm'
                                                         )}
@@ -346,23 +336,7 @@ export default function PacksReminder({
                                 </Link>
                             </div>
                         </article>
-                    ) : (
-                        <div className="flex flex-wrap items-center gap-3">
-                            <Link
-                                href={ctaHref}
-                                className={cn(
-                                    'group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
-                                    'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
-                                    'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
-                                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
-                                )}
-                            >
-                                {ctaLabel}
-                                <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
-                            </Link>
-                            <span className="text-xs text-foreground/60">Sélectionne un pack pour voir un périmètre type.</span>
-                        </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </section>
