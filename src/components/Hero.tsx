@@ -146,10 +146,7 @@ export default function Hero() {
         '/devis': {
             title: 'Devis — estimation rapide et transparente',
             paragraph: 'Explique ton contexte et ton périmètre, je te réponds sous 24–48h avec une proposition claire (WordPress ou React) et un planning réaliste.',
-            cta: [
-                { label: 'Réserver un appel', href: '/contact' },
-                { label: 'Voir les packs', href: '/offres' },
-            ],
+            cta: [{ label: 'Réserver un appel', href: '/contact/#contact-schedule' }],
             bg: '/hero/hero-contact.png',
         },
         '/methode': {
