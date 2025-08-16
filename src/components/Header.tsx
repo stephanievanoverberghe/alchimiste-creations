@@ -29,12 +29,14 @@ export default function Header() {
 
     const isSimplePage = simplePages.includes(pathname);
 
+    // Échap pour fermer le menu
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
     }, []);
 
+    // Détection du scroll (effet fixed+blur en lg+)
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 4);
         onScroll();
@@ -44,16 +46,13 @@ export default function Header() {
 
     const headerBase = 'z-50 w-full h-20 md:h-24 px-6 md:px-8 lg:px-[100px] xl:px-[150px] flex items-center justify-between font-body transition-colors duration-300';
 
-    // ✅ mobile & tablette : overlay transparent
-    // ✅ lg+ : overlay au top, puis fixed+blur au scroll
+    // Mobile/Tablet : header transparent (overlay) partout.
+    // lg+ : pages simples => fond plein; autres pages => overlay en haut, puis fixed+blur quand on scrolle.
     const headerVisual = isSimplePage
-        ? 'bg-foreground text-background shadow-sm' // pages simples : fond plein partout
+        ? 'text-background absolute top-0 left-0 lg:relative lg:bg-foreground lg:text-background lg:shadow-sm'
         : scrolled
-        ? // scrolled : transparent en <lg (texte foncé), fixed+blur en lg+
-          'bg-transparent text-background ' +
-          'lg:fixed lg:top-0 lg:left-0 lg:bg-foreground/70 lg:backdrop-blur lg:supports-[backdrop-filter]:bg-foreground/60 lg:border-b lg:border-ormat/20'
-        : // top de page : overlay transparent + texte clair sur visuel
-          'absolute top-0 left-0 bg-transparent text-background';
+        ? 'text-background absolute top-0 left-0 lg:fixed lg:top-0 lg:left-0 lg:bg-foreground/60 lg:backdrop-blur lg:supports-[backdrop-filter]:bg-foreground/80'
+        : 'text-background absolute top-0 left-0';
 
     return (
         <header className={cn(headerBase, headerVisual)}>
@@ -67,7 +66,7 @@ export default function Header() {
                 <Image src="/logo-sceau.png" alt="Alchimiste — logo" width={60} height={60} priority sizes="(max-width: 768px) 56px, 60px" className="h-14 w-14 object-contain" />
             </Link>
 
-            {/* Burger */}
+            {/* Burger (mobile/tablette) */}
             <button
                 onClick={() => setMenuOpen((v) => !v)}
                 className="lg:hidden z-50 rounded-xl p-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
@@ -101,14 +100,12 @@ export default function Header() {
                         </Link>
                     );
                 })}
-
-                {/* CTA mobile → Devis */}
                 <Link href="/devis" onClick={() => setMenuOpen(false)} className={ctaClasses}>
                     Demander un devis
                 </Link>
             </nav>
 
-            {/* Nav desktop */}
+            {/* Menu desktop */}
             <nav className="hidden lg:flex gap-6 text-sm">
                 {navLinks.map((link) => {
                     const isActive = pathname === link.href || (link.href === '/offres' && pathname.startsWith('/offres/'));
@@ -129,7 +126,7 @@ export default function Header() {
                 })}
             </nav>
 
-            {/* CTA desktop → Devis */}
+            {/* CTA desktop */}
             <Link href="/devis" className={cn('hidden lg:inline-block', ctaClasses)}>
                 Demander un devis
             </Link>
