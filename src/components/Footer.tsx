@@ -13,6 +13,7 @@ export default function Footer() {
     const NAV_MAIN: Array<[string, string]> = [
         ['/', 'Accueil'],
         ['/a-propos', 'À propos'],
+        ['/methode', 'Méthode'],
         ['/offres', 'Offres'],
         ['/projets', 'Projets'],
         ['/devis', 'Devis'],
