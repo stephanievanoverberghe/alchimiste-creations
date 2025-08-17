@@ -257,7 +257,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
             <div className="relative max-w-7xl mx-auto space-y-8">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
-                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
+                    <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <Calculator className="w-3.5 h-3.5" aria-hidden />
                         Estimation rapide (optionnelle)
                     </span>
@@ -417,7 +417,8 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
 
                         <p className="mt-2 text-sm text-foreground/70">
                             La borne basse ne descend pas sous le <strong>“À partir de” réel</strong> (pack + options cochées). La borne haute ajoute ~15 % pour couvrir les écarts
-                            de périmètre (contenus, perfs, intégrations). <em>E-commerce : sur devis.</em>
+                            de périmètre (contenus, perfs, intégrations). <br></br>
+                            <em>E-commerce : sur devis.</em>
                         </p>
 
                         {/* CTA */}

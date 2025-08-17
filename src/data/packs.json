@@ -20,7 +20,6 @@
             "react": { "prix": "À partir de 750€ TTC", "delai": "3 à 4 sem." }
         },
         "options": [
-            { "label": "Blog / Actus", "prix": { "wordpress": "+200€", "react": "+350€" } },
             { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
             { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "+180€" } },
             { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } }
@@ -66,8 +65,8 @@
             { "label": "Blog", "prix": { "wordpress": "+200€", "react": "+350€" } },
             { "label": "Formulaire avancé (logique, champs conditionnels)", "prix": { "wordpress": "+50€", "react": "+120€" } },
             { "label": "Réservation en ligne (WP via plugin / React via Calendly embed)", "prix": { "wordpress": "+250€", "react": "+180€" } },
-            { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+500€" } },
-            { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
+            { "label": "Multilingue", "prix": { "wordpress": "+450€", "react": "+700€" } },
+            { "label": "SEO avancé + stratégie de contenu", "prix": { "wordpress": "+300€", "react": "+450€" } },
             { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } }
         ],
         "allersRetours": "2 allers-retours (design/structure + final)",
@@ -101,6 +100,7 @@
             "Logo inclus",
             "Ton éditorial (1 page) + micro-copies clés",
             "Blog inclus (structure + 1 gabarit d’article)",
+            "Formulaire avancé (logique, champs conditionnels)",
             "Intégration sur-mesure avec micro-animations soignées",
             "Optimisations perfs (images, fonts) + baseline Lighthouse",
             "SEO optimisé (structure, contenus, maillage interne)",
@@ -118,8 +118,8 @@
         "options": [
             { "label": "Logo avancé (3 pistes + variantes + guide 6–8 pages)", "prix": "+500€" },
             { "label": "Brand kit étendu (≈10 pages : usages, icônes, bannières)", "prix": "+350€" },
-            { "label": "Multilingue", "prix": { "wordpress": "+300€", "react": "+600€" } },
-            { "label": "SEO avancé + stratégie de contenu", "prix": "+400€" },
+            { "label": "Multilingue", "prix": { "wordpress": "+600€", "react": "+900€" } },
+            { "label": "SEO avancé + stratégie de contenu", "prix": { "wordpress": "+300€", "react": "+450€" } },
             { "label": "Page supplémentaire", "prix": { "wordpress": "+120€", "react": "+150€" } },
             { "label": "Réservation en ligne (WP via plugin / React via embed Calendly)", "prix": { "wordpress": "+250€", "react": "+180€" } },
             { "label": "Copywriting long (par page, jusqu’à 800 mots)", "prix": "+200€ / page" },
