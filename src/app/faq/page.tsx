@@ -2,9 +2,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HelpCircle, Mail } from 'lucide-react';
+import { HelpCircle, Mail, Home } from 'lucide-react';
 import FAQBareList from '@/components/FaqBareList';
-import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
     title: 'FAQ — Offres, méthode & technique',
@@ -16,22 +15,7 @@ export const metadata: Metadata = {
     },
 };
 
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
-const pick = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v)?.trim();
-
-const FROM_MAP: Record<string, { href: string; label: string }> = {
-    offres: { href: '/offres', label: 'Offres' },
-    devis: { href: '/devis', label: 'Devis' },
-    contact: { href: '/contact', label: 'Contact' },
-};
-
-export default async function FaqPage({ searchParams }: { searchParams?: SearchParams }) {
-    const params = (await searchParams) ?? {};
-    const fromKey = (pick(params.from) || '').toLowerCase();
-    const middle = FROM_MAP[fromKey as keyof typeof FROM_MAP];
-
-    const crumbs = [{ href: '/', label: 'Accueil' }, ...(middle ? [middle] : []), { href: '/faq', label: 'FAQ', current: true }];
-
+export default async function FaqPage() {
     return (
         <section aria-labelledby="faq-page-title" className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px] bg-background">
             {/* Liseré haut */}
@@ -45,36 +29,21 @@ export default async function FaqPage({ searchParams }: { searchParams?: SearchP
             </div>
 
             <div className="relative z-[1] max-w-5xl mx-auto space-y-6 md:space-y-8">
-                {/* Fil d’Ariane accessible */}
+                {/* Breadcrumb */}
                 <nav aria-label="Fil d’Ariane" className="text-sm">
-                    <ol className="flex flex-wrap items-center gap-1 text-foreground/70">
-                        {crumbs.map((c, i) => {
-                            const isLast = i === crumbs.length - 1;
-                            return (
-                                <li key={c.href} className="inline-flex items-center gap-1">
-                                    {isLast ? (
-                                        <span aria-current="page" className="font-medium text-foreground/90">
-                                            {c.label}
-                                        </span>
-                                    ) : (
-                                        <Link
-                                            href={c.href}
-                                            className={cn(
-                                                'hover:text-ormat transition',
-                                                'focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 rounded px-1 -mx-1'
-                                            )}
-                                        >
-                                            {c.label}
-                                        </Link>
-                                    )}
-                                    {!isLast && (
-                                        <span className="px-1 text-foreground/40" aria-hidden>
-                                            ›
-                                        </span>
-                                    )}
-                                </li>
-                            );
-                        })}
+                    <ol className="flex flex-wrap items-center gap-2 text-foreground/70">
+                        <li className="inline-flex items-center gap-1">
+                            <Home className="w-4 h-4" aria-hidden />
+                            <Link href="/" className="underline underline-offset-4 hover:text-ormat">
+                                Accueil
+                            </Link>
+                        </li>
+                        <li aria-hidden className="opacity-60">
+                            /
+                        </li>
+                        <li>
+                            <span className="text-foreground">CGU</span>
+                        </li>
                     </ol>
                 </nav>
 
