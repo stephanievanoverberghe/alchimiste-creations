@@ -965,7 +965,8 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                     className={cn(
                                         'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl cursor-pointer',
                                         'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
-                                        'border-b-2 border-r-2 border-ormat',
+                                        'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
+                                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                                         'disabled:opacity-60 disabled:cursor-not-allowed'
                                     )}
                                 >
