@@ -1,3 +1,4 @@
+// src/components/layout/Footer.tsx
 'use client';
 
 import Image from 'next/image';
@@ -7,95 +8,132 @@ import { faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 export default function Footer() {
+    const year = new Date().getFullYear();
+
+    const NAV_MAIN: Array<[string, string]> = [
+        ['/', 'Accueil'],
+        ['/a-propos', 'À propos'],
+        ['/offres', 'Offres'],
+        ['/projets', 'Projets'],
+        ['/devis', 'Devis'],
+        ['/contact', 'Contact'],
+    ];
+
+    const NAV_LEGAL: Array<[string, string]> = [
+        ['/faq', 'FAQ'],
+        ['/mentions-legales', 'Mentions légales'],
+        ['/politique-confidentialite', 'Politique de confidentialité'],
+        ['/preferences-cookies', 'Cookies'],
+        ['/cgu', 'CGU'],
+    ];
+
     return (
-        <footer className="relative text-background text-sm lg:text-base pt-10 lg:pt-32 pb-10 px-6 md:px-20 overflow-hidden">
-            {/* Image de fond */}
-            <div className="absolute inset-0 z-0">
-                <Image src="/footer.png" alt="Fond footer" fill priority className="object-cover w-full h-full grayscale-[20%] brightness-[60%] contrast-100" />
-                {/* Overlay ardoise */}
-                <div className="absolute inset-0" style={{ backgroundColor: 'rgba(27, 10, 0, 0.6)' }} />
+        <footer className="relative overflow-hidden text-background px-6 md:px-10 lg:px-[100px] xl:px-[150px] pt-12 md:pt-20 pb-10" aria-labelledby="footer-title">
+            <h2 id="footer-title" className="sr-only">
+                Pied de page
+            </h2>
+
+            {/* background (sobre) */}
+            <div className="absolute inset-0 -z-10">
+                <Image src="/footer.png" alt="" role="presentation" fill loading="lazy" sizes="100vw" className="object-cover grayscale-[12%] brightness-[62%] contrast-100" />
+                <div className="absolute inset-0 bg-[rgba(27,10,0,0.58)]" aria-hidden />
             </div>
 
-            {/* Contenu principal */}
-            <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-start gap-10">
-                {/* Logo */}
-                <Link href="/" className="flex justify-center md:justify-start">
-                    <Image src="/logo-sceau.png" alt="Logo Alchimiste" width={150} height={150} className="w-20 lg:w-40 h-auto" />
-                </Link>
+            <div className="relative max-w-7xl mx-auto">
+                {/* carte contenante = moins “vrac” */}
+                <section aria-label="Navigation du site et réseaux" className="rounded-[22px] border border-white/10 bg-white/5 p-6 md:p-8">
+                    {/* tête : logo + baseline — centré mobile, aligné gauche desktop */}
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <Link href="/" aria-label="Aller à l’accueil" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 rounded">
+                                <Image src="/logo-sceau.png" alt="Alchimiste Créations" width={140} height={140} className="w-20 md:w-24 h-auto" />
+                            </Link>
+                            <p className="text-ormat text-xs md:text-sm font-semibold tracking-widest">Créer du web vivant, un projet à la fois.</p>
+                        </div>
 
-                {/* Navigation */}
-                <div className="flex flex-col items-center gap-6 text-center tracking-widest">
-                    <Link href="/" className="hover:text-ormat transition">
-                        Accueil
-                    </Link>
-                    <Link href="/a-propos" className="hover:text-ormat transition">
-                        Me découvrir
-                    </Link>
-                    <Link href="/offres" className="hover:text-ormat transition">
-                        Créer ensemble
-                    </Link>
-                    <Link href="/projets" className="hover:text-ormat transition">
-                        Projets vivants
-                    </Link>
-                    <Link href="/contact" className="hover:text-ormat transition">
-                        Entrer en lien
-                    </Link>
-                    <p className="text-ormat text-xs lg:text-sm mt-4">Créer du web vivant, un projet à la fois.</p>
-                </div>
-
-                {/* Réseaux sociaux */}
-                <div className="flex flex-col items-center md:items-end gap-3">
-                    <span className="text-base lg:text-xl font-title tracking-wide">Me rejoindre</span>
-                    <div className="flex gap-4 mt-2 text-background text-xl">
-                        <a
-                            href="https://www.facebook.com/lalchimiste2compostelle?locale=fr_FR"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Facebook"
-                            className="hover:text-ormat transition"
-                        >
-                            <FontAwesomeIcon icon={faFacebookF} />
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/stephanie-vanoverberghe/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="LinkedIn"
-                            className="hover:text-ormat transition"
-                        >
-                            <FontAwesomeIcon icon={faLinkedinIn} />
-                        </a>
-                        <a href="mailto:orangestreet@live.fr" aria-label="Email" className="hover:text-ormat transition">
-                            <FontAwesomeIcon icon={faEnvelope} />
-                        </a>
+                        {/* social compacts mais accessibles */}
+                        <ul className="flex items-center justify-center gap-2">
+                            <li>
+                                <a
+                                    href="https://www.facebook.com/lalchimiste2compostelle?locale=fr_FR"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Facebook — nouvelle fenêtre"
+                                    className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/15 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
+                                >
+                                    <FontAwesomeIcon icon={faFacebookF} className="text-base" />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://www.linkedin.com/in/stephanie-vanoverberghe/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="LinkedIn — nouvelle fenêtre"
+                                    className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/15 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
+                                >
+                                    <FontAwesomeIcon icon={faLinkedinIn} className="text-base" />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="mailto:orangestreet@live.fr"
+                                    aria-label="Écrire un email"
+                                    className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/15 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
+                                >
+                                    <FontAwesomeIcon icon={faEnvelope} className="text-base" />
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-            </div>
 
-            {/* Mentions légales */}
-            <div className="relative z-10 mt-10 text-center text-[10px] text-muted">
-                <p className="text-[11px] text-ormat font-semibold mb-3">© Alchimiste Créations — Tous droits réservés</p>
-                <div className="flex flex-wrap justify-center gap-3 mt-1">
-                    <Link href="/mentions-legales" className="hover:text-ormat transition">
-                        Mentions légales
-                    </Link>
-                    <span className="text-ormat">|</span>
-                    <Link href="/politique-confidentialite" className="hover:text-ormat transition">
-                        Politique de confidentialité
-                    </Link>
-                    <span className="text-ormat">|</span>
-                    <Link href="/preferences-cookies" className="hover:text-ormat transition">
-                        Cookies
-                    </Link>
-                    <span className="text-ormat">|</span>
-                    <Link href="/cgu" className="hover:text-ormat transition">
-                        CGU
-                    </Link>
-                    <span className="text-ormat">|</span>
-                    <Link href="/faq" className="hover:text-ormat transition">
-                        FAQ
-                    </Link>
-                </div>
+                    {/* séparateur fin */}
+                    <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" aria-hidden />
+
+                    {/* deux colonnes nettes : Explorer / Ressources */}
+                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <nav aria-labelledby="footer-nav-explorer">
+                            <h3 id="footer-nav-explorer" className="text-[12px] font-bold tracking-[0.25em] uppercase text-terracotta mb-3">
+                                Explorer
+                            </h3>
+                            <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm tracking-widest">
+                                {NAV_MAIN.map(([href, label]) => (
+                                    <li key={href}>
+                                        <Link
+                                            href={href}
+                                            className="inline-block py-1 rounded transition hover:text-ormat focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
+                                        >
+                                            {label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+
+                        <nav aria-labelledby="footer-nav-legal">
+                            <h3 id="footer-nav-legal" className="text-[12px] font-bold tracking-[0.25em] uppercase text-terracotta mb-3">
+                                Ressources & légal
+                            </h3>
+                            <ul className="space-y-2 text-sm tracking-widest">
+                                {NAV_LEGAL.map(([href, label]) => (
+                                    <li key={href}>
+                                        <Link
+                                            href={href}
+                                            className="inline-block py-1 rounded transition hover:text-ormat focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40"
+                                        >
+                                            {label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </div>
+
+                    {/* bas de carte : copyright + liens inline */}
+                    <div className="mt-8 pt-4 border-t border-white/10 text-center text-[11px] text-background/85">
+                        <p className="text-ormat font-semibold">© {year} Alchimiste Créations — Tous droits réservés</p>
+                    </div>
+                </section>
             </div>
         </footer>
     );
