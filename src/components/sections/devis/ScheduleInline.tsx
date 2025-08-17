@@ -61,7 +61,7 @@ export default function ScheduleInlineSection({
                     <h2 id={`${id}-title`} className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
                         Un échange rapide pour finaliser
                     </h2>
-                    <p className="mt-3 text-foreground/80">15–20 min pour valider le périmètre et repartir avec un devis clair.</p>
+                    <p className="mt-3 text-foreground/80">20-30 min pour valider le périmètre et repartir avec un devis clair.</p>
                 </div>
 
                 <article className="relative overflow-hidden rounded-[22px] border border-sauge/40 bg-background p-5 md:p-6 shadow-sm">
