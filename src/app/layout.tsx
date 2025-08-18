@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         template: '%s | Alchimiste Créations',
     },
     description:
-        'Création de sites web sur mesure à Lille et à distance. Spécialiste WordPress et React/Next.js, j’accompagne artistes, thérapeutes et entrepreneurs du cœur à concevoir des sites esthétiques, performants et alignés à leur univers.',
+        'Création de sites web sur mesure à Lille et à distance. Spécialiste WordPress et React, j’accompagne artistes, thérapeutes et entrepreneurs du cœur à concevoir des sites esthétiques, performants et alignés à leur univers.',
     keywords: [
         'développeuse web Lille',
         'site vitrine WordPress',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://alchimiste-creations.vercel.app/'),
     openGraph: {
         title: 'Alchimiste Créations — Développeuse web à Lille',
-        description: 'Création de sites WordPress et React/Next.js sur mesure pour artistes, thérapeutes et entrepreneurs du cœur.',
+        description: 'Création de sites WordPress et React sur mesure pour artistes, thérapeutes et entrepreneurs du cœur.',
         url: 'https://alchimiste-creations.vercel.app/',
         siteName: 'Alchimiste Créations',
         images: [
