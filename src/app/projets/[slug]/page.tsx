@@ -78,8 +78,9 @@ export function generateStaticParams() {
     return ALL.filter((p) => p.slug).map((p) => ({ slug: String(p.slug) }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const { slug } = params;
+// ⬇️ version Promise pour matcher ton type global “PageProps”
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
     const p = getProject(slug);
     if (!p) return { title: 'Projet introuvable — Alchimiste Créations' };
 
@@ -96,12 +97,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-    const { slug } = params;
+// ⬇️ version Promise pour matcher ton type global “PageProps”
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
     const p = getProject(slug);
     if (!p) notFound();
 
-    // ordre d’affichage pour la nav : priority ASC, puis year DESC, sinon ordre source
+    // ordre d’affichage pour la nav : priority ASC, puis year DESC
     const ordered = [...ALL].sort((a, b) => {
         const pa = a.priority ?? Number.MAX_SAFE_INTEGER;
         const pb = b.priority ?? Number.MAX_SAFE_INTEGER;
@@ -127,12 +129,16 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                     media: p.media,
                     titre: p.titre ?? p.title,
                     title: p.title,
-                    urls: p.urls, // ✅ lien “live” dispo dans ResultSection
+                    urls: p.urls, // ✅ “live” dispo pour le clic sur la capture
                 }}
             />
             <TestimonialSection project={{ testimonials: p.testimonials, citationClient: p.citationClient, client: p.client, logo: p.logo }} />
             <StackSection project={{ stack: p.stack, stackTags: p.stackTags, tags: p.tags }} />
-            <CollabsSection project={{ collabs: (p as { collabs?: { name?: string; role?: string; portfolio?: string; site?: string; link?: string }[] }).collabs }} />
+            <CollabsSection
+                project={{
+                    collabs: (p as { collabs?: { name?: string; role?: string; portfolio?: string; site?: string; link?: string }[] }).collabs,
+                }}
+            />
             <NavSection
                 prev={prev ? { slug: String(prev.slug), titre: prev.titre, title: prev.title, logo: prev.logo } : undefined}
                 next={next ? { slug: String(next.slug), titre: next.titre, title: next.title, logo: next.logo } : undefined}
