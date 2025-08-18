@@ -48,8 +48,7 @@ export const metadata: Metadata = {
         siteName: 'Alchimiste Créations',
         images: [
             {
-                // ⚠️ Pas besoin de /public dans le chemin des images OG
-                url: '/images/og-default.jpg',
+                url: '/images/og-default.png',
                 width: 1200,
                 height: 630,
                 alt: 'Alchimiste Créations — Développeuse web à Lille',
