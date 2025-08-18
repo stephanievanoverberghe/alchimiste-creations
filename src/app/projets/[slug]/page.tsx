@@ -16,6 +16,12 @@ import CallToActionSection from '@/components/sections/projects/project/CallToAc
 type KPI = { label: string; before?: string; after?: string; delta?: string };
 type Testi = { quote?: string; author?: string };
 
+type URLs = {
+    live?: string;
+    caseStudy?: string;
+    [key: string]: string | undefined;
+};
+
 type Project = {
     slug?: string;
     titre?: string;
@@ -56,6 +62,10 @@ type Project = {
     year?: number;
     location?: { city?: string };
     pack?: 'essentiel' | 'croissance' | 'signature' | 'surmesure' | string;
+
+    // Liens
+    lien?: string;
+    urls?: URLs;
 };
 
 const ALL: Project[] = Array.isArray(projectsData) ? (projectsData as Project[]) : [];
@@ -68,9 +78,8 @@ export function generateStaticParams() {
     return ALL.filter((p) => p.slug).map((p) => ({ slug: String(p.slug) }));
 }
 
-// 👇 rendre async + attendre params
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const { slug } = await params;
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const { slug } = params;
     const p = getProject(slug);
     if (!p) return { title: 'Projet introuvable — Alchimiste Créations' };
 
@@ -87,9 +96,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
-// 👇 rendre async + attendre params
-export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+    const { slug } = params;
     const p = getProject(slug);
     if (!p) notFound();
 
@@ -112,7 +120,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <>
             <ContextSection project={{ pourQui: p.pourQui, besoin: p.besoin }} />
             <PropositionSection project={{ proposition: p.proposition }} />
-            <ResultSection project={{ resultat: p.resultat, results: p.results, media: p.media, titre: p.titre || p.title, title: p.title }} />
+            <ResultSection
+                project={{
+                    resultat: p.resultat,
+                    results: p.results,
+                    media: p.media,
+                    titre: p.titre ?? p.title,
+                    title: p.title,
+                    urls: p.urls, // ✅ lien “live” dispo dans ResultSection
+                }}
+            />
             <TestimonialSection project={{ testimonials: p.testimonials, citationClient: p.citationClient, client: p.client, logo: p.logo }} />
             <StackSection project={{ stack: p.stack, stackTags: p.stackTags, tags: p.tags }} />
             <CollabsSection project={{ collabs: (p as { collabs?: { name?: string; role?: string; portfolio?: string; site?: string; link?: string }[] }).collabs }} />

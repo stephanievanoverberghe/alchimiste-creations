@@ -369,5 +369,70 @@
         "year": 2022,
         "external": false,
         "visibility": "public"
+    },
+    {
+        "id": 9,
+        "slug": "mysteres-a-la-carte",
+        "titre": "Mystères à la carte",
+        "sousTitre": "Démo one-page — escape game culinaire à Bastille",
+        "client": "Projet personnel (démo)",
+        "pourQui": "Concept d’escape game culinaire à Paris, pensé pour tester une narration mêlant enquête et gastronomie.",
+        "besoin": "Créer une démo publique alliant ambiance gastro & indices d’enquête, avec réservations simulées et parcours mobile-first.",
+        "citationClient": "Résolvez l’énigme, dégustez la solution.",
+        "proposition": [
+            "Hero photo parallax (desktop) + scrims + grain léger",
+            "Cartes menus visuelles avec badges (prix, tags) et hover sobre",
+            "Section “Le concept” (timeline d’enquête culinaire en 3 étapes)",
+            "Steps (brief → indices → recoupements → résolution)",
+            "Dataviz Recharts (bloc éditorial chiffré)",
+            "Formulaire de réservation (react-hook-form + zod, UX & a11y)",
+            "Header mobile en sheet (drag-to-close), scroll spy, CTA visibles",
+            "FX montés en dynamique (LazyMotion, dynamic import) pour perfs"
+        ],
+        "resultat": "Démo interactive orientée ressenti. Parcours fluide, a11y élevée, et base technique optimisée (images WebP, LazyMotion, effets limités sur mobile).",
+        "results": {
+            "period": "août 2025 (Lighthouse mobile)",
+            "kpis": [
+                { "label": "Performance", "after": "100" },
+                { "label": "Accessibilité", "after": "100" },
+                { "label": "Bonnes pratiques", "after": "100" },
+                { "label": "SEO", "after": "100" },
+                { "label": "FCP", "after": "0,3 s" },
+                { "label": "TBT", "after": "0 ms" },
+                { "label": "CLS", "after": "0" }
+            ],
+            "highlights": [
+                "Effets souris/scroll désactivés sur mobile pour préserver les perfs",
+                "Composants animés accessibles, focus & contrastes soignés",
+                "Orchestration d’animations cohérente (pas de ‘gadget’)"
+            ]
+        },
+        "sector": "loisirs",
+        "kind": "vitrine",
+        "stack": "react",
+        "stackTags": ["nextjs", "tailwind", "framer-motion", "recharts", "zod", "react-hook-form", "vercel"],
+        "tags": ["parallax", "scroll-orchestrator", "booking-form", "accessibilite", "webp"],
+        "featured": true,
+        "priority": 3,
+        "media": { "cover": "/projects/mysteres-a-la-carte.png" },
+        "logo": "/projects/logo-mysteres-a-la-carte.png",
+        "logoAlt": "Logo Mystères à la carte",
+        "coverAlt": "Aperçu du site Mystères à la carte",
+        "testimonials": [{ "quote": "Un mélange élégant entre gastronomie et enquête, avec une narration UI cohérente.", "author": "Étude de cas" }],
+        "lien": "/projets/mysteres-a-la-carte",
+        "urls": {
+            "live": "https://mysteres-a-la-carte.vercel.app/"
+        },
+        "collabs": [],
+        "location": { "city": "Paris", "region": "Île-de-France", "country": "FR" },
+        "seo": {
+            "title": "Mystères à la carte — Démo one-page",
+            "description": "Escape game culinaire : hero parallax, cartes menus, timeline, formulaire de réservation (démo)."
+        },
+        "pack": "essentiel",
+        "status": "coded",
+        "year": 2025,
+        "external": true,
+        "visibility": "public"
     }
 ]
