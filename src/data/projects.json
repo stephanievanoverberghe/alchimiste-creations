@@ -561,7 +561,7 @@
             "description": "Explor’Art est un blog et une plateforme éducative dédiée au dessin, à la peinture, à l’histoire de l’art et à la psychologie de l’art, avec une approche douce et accessible."
         },
         "pack": "signature",
-        "status": "coded",
+        "status": "wip",
         "year": 2025,
         "external": true,
         "visibility": "public"
