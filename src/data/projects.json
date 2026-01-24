@@ -434,5 +434,136 @@
         "year": 2025,
         "external": true,
         "visibility": "public"
+    },
+    {
+        "id": 10,
+        "slug": "ancre-toi",
+        "titre": "Ancre-toi",
+        "sousTitre": "Plateforme d’auto-accompagnement — programmes guidés & espace apprenant",
+        "client": "Projet propriétaire",
+        "pourQui": "Personnes très sollicitées (freelances, créatifs, soignants, aidants) souhaitant retrouver clarté, énergie et stabilité intérieure grâce à des micro-pratiques guidées.",
+        "besoin": "Créer une plateforme douce, sécurisée et structurée pour accompagner des programmes sensibles, avec un parcours simple, progressif et respectueux du rythme de chacun·e.",
+        "citationClient": "Je voulais un espace qui n’ajoute pas de pression, mais qui aide vraiment à revenir à soi.",
+        "proposition": [
+            "Architecture claire public / membre / admin (Next.js App Router)",
+            "Espace apprenant mobile-first avec un seul prochain pas visible",
+            "Journaux interactifs (autosave, export PDF, confidentialité)",
+            "Encadrés sécurité & approche trauma-informed",
+            "Programmes modulaires (RESET-7, BOUSSOLE-10, ANCRAGE-30, ALCHIMIE-90)",
+            "Back-office pédagogique sur mesure (programmes, unités, journaux, QA)",
+            "Performance, accessibilité AA et SEO maîtrisés"
+        ],
+        "resultat": "Une base produit robuste et évolutive : parcours fluide, forte complétion sur les programmes courts, et un socle technique prêt pour la montée en charge (nouveaux programmes, paiements, analytics). L’expérience favorise l’engagement sans surcharge cognitive.",
+        "results": {
+            "period": "phase MVP → pré-lancement",
+            "kpis": [
+                { "label": "Performance Lighthouse mobile", "after": "≈ 95–100" },
+                { "label": "Accessibilité", "after": "AA (focus, contrastes, clavier)" },
+                { "label": "Temps de chargement", "after": "< 1,5 s" },
+                { "label": "Complétion programme court", "after": "élevée (RESET-7)" }
+            ],
+            "highlights": [
+                "Un seul prochain pas visible → réduction de la charge mentale",
+                "Autosave & optionnalité → sentiment de sécurité",
+                "Architecture pensée pour durer (versionning, réutilisation des blocs)"
+            ]
+        },
+        "sector": "bien-etre",
+        "kind": "plateforme",
+        "stack": "react",
+        "stackTags": ["nextjs", "typescript", "tailwind", "app-router", "server-components", "vercel", "stripe"],
+        "tags": ["auto-accompagnement", "trauma-informed", "journaling", "espace membre", "lms sur mesure", "accessibilite"],
+        "featured": true,
+        "priority": 0,
+        "media": { "cover": "/projects/ancre-toi.png" },
+        "logo": "/projects/logo-ancre-toi.png",
+        "logoAlt": "Logo Ancre-toi",
+        "coverAlt": "Aperçu de la plateforme Ancre-toi — espace apprenant",
+        "testimonials": [
+            {
+                "quote": "On se sent accompagné sans être poussé. Tout est clair, doux et structurant.",
+                "author": "Utilisateur·rice pilote"
+            }
+        ],
+        "urls": {
+            "live": "https://ancretoi.vercel.app/"
+        },
+        "lien": "/projets/ancre-toi",
+        "collabs": [],
+        "location": { "city": "Armentières", "region": "Hauts-de-France", "country": "FR" },
+        "seo": {
+            "title": "Ancre-toi — Plateforme d’auto-accompagnement",
+            "description": "Plateforme de programmes guidés (RESET-7…) avec espace apprenant, journaux interactifs et approche trauma-informed."
+        },
+        "pack": "signature",
+        "status": "coded",
+        "year": 2025,
+        "external": true,
+        "visibility": "public"
+    },
+    {
+        "id": 11,
+        "slug": "explor-art",
+        "titre": "Explor’Art",
+        "sousTitre": "Blog & plateforme pédagogique — apprendre et ressentir l’art autrement",
+        "client": "Projet propriétaire",
+        "pourQui": "Explor’Art s’adresse aux débutants curieux, artistes amateurs et amoureux d’art sensibles qui souhaitent comprendre le dessin, la peinture et l’histoire de l’art sans jargon, avec une approche humaine, lumineuse et décomplexante.",
+        "besoin": "Créer un espace éditorial et pédagogique structuré, capable de transmettre des savoirs artistiques complexes de manière simple et joyeuse, tout en posant les bases d’une future plateforme de cours et de formations.",
+        "citationClient": "Je voulais un lieu où l’art devient clair, vivant et accessible — un espace qui donne envie de créer et de regarder autrement.",
+        "proposition": [
+            "Architecture éditoriale autour de 7 piliers clairs (technique, regard, histoire, couleurs, psychologie…)",
+            "Blog pédagogique structuré par formats (tutoriels, analyses, histoires d’artistes, guides couleur)",
+            "UX lumineuse et respirante, pensée pour la lecture longue et l’apprentissage doux",
+            "Système de niveaux (débutant / intermédiaire) non scolaire",
+            "Ressources téléchargeables dès le lancement (PDF, palettes, exercices)",
+            "Socle technique évolutif vers une plateforme de formations"
+        ],
+        "resultat": "Explor’Art pose une base éditoriale solide et différenciante : un univers cohérent, une navigation intuitive et une expérience émotionnelle forte. Le projet est conçu comme une \"école d’art moderne\" chaleureuse, prête à évoluer vers des parcours pédagogiques, cours et formations payantes.",
+        "results": {
+            "period": "phase conception → MVP",
+            "kpis": [
+                { "label": "Lisibilité éditoriale", "after": "7 piliers clairs et identifiables" },
+                { "label": "Formats pédagogiques", "after": "9 formats structurés prêts pour l’admin" },
+                { "label": "Performance cible", "after": "< 1,5 s mobile" },
+                { "label": "Scalabilité produit", "after": "blog → cours → formations" }
+            ],
+            "highlights": [
+                "Ton humain et chaleureux comme signature forte",
+                "Structure pensée dès le départ pour la monétisation future",
+                "Alliance rare entre pédagogie, sensibilité et UX"
+            ]
+        },
+        "sector": "education-art",
+        "kind": "plateforme",
+        "stack": "react",
+        "stackTags": ["nextjs", "typescript", "tailwind", "mongodb", "app-router", "vercel"],
+        "tags": ["blog pédagogique", "art", "plateforme éducative", "ux éditoriale", "formations artistiques"],
+        "featured": true,
+        "priority": 0,
+        "media": { "cover": "/projects/explor-art.png" },
+        "logo": "/projects/logo-explor-art.png",
+        "logoAlt": "Logo Explor’Art",
+        "coverAlt": "Aperçu de la plateforme Explor’Art",
+        "testimonials": [
+            {
+                "quote": "On a l’impression que quelqu’un nous prend par la main pour nous apprendre à regarder.",
+                "author": "Lecteur·rice pilote"
+            }
+        ],
+        "urls": {
+            "live": "https://explorart-six.vercel.app/"
+        },
+        "lien": "/projets/explor-art",
+        "collabs": [],
+        "location": { "city": "Armentières", "region": "Hauts-de-France", "country": "FR" },
+        "seo": {
+            "title": "Explor’Art — Blog et plateforme pédagogique autour de l’art",
+            "description": "Explor’Art est un blog et une plateforme éducative dédiée au dessin, à la peinture, à l’histoire de l’art et à la psychologie de l’art, avec une approche douce et accessible."
+        },
+        "pack": "signature",
+        "status": "coded",
+        "year": 2025,
+        "external": true,
+        "visibility": "public"
     }
 ]
