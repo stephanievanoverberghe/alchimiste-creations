@@ -234,14 +234,16 @@
         "logoAlt": "Logo Studio Lumen",
         "coverAlt": "Aperçu du site Studio Lumen",
         "testimonials": [{ "quote": "On reçoit des demandes mieux qualifiées depuis la mise en ligne." }],
-        "urls": { "caseStudy": "/projets/studio-lumen" },
+        "urls": {
+            "live": "https://studio-lumen.vercel.app/"
+        },
         "lien": "/projets/studio-lumen",
         "location": { "city": "Lille", "region": "Hauts-de-France", "country": "FR" },
         "seo": { "title": "Studio Lumen — Vitrine studio créatif", "description": "Site vitrine rapide, études de cas, formulaire de brief." },
         "pack": "surmesure",
         "status": "coded",
         "year": 2025,
-        "external": false,
+        "external": true,
         "visibility": "public"
     },
     {
