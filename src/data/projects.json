@@ -362,7 +362,9 @@
         "logoAlt": "Logo Rivage Photo",
         "coverAlt": "Aperçu du portfolio Rivage Photo",
         "testimonials": [{ "quote": "Navigation ultra fluide, exactement ce qu’il me fallait." }],
-        "urls": { "caseStudy": "/projets/rivage-photo" },
+        "urls": {
+            "live": "https://rivage-photo.vercel.app/"
+        },
         "lien": "/projets/rivage-photo",
         "location": { "city": "Dunkerque", "region": "Hauts-de-France", "country": "FR" },
         "seo": { "title": "Rivage Photo — Portfolio photographe", "description": "Grille masonry, mode focus, performance optimisée." },
