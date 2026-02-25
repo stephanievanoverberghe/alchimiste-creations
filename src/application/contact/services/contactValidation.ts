@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 export type ContactSubmissionInput = {
@@ -27,30 +28,43 @@ export type ContactValidationResult = {
     error?: string;
 };
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const normalizeText = (value: string) => value.replace(/\s+/g, ' ').trim();
 
+const normalizedString = (minLength: number, maxLength: number) =>
+    z.preprocess((value) => (typeof value === 'string' ? normalizeText(value) : ''), z.string().min(minLength).max(maxLength));
+
+const identitySchema = z.object({
+    name: normalizedString(2, 80),
+    email: z.preprocess((value) => (typeof value === 'string' ? normalizeText(value).toLowerCase() : ''), z.string().max(120).email()).transform((value) => value),
+    consent: z.preprocess((value) => Boolean(value), z.boolean()),
+});
+
+const messageSchema = normalizedString(10, 5000);
+
+const identityErrorMap: Record<string, string> = {
+    name: contactValidationCopy.invalidName,
+    email: contactValidationCopy.invalidEmail,
+};
+
+function getFirstIssuePath(result: z.ZodError): string | undefined {
+    return result.issues[0]?.path[0]?.toString();
+}
+
 function validateIdentity(input: ContactIdentityInput, options?: { requireConsent?: boolean }) {
-    const normalizedName = normalizeText(input.name ?? '');
-    if (!normalizedName || normalizedName.length < 2 || normalizedName.length > 80) {
-        return { error: contactValidationCopy.invalidName } as const;
+    const parsed = identitySchema.safeParse(input);
+    if (!parsed.success) {
+        const issuePath = getFirstIssuePath(parsed.error);
+        return { error: identityErrorMap[issuePath ?? ''] ?? contactValidationCopy.invalidForm } as const;
     }
 
-    const normalizedEmail = normalizeText(input.email ?? '').toLowerCase();
-    if (!normalizedEmail || !EMAIL_PATTERN.test(normalizedEmail) || normalizedEmail.length > 120) {
-        return { error: contactValidationCopy.invalidEmail } as const;
-    }
-
-    const consent = Boolean(input.consent);
-    if (options?.requireConsent && !consent) {
+    if (options?.requireConsent && !parsed.data.consent) {
         return { error: contactValidationCopy.consentRequired } as const;
     }
 
     return {
-        normalizedName,
-        normalizedEmail,
-        consent,
+        normalizedName: parsed.data.name,
+        normalizedEmail: parsed.data.email,
+        consent: parsed.data.consent,
     } as const;
 }
 
@@ -79,8 +93,8 @@ export function validateContactSubmission(input: ContactSubmissionInput, options
         return { isBot: false, error: validated.error };
     }
 
-    const normalizedMessage = normalizeText(input.message ?? '');
-    if (normalizedMessage.length < 10 || normalizedMessage.length > 5000) {
+    const message = messageSchema.safeParse(input.message);
+    if (!message.success) {
         return { isBot: false, error: contactValidationCopy.invalidMessage };
     }
 
@@ -89,7 +103,7 @@ export function validateContactSubmission(input: ContactSubmissionInput, options
         normalized: {
             name: validated.normalizedName,
             email: validated.normalizedEmail,
-            message: normalizedMessage,
+            message: message.data,
             consent: validated.consent,
         },
     };

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateContactSubmission } from '@/application/contact/services/contactValidation';
+import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,12 +21,12 @@ export async function POST(req: NextRequest) {
         }
 
         if (!validation.normalized) {
-            return NextResponse.json({ success: false, error: validation.error || 'Données invalides' }, { status: 400 });
+            return NextResponse.json({ success: false, error: validation.error || contactValidationCopy.fallbackInvalidPayload }, { status: 400 });
         }
 
         const access_key = process.env.WEB3FORMS_KEY;
         if (!access_key) {
-            return NextResponse.json({ success: false, error: 'Configuration serveur manquante (WEB3FORMS_KEY)' }, { status: 500 });
+            return NextResponse.json({ success: false, error: contactValidationCopy.missingServerConfig }, { status: 500 });
         }
 
         const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '';
@@ -53,12 +54,12 @@ export async function POST(req: NextRequest) {
 
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data?.success) {
-            return NextResponse.json({ success: false, error: data?.message || 'Échec de l’envoi via Web3Forms' }, { status: 502 });
+            return NextResponse.json({ success: false, error: data?.message || contactValidationCopy.providerFailed }, { status: 502 });
         }
 
         return NextResponse.json({ success: true }, { status: 200 });
     } catch {
-        return NextResponse.json({ success: false, error: 'Erreur serveur' }, { status: 500 });
+        return NextResponse.json({ success: false, error: contactValidationCopy.serverError }, { status: 500 });
     }
 }
 

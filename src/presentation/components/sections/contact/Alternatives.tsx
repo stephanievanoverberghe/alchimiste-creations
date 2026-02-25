@@ -7,7 +7,7 @@ import { Mail, MessageSquareText, MessageCircle, Copy, CheckCircle2, X, ChevronR
 import { cn } from '@/shared/utils/cn';
 import HcaptchaGate, { HcaptchaHandle } from '@/presentation/components/integrations/HcaptchaGate';
 import { validateContactSubmission } from '@/application/contact/services/contactValidation';
-import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
+import { contactAlternativesCopy, contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 type ApiResponse = { success: boolean; error?: string };
 
@@ -69,14 +69,19 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
     }, []);
 
     const mailtoHref = useMemo(() => {
-        const subject = 'Contact — Appel découverte';
+        const subject = contactAlternativesCopy.mailtoSubject;
         const body = `Nom: ${name ?? ''}\nEmail: ${email ?? ''}\n\nMessage:\n`;
         return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }, [EMAIL, name, email]);
 
     const whatsappHref = useMemo(() => {
         if (!WHATSAPP) return '';
-        const text = ['Bonjour,', name ? `je m'appelle ${name}.` : '', email ? `Mon email: ${email}.` : '', 'Je voudrais échanger sur mon projet et réserver un appel découverte.']
+        const text = [
+            contactAlternativesCopy.whatsappGreeting,
+            name ? `${contactAlternativesCopy.whatsappNamePrefix} ${name}.` : '',
+            email ? `${contactAlternativesCopy.whatsappEmailPrefix} ${email}.` : '',
+            contactAlternativesCopy.whatsappClosing,
+        ]
             .filter(Boolean)
             .join(' ');
         return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
@@ -99,13 +104,13 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
         if (validation.isBot) return;
         if (!validation.normalized) {
             setStatus('error');
-            setErrorMsg(validation.error === contactValidationCopy.invalidMessage ? contactValidationCopy.shortMessageUi : validation.error || 'Formulaire invalide.');
+            setErrorMsg(validation.error === contactValidationCopy.invalidMessage ? contactValidationCopy.shortMessageUi : validation.error || contactValidationCopy.invalidForm);
             return;
         }
 
         if (functionalAllowed && !captchaToken) {
             setStatus('error');
-            setErrorMsg('Merci de valider le challenge anti-spam.');
+            setErrorMsg(contactValidationCopy.captchaRequired);
             return;
         }
 
@@ -140,11 +145,11 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                 setSuccessOpen(true);
             } else {
                 setStatus('error');
-                setErrorMsg(data?.error || 'Impossible d’envoyer le message.');
+                setErrorMsg(data?.error || contactValidationCopy.submitFailed);
             }
         } catch {
             setStatus('error');
-            setErrorMsg('Erreur réseau. Réessaie dans un instant.');
+            setErrorMsg(contactValidationCopy.networkError);
         } finally {
             setSending(false);
         }
@@ -242,7 +247,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
 
                             {status === 'error' && (
                                 <span className="text-xs text-terracotta">
-                                    {errorMsg || 'Oups, ça a échoué.'}{' '}
+                                    {errorMsg || contactValidationCopy.unexpectedError}{' '}
                                     <a href={mailtoHref} className="underline">
                                         Écris-moi par email
                                     </a>
