@@ -1,110 +1,35 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/shared/utils/cn';
 import { GalleryVerticalEnd, LayoutGrid } from 'lucide-react';
-import rawData from '@/infrastructure/content/projects.json';
-import CardProject, { type CardProjectData } from '@/presentation/components/cards/CardProject';
+import { getHomeProjectCards } from '@/application/home';
+import { homeProjectsCopy } from '@/infrastructure/content/home-copy';
+import CardProject from '@/presentation/components/cards/CardProject';
 import CardContactTeaser from '@/presentation/components/cards/CardContactTeaser';
 
-type Project = {
-    slug?: string;
-    id?: string | number;
-    title?: string;
-    titre?: string;
-    name?: string;
-    description?: string;
-    sousTitre?: string;
-    subtitle?: string;
-    imageSrc?: string;
-    image?: string;
-    cover?: string;
-    logo?: string;
-    link?: string;
-    lien?: string;
-    status?: 'coded' | 'wip';
-    stack?: 'wordpress' | 'react' | 'mixte' | string;
-    kind?: 'vitrine' | 'portfolio' | 'ecommerce' | 'rdv' | string;
-    year?: number;
-    city?: string;
-    external?: boolean;
-};
-
-function normalizeProject(p: Project, idx: number): CardProjectData {
-    const title = p.title ?? p.titre ?? p.name ?? `Projet ${idx + 1}`;
-    const description = p.description ?? p.sousTitre ?? p.subtitle ?? '';
-    const imageSrc = p.imageSrc || p.image || p.cover || '';
-    const logoSrc = p.logo || undefined;
-    const link =
-        p.link ??
-        p.lien ??
-        (p.slug
-            ? `/projets/${p.slug}`
-            : `/projets/${(title || 'projet')
-                  .toString()
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/[^a-z0-9\-]/g, '')}`);
-
-    const status = p.status ?? (p.slug === 'norel-art' ? 'coded' : p.slug === 'ania-sophro' ? 'wip' : undefined);
-    const external = typeof p.external === 'boolean' ? p.external : /^https?:\/\//i.test(link);
-
-    return {
-        key: (p.slug ?? p.id ?? title).toString(),
-        title,
-        description,
-        imageSrc,
-        logoSrc,
-        link,
-        status,
-        stack: p.stack,
-        kind: p.kind,
-        external,
-    };
-}
-
-export default function ProjectsSection({ projects, ctaHref = '/projets' }: { projects?: Project[]; ctaHref?: string }) {
-    const source: Project[] = Array.isArray(projects) && projects.length ? projects : (rawData as Project[]);
-
-    const sortedByYearDesc = [...source].sort((a, b) => {
-        const ay = typeof a.year === 'number' ? a.year : -Infinity;
-        const by = typeof b.year === 'number' ? b.year : -Infinity;
-        if (by !== ay) return by - ay;
-        if ((b.status === 'wip') !== (a.status === 'wip')) return (b.status === 'wip' ? 1 : 0) - (a.status === 'wip' ? 1 : 0);
-        return String(a.titre ?? a.title ?? a.name ?? '').localeCompare(String(b.titre ?? b.title ?? b.name ?? ''));
-    });
-
-    const mapped: CardProjectData[] = sortedByYearDesc.map(normalizeProject);
-    const projectCards = mapped.slice(0, 2);
+export default function ProjectsSection({ ctaHref = '/projets' }: { ctaHref?: string }) {
+    const projectCards = getHomeProjectCards();
 
     return (
-        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
-            {/* Liseré haut */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" />
-            {/* Fond or mobile only */}
+        <section className="relative py-16 md:py-28 px-6 md:px-8 lg:px-25 xl:px-37.5">
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-background via-ormat/20 to-background" />
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" />
-            {/* Vague décorative (md+) */}
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0">
                 <Image src="/deco/about-wave.png" alt="" fill priority className="h-auto object-cover" />
             </div>
 
             <div className="relative mx-auto w-full max-w-7xl">
-                {/* Header */}
                 <div className="group text-center lg:text-left mb-12">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
                         <GalleryVerticalEnd className="w-3.5 h-3.5" aria-hidden />
-                        <span>Réalisations</span>
+                        <span>{homeProjectsCopy.badge}</span>
                     </span>
 
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
-                        Des sites vivants, alignés — au service de l’essentiel
-                    </h2>
+                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">{homeProjectsCopy.title}</h2>
 
-                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                        Un aperçu de deux projets récents — clairs, sensibles et performants. Le reste ? À découvrir dans le portfolio.
-                    </p>
+                    <p className="mt-4 text-base md:text-lg text-foreground/80 leading-relaxed max-w-3xl">{homeProjectsCopy.intro}</p>
                 </div>
 
                 {/* Grid */}
@@ -131,7 +56,7 @@ export default function ProjectsSection({ projects, ctaHref = '/projets' }: { pr
                         )}
                     >
                         <LayoutGrid className="w-4 h-4" aria-hidden />
-                        Voir tous les projets
+                        {homeProjectsCopy.cta}
                     </Link>
                 </div>
             </div>
