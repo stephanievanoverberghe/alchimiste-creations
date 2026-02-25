@@ -6,11 +6,11 @@
 
 ## 1) Vision d’architecture (target state)
 
-- [ ] Formaliser les principes d’architecture dans un ADR `docs/architecture/0001-principles.md`.
-- [ ] Définir les frontières : **Presentation / Application / Domain / Infrastructure**.
-- [ ] Adopter un style cible (modular monolith + clean architecture, adapté à Next.js App Router).
-- [ ] Définir les conventions de nommage (features, services, adapters, DTO, mappers).
-- [ ] Documenter les dépendances autorisées entre couches (règles d’import strictes).
+- [x] Formaliser les principes d’architecture dans un ADR `docs/architecture/0001-principles.md`.
+- [x] Définir les frontières : **Presentation / Application / Domain / Infrastructure**.
+- [x] Adopter un style cible (modular monolith + clean architecture, adapté à Next.js App Router).
+- [x] Définir les conventions de nommage (features, services, adapters, DTO, mappers).
+- [x] Documenter les dépendances autorisées entre couches (règles d’import strictes).
 
 ---
 
