@@ -1,128 +1,29 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import React, { type CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/shared/utils/cn';
 import { ClipboardList, ChevronRight, ArrowLeft, Send, Calendar, Globe, Upload, RefreshCw, X, CheckCircle2 } from 'lucide-react';
-import { buildBriefExpressMessage } from '@/application/contact/services/buildBriefExpressMessage';
 import type { LucideIcon } from 'lucide-react';
-import { validateContactIdentity, validateContactSubmission } from '@/application/contact/services/contactValidation';
-import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
-
-declare global {
-    interface Window {
-        dataLayer?: Array<Record<string, unknown>>;
-    }
-}
-const pushDl = (event: string, detail?: Record<string, unknown>) => window?.dataLayer?.push(detail ? { event, ...detail } : { event });
-
-type GoalKey = 'leads' | 'credibilite' | 'vente' | 'recrutement' | 'autre';
-type ContactPref = 'email' | 'appel';
-type ContentsReady = 'oui' | 'non' | 'partiel';
-type PriorityKey = 'budget' | 'delai' | 'qualite';
-
-type BriefData = {
-    projet: {
-        type: 'vitrine' | 'portfolio' | 'ecommerce' | 'autre';
-        refonte: boolean;
-        urlActuelle: string;
-    };
-
-    objectifs: {
-        goals: Record<GoalKey, boolean>;
-        goalsAutre?: string;
-        ciblePrincipale?: string;
-    };
-
-    contenus: {
-        contentsReady: ContentsReady;
-        blog: boolean;
-        formulaireAvance: boolean;
-        rdv: boolean;
-        paiement: boolean;
-        multilingue: boolean;
-        seoTechnique: boolean;
-        accessibilite: boolean;
-        performances: boolean;
-        integrations?: string;
-    };
-
-    cadrage: {
-        budget: '<1000' | '1000-2000' | '2000-4000' | '4000-6000' | '6000+';
-        deadline?: string;
-        priorite: PriorityKey;
-    };
-
-    contexte: {
-        secteur?: string;
-        diff?: string;
-        refs?: string;
-    };
-
-    contact: {
-        prenom: string;
-        email: string;
-        entreprise?: string;
-        paysFuseau?: string;
-        preference: ContactPref;
-        consent: boolean;
-    };
-
-    attachments: File[];
-
-    website?: string;
-};
-
-type StepKey = 'projet' | 'objectifs' | 'contenus' | 'cadrage' | 'contexte' | 'contact';
-
-const STORAGE_KEY = 'brief-express-v1';
+import {
+    fileAcceptOK,
+    fileSizeOK,
+    trackBriefExpress,
+    useBriefExpressForm,
+    type BriefData,
+    type ContactPref,
+    type ContentsReady,
+    type GoalKey,
+    type PriorityKey,
+} from '@/presentation/hooks/useBriefExpressForm';
 
 const motifStyle: CSSProperties = {
     backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
     backgroundSize: '16px 16px',
     color: 'var(--color-ormat)',
 };
-
-function useDebouncedEffect(fn: () => void, deps: React.DependencyList, delay = 350) {
-    useEffect(() => {
-        const id = setTimeout(fn, delay);
-        return () => clearTimeout(id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, deps);
-}
-
-const fileAcceptOK = (file: File) => /\.(pdf|docx?|zip)$/i.test(file.name);
-const fileSizeOK = (file: File, maxMB = 10) => file.size <= maxMB * 1024 * 1024;
-
-function makeInitialData(): BriefData {
-    return {
-        projet: { type: 'vitrine', refonte: false, urlActuelle: '' },
-        objectifs: {
-            goals: { leads: false, credibilite: false, vente: false, recrutement: false, autre: false },
-            goalsAutre: '',
-            ciblePrincipale: '',
-        },
-        contenus: {
-            contentsReady: 'partiel',
-            blog: false,
-            formulaireAvance: false,
-            rdv: false,
-            paiement: false,
-            multilingue: false,
-            seoTechnique: false,
-            accessibilite: false,
-            performances: false,
-            integrations: '',
-        },
-        cadrage: { budget: '2000-4000', deadline: '', priorite: 'qualite' },
-        contexte: { secteur: '', diff: '', refs: '' },
-        contact: { prenom: '', email: '', entreprise: '', paysFuseau: '', preference: 'email', consent: false },
-        attachments: [],
-        website: '',
-    };
-}
 
 const GOALS = briefExpressCopy.goals satisfies ReadonlyArray<{ key: GoalKey; text: string }>;
 const CONTENTS_READY = briefExpressCopy.contentsReadyOptions satisfies ReadonlyArray<ContentsReady>;
@@ -131,205 +32,31 @@ const BUDGETS = briefExpressCopy.budgets satisfies ReadonlyArray<{ value: BriefD
 const PRIORITIES = briefExpressCopy.priorities satisfies ReadonlyArray<PriorityKey>;
 
 export default function BriefExpressSection({ id = 'brief-express', className }: { id?: string; className?: string }) {
-    const [data, setData] = useState<BriefData>(makeInitialData);
-    const [step, setStep] = useState<StepKey>('projet');
-    const [restored, setRestored] = useState<boolean>(false);
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const {
+        closeBtnRef,
+        data,
+        errorMsg,
+        errors,
+        fileInputRef,
+        goNext,
+        goPrev,
+        onSubmit,
+        progress,
+        rememberFocus,
+        restored,
+        sending,
+        setData,
+        setStep,
+        setSuccessOpen,
+        status,
+        step,
+        stepIndex,
+        stepStatus,
+        steps,
+        successOpen,
+        validateStep,
+    } = useBriefExpressForm();
 
-    const [sending, setSending] = useState(false);
-    const [status, setStatus] = useState<'idle' | 'ok' | 'error'>('idle');
-    const [errorMsg, setErrorMsg] = useState('');
-
-    const skipPersistRef = useRef(false);
-
-    const [successOpen, setSuccessOpen] = useState(false);
-    const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-        pushDl('devis_form_start');
-    }, []);
-
-    const activeNameRef = useRef<string | null>(null);
-    const rememberFocus = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        activeNameRef.current = e.currentTarget.name || null;
-    }, []);
-    useEffect(() => {
-        const name = activeNameRef.current;
-        if (!name) return;
-        const el = document.querySelector<HTMLElement>(`[name="${name}"]`);
-        if (el && document.activeElement !== el) el.focus();
-    });
-
-    useEffect(() => {
-        if (!successOpen) return;
-        const prevOverflow = document.documentElement.style.overflow;
-        document.documentElement.style.overflow = 'hidden';
-        closeBtnRef.current?.focus();
-        const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSuccessOpen(false);
-        window.addEventListener('keydown', onKey);
-        return () => {
-            window.removeEventListener('keydown', onKey);
-            document.documentElement.style.overflow = prevOverflow;
-        };
-    }, [successOpen]);
-
-    useEffect(() => {
-        try {
-            const raw = window.localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-                const parsed = JSON.parse(raw) as BriefData;
-                setData({ ...parsed, attachments: [] });
-                setRestored(true);
-            }
-        } catch {}
-    }, []);
-
-    useDebouncedEffect(() => {
-        if (skipPersistRef.current) {
-            skipPersistRef.current = false;
-            return;
-        }
-        try {
-            const snapshot: Omit<BriefData, 'attachments'> & { attachments?: never[] } = { ...data, attachments: [] as never[] };
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-        } catch {}
-    }, [data]);
-
-    const steps = useMemo(
-        () =>
-            [
-                { key: 'projet', label: 'Projet' },
-                { key: 'objectifs', label: 'Objectifs & public' },
-                { key: 'contenus', label: 'Contenus & fonctionnalités' },
-                { key: 'cadrage', label: 'Budget & délai' },
-                { key: 'contexte', label: 'Contexte' },
-                { key: 'contact', label: 'Coordonnées & RGPD' },
-            ] as Array<{ key: StepKey; label: string }>,
-        [],
-    );
-
-    const stepIndex = steps.findIndex((s) => s.key === step);
-    const progress = Math.round(((stepIndex + 1) / steps.length) * 100);
-    const stepStatus = useCallback(
-        (index: number) => {
-            if (index < stepIndex) return 'done';
-            if (index === stepIndex) return 'current';
-            return 'upcoming';
-        },
-        [stepIndex],
-    );
-
-    const goNext = useCallback(() => {
-        setErrors({});
-        if (stepIndex < steps.length - 1) {
-            setStep(steps[stepIndex + 1].key);
-            pushDl('devis_form_step_next', { step: steps[stepIndex + 1].key });
-        }
-    }, [stepIndex, steps]);
-
-    const goPrev = useCallback(() => {
-        setErrors({});
-        if (stepIndex > 0) {
-            setStep(steps[stepIndex - 1].key);
-            pushDl('devis_form_step_prev', { step: steps[stepIndex - 1].key });
-        }
-    }, [stepIndex, steps]);
-
-    const validateStep = useCallback(
-        (k: StepKey): boolean => {
-            const e: Record<string, string> = {};
-            if (k === 'contact') {
-                const validation = validateContactIdentity(
-                    {
-                        name: data.contact.prenom,
-                        email: data.contact.email,
-                        consent: data.contact.consent,
-                    },
-                    { requireConsent: true },
-                );
-
-                if (validation.error === contactValidationCopy.invalidName) e['contact.prenom'] = briefExpressCopy.errors.firstNameRequired;
-                if (validation.error === contactValidationCopy.invalidEmail) e['contact.email'] = briefExpressCopy.errors.invalidEmail;
-                if (validation.error === contactValidationCopy.consentRequired) e['contact.consent'] = contactValidationCopy.consentRequired;
-            }
-            setErrors(e);
-            return Object.keys(e).length === 0;
-        },
-        [data.contact],
-    );
-
-    const resetAfterSubmit = useCallback(() => {
-        try {
-            window.localStorage.removeItem(STORAGE_KEY);
-        } catch {}
-        setRestored(false);
-        skipPersistRef.current = true;
-        setData(makeInitialData());
-        setStep('projet');
-        setErrors({});
-        if (fileInputRef.current) fileInputRef.current.value = '';
-    }, []);
-
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!validateStep('contact')) {
-            pushDl('devis_error', { where: 'validation' });
-            return;
-        }
-        if (data.website && data.website.trim().length > 0) {
-            pushDl('devis_error', { where: 'honeypot' });
-            return;
-        }
-
-        setSending(true);
-        setStatus('idle');
-        setErrorMsg('');
-
-        try {
-            const payload = {
-                name: data.contact.prenom || 'Visiteur',
-                email: data.contact.email,
-                message: buildBriefExpressMessage(data).replace(/\n/g, '\r\n'),
-                consent: data.contact.consent,
-                confirm_email: '',
-            };
-            const validation = validateContactSubmission(payload, { requireConsent: true });
-            if (!validation.normalized) {
-                setStatus('error');
-                setErrorMsg(validation.error || 'Impossible d’envoyer le brief pour l’instant.');
-                setSending(false);
-                return;
-            }
-
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-
-            const json = (await res.json()) as { success?: boolean; error?: string };
-
-            if (res.ok && json?.success) {
-                setStatus('ok');
-                pushDl('devis_form_submit', { ok: true });
-                resetAfterSubmit();
-                setSuccessOpen(true);
-            } else {
-                setStatus('error');
-                setErrorMsg(json?.error || 'Impossible d’envoyer le brief pour l’instant.');
-                pushDl('devis_error', { where: 'api_contact', msg: json?.error });
-            }
-        } catch {
-            setStatus('error');
-            setErrorMsg('Erreur réseau. Réessaie dans un instant.');
-            pushDl('devis_error', { where: 'network' });
-        } finally {
-            setSending(false);
-        }
-    };
-
-    // ------ UI pieces
     const Badge = ({ icon: Icon, children }: { icon: LucideIcon; children: React.ReactNode }) => (
         <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/40 rounded-full px-4 py-1">
             <Icon className="w-3.5 h-3.5" aria-hidden />
@@ -728,7 +455,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                 const kept: File[] = [];
                                 for (const f of files) if (fileAcceptOK(f) && fileSizeOK(f)) kept.push(f);
                                 setData((d) => ({ ...d, attachments: [...d.attachments, ...kept] }));
-                                if (kept.length > 0) pushDl('devis_upload', { count: kept.length });
+                                if (kept.length > 0) trackBriefExpress('devis_upload', { count: kept.length });
                                 if (fileInputRef.current) fileInputRef.current.value = '';
                             }}
                         />
@@ -806,8 +533,8 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
     };
 
     return (
-        <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-[100px] xl:px-[150px]', className)} aria-labelledby="brief-express-title">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background pointer-events-none" aria-hidden />
+        <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-25 xl:px-37.5', className)} aria-labelledby="brief-express-title">
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-background via-ormat/20 to-background pointer-events-none" aria-hidden />
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0 pointer-events-none" aria-hidden />
             <div className="absolute bottom-0 left-0 w-full h-full hidden md:block z-0 pointer-events-none" aria-hidden>
                 <Image src="/deco/about-wave.png" alt="" role="presentation" fill priority className="object-cover" sizes="100vw" />
@@ -834,7 +561,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     <div className="w-full h-2 rounded-full bg-foreground/10 overflow-hidden">
                         <div className="h-full bg-sauge" style={{ width: `${progress}%` }} aria-hidden />
                     </div>
-                    <span className="min-w-[52px] text-xs text-foreground/80 text-right">{progress}%</span>
+                    <span className="min-w-13 text-xs text-foreground/80 text-right">{progress}%</span>
                 </div>
 
                 <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3" aria-label="Progression du formulaire">
@@ -865,7 +592,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     })}
                 </ol>
                 <LinedCard>
-                    <form onSubmit={onSubmit} className="relative z-[1] grid gap-6">
+                    <form onSubmit={onSubmit} className="relative z-1 grid gap-6">
                         {renderStep()}
 
                         <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
@@ -880,7 +607,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         Retour
                                     </button>
                                 ) : (
-                                    <span aria-hidden className="inline-block w-[110px]" />
+                                    <span aria-hidden className="inline-block w-27.5" />
                                 )}
                             </div>
 
@@ -926,7 +653,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     <Link
                         href="#prendre-un-creneau"
                         className="inline-flex items-center gap-2 rounded-2xl border border-sauge/40 bg-background px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] hover:bg-sauge/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
-                        onClick={() => pushDl('devis_call_click', { origin: 'brief_express' })}
+                        onClick={() => trackBriefExpress('devis_call_click', { origin: 'brief_express' })}
                     >
                         Réserver un appel
                         <ChevronRight className="w-4 h-4" aria-hidden />
@@ -936,7 +663,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
             {successOpen && (
                 <div
-                    className="fixed inset-0 z-[60] flex items-center justify-center"
+                    className="fixed inset-0 z-60 flex items-center justify-center"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="brief-success-title"
