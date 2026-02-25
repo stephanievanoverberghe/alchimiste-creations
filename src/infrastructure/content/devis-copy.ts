@@ -154,3 +154,45 @@ export const briefExpressCopy = {
         helper: 'Envoi des fichiers séparément si besoin — ici, on transmet le brief texte. Tu recevras un lien pour partager les pièces jointes.',
     },
 } as const;
+
+export const quickEstimateCopy = {
+    section: {
+        badge: 'Simulation',
+        title: 'Estime ton budget en 30 secondes',
+        intro: 'Choisis un pack, ta techno, et les options — on te donne une',
+        introHighlight: 'fourchette réaliste',
+        introSuffix: 'avant brief.',
+    },
+    fields: {
+        packLegend: 'Pack',
+        technologyLegend: 'Technologie',
+        optionsLegend: 'Options',
+        includedBadge: 'Inclus',
+        unavailableBadge: 'Non proposé',
+        includedAriaLabel: 'Option incluse',
+        unavailableAriaLabel: 'Option non proposée',
+        baseForCalculation: 'Base du calcul :',
+        includedSuffix: '(inclus)',
+    },
+    estimate: {
+        heading: 'Estimation indicative',
+        delayPrefix: 'Délai type :',
+        delayFallback: 'à préciser',
+        currencyTaxLabel: 'TTC',
+        emptyPrice: '—',
+        emptyHint: 'Complète les 3 champs pour afficher la fourchette indicative.',
+        explanation:
+            'La borne basse ne descend pas sous le “À partir de” réel (pack + options cochées). La borne haute ajoute ~15 % pour couvrir les écarts de périmètre (contenus, perfs, intégrations).',
+        ecommerceNote: 'E-commerce : sur devis.',
+    },
+    actions: {
+        openBrief: 'Ouvrir le brief express',
+        viewPacks: 'Voir les packs',
+    },
+    transparencyNote:
+        'Estimation à titre informatif. Le devis final dépendra du périmètre réel (pages, contenus, intégrations, accessibilité/perfs). Aucun cookie tiers requis pour ce calcul.',
+    technologies: {
+        wordpress: 'WordPress',
+        react: 'React',
+    },
+} as const;

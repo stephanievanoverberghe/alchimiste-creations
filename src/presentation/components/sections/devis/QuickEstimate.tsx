@@ -17,6 +17,7 @@ import {
     type PackSlug,
     type TechKey,
 } from '@/application/catalog/services/quickEstimate';
+import { quickEstimateCopy } from '@/infrastructure/content/devis-copy';
 
 const PACK_ICONS: Record<PackSlug, LucideIcon> = {
     essentiel: Leaf,
@@ -75,7 +76,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
         <div className="inline-flex rounded-2xl border border-sauge/30 bg-background p-1">
             {(['wordpress', 'react'] as TechKey[]).map((t) => {
                 const on = state.tech === t;
-                const label = t === 'wordpress' ? 'WordPress' : 'React';
+                const label = quickEstimateCopy.technologies[t];
                 return (
                     <button
                         key={t}
@@ -113,20 +114,20 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
         const rows: Array<{ label: string; price: number; muted?: boolean }> = [];
 
         rows.push({
-            label: `${packData.titre.replace(/^Pack\s+/i, '')} • ${state.tech === 'wordpress' ? 'WordPress' : 'React'}`,
+            label: `${packData.titre.replace(/^Pack\s+/i, '')} • ${quickEstimateCopy.technologies[state.tech]}`,
             price: result.base ?? 0,
         });
 
         (Object.keys(optionDefinitions) as OptionKey[]).forEach((k) => {
             const optObj = findOptionObject(packData, k);
-            if (!optObj) return; // non proposé sur ce pack
+            if (!optObj) return;
             const included = isIncludedByDefault(packData, k);
             const chosen = state.features[k];
 
             const optLabel = optObj.label ?? optionDefinitions[k].label;
 
             if (included) {
-                rows.push({ label: `${optLabel} (inclus)`, price: 0, muted: true });
+                rows.push({ label: `${optLabel} ${quickEstimateCopy.fields.includedSuffix}`, price: 0, muted: true });
             } else if (chosen) {
                 rows.push({ label: optLabel, price: optionPrice(packData, k, state.tech) });
             }
@@ -138,18 +139,16 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
     return (
         <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-25 xl:px-37.5', className)} aria-labelledby="quick-estimate-title">
             <div className="relative max-w-7xl mx-auto space-y-8">
-                {/* En-tête */}
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         <Calculator className="w-3.5 h-3.5" aria-hidden />
-                        Estimation rapide (optionnelle)
+                        {quickEstimateCopy.section.badge}
                     </span>
                     <h2 id="quick-estimate-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
-                        Un ordre de grandeur en 3 clics
+                        {quickEstimateCopy.section.title}
                     </h2>
                     <p className="mt-4 text-foreground/80">
-                        Choisis un <strong>niveau</strong>, une <strong>techno</strong> et <strong>0–4 options</strong>. On affiche une fourchette indicative —
-                        <em> à affiner selon périmètre</em>.
+                        {quickEstimateCopy.section.intro} <strong>{quickEstimateCopy.section.introHighlight}</strong> {quickEstimateCopy.section.introSuffix}
                     </p>
                 </div>
 
@@ -161,7 +160,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                     }}
                 >
                     <fieldset>
-                        <legend className="text-sm font-semibold text-foreground/90">Niveau envisagé</legend>
+                        <legend className="text-sm font-semibold text-foreground/90">{quickEstimateCopy.fields.packLegend}</legend>
                         <div className="mt-3 flex flex-wrap items-center gap-2">
                             {(['essentiel', 'croissance', 'signature'] as PackSlug[]).map((slug) => {
                                 const Icon = PACK_ICONS[slug];
@@ -176,21 +175,21 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                     </fieldset>
 
                     <fieldset>
-                        <legend className="text-sm font-semibold text-foreground/90">Technologie</legend>
+                        <legend className="text-sm font-semibold text-foreground/90">{quickEstimateCopy.fields.technologyLegend}</legend>
                         <div className="mt-3">
                             <SwitchTech />
                         </div>
                     </fieldset>
 
                     <fieldset>
-                        <legend className="text-sm font-semibold text-foreground/90">Options</legend>
+                        <legend className="text-sm font-semibold text-foreground/90">{quickEstimateCopy.fields.optionsLegend}</legend>
                         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {(Object.keys(optionDefinitions) as OptionKey[]).map((k) => {
                                 const optObj = packData ? findOptionObject(packData, k) : undefined;
                                 const included = packData ? isIncludedByDefault(packData, k) : false;
                                 const available = !!optObj;
                                 const disabled = included || !available;
-                                const badge = included ? 'Inclus' : !available ? 'Non proposé' : null;
+                                const badge = included ? quickEstimateCopy.fields.includedBadge : !available ? quickEstimateCopy.fields.unavailableBadge : null;
 
                                 return (
                                     <label
@@ -222,8 +221,8 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                                     'text-foreground bg-background',
                                                     included ? 'border-sauge/50' : 'border-foreground/30',
                                                 )}
-                                                aria-label={included ? 'Option incluse' : 'Option non proposée'}
-                                                title={included ? 'Option incluse' : 'Option non proposée'}
+                                                aria-label={included ? quickEstimateCopy.fields.includedAriaLabel : quickEstimateCopy.fields.unavailableAriaLabel}
+                                                title={included ? quickEstimateCopy.fields.includedAriaLabel : quickEstimateCopy.fields.unavailableAriaLabel}
                                             >
                                                 <span aria-hidden className={cn('h-1.5 w-1.5 rounded-full', included ? 'bg-sauge' : 'bg-foreground/50')} />
                                                 {badge}
@@ -235,7 +234,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                         </div>
                         {packData && (
                             <p className="mt-2 text-xs text-foreground/60">
-                                Base du calcul : {packData.titre.replace(/^Pack\s+/i, '')} ({state.tech === 'wordpress' ? 'WordPress' : 'React'}).
+                                {quickEstimateCopy.fields.baseForCalculation} {packData.titre.replace(/^Pack\s+/i, '')} ({quickEstimateCopy.technologies[state.tech]}).
                             </p>
                         )}
                     </fieldset>
@@ -245,10 +244,10 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                     <div className="pointer-events-none absolute inset-0 opacity-10" style={motifStyle} aria-hidden />
 
                     <header className="relative z-1 flex flex-wrap items-baseline justify-between gap-3">
-                        <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Estimation indicative</h3>
+                        <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{quickEstimateCopy.estimate.heading}</h3>
                         {result.ok && (
                             <span className="inline-flex items-center gap-2 rounded-full border border-sauge/30 bg-sauge/10 text-sauge px-3 py-1.5 text-xs">
-                                Délai type : {result.delay ?? 'à préciser'}
+                                {quickEstimateCopy.estimate.delayPrefix} {result.delay ?? quickEstimateCopy.estimate.delayFallback}
                             </span>
                         )}
                     </header>
@@ -264,10 +263,10 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                         {result.ok ? (
                             <>
                                 <p className="text-xl md:text-2xl font-title text-terracotta">
-                                    {formatEUR(result.min)} – {formatEUR(result.max)} <span className="text-sm align-middle text-foreground/70">TTC</span>
+                                    {formatEUR(result.min)} – {formatEUR(result.max)}{' '}
+                                    <span className="text-sm align-middle text-foreground/70">{quickEstimateCopy.estimate.currencyTaxLabel}</span>
                                 </p>
 
-                                {/* Breakdown */}
                                 {breakdown.length > 0 && (
                                     <ul className="mt-3 grid gap-2">
                                         {breakdown.map((row, i) => (
@@ -281,7 +280,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                                     {row.label}
                                                 </span>
                                                 <span className={cn('text-sm', row.muted ? 'text-foreground/60' : 'text-foreground/90')}>
-                                                    {row.price > 0 ? `+ ${formatEUR(row.price)}` : '—'}
+                                                    {row.price > 0 ? `+ ${formatEUR(row.price)}` : quickEstimateCopy.estimate.emptyPrice}
                                                 </span>
                                             </li>
                                         ))}
@@ -289,16 +288,14 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                 )}
                             </>
                         ) : (
-                            <p className="text-foreground/70">Complète les 3 champs pour afficher la fourchette indicative.</p>
+                            <p className="text-foreground/70">{quickEstimateCopy.estimate.emptyHint}</p>
                         )}
 
                         <p className="mt-2 text-sm text-foreground/70">
-                            La borne basse ne descend pas sous le <strong>“À partir de” réel</strong> (pack + options cochées). La borne haute ajoute ~15 % pour couvrir les écarts
-                            de périmètre (contenus, perfs, intégrations). <br></br>
-                            <em>E-commerce : sur devis.</em>
+                            {quickEstimateCopy.estimate.explanation} <br></br>
+                            <em>{quickEstimateCopy.estimate.ecommerceNote}</em>
                         </p>
 
-                        {/* CTA */}
                         <div className="mt-4 flex flex-wrap items-center gap-3">
                             <Link
                                 href={`/devis?pack=${encodeURIComponent(state.pack)}&tech=${state.tech}#brief-express`}
@@ -310,7 +307,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                 )}
                                 onClick={() => pushDl('devis_estimate_go_brief')}
                             >
-                                Ouvrir le brief express
+                                {quickEstimateCopy.actions.openBrief}
                                 <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
                             </Link>
 
@@ -319,17 +316,13 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold tracking-widest uppercase border border-sauge/30 bg-background hover:bg-sauge/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                                 onClick={() => pushDl('devis_view_packs_click', { origin: 'quick_estimate' })}
                             >
-                                Voir les packs
+                                {quickEstimateCopy.actions.viewPacks}
                             </Link>
                         </div>
                     </div>
                 </article>
 
-                {/* Note transparence */}
-                <p className="text-xs text-foreground/60">
-                    Estimation à titre informatif. Le devis final dépendra du périmètre réel (pages, contenus, intégrations, accessibilité/perfs). Aucun cookie tiers requis pour ce
-                    calcul.
-                </p>
+                <p className="text-xs text-foreground/60">{quickEstimateCopy.transparencyNote}</p>
             </div>
         </section>
     );
