@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import PackCard from '@/presentation/components/cards/pack/CardPack';
-import { getVersion, type Tech } from '@/domain/offers/packs';
+import { resolvePackVersion, type Tech } from '@/presentation/hooks/resolvePackVersion';
 import { cn } from '@/shared/utils/cn';
 import { Atom, FileText, Code2, Gauge, Clock, GitBranch, Edit3, Wallet, Boxes } from 'lucide-react';
 
@@ -177,7 +177,7 @@ export default function PacksSection({ tech, onTechChange, packs }: PacksSection
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                     {packs
                         ? packs.map((pack) => {
-                              const v = pack.versions ? getVersion(pack.versions, tech) : undefined;
+                              const v = pack.versions ? resolvePackVersion(pack.versions, tech) : undefined;
                               return (
                                   <div key={pack.slug} className="h-full">
                                       <PackCard

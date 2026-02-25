@@ -33,10 +33,10 @@
 
 ## 3) Séparation logique / UI (point critique)
 
-- [ ] Interdire les règles métier dans les composants React (lint rule + revue code).
-- [ ] Créer des hooks d’orchestration orientés use-case (`useLeadCapture`, etc.) sans logique d’accès data directe.
-- [ ] Introduire des services applicatifs purs testables (sans dépendance React).
-- [ ] Mettre des mappers DTO ↔ domain pour éviter le couplage format API/UI.
+- [x] Interdire les règles métier dans les composants React (lint rule + revue code).
+- [x] Créer des hooks d’orchestration orientés use-case (`useLeadCapture`, etc.) sans logique d’accès data directe.
+- [x] Introduire des services applicatifs purs testables (sans dépendance React).
+- [x] Mettre des mappers DTO ↔ domain pour éviter le couplage format API/UI.
 - [ ] Externaliser toutes les strings/copies dans un content layer versionné.
 - [ ] Normaliser validation/sanitation via schémas (`zod`) côté serveur et client.
 
