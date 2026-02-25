@@ -63,15 +63,13 @@ export const metadata: Metadata = {
         description: 'Sites WordPress et React/Next.js sur mesure, alliant esthétique, fluidité et sens.',
         images: ['/images/og-default.jpg'],
     },
+    robots: process.env.VERCEL_ENV === 'production' ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" className={`${cormorant.variable} ${raleway.variable}`}>
             <head>
-                {/* (optionnel) retire ce noindex en prod */}
-                <meta name="robots" content="noindex, nofollow" />
-
                 {/* Consent Mode par défaut = denied (avant tout script analytics/ads) */}
                 <Script id="consent-default" strategy="beforeInteractive">
                     {`
