@@ -29,6 +29,8 @@ const CONTENTS_READY = briefExpressCopy.contentsReadyOptions satisfies ReadonlyA
 const FEATURES = briefExpressCopy.features satisfies ReadonlyArray<{ key: keyof BriefData['contenus']; text: string }>;
 const BUDGETS = briefExpressCopy.budgets satisfies ReadonlyArray<{ value: BriefData['cadrage']['budget']; text: string }>;
 const PRIORITIES = briefExpressCopy.priorities satisfies ReadonlyArray<PriorityKey>;
+const PROJECT_TYPES = briefExpressCopy.options.projectTypes satisfies ReadonlyArray<BriefData['projet']['type']>;
+const CONTACT_PREFERENCES = briefExpressCopy.options.contactPreferences satisfies ReadonlyArray<ContactPref>;
 
 export default function BriefExpressSection({ id = 'brief-express', className }: { id?: string; className?: string }) {
     const {
@@ -79,10 +81,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepProjet = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Projet</legend>
+            <legend className="text-sm font-semibold text-foreground">{briefExpressCopy.fields.projectLegend}</legend>
             <div className="mt-3 grid gap-3">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {(['vitrine', 'portfolio', 'ecommerce', 'autre'] as const).map((t) => (
+                    {PROJECT_TYPES.map((t) => (
                         <label key={t} className="inline-flex items-center gap-2 rounded-xl border border-sauge/40 bg-background px-3 py-2 cursor-pointer hover:bg-sauge/10">
                             <input
                                 type="radio"
@@ -104,16 +106,16 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                         checked={data.projet.refonte}
                         onChange={(e) => setData((d) => ({ ...d, projet: { ...d.projet, refonte: e.target.checked } }))}
                     />
-                    <span className="text-sm">C’est une refonte</span>
+                    <span className="text-sm">{briefExpressCopy.fields.redesignLabel}</span>
                 </label>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">URL actuelle (si existante)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.currentUrlLabel}</span>
                     <input
                         type="url"
                         name="projet.urlActuelle"
                         inputMode="url"
-                        placeholder="https://exemple.com"
+                        placeholder={briefExpressCopy.fields.currentUrlPlaceholder}
                         autoComplete="url"
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
@@ -128,7 +130,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepObjectifs = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Objectifs & public</legend>
+            <legend className="text-sm font-semibold text-foreground">{briefExpressCopy.fields.goalsLegend}</legend>
             <div className="mt-3 grid gap-3">
                 {/* Goals */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -147,11 +149,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Autre objectif (optionnel)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.otherGoalLabel}</span>
                     <input
                         type="text"
                         name="objectifs.goalsAutre"
-                        placeholder="Ex. notoriété locale, prise de parole média…"
+                        placeholder={briefExpressCopy.fields.otherGoalPlaceholder}
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
                         value={data.objectifs.goalsAutre ?? ''}
@@ -170,11 +172,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </label>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Cible principale (1 phrase)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.targetLabel}</span>
                     <input
                         type="text"
                         name="objectifs.ciblePrincipale"
-                        placeholder="Ex. dirigeants PME en B2B, étudiants…"
+                        placeholder={briefExpressCopy.fields.targetPlaceholder}
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
                         value={data.objectifs.ciblePrincipale ?? ''}
@@ -187,10 +189,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepContenus = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Contenus & fonctionnalités</legend>
+            <legend className="text-sm font-semibold text-foreground">{briefExpressCopy.fields.contentLegend}</legend>
             <div className="mt-3 grid gap-3">
                 <div>
-                    <span className="text-xs text-foreground/80 mr-3">Contenus prêts ?</span>
+                    <span className="text-xs text-foreground/80 mr-3">{briefExpressCopy.fields.contentReadyLabel}</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1">
                         {CONTENTS_READY.map((v) => (
                             <button
@@ -226,11 +228,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Intégrations (Calendly, newsletter, CRM…)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.integrationsLabel}</span>
                     <input
                         type="text"
                         name="contenus.integrations"
-                        placeholder="Ex. Calendly, Mailerlite, HubSpot…"
+                        placeholder={briefExpressCopy.fields.integrationsPlaceholder}
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
                         value={data.contenus.integrations ?? ''}
@@ -243,10 +245,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepCadrage = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Budget & délai</legend>
+            <legend className="text-sm font-semibold text-foreground">{briefExpressCopy.fields.framingLegend}</legend>
             <div className="mt-3 grid gap-3">
                 <div>
-                    <span className="text-xs text-foreground/80">Plage budgétaire</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.budgetLabel}</span>
                     <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {BUDGETS.map(({ value, text }) => (
                             <label
@@ -267,7 +269,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Deadline souhaitée (mois/trim.)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.deadlineLabel}</span>
                     <input
                         type="month"
                         name="cadrage.deadline"
@@ -279,7 +281,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </label>
 
                 <div>
-                    <span className="text-xs text-foreground/80 mr-3">Priorité principale</span>
+                    <span className="text-xs text-foreground/80 mr-3">{briefExpressCopy.fields.priorityLabel}</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1 ">
                         {PRIORITIES.map((v) => (
                             <button
@@ -304,36 +306,36 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepContexte = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Contexte</legend>
+            <legend className="text-sm font-semibold text-foreground">{briefExpressCopy.fields.contextLegend}</legend>
             <div className="mt-3 grid gap-3">
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Secteur</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.sectorLabel}</span>
                     <input
                         type="text"
                         name="contexte.secteur"
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
-                        placeholder="Ex. artisanat, conseil B2B, formation…"
+                        placeholder={briefExpressCopy.fields.sectorPlaceholder}
                         value={data.contexte.secteur ?? ''}
                         onChange={(e) => setData((d) => ({ ...d, contexte: { ...d.contexte, secteur: e.target.value } }))}
                     />
                 </label>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Ce qui vous différencie</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.differentiationLabel}</span>
                     <textarea
                         rows={3}
                         name="contexte.diff"
                         onFocus={rememberFocus}
                         className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
-                        placeholder="En 2–3 phrases."
+                        placeholder={briefExpressCopy.fields.differentiationPlaceholder}
                         value={data.contexte.diff ?? ''}
                         onChange={(e) => setData((d) => ({ ...d, contexte: { ...d.contexte, diff: e.target.value } }))}
                     />
                 </label>
 
                 <label className="block">
-                    <span className="text-xs text-foreground/80">Références aimées (1–3 liens)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.referencesLabel}</span>
                     <textarea
                         rows={2}
                         name="contexte.refs"
@@ -350,11 +352,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
     const StepContact = (
         <fieldset>
-            <legend className="text-sm font-semibold text-foreground">Coordonnées & RGPD</legend>
+            placeholder={briefExpressCopy.fields.referencesPlaceholder}
             <div className="mt-3 grid gap-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label className="block">
-                        <span className="text-xs text-foreground/80">Prénom *</span>
+                        <span className="text-xs text-foreground/80">{briefExpressCopy.fields.firstNameLabel}</span>
                         <input
                             type="text"
                             name="contact.prenom"
@@ -372,7 +374,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </label>
 
                     <label className="block">
-                        <span className="text-xs text-foreground/80">Email *</span>
+                        <span className="text-xs text-foreground/80">{briefExpressCopy.fields.emailLabel}</span>
                         <input
                             type="email"
                             name="contact.email"
@@ -393,7 +395,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label className="block">
-                        <span className="text-xs text-foreground/80">Entreprise (optionnel)</span>
+                        <span className="text-xs text-foreground/80">{briefExpressCopy.fields.companyLabel}</span>
                         <input
                             type="text"
                             name="contact.entreprise"
@@ -406,11 +408,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </label>
 
                     <label className="block">
-                        <span className="text-xs text-foreground/80">Pays / fuseau horaire</span>
+                        <span className="text-xs text-foreground/80">{briefExpressCopy.fields.timezoneLabel}</span>
                         <input
                             type="text"
                             name="contact.paysFuseau"
-                            placeholder="Ex. France (CET), Québec (ET)…"
+                            placeholder={briefExpressCopy.fields.timezonePlaceholder}
                             onFocus={rememberFocus}
                             className="mt-1 w-full rounded-xl border border-sauge/40 bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
                             value={data.contact.paysFuseau ?? ''}
@@ -420,9 +422,9 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
 
                 <div>
-                    <span className="text-xs text-foreground/80">Préférence de contact</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.fields.contactPreferenceLabel}</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1">
-                        {(['email', 'appel'] as ContactPref[]).map((v) => (
+                        {CONTACT_PREFERENCES.map((v) => (
                             <button
                                 key={v}
                                 type="button"
@@ -489,12 +491,12 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                         aria-invalid={Boolean(errors['contact.consent'])}
                     />
                     <span className="text-sm">
-                        J’accepte le traitement de mes données pour répondre à ma demande de devis.
+                        {briefExpressCopy.consent.text}
                         <br />
                         <span className="text-xs text-foreground/80">
-                            Les données sont traitées conformément à la{' '}
+                            {briefExpressCopy.consent.helperPrefix}{' '}
                             <Link href="/politique-confidentialite" className="underline underline-offset-4">
-                                politique de confidentialité
+                                {briefExpressCopy.consent.privacyPolicyLabel}
                             </Link>
                             .
                         </span>
@@ -543,17 +545,17 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             <div className="relative max-w-7xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="text-center lg:text-left">
-                    <Badge icon={ClipboardList}>Brief express</Badge>
+                    <Badge icon={ClipboardList}>{briefExpressCopy.badge}</Badge>
                     <h2 id="brief-express-title" className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">
-                        Le minimum utile pour un devis fiable
+                        {briefExpressCopy.heading}
                     </h2>
                     <p className="mt-4 text-foreground/80">
-                        4–6 minutes, sauvegarde automatique, validation douce. Pas besoin d’écrire un roman — <em>10–20 mots suffisent</em> quand c’est demandé.
+                        {briefExpressCopy.intro} <em>{briefExpressCopy.introEmphasis}</em> {briefExpressCopy.introSuffix}
                     </p>
 
                     {restored && (
                         <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-sauge/50 bg-foreground/10 text-foreground px-3 py-1.5 text-[11px] font-semibold">
-                            <RefreshCw className="w-3.5 h-3.5" aria-hidden /> Brouillon récupéré depuis cet appareil.
+                            <RefreshCw className="w-3.5 h-3.5" aria-hidden /> {briefExpressCopy.restoredDraftNotice}
                         </p>
                     )}
                 </div>
@@ -565,7 +567,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     <span className="min-w-13 text-xs text-foreground/80 text-right">{progress}%</span>
                 </div>
 
-                <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3" aria-label="Progression du formulaire">
+                <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3" aria-label={briefExpressCopy.progressionAriaLabel}>
                     {steps.map((s, i) => {
                         const status = stepStatus(i);
                         return (
@@ -605,7 +607,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         className="inline-flex items-center gap-2 rounded-2xl border border-sauge/40 bg-background px-3 py-2 text-sm hover:bg-sauge/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 cursor-pointer"
                                     >
                                         <ArrowLeft className="w-4 h-4" aria-hidden />
-                                        Retour
+                                        {briefExpressCopy.nav.back}
                                     </button>
                                 ) : (
                                     <span aria-hidden className="inline-block w-27.5" />
@@ -623,7 +625,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                                     )}
                                 >
-                                    Continuer
+                                    {briefExpressCopy.nav.next}
                                     <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
                                 </button>
                             ) : (
@@ -639,24 +641,24 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         'disabled:opacity-60 disabled:cursor-not-allowed',
                                     )}
                                 >
-                                    {sending ? 'Envoi…' : 'Envoyer mon brief'}
+                                    {sending ? briefExpressCopy.nav.sending : briefExpressCopy.nav.submit}
                                     {!sending && <Send className="h-4 w-4" aria-hidden />}
                                 </button>
                             )}
                         </div>
 
-                        {status === 'error' && <p className="text-xs text-terracotta font-medium">{errorMsg || 'Oups, ça a échoué.'}</p>}
+                        {status === 'error' && <p className="text-xs text-terracotta font-medium">{errorMsg || briefExpressCopy.status.genericError}</p>}
                     </form>
                 </LinedCard>
 
                 <div className="flex items-center justify-between gap-4">
-                    <p className="text-xs text-foreground/60">Tu préfères un échange rapide ? Réserve un créneau — on balise ensemble le périmètre avant chiffrage.</p>
+                    <p className="text-xs text-foreground/60">{briefExpressCopy.cta.intro}</p>
                     <Link
                         href="#prendre-un-creneau"
                         className="inline-flex items-center gap-2 rounded-2xl border border-sauge/40 bg-background px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] hover:bg-sauge/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40"
                         onClick={() => trackBriefExpress('devis_call_click', { origin: 'brief_express' })}
                     >
-                        Réserver un appel
+                        {briefExpressCopy.cta.bookCall}
                         <ChevronRight className="w-4 h-4" aria-hidden />
                     </Link>
                 </div>
@@ -670,7 +672,11 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     aria-labelledby="brief-success-title"
                     aria-describedby="brief-success-desc"
                 >
-                    <button aria-label="Fermer la fenêtre" className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity" onClick={() => setSuccessOpen(false)} />
+                    <button
+                        aria-label={briefExpressCopy.successModal.closeAriaLabel}
+                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
+                        onClick={() => setSuccessOpen(false)}
+                    />
                     <div className="relative mx-4 w-full max-w-md rounded-2xl border border-sauge/30 bg-background shadow-xl">
                         <div className="absolute right-2 top-2">
                             <button
@@ -687,10 +693,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                 <CheckCircle2 className="h-6 w-6" aria-hidden />
                             </div>
                             <h3 id="brief-success-title" className="mt-4 font-title text-xl font-bold text-terracotta tracking-widest">
-                                Brief envoyé
+                                {briefExpressCopy.successModal.title}
                             </h3>
                             <p id="brief-success-desc" className="mt-2 text-sm text-foreground/80">
-                                Merci ! Je te reviens sous 24–48h ouvrées. Tu peux aussi réserver un créneau si tu préfères.
+                                {briefExpressCopy.successModal.message}
                             </p>
 
                             <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
@@ -709,13 +715,13 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
                                     )}
                                 >
-                                    Réserver un appel
+                                    {briefExpressCopy.cta.bookCall}
                                 </a>
                                 <button
                                     onClick={() => setSuccessOpen(false)}
                                     className="inline-flex items-center justify-center rounded-2xl border border-sauge/40 bg-sauge/10 px-4 py-2 text-sm font-semibold text-sauge hover:bg-sauge/20 cursor-pointer"
                                 >
-                                    Fermer
+                                    {briefExpressCopy.successModal.close}
                                 </button>
                             </div>
                         </div>
