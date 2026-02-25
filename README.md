@@ -12,23 +12,23 @@ Ce projet n’est pas seulement technique. Il est avant tout humain, sensible, i
 
 ## ✨ Objectifs
 
--   Créer un espace digital aligné avec mon identité de créatrice
--   Structurer mes offres (packs, accompagnement)
--   Montrer mes projets avec sensibilité (portfolio vivant)
--   Offrir une expérience de navigation claire, intuitive et rassurante
--   Me connecter à mes futurs clients via une page de contact chaleureuse
+- Créer un espace digital aligné avec mon identité de créatrice
+- Structurer mes offres (packs, accompagnement)
+- Montrer mes projets avec sensibilité (portfolio vivant)
+- Offrir une expérience de navigation claire, intuitive et rassurante
+- Me connecter à mes futurs clients via une page de contact chaleureuse
 
 ---
 
 ## 🛠️ Stack technique
 
--   [Next.js 15 (App Router)](https://nextjs.org/)
--   [Tailwind CSS 4.1](https://tailwindcss.com/)
--   [Google Fonts via `next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
--   JSON local (fichiers dans `src/data/`) pour gérer les contenus dynamiques
--   [Calendly](https://calendly.com/app/scheduling/meeting_types/user/me)
--   [Web3form](https://web3forms.com/)
--   Déploiement prévu sur [Vercel](https://vercel.com/)
+- [Next.js 16 (App Router)](https://nextjs.org/)
+- [Tailwind CSS 4.1](https://tailwindcss.com/)
+- [Google Fonts via `next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+- JSON local (fichiers dans `src/data/`) pour gérer les contenus dynamiques
+- [Calendly](https://calendly.com/app/scheduling/meeting_types/user/me)
+- [Web3form](https://web3forms.com/)
+- Déploiement prévu sur [Vercel](https://vercel.com/)
 
 ---
 
@@ -73,12 +73,12 @@ src/
 
 ## 🎨 Identité graphique
 
--   **Couleurs** : ivoire, terracotta, sauge, or mat, ardoise
--   **Typographies** :
-    -   **Titres** : Cormorant Garamond
-    -   **Textes** : Raleway
--   **Ton de voix** : chaleureux, clair, incarné, sensible
--   **Charte** : présente dans `globals.css` via CSS variables (`@theme inline`)
+- **Couleurs** : ivoire, terracotta, sauge, or mat, ardoise
+- **Typographies** :
+    - **Titres** : Cormorant Garamond
+    - **Textes** : Raleway
+- **Ton de voix** : chaleureux, clair, incarné, sensible
+- **Charte** : présente dans `globals.css` via CSS variables (`@theme inline`)
 
 ---
 
@@ -99,20 +99,20 @@ src/
 
 ## 🚧 Statut actuel
 
--   ✅ Base technique posée (Next.js + Tailwind 4.1)
--   ✅ Charte graphique et éditoriale intégrée
--   ✅ Architecture fluide et modulaire créée
--   ✅ Contenus JSON en cours d’écriture
--   🔜 Composants dynamiques en développement
--   🔜 Pages en développement
+- ✅ Base technique posée (Next.js + Tailwind 4.1)
+- ✅ Charte graphique et éditoriale intégrée
+- ✅ Architecture fluide et modulaire créée
+- ✅ Contenus JSON en cours d’écriture
+- 🔜 Composants dynamiques en développement
+- 🔜 Pages en développement
 
 ---
 
 ## 💡 Prochaines étapes
 
--   Génération dynamique du portfolio à partir de `projets.json`
--   Publication de la version 1 sur Vercel
--   Ajout futur d’un blog (`/carnet`) si besoin
+- Génération dynamique du portfolio à partir de `projets.json`
+- Publication de la version 1 sur Vercel
+- Ajout futur d’un blog (`/carnet`) si besoin
 
 ---
 
