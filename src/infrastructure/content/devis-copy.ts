@@ -74,4 +74,15 @@ export const briefExpressCopy = {
         invalidEmail: 'Email invalide.',
         invalidProjectUrl: 'URL invalide. Utilise un lien complet (https://...).',
     },
+    submission: {
+        visitorFallbackName: 'Visiteur',
+        fallbackError: 'Impossible d’envoyer le brief pour l’instant.',
+        networkError: 'Erreur réseau. Réessaie dans un instant.',
+    },
+    attachments: {
+        label: 'Pièces jointes (PDF/DOCX/ZIP, max 10 Mo)',
+        addFilesCta: 'Ajouter des fichiers',
+        selectedCountSuffix: 'fichier(s) sélectionné(s)',
+        helper: 'Envoi des fichiers séparément si besoin — ici, on transmet le brief texte. Tu recevras un lien pour partager les pièces jointes.',
+    },
 } as const;

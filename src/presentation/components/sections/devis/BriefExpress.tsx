@@ -8,8 +8,7 @@ import { ClipboardList, ChevronRight, ArrowLeft, Send, Calendar, Globe, Upload, 
 import type { LucideIcon } from 'lucide-react';
 import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
 import {
-    fileAcceptOK,
-    fileSizeOK,
+    pickValidBriefFiles,
     trackBriefExpress,
     useBriefExpressForm,
     type BriefData,
@@ -443,7 +442,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
 
                 <div>
-                    <span className="text-xs text-foreground/80">Pièces jointes (PDF/DOCX/ZIP, max 10 Mo)</span>
+                    <span className="text-xs text-foreground/80">{briefExpressCopy.attachments.label}</span>
                     <div className="mt-2 flex flex-wrap items-center gap-3">
                         <input
                             ref={fileInputRef}
@@ -453,8 +452,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             className="hidden"
                             onChange={(e) => {
                                 const files = Array.from(e.target.files ?? []);
-                                const kept: File[] = [];
-                                for (const f of files) if (fileAcceptOK(f) && fileSizeOK(f)) kept.push(f);
+                                const kept = pickValidBriefFiles(files);
                                 setData((d) => ({ ...d, attachments: [...d.attachments, ...kept] }));
                                 if (kept.length > 0) trackBriefExpress('devis_upload', { count: kept.length });
                                 if (fileInputRef.current) fileInputRef.current.value = '';
@@ -469,14 +467,16 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             )}
                         >
                             <Upload className="w-4 h-4" aria-hidden />
-                            Ajouter des fichiers
+                            {briefExpressCopy.attachments.addFilesCta}
                         </button>
 
-                        {data.attachments.length > 0 && <div className="text-xs text-foreground/90">{data.attachments.length} fichier(s) sélectionné(s)</div>}
+                        {data.attachments.length > 0 && (
+                            <div className="text-xs text-foreground/90">
+                                {data.attachments.length} {briefExpressCopy.attachments.selectedCountSuffix}
+                            </div>
+                        )}
                     </div>
-                    <p className="mt-1 text-[11px] text-foreground/60">
-                        (Envoi des fichiers séparément si besoin — ici, on transmet le brief texte. Tu recevras un lien pour partager les pièces jointes.)
-                    </p>
+                    <p className="mt-1 text-[11px] text-foreground/60">{briefExpressCopy.attachments.helper}</p>
                 </div>
 
                 <label className="mt-2 inline-flex items-start gap-3 rounded-xl border border-sauge/50 bg-background px-3 py-2 cursor-pointer">

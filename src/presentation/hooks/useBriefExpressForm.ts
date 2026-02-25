@@ -14,6 +14,7 @@ import {
     type StepKey,
 } from '@/application/contact/services/briefExpressForm';
 import { validateContactSubmission } from '@/application/contact/services/contactValidation';
+import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export type { BriefData, ContactPref, ContentsReady, GoalKey, PriorityKey, StepKey };
@@ -39,6 +40,7 @@ function useDebouncedEffect(fn: () => void, deps: React.DependencyList, delay = 
 
 export const fileAcceptOK = (file: File) => /\.(pdf|docx?|zip)$/i.test(file.name);
 export const fileSizeOK = (file: File, maxMB = 10) => file.size <= maxMB * 1024 * 1024;
+export const pickValidBriefFiles = (files: File[]) => files.filter((file) => fileAcceptOK(file) && fileSizeOK(file));
 
 export function trackBriefExpress(event: string, detail?: PushDetail) {
     pushDl(event, detail);
@@ -193,7 +195,7 @@ export function useBriefExpressForm() {
 
             try {
                 const payload = {
-                    name: sanitizedData.contact.prenom || 'Visiteur',
+                    name: sanitizedData.contact.prenom || briefExpressCopy.submission.visitorFallbackName,
                     email: sanitizedData.contact.email,
                     message: buildBriefExpressMessage(sanitizedData).replace(/\n/g, '\r\n'),
                     consent: sanitizedData.contact.consent,
@@ -202,7 +204,7 @@ export function useBriefExpressForm() {
                 const validation = validateContactSubmission(payload, { requireConsent: true });
                 if (!validation.normalized) {
                     setStatus('error');
-                    setErrorMsg(validation.error || 'Impossible d’envoyer le brief pour l’instant.');
+                    setErrorMsg(validation.error || briefExpressCopy.submission.fallbackError);
                     setSending(false);
                     return;
                 }
@@ -222,12 +224,12 @@ export function useBriefExpressForm() {
                     setSuccessOpen(true);
                 } else {
                     setStatus('error');
-                    setErrorMsg(json?.error || 'Impossible d’envoyer le brief pour l’instant.');
+                    setErrorMsg(json?.error || briefExpressCopy.submission.fallbackError);
                     pushDl('devis_error', { where: 'api_contact', msg: json?.error });
                 }
             } catch {
                 setStatus('error');
-                setErrorMsg('Erreur réseau. Réessaie dans un instant.');
+                setErrorMsg(briefExpressCopy.submission.networkError);
                 pushDl('devis_error', { where: 'network' });
             } finally {
                 setSending(false);
