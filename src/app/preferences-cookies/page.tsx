@@ -263,9 +263,9 @@ export default function CookiePreferencesPage() {
     const save = () => persist(toConsent({ preferences, analytics, functional, marketing }));
 
     return (
-        <section id="cookie-preferences" className="relative overflow-x-hidden py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]">
+        <section id="cookie-preferences" className="relative overflow-x-hidden py-16 md:py-28 px-6 md:px-8 lg:px-25 xl:px-37.5">
             {/* Liseré décoratif en haut */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background" aria-hidden />
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-background via-ormat/20 to-background" aria-hidden />
             {/* Fond or mobile only */}
             <div className="absolute inset-0 bg-ormat/10 md:hidden z-0" aria-hidden />
             {/* Vague décorative (md+) */}
@@ -273,7 +273,7 @@ export default function CookiePreferencesPage() {
                 <Image src="/deco/about-wave.png" alt="" fill priority className="object-cover h-auto" />
             </div>
 
-            <div className="relative z-[1] max-w-4xl mx-auto space-y-8">
+            <div className="relative z-1 max-w-4xl mx-auto space-y-8">
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-terracotta bg-background border border-terracotta/30 rounded-full px-4 py-1">
                         <Cookie className="w-3.5 h-3.5" aria-hidden />
@@ -295,12 +295,12 @@ export default function CookiePreferencesPage() {
                         aria-hidden
                     />
                     {/* barre animée */}
-                    <div className="relative h-[2px] overflow-hidden">
+                    <div className="relative h-0.5 overflow-hidden">
                         <div className="absolute inset-0 bg-sauge/20" />
-                        <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full" />
+                        <div className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full" />
                     </div>
 
-                    <ul className="relative z-[1] mt-4 grid grid-cols-1 gap-4">
+                    <ul className="relative z-1 mt-4 grid grid-cols-1 gap-4">
                         {/* Nécessaires */}
                         <li className="rounded-2xl border border-sauge/30 bg-background p-4">
                             <div className="flex items-start gap-3">
@@ -427,7 +427,7 @@ export default function CookiePreferencesPage() {
                     </ul>
 
                     {/* Actions */}
-                    <div className="relative z-[1] mt-5 flex flex-wrap gap-2">
+                    <div className="relative z-1 mt-5 flex flex-wrap gap-2">
                         <button
                             type="button"
                             onClick={allReject}
@@ -458,7 +458,7 @@ export default function CookiePreferencesPage() {
                     </div>
 
                     {/* Récap légal */}
-                    <div className="relative z-[1] mt-6 pt-4 border-t border-sauge/20 text-xs text-foreground/70">
+                    <div className="relative z-1 mt-6 pt-4 border-t border-sauge/20 text-xs text-foreground/70">
                         Consentement valable 6 mois. Tu peux le modifier ou le retirer ici à tout moment. Consulte la{' '}
                         <Link href="/politique-confidentialite" className="underline underline-offset-2">
                             politique de confidentialité
