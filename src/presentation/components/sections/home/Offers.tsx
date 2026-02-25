@@ -17,7 +17,7 @@ interface Pack {
 }
 
 async function getPacks() {
-    const { getPacks } = await import('@/features/catalog/application/use-cases/getPacks');
+    const { getPacks } = await import('@/application/catalog/use-cases/getPacks');
     return getPacks();
 }
 

@@ -10,6 +10,12 @@ _Date : 2026-02-25_
 
 ---
 
+## Mise à jour d'alignement architecture (V2 checklist points 1 & 2)
+
+- Décision retenue : **supprimer les miroirs de modules** et conserver une seule implémentation par responsabilité.
+- Mise en œuvre : consolidation du catalogue dans `src/application/catalog`, `src/domain/offers`, `src/infrastructure/content`.
+- Bénéfice entreprise : lisibilité, onboarding plus simple, réduction du risque d'incohérences entre ré-exports et implémentations.
+
 ## 1) Pages actuelles & objectif de conversion
 
 | Route                                                                                     | Rôle principal        | Objectif conversion                         | CTA attendu                                       |

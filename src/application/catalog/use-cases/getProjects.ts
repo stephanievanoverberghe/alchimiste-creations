@@ -1,1 +1,5 @@
-export { getProjects } from '@/features/catalog/application/use-cases/getProjects';
+import { projects } from '@/infrastructure/content';
+
+export async function getProjects() {
+    return projects;
+}

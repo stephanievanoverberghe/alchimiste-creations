@@ -8,6 +8,8 @@
 
 Nous adoptons un **modular monolith** avec une **Clean Architecture adaptée à Next.js**.
 
+> Règle d'implémentation : **pas de doublons structurels entre couches globales et features**. Une responsabilité ne doit exister qu'à un seul endroit (single source of truth) pour éviter les miroirs `src/features/*` ↔ `src/{application,domain,infrastructure}/*`.
+
 ### Couches cibles
 
 1. **Presentation** (`src/presentation/*`, `src/app/*`)
@@ -45,15 +47,14 @@ Règle générale : dépendances **vers l’intérieur** et jamais l’inverse.
 
 ## Style d’organisation des modules
 
-Chaque **feature métier** suit un découpage interne similaire :
+Nous retenons un style **layer-first avec sous-dossiers métier** :
 
-- `contracts/` : DTO d’entrée/sortie
-- `application/` : use-cases
-- `domain/` : objets métier
-- `infrastructure/` : adapters
-- `presentation/` : composants/hook de feature
+- `src/application/<feature>/...`
+- `src/domain/<feature>/...`
+- `src/infrastructure/<feature>/...` (ou `content/` si provider local transverse)
+- `src/presentation/...`
 
-Les modules exposent une **API publique minimale** via un barrel `index.ts`.
+Les modules exposent une **API publique minimale** via un barrel `index.ts`, sans ré-export en cascade depuis une architecture parallèle.
 
 ## Conventions de nommage
 

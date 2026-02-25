@@ -24,6 +24,11 @@
 - [x] Créer `src/shared/*` pour primitives transverses (types, utils, constants).
 - [x] Ajouter des “barrels” contrôlés pour exposer une API publique par module.
 
+### Validation 1 & 2 (revue architecture)
+
+- [x] Supprimer les doublons d'architecture (`src/features/catalog/*` miroir) au profit d'une source unique dans `src/application`, `src/domain`, `src/infrastructure`.
+- [x] Aligner la structure avec l'audit : une organisation maintenable, lisible et conforme aux pratiques enterprise (single source of truth + dépendances explicites).
+
 ---
 
 ## 3) Séparation logique / UI (point critique)

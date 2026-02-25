@@ -1,1 +1,5 @@
-export { getPacks } from '@/features/catalog/application/use-cases/getPacks';
+import { packs } from '@/infrastructure/content';
+
+export async function getPacks() {
+    return packs;
+}
