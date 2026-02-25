@@ -1,62 +1,21 @@
 'use client';
 
 import { buildBriefExpressMessage } from '@/application/contact/services/buildBriefExpressMessage';
-import { validateContactIdentity, validateContactSubmission } from '@/application/contact/services/contactValidation';
-import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
-import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
+import {
+    briefExpressSteps,
+    makeInitialBriefData,
+    validateBriefExpressStep,
+    type BriefData,
+    type ContactPref,
+    type ContentsReady,
+    type GoalKey,
+    type PriorityKey,
+    type StepKey,
+} from '@/application/contact/services/briefExpressForm';
+import { validateContactSubmission } from '@/application/contact/services/contactValidation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-export type GoalKey = 'leads' | 'credibilite' | 'vente' | 'recrutement' | 'autre';
-export type ContactPref = 'email' | 'appel';
-export type ContentsReady = 'oui' | 'non' | 'partiel';
-export type PriorityKey = 'budget' | 'delai' | 'qualite';
-
-export type BriefData = {
-    projet: {
-        type: 'vitrine' | 'portfolio' | 'ecommerce' | 'autre';
-        refonte: boolean;
-        urlActuelle: string;
-    };
-    objectifs: {
-        goals: Record<GoalKey, boolean>;
-        goalsAutre?: string;
-        ciblePrincipale?: string;
-    };
-    contenus: {
-        contentsReady: ContentsReady;
-        blog: boolean;
-        formulaireAvance: boolean;
-        rdv: boolean;
-        paiement: boolean;
-        multilingue: boolean;
-        seoTechnique: boolean;
-        accessibilite: boolean;
-        performances: boolean;
-        integrations?: string;
-    };
-    cadrage: {
-        budget: '<1000' | '1000-2000' | '2000-4000' | '4000-6000' | '6000+';
-        deadline?: string;
-        priorite: PriorityKey;
-    };
-    contexte: {
-        secteur?: string;
-        diff?: string;
-        refs?: string;
-    };
-    contact: {
-        prenom: string;
-        email: string;
-        entreprise?: string;
-        paysFuseau?: string;
-        preference: ContactPref;
-        consent: boolean;
-    };
-    attachments: File[];
-    website?: string;
-};
-
-export type StepKey = 'projet' | 'objectifs' | 'contenus' | 'cadrage' | 'contexte' | 'contact';
+export type { BriefData, ContactPref, ContentsReady, GoalKey, PriorityKey, StepKey };
 
 type PushDetail = Record<string, unknown>;
 declare global {
@@ -77,34 +36,6 @@ function useDebouncedEffect(fn: () => void, deps: React.DependencyList, delay = 
     }, deps);
 }
 
-function makeInitialData(): BriefData {
-    return {
-        projet: { type: 'vitrine', refonte: false, urlActuelle: '' },
-        objectifs: {
-            goals: { leads: false, credibilite: false, vente: false, recrutement: false, autre: false },
-            goalsAutre: '',
-            ciblePrincipale: '',
-        },
-        contenus: {
-            contentsReady: 'partiel',
-            blog: false,
-            formulaireAvance: false,
-            rdv: false,
-            paiement: false,
-            multilingue: false,
-            seoTechnique: false,
-            accessibilite: false,
-            performances: false,
-            integrations: '',
-        },
-        cadrage: { budget: '2000-4000', deadline: '', priorite: 'qualite' },
-        contexte: { secteur: '', diff: '', refs: '' },
-        contact: { prenom: '', email: '', entreprise: '', paysFuseau: '', preference: 'email', consent: false },
-        attachments: [],
-        website: '',
-    };
-}
-
 export const fileAcceptOK = (file: File) => /\.(pdf|docx?|zip)$/i.test(file.name);
 export const fileSizeOK = (file: File, maxMB = 10) => file.size <= maxMB * 1024 * 1024;
 
@@ -113,7 +44,7 @@ export function trackBriefExpress(event: string, detail?: PushDetail) {
 }
 
 export function useBriefExpressForm() {
-    const [data, setData] = useState<BriefData>(makeInitialData);
+    const [data, setData] = useState<BriefData>(makeInitialBriefData);
     const [step, setStep] = useState<StepKey>('projet');
     const [restored, setRestored] = useState<boolean>(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -179,18 +110,7 @@ export function useBriefExpressForm() {
         } catch {}
     }, [data]);
 
-    const steps = useMemo(
-        () =>
-            [
-                { key: 'projet', label: 'Projet' },
-                { key: 'objectifs', label: 'Objectifs & public' },
-                { key: 'contenus', label: 'Contenus & fonctionnalités' },
-                { key: 'cadrage', label: 'Budget & délai' },
-                { key: 'contexte', label: 'Contexte' },
-                { key: 'contact', label: 'Coordonnées & RGPD' },
-            ] as Array<{ key: StepKey; label: string }>,
-        [],
-    );
+    const steps = useMemo(() => briefExpressSteps, []);
 
     const stepIndex = steps.findIndex((s) => s.key === step);
     const progress = Math.round(((stepIndex + 1) / steps.length) * 100);
@@ -224,26 +144,12 @@ export function useBriefExpressForm() {
 
     const validateStep = useCallback(
         (k: StepKey): boolean => {
-            const e: Record<string, string> = {};
-            if (k === 'contact') {
-                const validation = validateContactIdentity(
-                    {
-                        name: data.contact.prenom,
-                        email: data.contact.email,
-                        consent: data.contact.consent,
-                    },
-                    { requireConsent: true },
-                );
+            const stepErrors = validateBriefExpressStep(k, data);
 
-                if (validation.error === contactValidationCopy.invalidName) e['contact.prenom'] = briefExpressCopy.errors.firstNameRequired;
-                if (validation.error === contactValidationCopy.invalidEmail) e['contact.email'] = briefExpressCopy.errors.invalidEmail;
-                if (validation.error === contactValidationCopy.consentRequired) e['contact.consent'] = contactValidationCopy.consentRequired;
-            }
-
-            setErrors(e);
-            return Object.keys(e).length === 0;
+            setErrors(stepErrors);
+            return Object.keys(stepErrors).length === 0;
         },
-        [data.contact],
+        [data],
     );
 
     const resetAfterSubmit = useCallback(() => {
@@ -252,7 +158,7 @@ export function useBriefExpressForm() {
         } catch {}
         setRestored(false);
         skipPersistRef.current = true;
-        setData(makeInitialData());
+        setData(makeInitialBriefData());
         setStep('projet');
         setErrors({});
         if (fileInputRef.current) fileInputRef.current.value = '';

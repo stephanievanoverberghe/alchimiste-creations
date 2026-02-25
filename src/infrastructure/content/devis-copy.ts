@@ -61,6 +61,14 @@ export const briefExpressCopy = {
         { value: '6000+', text: '6 000 €+' },
     ],
     priorities: ['budget', 'delai', 'qualite'],
+    steps: [
+        { key: 'projet', label: 'Projet' },
+        { key: 'objectifs', label: 'Objectifs & public' },
+        { key: 'contenus', label: 'Contenus & fonctionnalités' },
+        { key: 'cadrage', label: 'Budget & délai' },
+        { key: 'contexte', label: 'Contexte' },
+        { key: 'contact', label: 'Coordonnées & RGPD' },
+    ],
     errors: {
         firstNameRequired: 'Indique ton prénom.',
         invalidEmail: 'Email invalide.',
