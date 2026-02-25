@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { validateContactIdentity } from '@/application/contact/services/contactValidation';
 import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
@@ -56,6 +57,79 @@ export type StepKey = 'projet' | 'objectifs' | 'contenus' | 'cadrage' | 'context
 
 export const briefExpressSteps: ReadonlyArray<{ key: StepKey; label: string }> = briefExpressCopy.steps;
 
+const normalizeText = (value: string) => value.replace(/\s+/g, ' ').trim();
+
+const normalizedText = (maxLength: number) => z.preprocess((value) => (typeof value === 'string' ? normalizeText(value) : ''), z.string().max(maxLength));
+
+const optionalUrlSchema = z.preprocess(
+    (value) => (typeof value === 'string' ? normalizeText(value) : ''),
+    z
+        .union([z.literal(''), z.url()])
+        .transform((value) => value ?? '')
+        .default(''),
+);
+
+const optionalMonthSchema = z.preprocess(
+    (value) => (typeof value === 'string' ? normalizeText(value) : ''),
+    z.union([z.literal(''), z.string().regex(/^\d{4}-\d{2}$/)]).transform((value) => value ?? ''),
+);
+
+const briefFormSchema = z.object({
+    projet: z.object({
+        type: z.enum(['vitrine', 'portfolio', 'ecommerce', 'autre']),
+        refonte: z.boolean(),
+        urlActuelle: optionalUrlSchema,
+    }),
+    objectifs: z.object({
+        goals: z.object({
+            leads: z.boolean(),
+            credibilite: z.boolean(),
+            vente: z.boolean(),
+            recrutement: z.boolean(),
+            autre: z.boolean(),
+        }),
+        goalsAutre: normalizedText(180).optional(),
+        ciblePrincipale: normalizedText(160).optional(),
+    }),
+    contenus: z.object({
+        contentsReady: z.enum(['oui', 'non', 'partiel']),
+        blog: z.boolean(),
+        formulaireAvance: z.boolean(),
+        rdv: z.boolean(),
+        paiement: z.boolean(),
+        multilingue: z.boolean(),
+        seoTechnique: z.boolean(),
+        accessibilite: z.boolean(),
+        performances: z.boolean(),
+        integrations: normalizedText(240).optional(),
+    }),
+    cadrage: z.object({
+        budget: z.enum(['<1000', '1000-2000', '2000-4000', '4000-6000', '6000+']),
+        deadline: optionalMonthSchema.optional(),
+        priorite: z.enum(['budget', 'delai', 'qualite']),
+    }),
+    contexte: z.object({
+        secteur: normalizedText(120).optional(),
+        diff: normalizedText(500).optional(),
+        refs: normalizedText(500).optional(),
+    }),
+    contact: z.object({
+        prenom: normalizedText(80),
+        email: normalizedText(120),
+        entreprise: normalizedText(120).optional(),
+        paysFuseau: normalizedText(120).optional(),
+        preference: z.enum(['email', 'appel']),
+        consent: z.boolean(),
+    }),
+    attachments: z.array(z.custom<File>()).default([]),
+    website: normalizedText(200).optional(),
+});
+
+const stepRules: Partial<Record<StepKey, z.ZodTypeAny>> = {
+    projet: z.object({ projet: briefFormSchema.shape.projet }),
+    contact: z.object({ contact: briefFormSchema.shape.contact }),
+};
+
 export function makeInitialBriefData(): BriefData {
     return {
         projet: { type: 'vitrine', refonte: false, urlActuelle: '' },
@@ -84,8 +158,26 @@ export function makeInitialBriefData(): BriefData {
     };
 }
 
+export function sanitizeBriefData(data: BriefData): BriefData {
+    const parsed = briefFormSchema.safeParse(data);
+    if (!parsed.success) return data;
+    return parsed.data;
+}
+
 export function validateBriefExpressStep(step: StepKey, data: BriefData): Record<string, string> {
     const errors: Record<string, string> = {};
+
+    const scopedStepSchema = stepRules[step];
+    if (scopedStepSchema) {
+        const scopedResult = scopedStepSchema.safeParse(data);
+        if (!scopedResult.success && step === 'projet') {
+            const hasUrlIssue = scopedResult.error.issues.some((issue) => issue.path.join('.') === 'projet.urlActuelle');
+            if (hasUrlIssue) {
+                errors['projet.urlActuelle'] = briefExpressCopy.errors.invalidProjectUrl;
+            }
+        }
+    }
+
     if (step !== 'contact') return errors;
 
     const validation = validateContactIdentity(

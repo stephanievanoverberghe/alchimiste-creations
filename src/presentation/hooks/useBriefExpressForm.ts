@@ -4,6 +4,7 @@ import { buildBriefExpressMessage } from '@/application/contact/services/buildBr
 import {
     briefExpressSteps,
     makeInitialBriefData,
+    sanitizeBriefData,
     validateBriefExpressStep,
     type BriefData,
     type ContactPref,
@@ -124,8 +125,26 @@ export function useBriefExpressForm() {
         [stepIndex],
     );
 
+    const validateStep = useCallback(
+        (k: StepKey): boolean => {
+            const stepErrors = validateBriefExpressStep(k, data);
+
+            setErrors(stepErrors);
+            return Object.keys(stepErrors).length === 0;
+        },
+        [data],
+    );
+
     const goNext = useCallback(() => {
-        setErrors({});
+        const currentStep = steps[stepIndex]?.key;
+        if (!currentStep) return;
+
+        const isStepValid = validateStep(currentStep);
+        if (!isStepValid) {
+            pushDl('devis_error', { where: 'step_validation', step: currentStep });
+            return;
+        }
+
         if (stepIndex < steps.length - 1) {
             const nextStep = steps[stepIndex + 1].key;
             setStep(nextStep);
@@ -140,17 +159,7 @@ export function useBriefExpressForm() {
             setStep(prevStep);
             pushDl('devis_form_step_prev', { step: prevStep });
         }
-    }, [stepIndex, steps]);
-
-    const validateStep = useCallback(
-        (k: StepKey): boolean => {
-            const stepErrors = validateBriefExpressStep(k, data);
-
-            setErrors(stepErrors);
-            return Object.keys(stepErrors).length === 0;
-        },
-        [data],
-    );
+    }, [stepIndex, steps, validateStep]);
 
     const resetAfterSubmit = useCallback(() => {
         try {
@@ -171,7 +180,9 @@ export function useBriefExpressForm() {
                 pushDl('devis_error', { where: 'validation' });
                 return;
             }
-            if (data.website && data.website.trim().length > 0) {
+            const sanitizedData = sanitizeBriefData(data);
+
+            if (sanitizedData.website && sanitizedData.website.trim().length > 0) {
                 pushDl('devis_error', { where: 'honeypot' });
                 return;
             }
@@ -182,10 +193,10 @@ export function useBriefExpressForm() {
 
             try {
                 const payload = {
-                    name: data.contact.prenom || 'Visiteur',
-                    email: data.contact.email,
-                    message: buildBriefExpressMessage(data).replace(/\n/g, '\r\n'),
-                    consent: data.contact.consent,
+                    name: sanitizedData.contact.prenom || 'Visiteur',
+                    email: sanitizedData.contact.email,
+                    message: buildBriefExpressMessage(sanitizedData).replace(/\n/g, '\r\n'),
+                    consent: sanitizedData.contact.consent,
                     confirm_email: '',
                 };
                 const validation = validateContactSubmission(payload, { requireConsent: true });

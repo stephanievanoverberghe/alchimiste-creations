@@ -72,5 +72,6 @@ export const briefExpressCopy = {
     errors: {
         firstNameRequired: 'Indique ton prénom.',
         invalidEmail: 'Email invalide.',
+        invalidProjectUrl: 'URL invalide. Utilise un lien complet (https://...).',
     },
 } as const;

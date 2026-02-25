@@ -121,6 +121,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                         value={data.projet.urlActuelle}
                         onChange={(e) => setData((d) => ({ ...d, projet: { ...d.projet, urlActuelle: e.target.value } }))}
                     />
+                    <FieldError name="projet.urlActuelle" />
                 </label>
             </div>
         </fieldset>
