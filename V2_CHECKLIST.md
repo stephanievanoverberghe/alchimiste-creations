@@ -16,7 +16,7 @@
 
 ## 2) Structure de code “entreprise”
 
-- [ ] Introduire une arborescence par **feature métier** + couches internes.
+- [x] Introduire une arborescence par **feature métier** + couches internes.
 - [x] Isoler l’UI dans `src/presentation/*` (components, sections, views).
 - [x] Déplacer la logique applicative dans `src/application/*` (use-cases, orchestrations).
 - [x] Centraliser le métier dans `src/domain/*` (entités, value objects, règles).

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Sparkles, BadgeCheck } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
-import { getProjects } from '@/application/catalog/use-cases/getProjects';
+import { getProjects } from '@/features/catalog/application/use-cases/getProjects';
 import CardFeaturedCases, { type RawProject } from '@/presentation/components/cards/projects/CardFeaturedCases';
 
 type Props = {

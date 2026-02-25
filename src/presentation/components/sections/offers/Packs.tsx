@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import PackCard from '@/presentation/components/cards/pack/CardPack';
-import { getVersion, type Tech } from '@/domain/offers/packs';
+import { getVersion, type Tech } from '@/features/catalog/domain/packs';
 import { cn } from '@/shared/utils/cn';
 import { Atom, FileText, Code2, Gauge, Clock, GitBranch, Edit3, Wallet, Boxes } from 'lucide-react';
 

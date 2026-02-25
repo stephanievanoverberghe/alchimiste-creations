@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getPacks } from '@/application/catalog/use-cases/getPacks';
-import type { Tech } from '@/domain/offers/packs';
+import { getPacks } from '@/features/catalog/application/use-cases/getPacks';
+import type { Tech } from '@/features/catalog/domain/packs';
 import PacksSection from '@/presentation/components/sections/offers/Packs';
 import PacksComparison from '@/presentation/components/sections/offers/PacksComparison';
 import AddonsGridSection from '@/presentation/components/sections/offers/AddonsGrid';
