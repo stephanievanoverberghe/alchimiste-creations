@@ -1,4 +1,3 @@
-// src/components/sections/devis/BriefExpress.tsx
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
@@ -8,7 +7,6 @@ import { cn } from '@/lib/utils';
 import { ClipboardList, ChevronRight, ArrowLeft, Send, Calendar, Globe, Upload, RefreshCw, X, CheckCircle2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-// --------- Tracking (privacy-first)
 declare global {
     interface Window {
         dataLayer?: Array<Record<string, unknown>>;
@@ -16,28 +14,24 @@ declare global {
 }
 const pushDl = (event: string, detail?: Record<string, unknown>) => window?.dataLayer?.push(detail ? { event, ...detail } : { event });
 
-// --------- Types
 type GoalKey = 'leads' | 'credibilite' | 'vente' | 'recrutement' | 'autre';
 type ContactPref = 'email' | 'appel';
 type ContentsReady = 'oui' | 'non' | 'partiel';
 type PriorityKey = 'budget' | 'delai' | 'qualite';
 
 type BriefData = {
-    // Étape 1 — Projet
     projet: {
         type: 'vitrine' | 'portfolio' | 'ecommerce' | 'autre';
         refonte: boolean;
         urlActuelle: string;
     };
 
-    // Étape 2 — Objectifs & public
     objectifs: {
         goals: Record<GoalKey, boolean>;
         goalsAutre?: string;
         ciblePrincipale?: string;
     };
 
-    // Étape 3 — Contenus & fonctionnalités
     contenus: {
         contentsReady: ContentsReady;
         blog: boolean;
@@ -51,21 +45,18 @@ type BriefData = {
         integrations?: string;
     };
 
-    // Étape 4 — Budget & délai
     cadrage: {
         budget: '<1000' | '1000-2000' | '2000-4000' | '4000-6000' | '6000+';
         deadline?: string;
         priorite: PriorityKey;
     };
 
-    // Étape 5 — Contexte
     contexte: {
         secteur?: string;
         diff?: string;
         refs?: string;
     };
 
-    // Étape 6 — Coordonnées & RGPD (+ upload)
     contact: {
         prenom: string;
         email: string;
@@ -75,16 +66,13 @@ type BriefData = {
         consent: boolean;
     };
 
-    // Upload (UI uniquement)
     attachments: File[];
 
-    // Anti-spam
-    website?: string; // honeypot
+    website?: string;
 };
 
 type StepKey = 'projet' | 'objectifs' | 'contenus' | 'cadrage' | 'contexte' | 'contact';
 
-// --------- Helpers
 const STORAGE_KEY = 'brief-express-v1';
 
 const motifStyle: CSSProperties = {
@@ -105,7 +93,6 @@ const assertEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const fileAcceptOK = (file: File) => /\.(pdf|docx?|zip)$/i.test(file.name);
 const fileSizeOK = (file: File, maxMB = 10) => file.size <= maxMB * 1024 * 1024;
 
-// État initial (factory)
 function makeInitialData(): BriefData {
     return {
         projet: { type: 'vitrine', refonte: false, urlActuelle: '' },
@@ -134,7 +121,6 @@ function makeInitialData(): BriefData {
     };
 }
 
-// Construit un message texte unique (utilisé par /api/contact)
 function buildMessage(d: BriefData) {
     const yesno = (b: boolean) => (b ? 'oui' : 'non');
     const onoff = (b: boolean) => (b ? 'on' : 'off');
@@ -152,7 +138,7 @@ function buildMessage(d: BriefData) {
         `• Contenus prêts: ${d.contenus.contentsReady}`,
         `  Blog:${onoff(d.contenus.blog)} | Formulaire avancé:${onoff(d.contenus.formulaireAvance)} | RDV:${onoff(d.contenus.rdv)} | Paiement:${onoff(d.contenus.paiement)}`,
         `  Multilingue:${onoff(d.contenus.multilingue)} | SEO technique:${onoff(d.contenus.seoTechnique)} | A11y:${onoff(d.contenus.accessibilite)} | Perf:${onoff(
-            d.contenus.performances
+            d.contenus.performances,
         )}`,
         `  Intégrations: ${d.contenus.integrations || '—'}`,
         `• Budget: ${d.cadrage.budget} | Deadline: ${d.cadrage.deadline || '—'} | Priorité: ${d.cadrage.priorite}`,
@@ -167,7 +153,6 @@ function buildMessage(d: BriefData) {
     ].join('\n');
 }
 
-// --------- Constantes de données (hors JSX, bien typées)
 const GOALS: ReadonlyArray<{ key: GoalKey; text: string }> = [
     { key: 'leads', text: 'Générer des leads' },
     { key: 'credibilite', text: 'Renforcer la crédibilité' },
@@ -199,33 +184,26 @@ const BUDGETS: ReadonlyArray<{ value: BriefData['cadrage']['budget']; text: stri
 
 const PRIORITIES: ReadonlyArray<PriorityKey> = ['budget', 'delai', 'qualite'];
 
-// --------- Component
 export default function BriefExpressSection({ id = 'brief-express', className }: { id?: string; className?: string }) {
-    // ========= State
     const [data, setData] = useState<BriefData>(makeInitialData);
     const [step, setStep] = useState<StepKey>('projet');
     const [restored, setRestored] = useState<boolean>(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // submit state
     const [sending, setSending] = useState(false);
     const [status, setStatus] = useState<'idle' | 'ok' | 'error'>('idle');
     const [errorMsg, setErrorMsg] = useState('');
 
-    // éviter de réécrire le localStorage juste après reset
     const skipPersistRef = useRef(false);
 
-    // ——— Modale de succès
     const [successOpen, setSuccessOpen] = useState(false);
     const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-    // ✅ Pousser un seul event au montage
     useEffect(() => {
         pushDl('devis_form_start');
     }, []);
 
-    // ---------- Hot-fix : mémoriser & restaurer le focus si ça remonte
     const activeNameRef = useRef<string | null>(null);
     const rememberFocus = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         activeNameRef.current = e.currentTarget.name || null;
@@ -237,7 +215,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         if (el && document.activeElement !== el) el.focus();
     });
 
-    // Accessibilité (focus, ESC) + scroll lock pendant la modale
     useEffect(() => {
         if (!successOpen) return;
         const prevOverflow = document.documentElement.style.overflow;
@@ -251,21 +228,17 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         };
     }, [successOpen]);
 
-    // ------ Restore from localStorage
     useEffect(() => {
         try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
             if (raw) {
                 const parsed = JSON.parse(raw) as BriefData;
-                setData({ ...parsed, attachments: [] }); // Files non sérialisables
+                setData({ ...parsed, attachments: [] });
                 setRestored(true);
             }
-        } catch {
-            // ignore
-        }
+        } catch {}
     }, []);
 
-    // ------ Persist to localStorage (debounced) — on enlève les attachments
     useDebouncedEffect(() => {
         if (skipPersistRef.current) {
             skipPersistRef.current = false;
@@ -274,12 +247,9 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         try {
             const snapshot: Omit<BriefData, 'attachments'> & { attachments?: never[] } = { ...data, attachments: [] as never[] };
             window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-        } catch {
-            // ignore
-        }
+        } catch {}
     }, [data]);
 
-    // ------ Steps model
     const steps = useMemo(
         () =>
             [
@@ -290,13 +260,20 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 { key: 'contexte', label: 'Contexte' },
                 { key: 'contact', label: 'Coordonnées & RGPD' },
             ] as Array<{ key: StepKey; label: string }>,
-        []
+        [],
     );
 
     const stepIndex = steps.findIndex((s) => s.key === step);
     const progress = Math.round(((stepIndex + 1) / steps.length) * 100);
+    const stepStatus = useCallback(
+        (index: number) => {
+            if (index < stepIndex) return 'done';
+            if (index === stepIndex) return 'current';
+            return 'upcoming';
+        },
+        [stepIndex],
+    );
 
-    // ------ Nav
     const goNext = useCallback(() => {
         setErrors({});
         if (stepIndex < steps.length - 1) {
@@ -313,7 +290,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         }
     }, [stepIndex, steps]);
 
-    // ------ Validation douce (step-level)
     const validateStep = useCallback(
         (k: StepKey): boolean => {
             const e: Record<string, string> = {};
@@ -325,10 +301,9 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             setErrors(e);
             return Object.keys(e).length === 0;
         },
-        [data.contact]
+        [data.contact],
     );
 
-    // ------ Reset complet après submit OK (et purge du brouillon) — sans scroll
     const resetAfterSubmit = useCallback(() => {
         try {
             window.localStorage.removeItem(STORAGE_KEY);
@@ -341,14 +316,12 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         if (fileInputRef.current) fileInputRef.current.value = '';
     }, []);
 
-    // ------ Submit → envoi sur /api/contact
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validateStep('contact')) {
             pushDl('devis_error', { where: 'validation' });
             return;
         }
-        // Honeypot
         if (data.website && data.website.trim().length > 0) {
             pushDl('devis_error', { where: 'honeypot' });
             return;
@@ -362,9 +335,9 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             const payload = {
                 name: data.contact.prenom || 'Visiteur',
                 email: data.contact.email,
-                message: buildMessage(data).replace(/\n/g, '\r\n'), // CRLF pour l'email
+                message: buildMessage(data).replace(/\n/g, '\r\n'),
                 consent: data.contact.consent,
-                confirm_email: '', // honeypot (vide)
+                confirm_email: '',
             };
 
             const res = await fetch('/api/contact', {
@@ -378,8 +351,8 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             if (res.ok && json?.success) {
                 setStatus('ok');
                 pushDl('devis_form_submit', { ok: true });
-                resetAfterSubmit(); // reset complet mais on ne bouge pas le scroll
-                setSuccessOpen(true); // ouvre la modale de succès
+                resetAfterSubmit();
+                setSuccessOpen(true);
             } else {
                 setStatus('error');
                 setErrorMsg(json?.error || 'Impossible d’envoyer le brief pour l’instant.');
@@ -416,12 +389,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             </p>
         ) : null;
 
-    // ------ Steps UIs
     const StepProjet = (
         <fieldset>
             <legend className="text-sm font-semibold text-foreground">Projet</legend>
             <div className="mt-3 grid gap-3">
-                {/* Type */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {(['vitrine', 'portfolio', 'ecommerce', 'autre'] as const).map((t) => (
                         <label key={t} className="inline-flex items-center gap-2 rounded-xl border border-sauge/40 bg-background px-3 py-2 cursor-pointer hover:bg-sauge/10">
@@ -437,7 +408,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     ))}
                 </div>
 
-                {/* Refonte */}
                 <label className="inline-flex items-center gap-3 rounded-xl border border-sauge/40 bg-background px-3 py-2 cursor-pointer hover:bg-sauge/10 w-fit">
                     <input
                         type="checkbox"
@@ -449,7 +419,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     <span className="text-sm">C’est une refonte</span>
                 </label>
 
-                {/* URL actuelle */}
                 <label className="block">
                     <span className="text-xs text-foreground/80">URL actuelle (si existante)</span>
                     <input
@@ -488,7 +457,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     ))}
                 </div>
 
-                {/* Goal autre */}
                 <label className="block">
                     <span className="text-xs text-foreground/80">Autre objectif (optionnel)</span>
                     <input
@@ -512,7 +480,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     />
                 </label>
 
-                {/* Cible */}
                 <label className="block">
                     <span className="text-xs text-foreground/80">Cible principale (1 phrase)</span>
                     <input
@@ -533,7 +500,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         <fieldset>
             <legend className="text-sm font-semibold text-foreground">Contenus & fonctionnalités</legend>
             <div className="mt-3 grid gap-3">
-                {/* Contents ready */}
                 <div>
                     <span className="text-xs text-foreground/80 mr-3">Contenus prêts ?</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1">
@@ -546,7 +512,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                 onClick={() => setData((d) => ({ ...d, contenus: { ...d.contenus, contentsReady: v } }))}
                                 className={cn(
                                     'inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs tracking-[0.14em] uppercase font-semibold cursor-pointer',
-                                    data.contenus.contentsReady === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10'
+                                    data.contenus.contentsReady === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10',
                                 )}
                             >
                                 {v}
@@ -555,7 +521,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </div>
                 </div>
 
-                {/* Features */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {FEATURES.map(({ key, text }) => (
                         <label key={key} className="inline-flex items-center gap-3 rounded-xl border border-sauge/40 bg-background px-3 py-2 cursor-pointer hover:bg-sauge/10">
@@ -571,7 +536,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     ))}
                 </div>
 
-                {/* Integrations */}
                 <label className="block">
                     <span className="text-xs text-foreground/80">Intégrations (Calendly, newsletter, CRM…)</span>
                     <input
@@ -592,7 +556,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         <fieldset>
             <legend className="text-sm font-semibold text-foreground">Budget & délai</legend>
             <div className="mt-3 grid gap-3">
-                {/* Budget */}
                 <div>
                     <span className="text-xs text-foreground/80">Plage budgétaire</span>
                     <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -614,7 +577,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </div>
                 </div>
 
-                {/* Deadline */}
                 <label className="block">
                     <span className="text-xs text-foreground/80">Deadline souhaitée (mois/trim.)</span>
                     <input
@@ -627,7 +589,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     />
                 </label>
 
-                {/* Priorité */}
                 <div>
                     <span className="text-xs text-foreground/80 mr-3">Priorité principale</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1 ">
@@ -640,7 +601,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                 onClick={() => setData((d) => ({ ...d, cadrage: { ...d.cadrage, priorite: v } }))}
                                 className={cn(
                                     'inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs tracking-[0.14em] uppercase font-semibold cursor-pointer',
-                                    data.cadrage.priorite === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10'
+                                    data.cadrage.priorite === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10',
                                 )}
                             >
                                 {v}
@@ -712,7 +673,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             onFocus={rememberFocus}
                             className={cn(
                                 'mt-1 w-full rounded-xl border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2',
-                                errors['contact.prenom'] ? 'border-terracotta focus-visible:ring-terracotta/40' : 'border-sauge/40 bg-background focus-visible:ring-sauge/40'
+                                errors['contact.prenom'] ? 'border-terracotta focus-visible:ring-terracotta/40' : 'border-sauge/40 bg-background focus-visible:ring-sauge/40',
                             )}
                             value={data.contact.prenom}
                             onChange={(e) => setData((d) => ({ ...d, contact: { ...d.contact, prenom: e.target.value } }))}
@@ -731,7 +692,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             onFocus={rememberFocus}
                             className={cn(
                                 'mt-1 w-full rounded-xl border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2',
-                                errors['contact.email'] ? 'border-terracotta focus-visible:ring-terracotta/40' : 'border-sauge/40 bg-background focus-visible:ring-sauge/40'
+                                errors['contact.email'] ? 'border-terracotta focus-visible:ring-terracotta/40' : 'border-sauge/40 bg-background focus-visible:ring-sauge/40',
                             )}
                             value={data.contact.email}
                             onChange={(e) => setData((d) => ({ ...d, contact: { ...d.contact, email: e.target.value } }))}
@@ -769,7 +730,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </label>
                 </div>
 
-                {/* Préférence de contact */}
                 <div>
                     <span className="text-xs text-foreground/80">Préférence de contact</span>
                     <div className="mt-2 inline-flex rounded-2xl border border-sauge/40 bg-background p-1">
@@ -782,7 +742,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                 onClick={() => setData((d) => ({ ...d, contact: { ...d.contact, preference: v } }))}
                                 className={cn(
                                     'inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs tracking-[0.14em] uppercase font-semibold cursor-pointer',
-                                    data.contact.preference === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10'
+                                    data.contact.preference === v ? 'bg-sauge text-background shadow-sm' : 'text-sauge hover:bg-sauge/10',
                                 )}
                             >
                                 {v === 'email' ? <Globe className="w-4 h-4" aria-hidden /> : <Calendar className="w-4 h-4" aria-hidden />}
@@ -792,7 +752,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </div>
                 </div>
 
-                {/* Upload (UI) */}
                 <div>
                     <span className="text-xs text-foreground/80">Pièces jointes (PDF/DOCX/ZIP, max 10 Mo)</span>
                     <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -816,7 +775,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             onClick={() => fileInputRef.current?.click()}
                             className={cn(
                                 'inline-flex items-center gap-2 rounded-2xl border border-sauge/40 bg-background px-3 py-2 text-sm hover:bg-sauge/10 cursor-pointer',
-                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40'
+                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40',
                             )}
                         >
                             <Upload className="w-4 h-4" aria-hidden />
@@ -830,7 +789,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     </p>
                 </div>
 
-                {/* Consent */}
                 <label className="mt-2 inline-flex items-start gap-3 rounded-xl border border-sauge/50 bg-background px-3 py-2 cursor-pointer">
                     <input
                         type="checkbox"
@@ -854,7 +812,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </label>
                 <FieldError name="contact.consent" />
 
-                {/* Honeypot */}
                 <input
                     type="text"
                     tabIndex={-1}
@@ -886,7 +843,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         }
     };
 
-    // ------ Render
     return (
         <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-[100px] xl:px-[150px]', className)} aria-labelledby="brief-express-title">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-background via-ormat/20 to-background pointer-events-none" aria-hidden />
@@ -912,7 +868,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     )}
                 </div>
 
-                {/* Progress (sans animation) */}
                 <div className="flex items-center justify-between gap-4">
                     <div className="w-full h-2 rounded-full bg-foreground/10 overflow-hidden">
                         <div className="h-full bg-sauge" style={{ width: `${progress}%` }} aria-hidden />
@@ -920,13 +875,37 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     <span className="min-w-[52px] text-xs text-foreground/80 text-right">{progress}%</span>
                 </div>
 
-                {/* Form card */}
+                <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3" aria-label="Progression du formulaire">
+                    {steps.map((s, i) => {
+                        const status = stepStatus(i);
+                        return (
+                            <li key={s.key} className="rounded-xl border border-sauge/30 bg-background/90 px-3 py-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setStep(s.key)}
+                                    className="flex w-full items-center gap-3 text-left cursor-pointer"
+                                    aria-current={status === 'current' ? 'step' : undefined}
+                                >
+                                    <span
+                                        className={cn(
+                                            'inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs font-semibold',
+                                            status === 'done' && 'border-sauge bg-sauge/15 text-sauge',
+                                            status === 'current' && 'border-terracotta bg-terracotta/10 text-terracotta',
+                                            status === 'upcoming' && 'border-foreground/20 text-foreground/60',
+                                        )}
+                                    >
+                                        {status === 'done' ? <CheckCircle2 className="h-4 w-4" aria-hidden /> : i + 1}
+                                    </span>
+                                    <span className="text-sm text-foreground/85">{s.label}</span>
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ol>
                 <LinedCard>
                     <form onSubmit={onSubmit} className="relative z-[1] grid gap-6">
-                        {/* Étapes */}
                         {renderStep()}
 
-                        {/* Footer nav */}
                         <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
                             <div className="flex items-center gap-2">
                                 {stepIndex > 0 ? (
@@ -951,7 +930,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         'group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl cursor-pointer',
                                         'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
                                         'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
-                                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+                                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                                     )}
                                 >
                                     Continuer
@@ -967,7 +946,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                         'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
                                         'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
                                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-                                        'disabled:opacity-60 disabled:cursor-not-allowed'
+                                        'disabled:opacity-60 disabled:cursor-not-allowed',
                                     )}
                                 >
                                     {sending ? 'Envoi…' : 'Envoyer mon brief'}
@@ -976,13 +955,10 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                             )}
                         </div>
 
-                        {/* Messages inline */}
                         {status === 'error' && <p className="text-xs text-terracotta font-medium">{errorMsg || 'Oups, ça a échoué.'}</p>}
-                        {/* pas de message de succès inline, on affiche une modale */}
                     </form>
                 </LinedCard>
 
-                {/* CTA secondaire */}
                 <div className="flex items-center justify-between gap-4">
                     <p className="text-xs text-foreground/60">Tu préfères un échange rapide ? Réserve un créneau — on balise ensemble le périmètre avant chiffrage.</p>
                     <Link
@@ -996,7 +972,6 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 </div>
             </div>
 
-            {/* ===== Modale de confirmation ===== */}
             {successOpen && (
                 <div
                     className="fixed inset-0 z-[60] flex items-center justify-center"
@@ -1041,7 +1016,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                                     className={cn(
                                         'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl',
                                         'bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold tracking-widest uppercase',
-                                        'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]'
+                                        'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
                                     )}
                                 >
                                     Réserver un appel
