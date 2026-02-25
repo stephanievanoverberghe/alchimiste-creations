@@ -6,6 +6,8 @@ import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { Mail, MessageSquareText, MessageCircle, Copy, CheckCircle2, X, ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 import HcaptchaGate, { HcaptchaHandle } from '@/presentation/components/integrations/HcaptchaGate';
+import { validateContactSubmission } from '@/application/contact/services/contactValidation';
+import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 type ApiResponse = { success: boolean; error?: string };
 
@@ -30,16 +32,13 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
     const [errorMsg, setErrorMsg] = useState('');
     const [chars, setChars] = useState(0);
 
-    // hCaptcha
     const [captchaToken, setCaptchaToken] = useState('');
     const [functionalAllowed, setFunctionalAllowed] = useState(false);
-    const captchaRef = useRef<HcaptchaHandle | null>(null); // 👈 ref vers le widget
+    const captchaRef = useRef<HcaptchaHandle | null>(null);
 
-    // ——— Modal de succès
     const [successOpen, setSuccessOpen] = useState(false);
     const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-    // Accessibilité (focus, ESC) + scroll lock pendant la modale
     useEffect(() => {
         if (!successOpen) return;
         const prevOverflow = document.documentElement.style.overflow;
@@ -53,7 +52,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
         };
     }, [successOpen]);
 
-    // Lire le consentement (ac_consent) et écouter les changements
     useEffect(() => {
         const m = document.cookie.match(/(?:^|; )ac_consent=([^;]*)/);
         if (m) {
@@ -70,14 +68,12 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
         return () => window.removeEventListener('ac:consent:update', onUpdate as EventListener);
     }, []);
 
-    // Mailto fallback (et affichage du mail)
     const mailtoHref = useMemo(() => {
         const subject = 'Contact — Appel découverte';
         const body = `Nom: ${name ?? ''}\nEmail: ${email ?? ''}\n\nMessage:\n`;
         return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }, [EMAIL, name, email]);
 
-    // WhatsApp (prérempli)
     const whatsappHref = useMemo(() => {
         if (!WHATSAPP) return '';
         const text = ['Bonjour,', name ? `je m'appelle ${name}.` : '', email ? `Mon email: ${email}.` : '', 'Je voudrais échanger sur mon projet et réserver un appel découverte.']
@@ -86,27 +82,27 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
         return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
     }, [WHATSAPP, name, email]);
 
-    // Envoi vers /api/contact (serveur)
     async function onSubmitExpress(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.currentTarget as HTMLFormElement;
         const fd = new FormData(form);
 
-        // Honeypot
-        if (String(fd.get('confirm_email') || '').trim()) return;
-
-        const n = String(fd.get('name') || '').trim();
-        const m = String(fd.get('email') || '').trim();
-        const msg = String(fd.get('message') || '').trim();
         const consent = String(fd.get('consent') || '') === 'on';
 
-        // Validation
-        if (msg.length < 10) {
+        const validation = validateContactSubmission({
+            name: String(fd.get('name') || ''),
+            email: String(fd.get('email') || ''),
+            message: String(fd.get('message') || ''),
+            consent,
+            confirm_email: String(fd.get('confirm_email') || ''),
+        });
+        if (validation.isBot) return;
+        if (!validation.normalized) {
             setStatus('error');
-            setErrorMsg('Ton message est un peu court (min. 10 caractères).');
+            setErrorMsg(validation.error === contactValidationCopy.invalidMessage ? contactValidationCopy.shortMessageUi : validation.error || 'Formulaire invalide.');
             return;
         }
-        // Si l’utilisateur a autorisé “Contenus tiers”, on exige un token valide
+
         if (functionalAllowed && !captchaToken) {
             setStatus('error');
             setErrorMsg('Merci de valider le challenge anti-spam.');
@@ -121,9 +117,9 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    name: n,
-                    email: m,
-                    message: msg,
+                    name: validation.normalized.name,
+                    email: validation.normalized.email,
+                    message: validation.normalized.message,
                     consent,
                     confirm_email: '',
                     hcaptcha: captchaToken,
@@ -139,8 +135,8 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                 setStatus('ok');
                 form.reset();
                 setChars(0);
-                setCaptchaToken(''); // vide le token (désactive le bouton si contenus tiers = ON)
-                captchaRef.current?.reset(); // 👈 réinitialise visuellement le widget hCaptcha
+                setCaptchaToken('');
+                captchaRef.current?.reset();
                 setSuccessOpen(true);
             } else {
                 setStatus('error');
@@ -164,7 +160,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                     <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">Alternatives rapides</h2>
                 </div>
 
-                {/* 1) Formulaire express */}
                 <article className="group relative h-full flex flex-col overflow-hidden rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                     <div
                         className="pointer-events-none absolute inset-0 opacity-10"
@@ -224,14 +219,11 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             J’accepte que mes informations soient utilisées pour être recontacté·e au sujet de ma demande.
                         </label>
 
-                        {/* Honeypot anti-bot */}
                         <input type="text" name="confirm_email" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
 
-                        {/* hCaptcha : chargé uniquement si “Contenus tiers” autorisé */}
                         <input type="hidden" name="h-captcha-response" value={captchaToken} />
                         <HcaptchaGate ref={captchaRef} sitekey={HCAPTCHA_SITEKEY} enabled={functionalAllowed} onVerify={setCaptchaToken} className="mt-1" />
 
-                        {/* Boutons */}
                         <div className="flex flex-wrap items-center gap-3">
                             <button
                                 type="submit"
@@ -248,7 +240,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                 {!sending && <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />}
                             </button>
 
-                            {/* Erreur inline */}
                             {status === 'error' && (
                                 <span className="text-xs text-terracotta">
                                     {errorMsg || 'Oups, ça a échoué.'}{' '}
@@ -262,9 +253,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                     </form>
                 </article>
 
-                {/* 2) Email + Messagerie — dessous, 2 colonnes */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    {/* Email direct */}
                     <article className="group relative h-full flex flex-col overflow-hidden rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                         <div
                             className="pointer-events-none absolute inset-0 opacity-10"
@@ -318,7 +307,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                         </div>
                     </article>
 
-                    {/* Messagerie */}
                     <article className="group relative h-full flex flex-col overflow-hidden rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                         <div
                             className="pointer-events-none absolute inset-0 opacity-10"
@@ -381,7 +369,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                 </div>
             </div>
 
-            {/* ===== Modale de confirmation ===== */}
             {successOpen && (
                 <div
                     className="fixed inset-0 z-[60] flex items-center justify-center"

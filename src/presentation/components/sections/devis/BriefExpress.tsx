@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { cn } from '@/shared/utils/cn';
 import { ClipboardList, ChevronRight, ArrowLeft, Send, Calendar, Globe, Upload, RefreshCw, X, CheckCircle2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { validateContactIdentity, validateContactSubmission } from '@/application/contact/services/contactValidation';
+import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 declare global {
     interface Window {
@@ -89,7 +91,6 @@ function useDebouncedEffect(fn: () => void, deps: React.DependencyList, delay = 
     }, deps);
 }
 
-const assertEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const fileAcceptOK = (file: File) => /\.(pdf|docx?|zip)$/i.test(file.name);
 const fileSizeOK = (file: File, maxMB = 10) => file.size <= maxMB * 1024 * 1024;
 
@@ -294,9 +295,18 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
         (k: StepKey): boolean => {
             const e: Record<string, string> = {};
             if (k === 'contact') {
-                if (!data.contact.prenom.trim()) e['contact.prenom'] = 'Indique ton prénom.';
-                if (!data.contact.email.trim() || !assertEmail(data.contact.email)) e['contact.email'] = 'Email invalide.';
-                if (!data.contact.consent) e['contact.consent'] = 'Nécessaire pour traiter ta demande.';
+                const validation = validateContactIdentity(
+                    {
+                        name: data.contact.prenom,
+                        email: data.contact.email,
+                        consent: data.contact.consent,
+                    },
+                    { requireConsent: true },
+                );
+
+                if (validation.error === contactValidationCopy.invalidName) e['contact.prenom'] = 'Indique ton prénom.';
+                if (validation.error === contactValidationCopy.invalidEmail) e['contact.email'] = 'Email invalide.';
+                if (validation.error === contactValidationCopy.consentRequired) e['contact.consent'] = contactValidationCopy.consentRequired;
             }
             setErrors(e);
             return Object.keys(e).length === 0;
@@ -339,6 +349,13 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                 consent: data.contact.consent,
                 confirm_email: '',
             };
+            const validation = validateContactSubmission(payload, { requireConsent: true });
+            if (!validation.normalized) {
+                setStatus('error');
+                setErrorMsg(validation.error || 'Impossible d’envoyer le brief pour l’instant.');
+                setSending(false);
+                return;
+            }
 
             const res = await fetch('/api/contact', {
                 method: 'POST',
