@@ -1,0 +1,57 @@
+{
+    "badge": "Dépendances & contenus",
+    "title": "Ce dont j’ai besoin pour démarrer vite et bien",
+    "description": "Un cadre simple pour éviter les allers-retours inutiles : prérequis, formats attendus et bonnes pratiques de contenu.",
+    "cards": [
+        {
+            "id": "prerequisites",
+            "title": "Avant de démarrer (prérequis)",
+            "icon": "keySquare",
+            "items": [
+                { "icon": "fileText", "label": "Textes principaux (Google Doc / Markdown)" },
+                { "icon": "image", "label": "Images/visuels (WebP/AVIF) + crédits" },
+                { "icon": "keySquare", "label": "Accès (hébergeur, DNS, Analytics, CMS)" },
+                { "icon": "globe", "label": "Nom de domaine & paramètres DNS" },
+                { "icon": "shieldCheck", "label": "Contraintes légales (mentions, RGPD)" }
+            ],
+            "tags": [
+                { "icon": "globe", "label": "DNS/SSL" },
+                { "icon": "shieldCheck", "label": "RGPD" }
+            ],
+            "exampleTitle": "Exemple",
+            "exampleDescription": "Partage des accès hébergeur + registrar, doc “Mentions légales & politique de confidentialité”, dossier images existant."
+        },
+        {
+            "id": "formats",
+            "title": "Formats attendus",
+            "icon": "folderOpen",
+            "items": [
+                { "icon": "fileText", "label": "Google Doc structuré (H1–H3, listes, liens internes)" },
+                { "icon": "image", "label": "Dossier /images trié par page (WebP/AVIF)" },
+                { "icon": "type", "label": "Typographies (licences + WOFF2)" },
+                { "icon": "folderOpen", "label": "Espace partagé (Drive/Notion) unique" }
+            ],
+            "tags": [
+                { "icon": "fileText", "label": "Google Doc" },
+                { "icon": "image", "label": "WebP/AVIF" },
+                { "icon": "type", "label": "WOFF2" }
+            ],
+            "exampleTitle": "Exemple",
+            "exampleDescription": "Drive partagé : /Site → /Textes (1 doc/page) • /Images (dossiers par page) • /Fonts (licences + WOFF2)."
+        },
+        {
+            "id": "bestPractices",
+            "title": "Bonnes pratiques de contenu",
+            "icon": "listChecks",
+            "items": [
+                { "icon": "link2", "label": "Droits/licences clairs (photos, polices, logos)" },
+                { "icon": "type", "label": "Ton éditorial clair & orienté bénéfices" },
+                { "icon": "fileText", "label": "Longueurs indicatives : 250–600 mots/page clé" },
+                { "icon": "listChecks", "label": "Checklist d’envoi : textes, images, accès" }
+            ],
+            "exampleTitle": "Exemple",
+            "exampleDescription": "Hero direct (bénéfice, preuve, CTA), sections en listes courtes, visuels légendés, liens vers /offres et /contact."
+        }
+    ],
+    "footnote": "* Un seul espace partagé fait foi (Drive/Notion). J’aide à trier/convertir si besoin (images → WebP, polices → WOFF2)."
+}

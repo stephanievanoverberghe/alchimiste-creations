@@ -9,7 +9,7 @@ import PrinciplesSection from '@/presentation/components/sections/method/Princip
 import RolesSection from '@/presentation/components/sections/method/Roles';
 import QualitySection from '@/presentation/components/sections/method/Quality';
 import SEOSection from '@/presentation/components/sections/method/SEO';
-import DependenciesSection from '@/presentation/components/sections/method//Dependencies';
+import DependenciesSection from '@/presentation/components/sections/method/Dependencies';
 import ChangeManagementSection from '@/presentation/components/sections/method/ChangeManagement';
 import PlanningSection from '@/presentation/components/sections/method/Planning';
 import DeliverablesSection from '@/presentation/components/sections/method/Deliverables';
