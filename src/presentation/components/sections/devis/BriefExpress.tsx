@@ -5,9 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/shared/utils/cn';
 import { ClipboardList, ChevronRight, ArrowLeft, Send, Calendar, Globe, Upload, RefreshCw, X, CheckCircle2 } from 'lucide-react';
+import { buildBriefExpressMessage } from '@/application/contact/services/buildBriefExpressMessage';
 import type { LucideIcon } from 'lucide-react';
 import { validateContactIdentity, validateContactSubmission } from '@/application/contact/services/contactValidation';
 import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
+import { briefExpressCopy } from '@/infrastructure/content/devis-copy';
 
 declare global {
     interface Window {
@@ -122,68 +124,11 @@ function makeInitialData(): BriefData {
     };
 }
 
-function buildMessage(d: BriefData) {
-    const yesno = (b: boolean) => (b ? 'oui' : 'non');
-    const onoff = (b: boolean) => (b ? 'on' : 'off');
-    const objectifs =
-        Object.entries(d.objectifs.goals)
-            .filter(([, v]) => v)
-            .map(([k]) => k)
-            .join(', ') || '—';
-
-    return [
-        `=== Brief express ===`,
-        `• Projet: ${d.projet.type} | Refonte: ${yesno(d.projet.refonte)} | URL: ${d.projet.urlActuelle || '—'}`,
-        `• Objectifs: ${objectifs} ${d.objectifs.goalsAutre ? `(autre: ${d.objectifs.goalsAutre})` : ''}`,
-        `  Cible: ${d.objectifs.ciblePrincipale || '—'}`,
-        `• Contenus prêts: ${d.contenus.contentsReady}`,
-        `  Blog:${onoff(d.contenus.blog)} | Formulaire avancé:${onoff(d.contenus.formulaireAvance)} | RDV:${onoff(d.contenus.rdv)} | Paiement:${onoff(d.contenus.paiement)}`,
-        `  Multilingue:${onoff(d.contenus.multilingue)} | SEO technique:${onoff(d.contenus.seoTechnique)} | A11y:${onoff(d.contenus.accessibilite)} | Perf:${onoff(
-            d.contenus.performances,
-        )}`,
-        `  Intégrations: ${d.contenus.integrations || '—'}`,
-        `• Budget: ${d.cadrage.budget} | Deadline: ${d.cadrage.deadline || '—'} | Priorité: ${d.cadrage.priorite}`,
-        `• Contexte — Secteur: ${d.contexte.secteur || '—'}`,
-        `  Différenciation: ${d.contexte.diff || '—'}`,
-        `  Références: ${d.contexte.refs || '—'}`,
-        `• Contact — Prénom: ${d.contact.prenom}`,
-        `  Email: ${d.contact.email}`,
-        `  Entreprise: ${d.contact.entreprise || '—'}`,
-        `  Pays/Fuseau: ${d.contact.paysFuseau || '—'}`,
-        `  Préférence: ${d.contact.preference}`,
-    ].join('\n');
-}
-
-const GOALS: ReadonlyArray<{ key: GoalKey; text: string }> = [
-    { key: 'leads', text: 'Générer des leads' },
-    { key: 'credibilite', text: 'Renforcer la crédibilité' },
-    { key: 'vente', text: 'Vendre en ligne' },
-    { key: 'recrutement', text: 'Recruter' },
-    { key: 'autre', text: 'Autre' },
-];
-
-const CONTENTS_READY: ReadonlyArray<ContentsReady> = ['oui', 'non', 'partiel'];
-
-const FEATURES: ReadonlyArray<{ key: keyof BriefData['contenus']; text: string }> = [
-    { key: 'blog', text: 'Blog' },
-    { key: 'formulaireAvance', text: 'Formulaire avancé' },
-    { key: 'rdv', text: 'Prise de RDV' },
-    { key: 'paiement', text: 'Paiement en ligne' },
-    { key: 'multilingue', text: 'Multilingue' },
-    { key: 'seoTechnique', text: 'SEO technique' },
-    { key: 'accessibilite', text: 'Accessibilité' },
-    { key: 'performances', text: 'Performances' },
-];
-
-const BUDGETS: ReadonlyArray<{ value: BriefData['cadrage']['budget']; text: string }> = [
-    { value: '<1000', text: '< 1 000 €' },
-    { value: '1000-2000', text: '1 000 – 2 000 €' },
-    { value: '2000-4000', text: '2 000 – 4 000 €' },
-    { value: '4000-6000', text: '4 000 – 6 000 €' },
-    { value: '6000+', text: '6 000 €+' },
-];
-
-const PRIORITIES: ReadonlyArray<PriorityKey> = ['budget', 'delai', 'qualite'];
+const GOALS = briefExpressCopy.goals satisfies ReadonlyArray<{ key: GoalKey; text: string }>;
+const CONTENTS_READY = briefExpressCopy.contentsReadyOptions satisfies ReadonlyArray<ContentsReady>;
+const FEATURES = briefExpressCopy.features satisfies ReadonlyArray<{ key: keyof BriefData['contenus']; text: string }>;
+const BUDGETS = briefExpressCopy.budgets satisfies ReadonlyArray<{ value: BriefData['cadrage']['budget']; text: string }>;
+const PRIORITIES = briefExpressCopy.priorities satisfies ReadonlyArray<PriorityKey>;
 
 export default function BriefExpressSection({ id = 'brief-express', className }: { id?: string; className?: string }) {
     const [data, setData] = useState<BriefData>(makeInitialData);
@@ -304,8 +249,8 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
                     { requireConsent: true },
                 );
 
-                if (validation.error === contactValidationCopy.invalidName) e['contact.prenom'] = 'Indique ton prénom.';
-                if (validation.error === contactValidationCopy.invalidEmail) e['contact.email'] = 'Email invalide.';
+                if (validation.error === contactValidationCopy.invalidName) e['contact.prenom'] = briefExpressCopy.errors.firstNameRequired;
+                if (validation.error === contactValidationCopy.invalidEmail) e['contact.email'] = briefExpressCopy.errors.invalidEmail;
                 if (validation.error === contactValidationCopy.consentRequired) e['contact.consent'] = contactValidationCopy.consentRequired;
             }
             setErrors(e);
@@ -345,7 +290,7 @@ export default function BriefExpressSection({ id = 'brief-express', className }:
             const payload = {
                 name: data.contact.prenom || 'Visiteur',
                 email: data.contact.email,
-                message: buildMessage(data).replace(/\n/g, '\r\n'),
+                message: buildBriefExpressMessage(data).replace(/\n/g, '\r\n'),
                 consent: data.contact.consent,
                 confirm_email: '',
             };
