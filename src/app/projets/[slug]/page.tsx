@@ -1,17 +1,17 @@
 // app/projets/[slug]/page.tsx
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import projectsData from '@/data/projects.json';
+import projectsData from '@/infrastructure/content/projects.json';
 
-import ContextSection from '@/components/sections/projects/project/Context';
-import PropositionSection from '@/components/sections/projects/project/Proposition';
-import ResultSection from '@/components/sections/projects/project/Result';
-import TestimonialSection from '@/components/sections/projects/project/Testimonial';
-import StackSection from '@/components/sections/projects/project/Stack';
-import CollabsSection from '@/components/sections/projects/project/Collabs';
-import NavSection from '@/components/sections/projects/project/Nav';
-import RelatedSection from '@/components/sections/projects/project/Related';
-import CallToActionSection from '@/components/sections/projects/project/CallToAction';
+import ContextSection from '@/presentation/components/sections/projects/project/Context';
+import PropositionSection from '@/presentation/components/sections/projects/project/Proposition';
+import ResultSection from '@/presentation/components/sections/projects/project/Result';
+import TestimonialSection from '@/presentation/components/sections/projects/project/Testimonial';
+import StackSection from '@/presentation/components/sections/projects/project/Stack';
+import CollabsSection from '@/presentation/components/sections/projects/project//Collabs';
+import NavSection from '@/presentation/components/sections/projects/project/Nav';
+import RelatedSection from '@/presentation/components/sections/projects/project/Related';
+import CallToActionSection from '@/presentation/components/sections/projects/project/CallToAction';
 
 type KPI = { label: string; before?: string; after?: string; delta?: string };
 type Testi = { quote?: string; author?: string };

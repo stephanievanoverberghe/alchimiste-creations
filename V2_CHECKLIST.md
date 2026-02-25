@@ -17,12 +17,12 @@
 ## 2) Structure de code “entreprise”
 
 - [ ] Introduire une arborescence par **feature métier** + couches internes.
-- [ ] Isoler l’UI dans `src/presentation/*` (components, sections, views).
-- [ ] Déplacer la logique applicative dans `src/application/*` (use-cases, orchestrations).
-- [ ] Centraliser le métier dans `src/domain/*` (entités, value objects, règles).
-- [ ] Encapsuler I/O et providers dans `src/infrastructure/*` (CMS/API/email/analytics).
-- [ ] Créer `src/shared/*` pour primitives transverses (types, utils, constants).
-- [ ] Ajouter des “barrels” contrôlés pour exposer une API publique par module.
+- [x] Isoler l’UI dans `src/presentation/*` (components, sections, views).
+- [x] Déplacer la logique applicative dans `src/application/*` (use-cases, orchestrations).
+- [x] Centraliser le métier dans `src/domain/*` (entités, value objects, règles).
+- [x] Encapsuler I/O et providers dans `src/infrastructure/*` (CMS/API/email/analytics).
+- [x] Créer `src/shared/*` pour primitives transverses (types, utils, constants).
+- [x] Ajouter des “barrels” contrôlés pour exposer une API publique par module.
 
 ---
 

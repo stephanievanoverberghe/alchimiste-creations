@@ -1,10 +1,10 @@
-import { AfterSubmitTimelineSection } from '@/components/sections/devis/AfterSubmitTimeline';
-import BriefExpressSection from '@/components/sections/devis/BriefExpress';
-import CallToActionDevis from '@/components/sections/devis/CallToAction';
-import FaqDevisSection from '@/components/sections/devis/FaqDevis';
-import PacksReminderSection from '@/components/sections/devis/PacksReminder';
-import QuickEstimateSection from '@/components/sections/devis/QuickEstimate';
-import ScheduleInlineSection from '@/components/sections/devis/ScheduleInline';
+import { AfterSubmitTimelineSection } from '@/presentation/components/sections/devis/AfterSubmitTimeline';
+import BriefExpressSection from '@/presentation/components/sections/devis/BriefExpress';
+import CallToActionDevis from '@/presentation/components/sections/devis/CallToAction';
+import FaqDevisSection from '@/presentation/components/sections/devis/FaqDevis';
+import PacksReminderSection from '@/presentation/components/sections/devis/PacksReminder';
+import QuickEstimateSection from '@/presentation/components/sections/devis/QuickEstimate';
+import ScheduleInlineSection from '@/presentation/components/sections/devis/ScheduleInline';
 
 export default function DevisPage() {
     return (

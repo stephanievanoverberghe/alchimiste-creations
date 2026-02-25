@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import TocClient from '@/components/legal/TopClient';
+import TocClient from '@/presentation/components/legal/TopClient';
 import { Home, FileText, Link as IconLink } from 'lucide-react';
 
 export const metadata: Metadata = {

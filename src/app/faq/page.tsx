@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HelpCircle, Mail, Home } from 'lucide-react';
-import FAQBareList from '@/components/FaqBareList';
+import FAQBareList from '@/presentation/components/FaqBareList';
 
 export const metadata: Metadata = {
     title: 'FAQ — Offres, méthode & technique',

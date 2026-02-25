@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import CalendlySection from '@/components/sections/contact/Calendly';
-import AlternativesSection from '@/components/sections/contact/Alternatives';
-import AgendaSection from '@/components/sections/contact/Agenda';
-import OffersSection from '@/components/sections/contact/Offers';
-import TestimonialSection from '@/components/sections/contact/Testimonials';
-import FaqSection from '@/components/sections/contact/FaqContact';
-import InfosSection from '@/components/sections/contact/Infos';
-import PrivacySection from '@/components/sections/contact/Privacy';
-import CallToActionSection from '@/components/sections/contact/CallToAction';
+import CalendlySection from '@/presentation/components/sections/contact//Calendly';
+import AlternativesSection from '@/presentation/components/sections/contact/Alternatives';
+import AgendaSection from '@/presentation/components/sections/contact/Agenda';
+import OffersSection from '@/presentation/components/sections/contact/Offers';
+import TestimonialSection from '@/presentation/components/sections/contact/Testimonials';
+import FaqSection from '@/presentation/components/sections/contact/FaqContact';
+import InfosSection from '@/presentation/components/sections/contact/Infos';
+import PrivacySection from '@/presentation/components/sections/contact/Privacy';
+import CallToActionSection from '@/presentation/components/sections/contact/CallToAction';
 
 export const metadata: Metadata = {
     title: 'Contact — Réserver un appel découverte (30 min)',

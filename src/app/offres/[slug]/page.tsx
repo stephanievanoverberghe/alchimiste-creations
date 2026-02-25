@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import IdealFitSection from '@/components/sections/offers/offer/IdealFit';
-import IncludedSection from '@/components/sections/offers/offer/Icluded';
-import OptionsGridSection from '@/components/sections/offers/offer/OptionsGrid';
-import MiniProcessSection from '@/components/sections/offers/offer/MiniProcess';
-import PricingTermsSection from '@/components/sections/offers/offer/PricingTerms';
-import ProjectsNearbySection from '@/components/sections/offers/offer/ProjectsNearby';
-import FAQSection from '@/components/sections/offers/offer/FaqOffer';
-import MiniComparatorSection from '@/components/sections/offers/offer/MiniComparator';
-import CallToActionSection from '@/components/sections/offers/offer/CallToAction';
+import IdealFitSection from '@/presentation/components/sections/offers/offer/IdealFit';
+import IncludedSection from '@/presentation/components/sections/offers/offer/Icluded';
+import OptionsGridSection from '@/presentation/components/sections/offers/offer/OptionsGrid';
+import MiniProcessSection from '@/presentation/components/sections/offers/offer/MiniProcess';
+import PricingTermsSection from '@/presentation/components/sections/offers/offer/PricingTerms';
+import ProjectsNearbySection from '@/presentation/components/sections/offers/offer/ProjectsNearby';
+import FAQSection from '@/presentation/components/sections/offers/offer/FaqOffer';
+import MiniComparatorSection from '@/presentation/components/sections/offers/offer/MiniComparator';
+import CallToActionSection from '@/presentation/components/sections/offers/offer/CallToAction';
 
 type Tech = 'wordpress' | 'react';
 

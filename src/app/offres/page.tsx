@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getPacks } from '@/lib/getPacks';
-import type { Tech } from '@/lib/packs';
-import PacksSection from '@/components/sections/offers/Packs';
-import PacksComparison from '@/components/sections/offers/PacksComparison';
-import AddonsGridSection from '@/components/sections/offers/AddonsGrid';
-import MiniProcessSection from '@/components/sections/shared/MiniProcess';
-import GuaranteesSection from '@/components/sections/shared/Guarantees';
-import IdealFitSection from '@/components/sections/offers/IdealFit';
-import FaqSection from '@/components/sections/offers/FaqOffers';
-import ProjectsTeaserSection from '@/components/sections/offers/ProjectsTeaser';
-import CallToActionSection from '@/components/sections/offers/CallToAction';
+import { getPacks } from '@/application/catalog/use-cases/getPacks';
+import type { Tech } from '@/domain/offers/packs';
+import PacksSection from '@/presentation/components/sections/offers/Packs';
+import PacksComparison from '@/presentation/components/sections/offers/PacksComparison';
+import AddonsGridSection from '@/presentation/components/sections/offers/AddonsGrid';
+import MiniProcessSection from '@/presentation/components/sections/shared/MiniProcess';
+import GuaranteesSection from '@/presentation/components/sections/shared/Guarantees';
+import IdealFitSection from '@/presentation/components/sections/offers/IdealFit';
+import FaqSection from '@/presentation/components/sections/offers/FaqOffers';
+import ProjectsTeaserSection from '@/presentation/components/sections/offers/ProjectsTeaser';
+import CallToActionSection from '@/presentation/components/sections/offers/CallToAction';
 
 // On infère le type des packs directement depuis la fonction
 type Packs = Awaited<ReturnType<typeof getPacks>>;

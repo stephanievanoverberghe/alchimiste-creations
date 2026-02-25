@@ -7,8 +7,8 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import './globals.css';
-import PageWrapper from '@/components/PageWrapper';
-import ConsentBanner from '@/components/legal/ConsentBanner';
+import PageWrapper from '@/presentation/components/PageWrapper';
+import ConsentBanner from '@/presentation/components/legal/ConsentBanner';
 
 const cormorant = Cormorant_Garamond({
     subsets: ['latin'],

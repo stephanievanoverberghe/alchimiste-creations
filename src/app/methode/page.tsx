@@ -2,20 +2,20 @@
 
 import { useEffect } from 'react';
 
-import TLDRSection from '@/components/sections/method/TLDR';
-import ProcessSection from '@/components/sections/method/Process';
-import ToolsSection from '@/components/sections/method/Tools';
-import PrinciplesSection from '@/components/sections/method/Principles';
-import RolesSection from '@/components/sections/method/Roles';
-import QualitySection from '@/components/sections/method/Quality';
-import SEOSection from '@/components/sections/method/SEO';
-import DependenciesSection from '@/components/sections/method/Dependencies';
-import ChangeManagementSection from '@/components/sections/method/ChangeManagement';
-import PlanningSection from '@/components/sections/method/Planning';
-import DeliverablesSection from '@/components/sections/method/Deliverables';
-import CaseStudiesSection from '@/components/sections/method/CaseStudies';
-import FAQSection from '@/components/sections/method/FAQ';
-import CTASection from '@/components/sections/method/CallToAction';
+import TLDRSection from '@/presentation/components/sections/method/TLDR';
+import ProcessSection from '@/presentation/components/sections/method/Process';
+import ToolsSection from '@/presentation/components/sections/method/Tools';
+import PrinciplesSection from '@/presentation/components/sections/method/Principles';
+import RolesSection from '@/presentation/components/sections/method/Roles';
+import QualitySection from '@/presentation/components/sections/method/Quality';
+import SEOSection from '@/presentation/components/sections/method/SEO';
+import DependenciesSection from '@/presentation/components/sections/method//Dependencies';
+import ChangeManagementSection from '@/presentation/components/sections/method/ChangeManagement';
+import PlanningSection from '@/presentation/components/sections/method/Planning';
+import DeliverablesSection from '@/presentation/components/sections/method/Deliverables';
+import CaseStudiesSection from '@/presentation/components/sections/method/CaseStudies';
+import FAQSection from '@/presentation/components/sections/method/FAQ';
+import CTASection from '@/presentation/components/sections/method/CallToAction';
 
 export default function MethodPage() {
     useEffect(() => {

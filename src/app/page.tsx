@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import OffersSection from '@/components/sections/home/Offers';
-import CallToActionSection from '@/components/sections/home/CallToAction';
-import PromiseSection from '@/components/sections/home/Promise';
-import AboutPreviewSection from '@/components/sections/home/AboutPreview';
-import WhyChooseSection from '@/components/sections/home/WhyChoose';
-import ProjectsSection from '@/components/sections/home/ProjectsSection';
+import OffersSection from '@/presentation/components/sections/home//Offers';
+import CallToActionSection from '@/presentation/components/sections/home/CallToAction';
+import PromiseSection from '@/presentation/components/sections/home/Promise';
+import AboutPreviewSection from '@/presentation/components/sections/home/AboutPreview';
+import WhyChooseSection from '@/presentation/components/sections/home/WhyChoose';
+import ProjectsSection from '@/presentation/components/sections/home/ProjectsSection';
 
 export default function HomePage() {
     useEffect(() => {

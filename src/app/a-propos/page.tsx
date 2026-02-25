@@ -1,12 +1,12 @@
 'use client';
 
-import StorySection from '@/components/sections/about/Story';
-import IdealFitSection from '@/components/sections/about/IdealFit';
-import ValuesSection from '@/components/sections/about/Value';
-import GuaranteesSection from '@/components/sections/shared/Guarantees';
-import MilestonesSection from '@/components/sections/about/Milestones';
-import CallToActionSection from '@/components/sections/about/CallToAction';
-import MiniProcessSection from '@/components/sections/shared/MiniProcess';
+import StorySection from '@/presentation/components/sections/about/Story';
+import IdealFitSection from '@/presentation/components/sections/about/IdealFit';
+import ValuesSection from '@/presentation/components/sections/about/Value';
+import GuaranteesSection from '@/presentation/components/sections/shared/Guarantees';
+import MilestonesSection from '@/presentation/components/sections/about/Milestones';
+import CallToActionSection from '@/presentation/components/sections/about/CallToAction';
+import MiniProcessSection from '@/presentation/components/sections/shared//MiniProcess';
 
 export default function AboutPage() {
     return (
