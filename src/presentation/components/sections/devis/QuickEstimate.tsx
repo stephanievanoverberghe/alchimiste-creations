@@ -1,4 +1,3 @@
-// src/components/sections/devis/QuickEstimate.tsx
 'use client';
 
 import { useMemo, useState, type CSSProperties } from 'react';
@@ -6,141 +5,29 @@ import Link from 'next/link';
 import { cn } from '@/shared/utils/cn';
 import { Calculator, ChevronRight, FileText, Code2, Leaf, Droplets, Flame, Plus, BadgeCheck } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import packsData from '@/infrastructure/content/packs.json';
+import {
+    estimate,
+    findOptionObject,
+    getPack,
+    isIncludedByDefault,
+    optionDefinitions,
+    optionPrice,
+    type FormState,
+    type OptionKey,
+    type PackSlug,
+    type TechKey,
+} from '@/application/catalog/services/quickEstimate';
 
-// ——— Types
-type TechKey = 'wordpress' | 'react';
-type PackSlug = 'essentiel' | 'croissance' | 'signature';
-type OptionKey = 'blog' | 'formulaire' | 'rdv' | 'multilingue';
-
-type RawPack = {
-    slug: string;
-    titre: string;
-    sousTitre?: string;
-    cible?: string;
-    inclus?: string[];
-    prix?: string;
-    technoChoix?: boolean;
-    versions?: Partial<Record<TechKey, { prix?: string; delai?: string }>>;
-    options?: Array<{
-        label: string;
-        prix: string | Partial<Record<TechKey, string>>;
-    }>;
-};
-
-type FormState = {
-    pack: PackSlug; // ⬅️ plus d’"auto"
-    tech: TechKey;
-    features: Record<OptionKey, boolean>;
-};
-
-// ——— Utils
 const PACK_ICONS: Record<PackSlug, LucideIcon> = {
     essentiel: Leaf,
     croissance: Droplets,
     signature: Flame,
 };
 
-const OPTION_DEFS: Record<OptionKey, { label: string; test: RegExp }> = {
-    blog: { label: 'Blog / Actus', test: /blog|actus/i },
-    formulaire: { label: 'Formulaire avancé', test: /formulaire.+avanc/i },
-    rdv: { label: 'Prise de RDV en ligne', test: /r[ée]servation|rdv|calendly/i },
-    multilingue: { label: 'Multilingue', test: /multi[- ]?lingue/i },
-};
-
-const ceilTo50 = (n: number) => Math.ceil(n / 50) * 50;
-
-function priceToNumber(s?: string): number | undefined {
-    if (!s) return undefined;
-    if (/sur\s*devis|—|--/i.test(s)) return undefined;
-    const m = s.replace(/\s/g, '').match(/(\d+(?:[.,]\d+)?)/);
-    if (!m) return undefined;
-    return Math.round(parseFloat(m[1].replace(',', '.')));
-}
-
 function formatEUR(n: number): string {
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
 }
 
-function delayRange(versions?: Partial<Record<TechKey, { delai?: string }>>): string | undefined {
-    if (!versions) return undefined;
-    const vals = Object.values(versions) as Array<{ delai?: string } | undefined>;
-    const nums: number[] = [];
-    for (const v of vals) {
-        const s = v?.delai ?? '';
-        for (const m of s.matchAll(/(\d+)\s*(?:à|-|–|—)?\s*(\d+)?/g)) {
-            const a = Number(m[1]);
-            const b = Number(m[2] ?? m[1]);
-            if (!Number.isNaN(a)) nums.push(a);
-            if (!Number.isNaN(b)) nums.push(b);
-        }
-    }
-    if (!nums.length) return undefined;
-    const min = Math.min(...nums);
-    const max = Math.max(...nums);
-    return min === max ? `${min} sem.` : `${min}–${max} sem.`;
-}
-
-function getPack(slug: PackSlug): RawPack | undefined {
-    const arr = Array.isArray(packsData) ? (packsData as RawPack[]) : [];
-    return arr.find((p) => p.slug === slug);
-}
-
-function basePrice(pack: RawPack, tech: TechKey): number | undefined {
-    const byTech = pack.versions?.[tech]?.prix ?? pack.prix;
-    return priceToNumber(byTech);
-}
-
-function findOptionObject(pack: RawPack, key: OptionKey) {
-    const def = OPTION_DEFS[key];
-    return (pack.options ?? []).find((o) => def.test.test(o.label));
-}
-
-function optionPrice(pack: RawPack, key: OptionKey, tech: TechKey): number {
-    const opt = findOptionObject(pack, key);
-    if (!opt) return 0;
-    const val = typeof opt.prix === 'string' ? opt.prix : (opt.prix?.[tech] ?? opt.prix?.wordpress);
-    return priceToNumber(val) ?? 0;
-}
-
-function isIncludedByDefault(pack: RawPack, key: OptionKey): boolean {
-    if (pack.slug === 'signature' && key === 'formulaire') return true;
-    if (key === 'blog') {
-        return (pack.inclus ?? []).some((s) => /blog/i.test(s));
-    }
-    return false;
-}
-
-function isOptionAvailable(pack: RawPack, key: OptionKey): boolean {
-    return !!findOptionObject(pack, key);
-}
-
-function estimate(state: FormState) {
-    const pack = getPack(state.pack);
-    if (!pack) return { pack: state.pack, ok: false as const };
-
-    const base = basePrice(pack, state.tech);
-    if (!base) return { pack: state.pack, ok: false as const };
-
-    const addBlog = state.features.blog && isOptionAvailable(pack, 'blog') && !isIncludedByDefault(pack, 'blog');
-    const addForm = state.features.formulaire && isOptionAvailable(pack, 'formulaire');
-    const addRdv = state.features.rdv && isOptionAvailable(pack, 'rdv');
-    const addMulti = state.features.multilingue && isOptionAvailable(pack, 'multilingue');
-
-    const sumOptions =
-        (addBlog ? optionPrice(pack, 'blog', state.tech) : 0) +
-        (addForm ? optionPrice(pack, 'formulaire', state.tech) : 0) +
-        (addRdv ? optionPrice(pack, 'rdv', state.tech) : 0) +
-        (addMulti ? optionPrice(pack, 'multilingue', state.tech) : 0);
-
-    const center = base + sumOptions;
-    const min = center; // ⬅️ jamais sous le “À partir de” réel
-    const max = ceilTo50(center * 1.15);
-
-    return { pack: state.pack, ok: true as const, min, max, delay: delayRange(pack.versions), sumOptions, base };
-}
-
-// dataLayer (optionnel)
 declare global {
     interface Window {
         dataLayer?: Array<Record<string, unknown>>;
@@ -148,7 +35,6 @@ declare global {
 }
 const pushDl = (event: string, detail?: Record<string, unknown>) => window?.dataLayer?.push(detail ? { event, ...detail } : { event });
 
-// ——— Composant
 export default function QuickEstimateSection({ id = 'quick-estimate', className }: { id?: string; className?: string }) {
     const [state, setState] = useState<FormState>({
         pack: 'essentiel', // ⬅️ défaut
@@ -204,7 +90,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                             'inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl',
                             'text-xs tracking-[0.14em] uppercase font-semibold transition transform',
                             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sauge/40 focus-visible:ring-offset-2',
-                            on ? 'bg-sauge text-background shadow-sm' : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-[1px] hover:shadow-sm',
+                            on ? 'bg-sauge text-background shadow-sm' : 'cursor-pointer text-sauge hover:bg-sauge/10 hover:-translate-y-px hover:shadow-sm',
                         )}
                     >
                         {t === 'wordpress' ? <FileText className="w-4 h-4" aria-hidden /> : <Code2 className="w-4 h-4" aria-hidden />}
@@ -222,25 +108,22 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
             return { ...s, features: next };
         });
 
-    // breakdown (pack + options) — pas de dépendance vers une fonction locale => pas d'avertissement ESLint
     const breakdown = useMemo(() => {
         if (!packData || !result.ok) return [];
         const rows: Array<{ label: string; price: number; muted?: boolean }> = [];
 
-        // ligne pack
         rows.push({
             label: `${packData.titre.replace(/^Pack\s+/i, '')} • ${state.tech === 'wordpress' ? 'WordPress' : 'React'}`,
             price: result.base ?? 0,
         });
 
-        // lignes options
-        (Object.keys(OPTION_DEFS) as OptionKey[]).forEach((k) => {
+        (Object.keys(optionDefinitions) as OptionKey[]).forEach((k) => {
             const optObj = findOptionObject(packData, k);
             if (!optObj) return; // non proposé sur ce pack
             const included = isIncludedByDefault(packData, k);
             const chosen = state.features[k];
 
-            const optLabel = optObj.label ?? OPTION_DEFS[k].label;
+            const optLabel = optObj.label ?? optionDefinitions[k].label;
 
             if (included) {
                 rows.push({ label: `${optLabel} (inclus)`, price: 0, muted: true });
@@ -253,7 +136,7 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
     }, [packData, result.ok, result.base, state.tech, state.features]);
 
     return (
-        <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-[100px] xl:px-[150px]', className)} aria-labelledby="quick-estimate-title">
+        <section id={id} className={cn('relative py-12 md:py-20 px-6 md:px-8 lg:px-25 xl:px-37.5', className)} aria-labelledby="quick-estimate-title">
             <div className="relative max-w-7xl mx-auto space-y-8">
                 {/* En-tête */}
                 <div className="text-center lg:text-left">
@@ -270,7 +153,6 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                     </p>
                 </div>
 
-                {/* Form compact */}
                 <form
                     className="grid gap-6 rounded-[22px] border border-sauge/30 bg-background p-5 md:p-6 shadow-sm"
                     onSubmit={(e) => {
@@ -278,7 +160,6 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                         pushDl('devis_estimate_submit', { ...state });
                     }}
                 >
-                    {/* Q1 — Niveau */}
                     <fieldset>
                         <legend className="text-sm font-semibold text-foreground/90">Niveau envisagé</legend>
                         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -294,7 +175,6 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                         </div>
                     </fieldset>
 
-                    {/* Q2 — Tech */}
                     <fieldset>
                         <legend className="text-sm font-semibold text-foreground/90">Technologie</legend>
                         <div className="mt-3">
@@ -302,11 +182,10 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                         </div>
                     </fieldset>
 
-                    {/* Q3 — Options */}
                     <fieldset>
                         <legend className="text-sm font-semibold text-foreground/90">Options</legend>
                         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {(Object.keys(OPTION_DEFS) as OptionKey[]).map((k) => {
+                            {(Object.keys(optionDefinitions) as OptionKey[]).map((k) => {
                                 const optObj = packData ? findOptionObject(packData, k) : undefined;
                                 const included = packData ? isIncludedByDefault(packData, k) : false;
                                 const available = !!optObj;
@@ -329,11 +208,11 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                                 checked={state.features[k] && !disabled}
                                                 onChange={() => {
                                                     if (!disabled) toggleFeature(k);
-                                                }} // ✅ utilise la fonction
-                                                aria-label={OPTION_DEFS[k].label}
+                                                }}
+                                                aria-label={optionDefinitions[k].label}
                                                 disabled={disabled}
                                             />
-                                            <span className="text-sm">{OPTION_DEFS[k].label}</span>
+                                            <span className="text-sm">{optionDefinitions[k].label}</span>
                                         </span>
 
                                         {badge && (
@@ -346,7 +225,6 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                                                 aria-label={included ? 'Option incluse' : 'Option non proposée'}
                                                 title={included ? 'Option incluse' : 'Option non proposée'}
                                             >
-                                                {/* Accent couleur, non porteur de sens seul */}
                                                 <span aria-hidden className={cn('h-1.5 w-1.5 rounded-full', included ? 'bg-sauge' : 'bg-foreground/50')} />
                                                 {badge}
                                             </span>
@@ -363,11 +241,10 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                     </fieldset>
                 </form>
 
-                {/* Résultat */}
                 <article className="group relative overflow-hidden rounded-[22px] border border-sauge/30 bg-background p-5 md:p-6 shadow-sm">
                     <div className="pointer-events-none absolute inset-0 opacity-10" style={motifStyle} aria-hidden />
 
-                    <header className="relative z-[1] flex flex-wrap items-baseline justify-between gap-3">
+                    <header className="relative z-1 flex flex-wrap items-baseline justify-between gap-3">
                         <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Estimation indicative</h3>
                         {result.ok && (
                             <span className="inline-flex items-center gap-2 rounded-full border border-sauge/30 bg-sauge/10 text-sauge px-3 py-1.5 text-xs">
@@ -375,15 +252,15 @@ export default function QuickEstimateSection({ id = 'quick-estimate', className 
                             </span>
                         )}
                     </header>
-                    <div className="relative z-[1] mt-3 h-[2px] overflow-hidden">
+                    <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                         <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                         <div
-                            className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                            className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
                             aria-hidden
                         />
                     </div>
 
-                    <div className="relative z-[1] mt-3">
+                    <div className="relative z-1 mt-3">
                         {result.ok ? (
                             <>
                                 <p className="text-xl md:text-2xl font-title text-terracotta">
