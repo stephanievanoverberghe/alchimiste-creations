@@ -20,25 +20,24 @@ export function SiteHeader() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    React.useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
+
     return (
         <header
-            className={cn(
-                'site-header sticky top-0 z-40 transition-all duration-[var(--motion-base)] ease-[var(--ease-standard)]',
-                scrolled ? 'site-header--scrolled' : 'site-header--top',
-            )}
+            className={cn('site-header sticky top-0 z-40 transition-all duration-(--motion-base) ease-(--ease-standard)', scrolled ? 'site-header--scrolled' : 'site-header--top')}
         >
-            <Container className="flex items-center justify-between py-3 md:py-4">
-                <div className="flex items-center gap-3">
+            <Container className="grid grid-cols-[1fr_auto] items-center gap-3 py-3 md:grid-cols-[auto_1fr_auto] md:gap-4 md:py-4">
+                <div className="flex items-center gap-3 md:gap-4">
                     <Link href="/" className="focus-ring site-header__brand" aria-label={siteContent.brand}>
                         <span className="site-header__brandMark" aria-hidden="true" />
-                        <span className="text-sm font-semibold tracking-wide">{siteContent.brand}</span>
+                        <span className="text-sm font-semibold tracking-wide md:text-base">{siteContent.brand}</span>
                     </Link>
-
-                    <span className="hidden text-xs text-text-muted md:inline">{/* micro preuve “douce” */}1 projet / mois · réponse sous 48h</span>
                 </div>
 
-                {/* Desktop nav */}
-                <nav className="hidden items-center gap-6 md:flex" aria-label="Navigation principale">
+                {/* Tablet + desktop nav */}
+                <nav className="site-header__nav hidden items-center justify-center md:flex" aria-label="Navigation principale">
                     {siteContent.nav.map((item) => {
                         const isActive = pathname === item.href;
                         return (
@@ -53,25 +52,26 @@ export function SiteHeader() {
                     })}
                 </nav>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-end gap-2">
                     {/* Secondary CTA desktop only (évite surcharge mobile) */}
-                    <Link href={siteContent.ctaSecondary.href} className="focus-ring hidden rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text md:inline-flex">
+                    <Link href={siteContent.ctaSecondary.href} className="focus-ring hidden rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text lg:inline-flex">
                         {siteContent.ctaSecondary.label}
                     </Link>
 
-                    <Button href={siteContent.ctaPrimary.href} variant="secondary" className="px-4 py-2 text-xs md:text-sm">
+                    <Button href={siteContent.ctaPrimary.href} variant="secondary" className="site-header__primaryCta hidden px-4 py-2 text-xs sm:inline-flex md:text-sm">
                         {siteContent.ctaPrimary.label}
                     </Button>
 
                     {/* Mobile menu button */}
                     <button
                         type="button"
-                        className="focus-ring md:hidden rounded-xl px-3 py-2 text-xs text-text-muted hover:text-text"
+                        className={cn('focus-ring site-header__menuButton md:hidden', open ? 'site-header__menuButton--open' : '')}
                         aria-expanded={open}
                         aria-controls="mobile-menu"
                         onClick={() => setOpen((v) => !v)}
                     >
-                        Menu
+                        <span className="sr-only">Ouvrir le menu</span>
+                        <span className="site-header__menuLines" aria-hidden="true" />
                     </button>
                 </div>
             </Container>
@@ -86,17 +86,22 @@ export function SiteHeader() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    onClick={() => setOpen(false)}
                                     className={cn(
-                                        'focus-ring rounded-xl px-3 py-3 text-sm transition',
-                                        isActive ? 'bg-surface-elevated text-text' : 'text-text-muted hover:text-text',
+                                        'focus-ring rounded-2xl px-3 py-3 text-sm transition',
+                                        isActive ? 'bg-surface-elevated text-text shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]' : 'text-text-muted hover:text-text',
                                     )}
                                 >
                                     {item.label}
                                 </Link>
                             );
                         })}
-                        <div className="pt-2">
+                        <Link
+                            href={siteContent.ctaSecondary.href}
+                            className="focus-ring rounded-2xl px-3 py-3 text-sm text-text-muted transition hover:bg-surface-elevated/40 hover:text-text sm:hidden"
+                        >
+                            {siteContent.ctaSecondary.label}
+                        </Link>
+                        <div className="pt-2 sm:hidden">
                             <Button href={siteContent.ctaPrimary.href} variant="primary" className="w-full">
                                 {siteContent.ctaPrimary.label}
                             </Button>
