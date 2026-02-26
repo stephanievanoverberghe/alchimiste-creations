@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 
-import { ScanSearch, Layers3, Code2, Rocket, Check } from 'lucide-react';
+import { ScanSearch, Layers3, Code2, Rocket, Check, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type HomeProcessSectionProps = {
@@ -24,42 +24,27 @@ export function HomeProcessSection({ content }: HomeProcessSectionProps) {
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
 
-                <ol className="relative grid gap-5 md:grid-cols-2" aria-label="Étapes du process">
-                    {/* rail vertical (mobile) */}
-                    <div aria-hidden="true" className="pointer-events-none absolute left-4.5 top-2 hidden h-[calc(100%-16px)] w-px bg-border/70 md:hidden" />
+                <ol className="process-grid relative grid gap-5 md:grid-cols-2" aria-label="Étapes du process">
+                    <div aria-hidden="true" className="process-rail pointer-events-none absolute left-4.5 top-2 hidden h-[calc(100%-16px)] w-px md:hidden" />
 
                     {content.steps.map((step, index) => {
                         const Icon = ICONS[step.icon];
                         return (
                             <li key={step.title} className="relative">
-                                <Card
-                                    className="group relative overflow-hidden border-border/80 bg-background/90 transition duration-300 hover:-translate-y-1 hover:border-accent/40"
-                                    style={{ animationDelay: `${index * 90}ms` }}
-                                >
-                                    {/* glow */}
-                                    <div
-                                        aria-hidden="true"
-                                        className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl transition-transform duration-500 group-hover:scale-110"
-                                        style={{
-                                            background:
-                                                index === 0
-                                                    ? 'rgba(122,84,255,0.12)'
-                                                    : index === 1
-                                                      ? 'rgba(19,209,255,0.10)'
-                                                      : index === 2
-                                                        ? 'rgba(122,84,255,0.10)'
-                                                        : 'rgba(19,209,255,0.08)',
-                                        }}
-                                    />
+                                <Card className="process-card group relative overflow-hidden border-border/80 bg-background/90" style={{ animationDelay: `${index * 110}ms` }}>
+                                    <div className="process-card__mesh" aria-hidden="true" />
+                                    <div className="process-card__pulse" aria-hidden="true" />
 
                                     <div className="flex items-start gap-4">
-                                        {/* badge + icon */}
                                         <div className="relative">
-                                            <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border/70 bg-background/40 transition duration-300 group-hover:border-accent/60 group-hover:bg-accent/10">
+                                            <span className="process-card__iconWrap inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border/70 bg-background/40">
                                                 <Icon className="h-5 w-5 text-accent" />
                                             </span>
 
-                                            {/* connecteur mobile */}
+                                            <span className="process-card__index absolute -right-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-border/70 bg-surface-elevated px-1 text-[10px] font-semibold text-text-muted">
+                                                0{index + 1}
+                                            </span>
+
                                             <span
                                                 aria-hidden="true"
                                                 className={cn(
@@ -73,7 +58,7 @@ export function HomeProcessSection({ content }: HomeProcessSectionProps) {
                                             <div className="flex flex-wrap items-center gap-2">
                                                 <p className="text-base font-semibold leading-snug">{step.title}</p>
                                                 {step.duration ? (
-                                                    <span className="rounded-full border border-border/70 bg-background/40 px-2.5 py-1 text-[11px] font-semibold text-text-muted">
+                                                    <span className="process-card__duration rounded-full border border-border/70 bg-background/40 px-2.5 py-1 text-[11px] font-semibold text-text-muted">
                                                         {step.duration}
                                                     </span>
                                                 ) : null}
@@ -83,13 +68,13 @@ export function HomeProcessSection({ content }: HomeProcessSectionProps) {
 
                                             <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-surface-elevated/80">
                                                 <span
-                                                    className="block h-full rounded-full bg-linear-to-r from-primary to-accent transition-all duration-500 group-hover:w-full"
+                                                    className="process-card__progress block h-full rounded-full bg-linear-to-r from-primary via-accent to-primary"
                                                     style={{ width: `${Math.min((index + 1) * 25, 100)}%` }}
                                                 />
                                             </div>
 
                                             <div className="mt-4 grid gap-3 lg:grid-cols-2">
-                                                <div className="rounded-2xl border border-border/60 bg-background/30 p-4">
+                                                <div className="process-card__panel rounded-2xl border border-border/60 bg-background/30 p-4">
                                                     <p className="text-xs font-semibold tracking-wide text-text-muted">Ce que vous recevez</p>
                                                     <ul className="mt-3 space-y-2 text-sm">
                                                         {step.deliverables.map((d) => (
@@ -102,8 +87,10 @@ export function HomeProcessSection({ content }: HomeProcessSectionProps) {
                                                 </div>
 
                                                 {step.validation ? (
-                                                    <div className="rounded-2xl border border-border/60 bg-background/30 p-4">
-                                                        <p className="text-xs font-semibold tracking-wide text-text-muted">Votre feu vert</p>
+                                                    <div className="process-card__panel rounded-2xl border border-border/60 bg-background/30 p-4">
+                                                        <p className="inline-flex items-center gap-1 text-xs font-semibold tracking-wide text-text-muted">
+                                                            <Sparkles className="h-3.5 w-3.5 text-accent" /> Votre feu vert
+                                                        </p>
                                                         <p className="mt-3 text-sm text-text-muted">{step.validation}</p>
                                                     </div>
                                                 ) : null}

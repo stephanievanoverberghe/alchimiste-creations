@@ -298,6 +298,100 @@ body {
     transform: translateY(0);
 }
 
+.process-grid {
+    isolation: isolate;
+}
+
+.process-rail {
+    background: linear-gradient(180deg, color-mix(in oklab, hsl(var(--accent)) 60%, hsl(var(--primary)) 40%), transparent 88%);
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.process-card {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.process-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 35%, hsl(var(--border)) 65%);
+    box-shadow: 0 16px 50px rgba(5, 9, 22, 0.45);
+}
+
+.process-card__mesh {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(122, 84, 255, 0.16), transparent 42%),
+        radial-gradient(circle at 85% 85%, rgba(19, 209, 255, 0.14), transparent 48%);
+    transition: opacity var(--motion-base) var(--ease-standard);
+}
+
+.process-card:hover .process-card__mesh {
+    opacity: 1;
+}
+
+.process-card__pulse {
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 180px;
+    height: 180px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.2), transparent 65%);
+    filter: blur(6px);
+    animation: driftOrb 8s ease-in-out infinite;
+}
+
+.process-card__iconWrap,
+.process-card__duration,
+.process-card__panel {
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard);
+}
+
+.process-card:hover .process-card__iconWrap {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 45%, hsl(var(--border)) 55%);
+    background-color: color-mix(in oklab, hsl(var(--accent)) 14%, transparent 86%);
+}
+
+.process-card__index {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.process-card:hover .process-card__duration,
+.process-card:hover .process-card__panel {
+    border-color: color-mix(in oklab, hsl(var(--accent)) 30%, hsl(var(--border)) 70%);
+}
+
+.process-card__progress {
+    background-size: 200% 100%;
+    animation: shimmerFlow 2.4s linear infinite;
+}
+
+@keyframes driftOrb {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-12px, 8px) scale(1.08);
+    }
+}
+
+@keyframes shimmerFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
 .qualification-section {
     position: relative;
 }
