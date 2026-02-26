@@ -92,9 +92,9 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
             <div className="relative z-1 max-w-5xl mx-auto space-y-8">
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
-                        Tu préfères autre chose que Calendly ?
+                        {contactAlternativesCopy.headingBadge}
                     </span>
-                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">Alternatives rapides</h2>
+                    <h2 className="mt-6 text-terracotta font-title text-3xl md:text-4xl font-bold tracking-widest leading-tight">{contactAlternativesCopy.headingTitle}</h2>
                 </div>
 
                 <article className="group relative h-full flex flex-col overflow-hidden rounded-[20px] border border-sauge/30 bg-background p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -108,7 +108,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                         <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                             <MessageSquareText className="w-4 h-4" aria-hidden />
                         </span>
-                        <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Formulaire express</h3>
+                        <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{contactAlternativesCopy.expressFormTitle}</h3>
                     </header>
 
                     <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
@@ -123,7 +123,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                         <input
                             name="name"
                             defaultValue={name}
-                            placeholder="Ton prénom"
+                            placeholder={contactAlternativesCopy.expressFormNamePlaceholder}
                             autoComplete="name"
                             className="rounded-xl border border-sauge/30 bg-background px-3 py-2 text-sm outline-none focus:border-sauge/60"
                             required
@@ -132,7 +132,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             name="email"
                             defaultValue={email}
                             type="email"
-                            placeholder="Ton email"
+                            placeholder={contactAlternativesCopy.expressFormEmailPlaceholder}
                             autoComplete="email"
                             className="rounded-xl border border-sauge/30 bg-background px-3 py-2 text-sm outline-none focus:border-sauge/60"
                             required
@@ -140,7 +140,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                         <div>
                             <textarea
                                 name="message"
-                                placeholder="Ton message (3 lignes suffisent)"
+                                placeholder={contactAlternativesCopy.expressFormMessagePlaceholder}
                                 rows={3}
                                 minLength={10}
                                 maxLength={5000}
@@ -153,7 +153,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
 
                         <label className="flex items-start gap-2 text-xs text-foreground/70 cursor-pointer">
                             <input type="checkbox" name="consent" className="mt-0.5" />
-                            J’accepte que mes informations soient utilisées pour être recontacté·e au sujet de ma demande.
+                            {contactAlternativesCopy.expressFormConsentLabel}
                         </label>
 
                         <input type="text" name="confirm_email" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
@@ -173,7 +173,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                     'cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed',
                                 )}
                             >
-                                <span>{sending ? 'Envoi…' : 'Envoyer'}</span>
+                                <span>{sending ? contactAlternativesCopy.expressFormSendingLabel : contactAlternativesCopy.expressFormSubmitLabel}</span>
                                 {!sending && <ChevronRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />}
                             </button>
 
@@ -181,7 +181,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                 <span className="text-xs text-terracotta">
                                     {errorMsg || contactValidationCopy.unexpectedError}{' '}
                                     <a href={mailtoHref} className="underline">
-                                        Écris-moi par email
+                                        {contactAlternativesCopy.expressFormErrorEmailCta}
                                     </a>
                                     .
                                 </span>
@@ -201,7 +201,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                 <Mail className="w-4 h-4" aria-hidden />
                             </span>
-                            <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Écrire un email</h3>
+                            <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{contactAlternativesCopy.emailCardTitle}</h3>
                         </header>
                         <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                             <div className="absolute inset-0 bg-sauge/20" aria-hidden />
@@ -211,7 +211,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             />
                         </div>
                         <div className="relative z-1 mt-3">
-                            <p className="text-sm text-foreground/85 leading-relaxed">Décris-moi en 3–5 lignes ton besoin, je te réponds sous 24–48h ouvrées.</p>
+                            <p className="text-sm text-foreground/85 leading-relaxed">{contactAlternativesCopy.emailCardDescription}</p>
                             <div className="mt-4 flex flex-wrap items-center gap-2">
                                 <a
                                     href={mailtoHref}
@@ -234,11 +234,11 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                         'inline-flex items-center justify-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold',
                                         'border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/20',
                                     )}
-                                    aria-label="Copier l’adresse e-mail"
-                                    title="Copier l’adresse e-mail"
+                                    aria-label={contactAlternativesCopy.emailCopyButtonAriaLabel}
+                                    title={contactAlternativesCopy.emailCopyButtonAriaLabel}
                                 >
                                     <Copy className="h-4 w-4" />
-                                    Copier
+                                    {contactAlternativesCopy.emailCopyButtonLabel}
                                 </button>
                             </div>
                         </div>
@@ -254,7 +254,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                 <MessageCircle className="w-4 h-4" aria-hidden />
                             </span>
-                            <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Messagerie</h3>
+                            <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">{contactAlternativesCopy.messagingCardTitle}</h3>
                         </header>
                         <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                             <div className="absolute inset-0 bg-sauge/20" aria-hidden />
@@ -264,7 +264,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             />
                         </div>
                         <div className="relative z-1 mt-3">
-                            <p className="text-sm text-foreground/85 leading-relaxed">Tu préfères écrire vite fait par messagerie ? Pas de souci.</p>
+                            <p className="text-sm text-foreground/85 leading-relaxed">{contactAlternativesCopy.messagingCardDescription}</p>
                             <div className="mt-4 flex flex-wrap items-center gap-2">
                                 {LINKEDIN && (
                                     <a
@@ -277,7 +277,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                         )}
                                     >
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                        LinkedIn
+                                        {contactAlternativesCopy.linkedinButtonLabel}
                                     </a>
                                 )}
                                 {whatsappHref && (
@@ -291,14 +291,15 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                         )}
                                     >
                                         <MessageCircle className="h-4 w-4" />
-                                        WhatsApp
+                                        {contactAlternativesCopy.whatsappButtonLabel}
                                     </a>
                                 )}
                             </div>
 
                             {!LINKEDIN && !whatsappHref && (
                                 <p className="mt-2 text-xs text-foreground/50">
-                                    Configure <code>NEXT_PUBLIC_LINKEDIN_URL</code> et/ou <code>NEXT_PUBLIC_WHATSAPP</code> pour afficher les boutons.
+                                    {contactAlternativesCopy.messagingMissingConfigPrefix} <code>NEXT_PUBLIC_LINKEDIN_URL</code>{' '}
+                                    {contactAlternativesCopy.messagingMissingConfigMiddle} <code>NEXT_PUBLIC_WHATSAPP</code> {contactAlternativesCopy.messagingMissingConfigSuffix}
                                 </p>
                             )}
                         </div>
@@ -314,8 +315,12 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                     aria-labelledby="contact-success-title"
                     aria-describedby="contact-success-desc"
                 >
-                    <button aria-label="Fermer la fenêtre" className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity" onClick={() => setSuccessOpen(false)} />
-                    <div className="relative mx-4 w/full max-w-md rounded-2xl border border-sauge/30 bg-background shadow-xl">
+                    <button
+                        aria-label={contactAlternativesCopy.successModalCloseAriaLabel}
+                        className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
+                        onClick={() => setSuccessOpen(false)}
+                    />
+                    <div className="relative mx-4 w-full max-w-md rounded-2xl border border-sauge/30 bg-background shadow-xl">
                         <div className="absolute right-2 top-2">
                             <button
                                 ref={closeBtnRef}
@@ -331,10 +336,10 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                 <CheckCircle2 className="h-6 w-6" aria-hidden />
                             </div>
                             <h3 id="contact-success-title" className="mt-4 font-title text-xl font-bold text-terracotta tracking-widest">
-                                Message envoyé
+                                {contactAlternativesCopy.successModalTitle}
                             </h3>
                             <p id="contact-success-desc" className="mt-2 text-sm text-foreground/80">
-                                Merci&nbsp;! Je te réponds sous 24–48h ouvrées. Tu peux aussi réserver un créneau dans l’agenda si tu préfères.
+                                {contactAlternativesCopy.successModalDescription}
                             </p>
 
                             <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
@@ -353,13 +358,13 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                                         'border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]',
                                     )}
                                 >
-                                    Réserver un appel
+                                    {contactAlternativesCopy.successModalScheduleLabel}
                                 </a>
                                 <button
                                     onClick={() => setSuccessOpen(false)}
                                     className="inline-flex items-center justify-center rounded-2xl border border-sauge/40 bg-sauge/10 px-4 py-2 text-sm font-semibold text-sauge hover:bg-sauge/20"
                                 >
-                                    Fermer
+                                    {contactAlternativesCopy.successModalCloseLabel}
                                 </button>
                             </div>
                         </div>

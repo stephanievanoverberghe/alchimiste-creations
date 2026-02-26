@@ -1,23 +1,11 @@
-'use client';
+import type { Metadata } from 'next';
+import { AboutPage } from '@/presentation/pages/AboutPage';
 
-import StorySection from '@/presentation/components/sections/about/Story';
-import IdealFitSection from '@/presentation/components/sections/about/IdealFit';
-import ValuesSection from '@/presentation/components/sections/about/Value';
-import GuaranteesSection from '@/presentation/components/sections/shared/Guarantees';
-import MilestonesSection from '@/presentation/components/sections/about/Milestones';
-import CallToActionSection from '@/presentation/components/sections/about/CallToAction';
-import MiniProcessSection from '@/presentation/components/sections/shared//MiniProcess';
+export const metadata: Metadata = {
+    title: 'À propos',
+    description: 'Front-end + Product Design pour transformer une identité sensible en expérience web claire.',
+};
 
-export default function AboutPage() {
-    return (
-        <div>
-            <StorySection />
-            <ValuesSection />
-            <IdealFitSection />
-            <MiniProcessSection />
-            <GuaranteesSection />
-            <MilestonesSection />
-            <CallToActionSection />
-        </div>
-    );
+export default function Page() {
+    return <AboutPage />;
 }
