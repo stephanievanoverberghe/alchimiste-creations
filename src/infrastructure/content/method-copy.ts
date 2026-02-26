@@ -75,3 +75,54 @@ export const methodPrinciplesCopy = {
     ],
     footnote: '* Chaque principe peut être contractualisé en critères vérifiables (checklists & budgets).',
 } as const;
+
+export const methodCaseStudiesCopy = {
+    badge: 'Études de cas',
+    title: 'La preuve par l’exemple — projets proches de votre besoin',
+    description: 'Deux projets courts : résultat concret, délais réels, impact mesurable.',
+    ctaLabel: 'Voir tous les projets',
+} as const;
+
+export const methodRolesCopy = {
+    badge: 'Rôles & responsabilités',
+    title: 'Qui fait quoi — clair, cadré, serein',
+    description:
+        'On répartit les responsabilités pour éviter les malentendus. Trois colonnes : moi / toi / partagé, des délais de réponse doux, et des formats de livrables explicites.',
+    labels: {
+        me: 'Moi',
+        you: 'Toi',
+        shared: 'Partagé',
+        slaTitle: 'Délais de réponse (SLA doux)',
+        deliverablesTitle: 'Formats des livrables',
+        slaFootnote: '* Hors week-ends/jours fériés. Les fenêtres de retours sont précisées à chaque jalon.',
+        deliverablesFootnote: '* Un canal unique “source of truth” (ex. Notion/Email) est défini en début de projet.',
+    },
+    defaults: {
+        mine: [
+            'Architecture & design système (UI Kit)',
+            'Wireframes & maquettes UI',
+            'Intégration (WordPress ou React)',
+            'Performance, accessibilité & SEO de base',
+            'Mise en ligne (DNS/SSL) & passation',
+        ],
+        yours: [
+            'Contenus (textes, images, logo) & droits/licences',
+            'Accès (nom de domaine, hébergement, CMS)',
+            'Validations aux jalons (wireframes → UI → dev)',
+            'Retours dans les fenêtres prévues (1–2 cycles/étape)',
+            'Conformité légale (mentions, CGU/CGV, cookies)',
+        ],
+        shared: [
+            'Objectifs & priorités des pages',
+            'Arborescence & parcours utilisateurs',
+            'Tests de recette (formulaires, responsive)',
+            'Choix des options & itérations',
+            'Plan de suivi post-lancement',
+        ],
+        sla: {
+            me: 'Réponse sous 24–48 h ouvrées',
+            you: 'Validation sous 3 jours ouvrés',
+        },
+        formats: ['Google Docs', 'Figma', 'Notion/Drive', 'CMS', 'Replay vidéo', 'Accès + codes'],
+    },
+} as const;
