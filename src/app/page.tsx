@@ -10,6 +10,21 @@ import { projects } from '@/content/projects';
 import { siteContent } from '@/content/site';
 
 export default function HomePage() {
+    const architecturePillars = [
+        {
+            title: 'Attract',
+            text: 'Positionnement clair + branding digital qui capte l’attention en moins de 5 secondes.',
+        },
+        {
+            title: 'Convince',
+            text: 'Structure narrative et preuves sociales pour transformer une visite en intention d’achat.',
+        },
+        {
+            title: 'Convert',
+            text: 'CTA, parcours utilisateur et performance technique optimisés pour maximiser les demandes entrantes.',
+        },
+    ];
+
     return (
         <>
             <Section>
@@ -37,6 +52,20 @@ export default function HomePage() {
                                 ))}
                             </ul>
                         </Card>
+                    </div>
+                </Container>
+            </Section>
+
+            <Section>
+                <Container>
+                    <SectionHeading eyebrow="Architecture" title="Une architecture web pensée pour attirer, convaincre et convertir." />
+                    <div className="grid gap-5 md:grid-cols-3">
+                        {architecturePillars.map((pillar) => (
+                            <Card key={pillar.title}>
+                                <p className="text-sm font-medium text-accent">{pillar.title}</p>
+                                <p className="mt-2 text-base font-semibold">{pillar.text}</p>
+                            </Card>
+                        ))}
                     </div>
                 </Container>
             </Section>

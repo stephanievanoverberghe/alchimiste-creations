@@ -6,10 +6,10 @@ import { Card } from '@/components/ui/card';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 const steps = [
-    ['01 · Cadrage', 'Objectifs, audience, messages, KPI et périmètre prioritaire.'],
-    ['02 · Direction UI/UX', 'Wireframe orienté conversion puis design haute-fidélité.'],
-    ['03 · Production', 'Intégration Next.js, performance, accessibilité et SEO technique.'],
-    ['04 · Lancement', 'QA final, mise en ligne et plan d’itération post-livraison.'],
+    ['01 · Vision business', 'Objectifs de vente, persona, proposition de valeur et plan d’acquisition prioritaire.'],
+    ['02 · Architecture de conversion', 'Arborescence, messages-clés, preuves sociales et parcours CTA page par page.'],
+    ['03 · Design & Développement', 'UI premium + intégration React/Next.js + optimisation performance, SEO et accessibilité.'],
+    ['04 · Croissance continue', 'Lancement, instrumentation analytics puis itérations guidées par les données réelles.'],
 ];
 
 export const metadata: Metadata = {
@@ -22,8 +22,8 @@ export default function MethodePage() {
         <>
             <PageHero
                 eyebrow="Méthode"
-                title="Un process clair pour éviter les allers-retours infinis."
-                description="Vous savez à tout moment où on va, ce qui est livré, et pourquoi c’est prioritaire."
+                title="Une méthode orientée résultats, pas seulement esthétique."
+                description="Chaque étape sert un objectif business précis : visibilité, crédibilité, conversion et croissance."
             />
             <Section className="pt-2">
                 <Container>
