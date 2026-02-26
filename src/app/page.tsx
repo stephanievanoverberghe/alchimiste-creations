@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { SectionHeading } from '@/components/ui/section-heading';
+import { AtomBackground } from '@/components/visual/atom-background';
 import { offers } from '@/content/offers';
 import { projects } from '@/content/projects';
 import { siteContent } from '@/content/site';
@@ -29,11 +30,12 @@ export default function HomePage() {
         <>
             <Section>
                 <Container>
-                    <div className="reveal-up grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
+                    <div className="reveal-up grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center">
                         <div className="space-y-6">
                             <Badge>Freelance front-end premium</Badge>
                             <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight md:text-6xl">{siteContent.baseline}</h1>
                             <p className="max-w-2xl text-pretty text-lg text-text-muted">{siteContent.valueProposition}</p>
+                            <p className="max-w-2xl text-sm text-accent">Fond animé “atome digital” + capsules visuelles pour un effet découverte en continu.</p>
                             <div className="flex flex-wrap gap-3">
                                 <Button href={siteContent.ctaPrimary.href}>{siteContent.ctaPrimary.label}</Button>
                                 <Button href={siteContent.ctaSecondary.href} variant="secondary">
@@ -41,17 +43,20 @@ export default function HomePage() {
                                 </Button>
                             </div>
                         </div>
-                        <Card>
-                            <p className="mb-5 text-sm font-medium text-text-muted">Preuves immédiates</p>
-                            <ul className="space-y-4">
-                                {siteContent.stats.map((stat) => (
-                                    <li key={stat.label} className="space-y-1">
-                                        <p className="text-xl font-semibold">{stat.value}</p>
-                                        <p className="text-sm text-text-muted">{stat.label}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Card>
+                        <div className="space-y-4">
+                            <AtomBackground />
+                            <Card>
+                                <p className="mb-5 text-sm font-medium text-text-muted">Preuves immédiates</p>
+                                <ul className="space-y-4">
+                                    {siteContent.stats.map((stat) => (
+                                        <li key={stat.label} className="space-y-1">
+                                            <p className="text-xl font-semibold">{stat.value}</p>
+                                            <p className="text-sm text-text-muted">{stat.label}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+                        </div>
                     </div>
                 </Container>
             </Section>
