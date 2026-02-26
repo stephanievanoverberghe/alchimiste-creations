@@ -27,3 +27,29 @@ export type MethodDependenciesContent = {
     cards: MethodDependencyCard[];
     footnote: string;
 };
+
+export type MethodTldrPillar = {
+    title: string;
+    description: string;
+};
+
+export type MethodTldrMetrics = {
+    delaisMoyens: string;
+    cyclesRetours: string;
+    capaciteProjets: string;
+};
+
+export type MethodTldrContent = {
+    badge: string;
+    title: string;
+    description: string;
+    pillars: [MethodTldrPillar, MethodTldrPillar, MethodTldrPillar];
+    metricLabels: {
+        delaisMoyens: string;
+        cyclesRetours: string;
+        capaciteProjets: string;
+    };
+    footnote: string;
+    detailsCta: string;
+    defaultMetrics: MethodTldrMetrics;
+};
