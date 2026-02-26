@@ -81,7 +81,7 @@ export function HomeProofsSection({ content }: HomeProofsSectionProps) {
 
                 <div className="grid gap-5 lg:grid-cols-[1fr_1.15fr] lg:items-start">
                     {/* Stats */}
-                    <Card className="relative overflow-hidden border-border/80 bg-background/90">
+                    <Card className="relative overflow-hidden border-border/80 bg-background/90 lg:sticky lg:top-24 lg:self-start">
                         <div
                             aria-hidden="true"
                             className="pointer-events-none absolute -left-12 -top-12 h-44 w-44 rounded-full blur-3xl"
