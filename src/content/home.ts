@@ -51,6 +51,7 @@ export type HomeContent = {
         eyebrow: string;
         title: string;
         description: string;
+        journey: string[];
         items: HomeQualificationItem[];
     };
     proofs: {
@@ -109,7 +110,7 @@ export const homeContent = {
         eyebrow: 'Un site qui aide vos futurs clients à dire “oui”',
         title: 'Votre site devient une vraie vitrine qui rassure et donne envie de vous contacter.',
         description: 'Ici, pas de jargon : on simplifie votre message, on met en avant vos points forts et on guide naturellement vers la prise de contact.',
-        journey: ['Ils comprennent immédiatement ce que vous proposez.', 'Ils se projettent grâce à une présentation claire.', 'Ils passent à l’action sans hésiter.'],
+        journey: ['Compréhension immédiate de votre promesse.', 'Projection rapide sur la bonne offre.', 'Passage à l’action avec confiance.'],
         items: [
             {
                 icon: 'target',

@@ -6,7 +6,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { cn } from '@/lib/utils';
 import type { HomeContent } from '@/content/home';
 
-import { Gauge, LayoutGrid, Search, ShieldCheck, Sparkles, Target } from 'lucide-react';
+import { CheckCircle2, Gauge, LayoutGrid, Search, ShieldCheck, Sparkles, Target } from 'lucide-react';
 
 type Props = {
     content: HomeContent['qualification'];
@@ -81,7 +81,7 @@ export function HomeQualificationSection({ content }: Props) {
                                 <ul className="mt-5 space-y-2 text-sm">
                                     {item.bullets.map((bullet) => (
                                         <li key={bullet} className="flex gap-2 text-text-muted">
-                                            <span className="font-medium text-accent">Ce que vos visiteurs ressentent :</span> {item.emphasis}
+                                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                                             <span>{bullet}</span>
                                         </li>
                                     ))}
