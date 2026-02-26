@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+    --bg: 240 24% 8%;
+    --surface: 238 22% 12%;
+    --surface-elevated: 236 20% 16%;
+    --text: 220 33% 96%;
+    --text-muted: 220 20% 70%;
+    --primary: 268 92% 66%;
+    --primary-foreground: 220 33% 96%;
+    --accent: 194 92% 60%;
+    --border: 236 19% 26%;
+    --ring: 268 92% 66%;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+    --shadow-card: 0 12px 40px rgba(8, 10, 20, 0.25);
+    --shadow-glow: 0 0 50px rgba(122, 84, 255, 0.35);
+    --space-section-y: clamp(4rem, 8vw, 7rem);
+    --motion-fast: 140ms;
+    --motion-base: 220ms;
+    --motion-slow: 420ms;
+    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@theme inline {
+    --color-bg: hsl(var(--bg));
+    --color-surface: hsl(var(--surface));
+    --color-surface-elevated: hsl(var(--surface-elevated));
+    --color-text: hsl(var(--text));
+    --color-text-muted: hsl(var(--text-muted));
+    --color-primary: hsl(var(--primary));
+    --color-primary-foreground: hsl(var(--primary-foreground));
+    --color-accent: hsl(var(--accent));
+    --color-border: hsl(var(--border));
+}
+
+* {
+    border-color: hsl(var(--border));
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at 10% 10%, rgba(122, 84, 255, 0.18), transparent 40%),
+        radial-gradient(circle at 85% 25%, rgba(27, 194, 255, 0.14), transparent 45%),
+        hsl(var(--bg));
+    color: hsl(var(--text));
+    min-height: 100vh;
+}
+
+::selection {
+    background: rgba(122, 84, 255, 0.35);
+}
+
+.focus-ring:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -120%;
+    z-index: 50;
+}
+
+.skip-link:focus-visible {
+    top: 1rem;
+}
+
+.glass {
+    background: color-mix(in oklab, hsl(var(--surface)) 88%, white 12%);
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 80%, white 20%);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(16px);
+}
+
+.reveal-up {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+}
+
+@keyframes revealUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+    }
+}

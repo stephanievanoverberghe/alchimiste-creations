@@ -1,0 +1,84 @@
+import { Container } from '@/components/layout/container';
+import { Section } from '@/components/layout/section';
+import { CtaStrip } from '@/components/sections/cta-strip';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { SectionHeading } from '@/components/ui/section-heading';
+import { offers } from '@/content/offers';
+import { projects } from '@/content/projects';
+import { siteContent } from '@/content/site';
+
+export default function HomePage() {
+    return (
+        <>
+            <Section>
+                <Container>
+                    <div className="reveal-up grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
+                        <div className="space-y-6">
+                            <Badge>Freelance front-end premium</Badge>
+                            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight md:text-6xl">{siteContent.baseline}</h1>
+                            <p className="max-w-2xl text-pretty text-lg text-text-muted">{siteContent.valueProposition}</p>
+                            <div className="flex flex-wrap gap-3">
+                                <Button href={siteContent.ctaPrimary.href}>{siteContent.ctaPrimary.label}</Button>
+                                <Button href={siteContent.ctaSecondary.href} variant="secondary">
+                                    {siteContent.ctaSecondary.label}
+                                </Button>
+                            </div>
+                        </div>
+                        <Card>
+                            <p className="mb-5 text-sm font-medium text-text-muted">Preuves immédiates</p>
+                            <ul className="space-y-4">
+                                {siteContent.stats.map((stat) => (
+                                    <li key={stat.label} className="space-y-1">
+                                        <p className="text-xl font-semibold">{stat.value}</p>
+                                        <p className="text-sm text-text-muted">{stat.label}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Card>
+                    </div>
+                </Container>
+            </Section>
+
+            <Section>
+                <Container>
+                    <SectionHeading eyebrow="Offres" title="Des formats pensés pour décider vite et bien." />
+                    <div className="grid gap-5 md:grid-cols-3">
+                        {offers.map((offer) => (
+                            <Card key={offer.slug} className={offer.featured ? 'border-primary/60' : ''}>
+                                <p className="text-lg font-semibold">{offer.name}</p>
+                                <p className="mt-2 text-sm text-text-muted">{offer.punchline}</p>
+                                <p className="mt-4 text-xs text-accent">
+                                    {offer.timeline} · {offer.priceFrom}
+                                </p>
+                            </Card>
+                        ))}
+                    </div>
+                </Container>
+            </Section>
+
+            <Section>
+                <Container>
+                    <SectionHeading eyebrow="Projets" title="Des résultats concrets, pas juste un beau design." />
+                    <div className="grid gap-5 md:grid-cols-3">
+                        {projects.map((project) => (
+                            <Card key={project.slug}>
+                                <p className="text-sm text-accent">{project.sector}</p>
+                                <p className="mt-2 text-lg font-semibold">{project.client}</p>
+                                <p className="mt-3 text-sm text-text-muted">{project.challenge}</p>
+                                <ul className="mt-4 space-y-2 text-sm">
+                                    {project.outcomes.map((outcome) => (
+                                        <li key={outcome}>• {outcome}</li>
+                                    ))}
+                                </ul>
+                            </Card>
+                        ))}
+                    </div>
+                </Container>
+            </Section>
+
+            <CtaStrip />
+        </>
+    );
+}
