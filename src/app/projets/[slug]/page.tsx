@@ -1,7 +1,7 @@
-// app/projets/[slug]/page.tsx
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import projectsData from '@/infrastructure/content/projects.json';
+import { getProjectBySlug, getProjectSeo, getProjectSiblings, getProjectStaticParams } from '@/application/projects';
+import type { Project } from '@/application/projects';
 
 import ContextSection from '@/presentation/components/sections/projects/project/Context';
 import PropositionSection from '@/presentation/components/sections/projects/project/Proposition';
@@ -13,110 +13,28 @@ import NavSection from '@/presentation/components/sections/projects/project/Nav'
 import RelatedSection from '@/presentation/components/sections/projects/project/Related';
 import CallToActionSection from '@/presentation/components/sections/projects/project/CallToAction';
 
-type KPI = { label: string; before?: string; after?: string; delta?: string };
-type Testi = { quote?: string; author?: string };
-
-type URLs = {
-    live?: string;
-    caseStudy?: string;
-    [key: string]: string | undefined;
-};
-
-type Project = {
-    slug?: string;
-    titre?: string;
-    title?: string;
-    sousTitre?: string;
-    seo?: { title?: string; description?: string };
-    media?: { cover?: string };
-    logo?: string;
-
-    // Contexte
-    pourQui?: string;
-    besoin?: string;
-
-    // Proposition
-    proposition?: string[];
-
-    // Résultats
-    resultat?: string;
-    results?: { period?: string; kpis?: KPI[]; highlights?: string[] };
-
-    // Témoignages
-    client?: string;
-    citationClient?: string;
-    testimonials?: Testi[];
-
-    // Stack & tags
-    stack?: string;
-    stackTags?: string[];
-    tags?: string[];
-
-    // Nav
-    priority?: number;
-
-    // Meta
-    sector?: string;
-    kind?: string;
-    status?: string;
-    year?: number;
-    location?: { city?: string };
-    pack?: 'essentiel' | 'croissance' | 'signature' | 'surmesure' | string;
-
-    // Liens
-    lien?: string;
-    urls?: URLs;
-};
-
-const ALL: Project[] = Array.isArray(projectsData) ? (projectsData as Project[]) : [];
-
-function getProject(slug: string) {
-    return ALL.find((p) => String(p.slug ?? '') === slug);
-}
-
 export function generateStaticParams() {
-    return ALL.filter((p) => p.slug).map((p) => ({ slug: String(p.slug) }));
+    return getProjectStaticParams();
 }
 
-// ⬇️ version Promise pour matcher ton type global “PageProps”
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const p = getProject(slug);
-    if (!p) return { title: 'Projet introuvable — Alchimiste Créations' };
-
-    const title = p.seo?.title || p.titre || p.title || 'Projet';
-    const description = p.seo?.description || p.sousTitre || undefined;
-    const ogImage = p.media?.cover || p.logo || '/og/projects.png';
-    const url = `/projets/${slug}`;
+    const seo = getProjectSeo(slug);
+    if (!seo) return { title: 'Projet introuvable — Alchimiste Créations' };
 
     return {
-        title,
-        description,
-        alternates: { canonical: url },
-        openGraph: { title, description, url, images: ogImage ? [{ url: ogImage }] : undefined },
+        title: seo.title,
+        description: seo.description,
+        alternates: { canonical: seo.url },
+        openGraph: { title: seo.title, description: seo.description, url: seo.url, images: seo.ogImage ? [{ url: seo.ogImage }] : undefined },
     };
 }
 
-// ⬇️ version Promise pour matcher ton type global “PageProps”
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const p = getProject(slug);
+    const p = getProjectBySlug(slug);
     if (!p) notFound();
-
-    // ordre d’affichage pour la nav : priority ASC, puis year DESC
-    const ordered = [...ALL].sort((a, b) => {
-        const pa = a.priority ?? Number.MAX_SAFE_INTEGER;
-        const pb = b.priority ?? Number.MAX_SAFE_INTEGER;
-        if (pa !== pb) return pa - pb;
-        const ya = a.year ?? 0;
-        const yb = b.year ?? 0;
-        if (ya !== yb) return yb - ya;
-        return 0;
-    });
-
-    const idx = ordered.findIndex((x) => String(x.slug) === slug);
-    const prev = idx > 0 ? ordered[idx - 1] : undefined;
-    const next = idx >= 0 && idx < ordered.length - 1 ? ordered[idx + 1] : undefined;
+    const { previous, next } = getProjectSiblings(slug);
 
     return (
         <>
@@ -129,7 +47,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     media: p.media,
                     titre: p.titre ?? p.title,
                     title: p.title,
-                    urls: p.urls, // ✅ “live” dispo pour le clic sur la capture
+                    urls: p.urls,
                 }}
             />
             <TestimonialSection project={{ testimonials: p.testimonials, citationClient: p.citationClient, client: p.client, logo: p.logo }} />
@@ -140,7 +58,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 }}
             />
             <NavSection
-                prev={prev ? { slug: String(prev.slug), titre: prev.titre, title: prev.title, logo: prev.logo } : undefined}
+                prev={previous ? { slug: String(previous.slug), titre: previous.titre, title: previous.title, logo: previous.logo } : undefined}
                 next={next ? { slug: String(next.slug), titre: next.titre, title: next.title, logo: next.logo } : undefined}
             />
             <RelatedSection currentSlug={p.slug as string} sector={p.sector} kind={p.kind} />
