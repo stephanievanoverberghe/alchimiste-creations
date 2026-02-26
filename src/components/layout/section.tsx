@@ -9,7 +9,7 @@ type SectionProps = {
 
 export function Section({ id, children, className }: SectionProps) {
     return (
-        <section id={id} className={cn('py-[var(--space-section-y)]', className)}>
+        <section id={id} className={cn('py-(--space-section-y)', className)}>
             {children}
         </section>
     );
