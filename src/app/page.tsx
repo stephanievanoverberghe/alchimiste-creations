@@ -38,17 +38,17 @@ export default function HomePage() {
         <>
             <Section>
                 <Container>
-                    <div className="reveal-up grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-                        <div className="space-y-6">
+                    <div className="reveal-up grid gap-6 md:gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+                        <div className="space-y-5 md:space-y-6">
                             <Badge>Sites web qui transforment des visiteurs en clients</Badge>
-                            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+                            <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl xl:text-6xl">
                                 Développeuse front-end freelance pour créer un site qui attire, rassure et convertit.
                             </h1>
-                            <p className="max-w-2xl text-pretty text-lg text-text-muted">
+                            <p className="max-w-2xl text-pretty text-base text-text-muted sm:text-lg">
                                 Je conçois des expériences web performantes pour aider votre entreprise à vendre plus simplement: message clair, design crédible, tunnel de
                                 conversion pensé business.
                             </p>
-                            <div className="max-w-2xl rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur">
+                            <div className="max-w-2xl rounded-2xl border border-border/70 bg-card/70 p-3.5 backdrop-blur sm:p-4">
                                 <p className="text-sm font-semibold text-accent">Ce que votre client perçoit en arrivant sur votre site :</p>
                                 <ul className="mt-3 space-y-2 text-sm text-text-muted">
                                     {heroHighlights.map((highlight) => (
@@ -63,18 +63,18 @@ export default function HomePage() {
                                     </span>
                                 ))}
                             </div>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                                 <Button href={siteContent.ctaPrimary.href}>{siteContent.ctaPrimary.label}</Button>
                                 <Button href={siteContent.ctaSecondary.href} variant="secondary">
                                     {siteContent.ctaSecondary.label}
                                 </Button>
                             </div>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-4 md:space-y-5">
                             <AtomBackground />
                             <Card>
                                 <p className="mb-5 text-sm font-medium text-text-muted">Ce que vous sécurisez tout de suite</p>
-                                <ul className="space-y-4">
+                                <ul className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                                     {siteContent.stats.map((stat) => (
                                         <li key={stat.label} className="space-y-1 rounded-xl border border-border/70 bg-background/70 p-3">
                                             <p className="text-xl font-semibold text-primary">{stat.value}</p>
