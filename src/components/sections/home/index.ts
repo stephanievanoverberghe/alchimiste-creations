@@ -1,0 +1,9 @@
+export { HomeHeroSection } from './home-hero-section';
+export { HomeQualificationSection } from './home-qualification-section';
+export { HomeProofsSection } from './home-proofs-section';
+export { HomeArchitectureSection } from './home-architecture-section';
+export { HomeProcessSection } from './home-process-section';
+export { HomeOffersSection } from './home-offers-section';
+export { HomeProjectsSection } from './home-projects-section';
+export { HomeFaqSection } from './home-faq-section';
+export { useHome } from './use-home';
