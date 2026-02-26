@@ -72,7 +72,7 @@ function MobileMenu({ pathname, open, isCompact }: { pathname: string; open: boo
 
 export function SiteHeader() {
     const pathname = usePathname();
-    const { hidden, isCompact, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
+    const { hidden, isCompact, isMobile, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
     const hasSecondaryCtaInNav = siteContent.nav.some((item) => item.href === siteContent.ctaSecondary.href);
     const navRef = useRef<HTMLElement | null>(null);
     const indicatorRef = useRef<HTMLSpanElement | null>(null);
@@ -166,12 +166,8 @@ export function SiteHeader() {
                         </Link>
                     ) : null}
 
-                    {!isCompact ? (
-                        <Button
-                            href={siteContent.ctaPrimary.href}
-                            variant="secondary"
-                            className="site-header__primaryCta site-header__primaryCta--tabletUp px-4 py-2 text-xs md:text-sm"
-                        >
+                    {!isCompact || !isMobile ? (
+                        <Button href={siteContent.ctaPrimary.href} variant="secondary" className="site-header__primaryCta px-4 py-2 text-xs md:text-sm">
                             {siteContent.ctaPrimary.label}
                         </Button>
                     ) : null}

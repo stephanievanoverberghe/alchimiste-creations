@@ -4,11 +4,13 @@ import * as React from 'react';
 
 const SCROLL_THRESHOLD = 8;
 const COMPACT_HEADER_QUERY = '(max-width: 980px)';
+const MOBILE_QUERY = '(max-width: 639px)';
 
 export function useSiteHeaderState(pathname: string) {
     const [scrolled, setScrolled] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [isCompact, setIsCompact] = React.useState(true);
+    const [isMobile, setIsMobile] = React.useState(true);
     const [hidden, setHidden] = React.useState(false);
     const previousScrollY = React.useRef(0);
 
@@ -43,6 +45,18 @@ export function useSiteHeaderState(pathname: string) {
     }, []);
 
     React.useEffect(() => {
+        const mobileMediaQuery = window.matchMedia(MOBILE_QUERY);
+        const syncMobileMode = (event: MediaQueryList | MediaQueryListEvent) => {
+            setIsMobile(event.matches);
+        };
+
+        syncMobileMode(mobileMediaQuery);
+        mobileMediaQuery.addEventListener('change', syncMobileMode);
+
+        return () => mobileMediaQuery.removeEventListener('change', syncMobileMode);
+    }, []);
+
+    React.useEffect(() => {
         if (!isCompact) {
             setOpen(false);
         }
@@ -72,6 +86,7 @@ export function useSiteHeaderState(pathname: string) {
     return {
         hidden,
         isCompact,
+        isMobile,
         open,
         scrolled,
         toggleOpen,

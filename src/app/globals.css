@@ -143,24 +143,6 @@ body {
     box-shadow: 0 0 18px rgba(122, 84, 255, 0.35);
 }
 
-.site-header__proof {
-    position: relative;
-    padding-left: 0.8rem;
-}
-
-.site-header__proof::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: 999px;
-    background: hsl(var(--accent));
-    transform: translateY(-50%);
-    box-shadow: 0 0 10px color-mix(in oklab, hsl(var(--accent)) 45%, transparent 55%);
-}
-
 .site-header__nav {
     position: relative;
     gap: clamp(0.75rem, 1.8vw, 1.5rem);
