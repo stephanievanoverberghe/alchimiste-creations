@@ -53,3 +53,21 @@ export type MethodTldrContent = {
     detailsCta: string;
     defaultMetrics: MethodTldrMetrics;
 };
+
+export type MethodPrincipleIcon = 'leaf' | 'accessibility' | 'gauge' | 'userCheck' | 'shieldCheck' | 'sparkles';
+
+export type MethodPrinciple = {
+    icon: MethodPrincipleIcon;
+    title: string;
+    desc: string;
+    example: string;
+};
+
+export type MethodPrinciplesContent = {
+    badge: string;
+    title: string;
+    description: string;
+    exampleLabel: string;
+    principles: MethodPrinciple[];
+    footnote: string;
+};
