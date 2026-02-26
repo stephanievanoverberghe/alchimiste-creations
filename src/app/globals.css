@@ -84,6 +84,83 @@ body {
     animation: revealUp var(--motion-slow) var(--ease-standard) both;
 }
 
+.site-header {
+    border-bottom: 1px solid color-mix(in oklab, hsl(var(--border)) 75%, transparent 25%);
+    backdrop-filter: blur(16px);
+}
+
+.site-header--top {
+    background: color-mix(in oklab, hsl(var(--bg)) 60%, transparent 40%);
+}
+
+.site-header--scrolled {
+    background: color-mix(in oklab, hsl(var(--bg)) 85%, transparent 15%);
+    box-shadow: 0 10px 30px rgba(8, 10, 20, 0.35);
+}
+
+.site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.site-header__brandMark {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(27, 194, 255, 0.65), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(122, 84, 255, 0.75), transparent 55%),
+        rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 18px rgba(122, 84, 255, 0.35);
+}
+
+.site-header__link {
+    font-size: 0.875rem;
+    transition: color var(--motion-fast) var(--ease-standard);
+    position: relative;
+    padding: 0.4rem 0.15rem;
+}
+
+.site-header__link--idle {
+    color: hsl(var(--text-muted));
+}
+
+.site-header__link--idle:hover {
+    color: hsl(var(--text));
+}
+
+.site-header__link--active {
+    color: hsl(var(--text));
+}
+
+.site-header__link--active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.35rem;
+    height: 2px;
+    border-radius: 999px;
+    background: color-mix(in oklab, hsl(var(--accent)) 70%, hsl(var(--primary)) 30%);
+    opacity: 0.9;
+}
+
+.site-mobile {
+    overflow: hidden;
+    transition: max-height var(--motion-slow) var(--ease-standard);
+    border-bottom: 1px solid color-mix(in oklab, hsl(var(--border)) 75%, transparent 25%);
+    background: color-mix(in oklab, hsl(var(--bg)) 92%, transparent 8%);
+}
+
+.site-mobile--closed {
+    max-height: 0;
+}
+
+.site-mobile--open {
+    max-height: 520px;
+}
+
 @keyframes revealUp {
     from {
         opacity: 0;
