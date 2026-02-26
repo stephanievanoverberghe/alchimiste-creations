@@ -17,9 +17,9 @@ const ICONS = {
 } as const;
 
 const STEP_BADGE: Record<string, string> = {
-    Attract: '01',
-    Convince: '02',
-    Convert: '03',
+    Attire: '01',
+    Convainc: '02',
+    Convertit: '03',
 };
 
 export function HomeArchitectureSection({ content }: Props) {
@@ -45,14 +45,14 @@ export function HomeArchitectureSection({ content }: Props) {
                         const Icon = ICONS[pillar.icon];
 
                         return (
-                            <Card key={pillar.title} className="relative overflow-hidden">
+                            <Card key={pillar.title} className="group relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                                 {/* glow décor */}
                                 <div
                                     aria-hidden="true"
                                     className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl"
                                     style={{
                                         background:
-                                            pillar.title === 'Attract' ? 'rgba(122,84,255,0.14)' : pillar.title === 'Convince' ? 'rgba(19,209,255,0.12)' : 'rgba(122,84,255,0.10)',
+                                            pillar.title === 'Attire' ? 'rgba(122,84,255,0.16)' : pillar.title === 'Convainc' ? 'rgba(19,209,255,0.14)' : 'rgba(122,84,255,0.12)',
                                     }}
                                 />
 
@@ -73,12 +73,18 @@ export function HomeArchitectureSection({ content }: Props) {
                                 <p className="mt-3 text-sm text-text-muted">{pillar.description}</p>
 
                                 {pillar.image ? (
-                                    <div className="mt-5 overflow-hidden rounded-2xl border border-border/70 bg-background/40 p-3">
-                                        <div className="flex items-center gap-3">
-                                            <Image src={pillar.image.src} alt={pillar.image.alt} width={46} height={46} />
-                                            <p className="text-xs text-text-muted">
-                                                <span className="font-medium text-text">Signal :</span>{' '}
-                                                {pillar.title === 'Attract' ? 'Clarté immédiate' : pillar.title === 'Convince' ? 'Confiance' : 'Passage à l’action'}
+                                    <div className="mt-5 overflow-hidden rounded-2xl border border-border/70 bg-background/30">
+                                        <div className="relative">
+                                            <Image
+                                                src={pillar.image.src}
+                                                alt={pillar.image.alt}
+                                                width={640}
+                                                height={320}
+                                                className="h-36 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-background/80 via-background/25 to-transparent" />
+                                            <p className="absolute bottom-3 left-3 text-xs font-medium text-text">
+                                                {pillar.title === 'Attire' ? 'Clarté immédiate' : pillar.title === 'Convainc' ? 'Confiance renforcée' : 'Action évidente'}
                                             </p>
                                         </div>
                                     </div>
@@ -96,8 +102,8 @@ export function HomeArchitectureSection({ content }: Props) {
                                 {/* mini footer */}
                                 <div className="mt-5 flex items-center justify-between border-t border-border/60 pt-4 text-xs text-text-muted">
                                     <span>Impact</span>
-                                    <span className={cn('font-medium', pillar.title === 'Convert' ? 'text-text' : 'text-text-muted')}>
-                                        {pillar.title === 'Attract' ? '↑ Attention' : pillar.title === 'Convince' ? '↑ Confiance' : '↑ Leads'}
+                                    <span className={cn('font-medium', pillar.title === 'Convertit' ? 'text-text' : 'text-text-muted')}>
+                                        {pillar.title === 'Attire' ? '↑ Attention' : pillar.title === 'Convainc' ? '↑ Confiance' : '↑ Prises de contact'}
                                     </span>
                                 </div>
                             </Card>
