@@ -1,6 +1,6 @@
-// src/components/integrations/HcaptchaGate.tsx
 'use client';
 import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import { contactValidationCopy } from '@/infrastructure/content/contact-copy';
 
 type Props = {
     sitekey: string;
@@ -19,7 +19,7 @@ interface HCaptchaAPI {
             'expired-callback'?: () => void;
             theme?: 'light' | 'dark';
             size?: 'normal' | 'compact' | 'invisible';
-        }
+        },
     ) => string | number;
     reset: (id?: string | number) => void;
 }
@@ -88,16 +88,17 @@ const HcaptchaGate = forwardRef<HcaptchaHandle, Props>(function HcaptchaGate({ s
                 }
             },
         }),
-        [onVerify]
+        [onVerify],
     );
 
     if (!enabled) {
         return (
             <div className={className}>
                 <p className="text-xs text-foreground/60">
-                    Pour envoyer le formulaire, autorise <strong>Contenus tiers</strong> dans{' '}
+                    {contactValidationCopy.captchaGate.enableThirdPartyPrefix} <strong>{contactValidationCopy.captchaGate.thirdPartyStrongLabel}</strong>{' '}
+                    {contactValidationCopy.captchaGate.enableThirdPartySuffix}{' '}
                     <a href="/preferences-cookies" className="underline underline-offset-2">
-                        Préférences cookies
+                        {contactValidationCopy.captchaGate.cookiePreferencesLabel}
                     </a>
                     .
                 </p>
@@ -105,7 +106,7 @@ const HcaptchaGate = forwardRef<HcaptchaHandle, Props>(function HcaptchaGate({ s
         );
     }
 
-    return <div ref={boxRef} className={className} aria-label="Vérification anti-spam" />;
+    return <div ref={boxRef} className={className} aria-label={contactValidationCopy.captchaGate.antiSpamAriaLabel} />;
 });
 
 export default HcaptchaGate;

@@ -158,9 +158,9 @@ export function makeInitialBriefData(): BriefData {
     };
 }
 
-export function sanitizeBriefData(data: BriefData): BriefData {
+export function sanitizeBriefData(data: unknown): BriefData {
     const parsed = briefFormSchema.safeParse(data);
-    if (!parsed.success) return data;
+    if (!parsed.success) return makeInitialBriefData();
     return parsed.data;
 }
 

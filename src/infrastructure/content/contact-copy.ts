@@ -13,6 +13,17 @@ export const contactValidationCopy = {
     missingServerConfig: 'Configuration serveur manquante (WEB3FORMS_KEY)',
     providerFailed: 'Échec de l’envoi via Web3Forms',
     serverError: 'Erreur serveur',
+    api: {
+        subject: 'Contact — Formulaire express',
+        getHint: 'POST only',
+    },
+    captchaGate: {
+        enableThirdPartyPrefix: 'Pour envoyer le formulaire, autorise',
+        thirdPartyStrongLabel: 'Contenus tiers',
+        enableThirdPartySuffix: 'dans',
+        cookiePreferencesLabel: 'Préférences cookies',
+        antiSpamAriaLabel: 'Vérification anti-spam',
+    },
 } as const;
 
 export const contactAlternativesCopy = {

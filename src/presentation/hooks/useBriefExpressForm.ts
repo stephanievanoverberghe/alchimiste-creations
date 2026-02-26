@@ -95,8 +95,9 @@ export function useBriefExpressForm() {
         try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
             if (raw) {
-                const parsed = JSON.parse(raw) as BriefData;
-                setData({ ...parsed, attachments: [] });
+                const parsed = JSON.parse(raw) as unknown;
+                const restoredData = sanitizeBriefData(parsed);
+                setData({ ...restoredData, attachments: [] });
                 setRestored(true);
             }
         } catch {}

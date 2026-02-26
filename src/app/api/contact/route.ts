@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
             cache: 'no-store',
             body: JSON.stringify({
                 access_key,
-                subject: 'Contact — Formulaire express',
+                subject: contactValidationCopy.api.subject,
                 name: validation.normalized.name,
                 from_name: validation.normalized.name,
                 email: validation.normalized.email,
@@ -64,5 +64,5 @@ export async function POST(req: NextRequest) {
 }
 
 export function GET() {
-    return NextResponse.json({ ok: true, hint: 'POST only' }, { status: 200 });
+    return NextResponse.json({ ok: true, hint: contactValidationCopy.api.getHint }, { status: 200 });
 }
