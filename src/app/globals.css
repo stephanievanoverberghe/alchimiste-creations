@@ -312,6 +312,26 @@ body {
     animation: revealUp var(--motion-slow) var(--ease-standard) both;
 }
 
+.site-footer {
+    background:
+        radial-gradient(circle at 12% 15%, rgba(122, 84, 255, 0.1), transparent 40%),
+        radial-gradient(circle at 88% 75%, rgba(27, 194, 255, 0.08), transparent 45%);
+}
+
+.site-footer__link {
+    transition: color var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard);
+    display: inline-flex;
+}
+
+.site-footer__link:hover {
+    color: hsl(var(--text));
+    transform: translateX(2px);
+}
+
+.site-footer__bottom {
+    letter-spacing: 0.01em;
+}
+
 @keyframes revealUp {
     from {
         opacity: 0;
