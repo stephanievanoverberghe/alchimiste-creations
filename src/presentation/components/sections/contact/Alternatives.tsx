@@ -6,10 +6,8 @@ import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { Mail, MessageSquareText, MessageCircle, Copy, CheckCircle2, X, ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 import HcaptchaGate, { HcaptchaHandle } from '@/presentation/components/integrations/HcaptchaGate';
-import { validateContactSubmission } from '@/application/contact/services/contactValidation';
 import { contactAlternativesCopy, contactValidationCopy } from '@/infrastructure/content/contact-copy';
-
-type ApiResponse = { success: boolean; error?: string };
+import { useContactExpressForm } from '@/presentation/hooks/useContactExpressForm';
 
 export type AlternativesProps = {
     id?: string;
@@ -26,11 +24,6 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
     const LINKEDIN = linkedinUrl || process.env.NEXT_PUBLIC_LINKEDIN_URL || '';
     const WHATSAPP = whatsapp || process.env.NEXT_PUBLIC_WHATSAPP || '';
     const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY || '';
-
-    const [sending, setSending] = useState(false);
-    const [status, setStatus] = useState<'idle' | 'ok' | 'error'>('idle');
-    const [errorMsg, setErrorMsg] = useState('');
-    const [chars, setChars] = useState(0);
 
     const [captchaToken, setCaptchaToken] = useState('');
     const [functionalAllowed, setFunctionalAllowed] = useState(false);
@@ -87,77 +80,16 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
         return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
     }, [WHATSAPP, name, email]);
 
-    async function onSubmitExpress(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const form = e.currentTarget as HTMLFormElement;
-        const fd = new FormData(form);
-
-        const consent = String(fd.get('consent') || '') === 'on';
-
-        const validation = validateContactSubmission({
-            name: String(fd.get('name') || ''),
-            email: String(fd.get('email') || ''),
-            message: String(fd.get('message') || ''),
-            consent,
-            confirm_email: String(fd.get('confirm_email') || ''),
-        });
-        if (validation.isBot) return;
-        if (!validation.normalized) {
-            setStatus('error');
-            setErrorMsg(validation.error === contactValidationCopy.invalidMessage ? contactValidationCopy.shortMessageUi : validation.error || contactValidationCopy.invalidForm);
-            return;
-        }
-
-        if (functionalAllowed && !captchaToken) {
-            setStatus('error');
-            setErrorMsg(contactValidationCopy.captchaRequired);
-            return;
-        }
-
-        setSending(true);
-        setStatus('idle');
-        setErrorMsg('');
-        try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: validation.normalized.name,
-                    email: validation.normalized.email,
-                    message: validation.normalized.message,
-                    consent,
-                    confirm_email: '',
-                    hcaptcha: captchaToken,
-                }),
-            });
-
-            let data: ApiResponse | null = null;
-            try {
-                data = (await res.json()) as ApiResponse;
-            } catch {}
-
-            if (res.ok && data?.success) {
-                setStatus('ok');
-                form.reset();
-                setChars(0);
-                setCaptchaToken('');
-                captchaRef.current?.reset();
-                setSuccessOpen(true);
-            } else {
-                setStatus('error');
-                setErrorMsg(data?.error || contactValidationCopy.submitFailed);
-            }
-        } catch {
-            setStatus('error');
-            setErrorMsg(contactValidationCopy.networkError);
-        } finally {
-            setSending(false);
-        }
-    }
+    const { sending, status, errorMsg, chars, setChars, onSubmitExpress } = useContactExpressForm({
+        functionalAllowed,
+        captchaToken,
+        captchaRef,
+        onSuccess: () => setSuccessOpen(true),
+    });
 
     return (
-        <section id={id} className={cn('relative overflow-x-hidden py-16 md:py-28 px-6 md:px-8 lg:px-[100px] xl:px-[150px]', className)}>
-            <div className="relative z-[1] max-w-5xl mx-auto space-y-8">
+        <section id={id} className={cn('relative overflow-x-hidden py-16 md:py-28 px-6 md:px-8 lg:px-25 xl:px-37.5', className)}>
+            <div className="relative z-1 max-w-5xl mx-auto space-y-8">
                 <div className="text-center lg:text-left">
                     <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-full px-4 py-1">
                         Tu préfères autre chose que Calendly ?
@@ -172,22 +104,22 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                         aria-hidden
                     />
 
-                    <header className="relative z-[1] flex items-center gap-3">
+                    <header className="relative z-1 flex items-center gap-3">
                         <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                             <MessageSquareText className="w-4 h-4" aria-hidden />
                         </span>
                         <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Formulaire express</h3>
                     </header>
 
-                    <div className="relative z-[1] mt-3 h-[2px] overflow-hidden">
+                    <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                         <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                         <div
-                            className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                            className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
                             aria-hidden
                         />
                     </div>
 
-                    <form onSubmit={onSubmitExpress} className="relative z-[1] mt-3 grid gap-3">
+                    <form onSubmit={onSubmitExpress} className="relative z-1 mt-3 grid gap-3">
                         <input
                             name="name"
                             defaultValue={name}
@@ -265,20 +197,20 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
                             aria-hidden
                         />
-                        <header className="relative z-[1] flex items-center gap-3">
+                        <header className="relative z-1 flex items-center gap-3">
                             <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                 <Mail className="w-4 h-4" aria-hidden />
                             </span>
                             <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Écrire un email</h3>
                         </header>
-                        <div className="relative z-[1] mt-3 h-[2px] overflow-hidden">
+                        <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                             <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                             <div
-                                className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                                className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
                                 aria-hidden
                             />
                         </div>
-                        <div className="relative z-[1] mt-3">
+                        <div className="relative z-1 mt-3">
                             <p className="text-sm text-foreground/85 leading-relaxed">Décris-moi en 3–5 lignes ton besoin, je te réponds sous 24–48h ouvrées.</p>
                             <div className="mt-4 flex flex-wrap items-center gap-2">
                                 <a
@@ -318,20 +250,20 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
                             style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '16px 16px', color: 'var(--color-ormat)' }}
                             aria-hidden
                         />
-                        <header className="relative z-[1] flex items-center gap-3">
+                        <header className="relative z-1 flex items-center gap-3">
                             <span className="grid place-content-center size-9 rounded-full border border-sauge/40 bg-sauge/10 text-sauge">
                                 <MessageCircle className="w-4 h-4" aria-hidden />
                             </span>
                             <h3 className="text-[11px] tracking-[0.14em] uppercase font-semibold text-terracotta">Messagerie</h3>
                         </header>
-                        <div className="relative z-[1] mt-3 h-[2px] overflow-hidden">
+                        <div className="relative z-1 mt-3 h-0.5 overflow-hidden">
                             <div className="absolute inset-0 bg-sauge/20" aria-hidden />
                             <div
-                                className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
+                                className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-sauge via-terracotta to-sauge transition-[width] duration-500 ease-out group-hover:w-full"
                                 aria-hidden
                             />
                         </div>
-                        <div className="relative z-[1] mt-3">
+                        <div className="relative z-1 mt-3">
                             <p className="text-sm text-foreground/85 leading-relaxed">Tu préfères écrire vite fait par messagerie ? Pas de souci.</p>
                             <div className="mt-4 flex flex-wrap items-center gap-2">
                                 {LINKEDIN && (
@@ -376,7 +308,7 @@ export default function AlternativesSection({ id = 'contact-alternatives', name,
 
             {successOpen && (
                 <div
-                    className="fixed inset-0 z-[60] flex items-center justify-center"
+                    className="fixed inset-0 z-60 flex items-center justify-center"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="contact-success-title"
