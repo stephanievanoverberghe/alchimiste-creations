@@ -123,7 +123,11 @@ export function SiteHeader() {
             )}
         >
             <Container
-                className={cn('site-header__inner grid grid-cols-[1fr_auto] items-center gap-3 md:grid-cols-[auto_1fr_auto] md:gap-4', open && 'site-header__inner--menuOpen')}
+                className={cn(
+                    'site-header__inner grid items-center gap-3',
+                    isCompact ? 'grid-cols-[1fr_auto]' : 'grid-cols-[auto_1fr_auto] md:gap-4',
+                    open && 'site-header__inner--menuOpen',
+                )}
             >
                 <div className="flex items-center gap-3 md:gap-4">
                     <Link href="/" className="focus-ring site-header__brand" aria-label={siteContent.brand}>
