@@ -54,3 +54,58 @@ export const aboutCallToActionCopy = {
         privacy: 'Données traitées avec soin',
     },
 } as const;
+
+export const aboutIdealFitCopy = {
+    badge: 'Pour qui c’est fait ?',
+    title: 'Tu te reconnais ici ?',
+    intro: 'J’accompagne surtout des profils sensibles et engagés. On pose un site clair, vivant et aligné — sans jargon, avec des étapes lisibles.',
+    footnote: 'Tu n’es pas exactement dans ces catégories ? L’important, c’est un projet humain et aligné.',
+    ctaLabel: 'M’écrire',
+    items: [
+        {
+            icon: 'stethoscope',
+            title: 'Thérapeutes & praticiens',
+            desc: 'Une présence apaisante qui inspire confiance, avec un parcours clair jusqu’à la prise de RDV.',
+            bullets: ['Ton & visuels rassurants', 'Séances / tarifs lisibles', 'Réservation (Calendly)'],
+            objective: { icon: 'calendarDays', label: 'Objectif : RDV' },
+        },
+        {
+            icon: 'palette',
+            title: 'Artistes & créatifs',
+            desc: 'Un portfolio vivant qui met l’intention et l’œuvre au centre, prêt à évoluer avec ta pratique.',
+            bullets: ['Grilles harmonieuses et modulables', 'Fiches œuvre / projet soignées', 'Gabarits prêts pour nouvelles séries'],
+            objective: { icon: 'images', label: 'Objectif : Portfolio vivant' },
+        },
+        {
+            icon: 'briefcase',
+            title: 'Indépendants & coachs',
+            desc: 'Une vitrine claire, alignée et évolutive, avec des appels à l’action doux et assumés.',
+            bullets: ['Pages services structurées', 'Offres lisibles + FAQ', 'Formulaire simple / lead magnet'],
+            objective: { icon: 'target', label: 'Objectif : Demandes qualifiées' },
+        },
+    ],
+} as const;
+
+export const aboutMilestonesCopy = {
+    badge: 'Mon chemin',
+    title: 'Une trajectoire qui relie le sensible et le code',
+    intro: 'Défilement automatique, propre et lisible. Tu peux aussi swiper ou utiliser les points pour naviguer.',
+    regionAriaLabel: 'Parcours',
+    previousSlideAriaLabel: 'Slide précédent',
+    nextSlideAriaLabel: 'Slide suivant',
+    resumeAriaLabel: 'Relancer le défilement',
+    pauseAriaLabel: 'Mettre en pause le défilement',
+    playLabel: 'Lecture',
+    pauseLabel: 'Pause',
+    milestoneAriaLabel: 'Aller au jalon',
+    ctaLabel: 'Discuter de ton projet',
+    items: [
+        { date: '2021', title: 'BTS Graphiste multimédia — Studi (distanciel)', desc: 'Du dessin au digital : bases design & UI pour le web.' },
+        { date: '2023', title: 'BTS Dev Web & Web Mobile — La Manu Amiens', desc: 'Front (JS/Bootstrap), back (PHP/SQL) & WordPress.' },
+        { date: '12/2023', title: 'Certification Community Manager', desc: 'Réseaux sociaux, ligne édito & contenus qui convertissent.' },
+        { date: '05/2025', title: 'Licence Concepteur·trice Dév. Logiciel — OpenClassrooms', desc: 'React, Next.js, TypeScript + Tailwind/SCSS.' },
+        { date: '08/2025', title: 'Naissance d’Alchimiste Créations', desc: 'Sites alignés pour thérapeutes, artistes & indépendants.' },
+        { date: '2025 →', title: 'Collaboration backend', desc: 'Avec Perrine Dassonville pour des sites codés de A à Z.' },
+        { date: 'Fin 2025', title: 'Cap & prochaines marches', desc: 'Approfondir back JS, GraphQL, motion & accessibilité.' },
+    ],
+} as const;
