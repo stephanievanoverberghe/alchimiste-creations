@@ -22,9 +22,13 @@ function HeaderNavLink({ href, label, isActive }: HeaderNavLinkProps) {
     );
 }
 
-function MobileMenu({ pathname, open }: { pathname: string; open: boolean }) {
+function MobileMenu({ pathname, open, isCompact }: { pathname: string; open: boolean; isCompact: boolean }) {
+    if (!isCompact) {
+        return null;
+    }
+
     return (
-        <div id="mobile-menu" className={cn('md:hidden site-mobile', open ? 'site-mobile--open' : 'site-mobile--closed')}>
+        <div id="mobile-menu" className={cn('site-mobile', open ? 'site-mobile--open' : 'site-mobile--closed')}>
             <Container className="site-mobile__inner py-3">
                 <nav className="grid gap-2" aria-label="Navigation mobile">
                     {siteContent.nav.map((item, index) => {
@@ -62,7 +66,7 @@ function MobileMenu({ pathname, open }: { pathname: string; open: boolean }) {
 
 export function SiteHeader() {
     const pathname = usePathname();
-    const { open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
+    const { isCompact, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
 
     return (
         <header
@@ -76,35 +80,46 @@ export function SiteHeader() {
                     </Link>
                 </div>
 
-                <nav className="site-header__nav hidden items-center justify-center md:flex" aria-label="Navigation principale">
-                    {siteContent.nav.map((item) => (
-                        <HeaderNavLink key={item.href} href={item.href} label={item.label} isActive={pathname === item.href} />
-                    ))}
-                </nav>
+                {!isCompact ? (
+                    <nav className="site-header__nav flex items-center justify-center" aria-label="Navigation principale">
+                        {siteContent.nav.map((item) => (
+                            <HeaderNavLink key={item.href} href={item.href} label={item.label} isActive={pathname === item.href} />
+                        ))}
+                    </nav>
+                ) : null}
 
                 <div className="flex items-center justify-end gap-2">
-                    <Link href={siteContent.ctaSecondary.href} className="focus-ring hidden rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text lg:inline-flex">
+                    <Link
+                        href={siteContent.ctaSecondary.href}
+                        className={cn('focus-ring rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text', isCompact ? 'hidden sm:inline-flex' : 'inline-flex')}
+                    >
                         {siteContent.ctaSecondary.label}
                     </Link>
 
-                    <Button href={siteContent.ctaPrimary.href} variant="secondary" className="site-header__primaryCta hidden px-4 py-2 text-xs sm:inline-flex md:text-sm">
+                    <Button
+                        href={siteContent.ctaPrimary.href}
+                        variant="secondary"
+                        className={cn('site-header__primaryCta px-4 py-2 text-xs md:text-sm', isCompact ? 'hidden sm:inline-flex' : 'inline-flex')}
+                    >
                         {siteContent.ctaPrimary.label}
                     </Button>
 
-                    <button
-                        type="button"
-                        className={cn('focus-ring site-header__menuButton md:hidden', open ? 'site-header__menuButton--open' : '')}
-                        aria-expanded={open}
-                        aria-controls="mobile-menu"
-                        aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-                        onClick={toggleOpen}
-                    >
-                        <span className="site-header__menuLines" aria-hidden="true" />
-                    </button>
+                    {isCompact ? (
+                        <button
+                            type="button"
+                            className={cn('focus-ring site-header__menuButton', open ? 'site-header__menuButton--open' : '')}
+                            aria-expanded={open}
+                            aria-controls="mobile-menu"
+                            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+                            onClick={toggleOpen}
+                        >
+                            <span className="site-header__menuLines" aria-hidden="true" />
+                        </button>
+                    ) : null}
                 </div>
             </Container>
 
-            <MobileMenu pathname={pathname} open={open} />
+            <MobileMenu pathname={pathname} open={open} isCompact={isCompact} />
         </header>
     );
 }
