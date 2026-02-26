@@ -23,25 +23,37 @@ const ICONS = {
 
 export function HomeQualificationSection({ content }: Props) {
     return (
-        <Section>
+        <Section className="qualification-section">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
+
+                <div className="qualification-journey mb-6 grid gap-3 sm:grid-cols-3">
+                    {content.journey.map((step, idx) => (
+                        <div key={step} className="qualification-journey__step" style={{ animationDelay: `${120 + idx * 80}ms` }}>
+                            <span className="qualification-journey__index">0{idx + 1}</span>
+                            <p>{step}</p>
+                        </div>
+                    ))}
+                </div>
 
                 <div className="grid gap-5 lg:grid-cols-3">
                     {content.items.map((item, idx) => {
                         const Icon = ICONS[item.icon];
 
                         return (
-                            <Card key={item.title} className={cn('relative overflow-hidden', idx === 0 ? 'lg:col-span-1' : '')}>
-                                {/* décor léger */}
+                            <Card
+                                key={item.title}
+                                className={cn('qualification-card relative overflow-hidden', idx === 0 ? 'lg:col-span-1' : '')}
+                                style={{ animationDelay: `${220 + idx * 110}ms` }}
+                            >
                                 <div
                                     aria-hidden="true"
-                                    className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl"
+                                    className="qualification-card__glow pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl"
                                     style={{ background: 'rgba(122, 84, 255, 0.18)' }}
                                 />
 
                                 <div className="flex items-start gap-3">
-                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40">
+                                    <span className="qualification-card__icon inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40">
                                         <Icon className="h-5 w-5 text-accent" />
                                     </span>
 
@@ -52,11 +64,11 @@ export function HomeQualificationSection({ content }: Props) {
                                 </div>
 
                                 {item.image ? (
-                                    <div className="mt-5 overflow-hidden rounded-2xl border border-border/70 bg-background/40 p-3">
+                                    <div className="qualification-card__signal mt-5 overflow-hidden rounded-2xl border border-border/70 bg-background/40 p-3">
                                         <div className="flex items-center gap-3">
                                             <Image src={item.image.src} alt={item.image.alt} width={44} height={44} />
                                             <p className="text-xs text-text-muted">
-                                                <span className="font-medium text-text">Signal clé :</span> {item.emphasis ?? 'Clarté, confiance, action.'}
+                                                <span className="font-medium text-text">Ce que vos visiteurs ressentent :</span> {item.emphasis ?? 'Clarté, confiance, action.'}
                                             </p>
                                         </div>
                                     </div>
@@ -69,7 +81,7 @@ export function HomeQualificationSection({ content }: Props) {
                                 <ul className="mt-5 space-y-2 text-sm">
                                     {item.bullets.map((bullet) => (
                                         <li key={bullet} className="flex gap-2 text-text-muted">
-                                            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                                            <span className="font-medium text-accent">Ce que vos visiteurs ressentent :</span> {item.emphasis}
                                             <span>{bullet}</span>
                                         </li>
                                     ))}

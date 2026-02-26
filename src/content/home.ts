@@ -28,6 +28,11 @@ export type HomeProofStat = {
     value: string;
 };
 
+export type HomeProofCard = {
+    title: string;
+    description: string;
+};
+
 export type HomePillar = {
     title: string;
     text: string;
@@ -53,7 +58,7 @@ export type HomeContent = {
         title: string;
         description: string;
         stats: HomeProofStat[];
-        cards: HomeQualificationItem[];
+        cards: HomeProofCard[];
     };
     architecture: {
         eyebrow: string;
@@ -101,32 +106,33 @@ export const homeContent = {
         ctaHint: 'Objectif de l’audit : identifier 3 leviers immédiats pour augmenter vos conversions.',
     },
     qualification: {
-        eyebrow: 'Est-ce pour vous ?',
-        title: 'Si vous voulez plus de demandes, pas juste “un joli site”.',
-        description: 'On travaille la clarté, la confiance et le passage à l’action — avec une exécution Next.js propre (perf/SEO/a11y) et une UI premium.',
+        eyebrow: 'Un site qui aide vos futurs clients à dire “oui”',
+        title: 'Votre site devient une vraie vitrine qui rassure et donne envie de vous contacter.',
+        description: 'Ici, pas de jargon : on simplifie votre message, on met en avant vos points forts et on guide naturellement vers la prise de contact.',
+        journey: ['Ils comprennent immédiatement ce que vous proposez.', 'Ils se projettent grâce à une présentation claire.', 'Ils passent à l’action sans hésiter.'],
         items: [
             {
                 icon: 'target',
-                title: 'Vous avez du trafic… mais peu de prises de contact.',
-                description: 'On transforme des visites en conversations : message + hiérarchie + CTA + preuves.',
-                bullets: ['CTA visibles et répétés intelligemment', 'Sections qui répondent aux objections', 'Parcours “scan-friendly” mobile'],
-                emphasis: 'Objectif : augmenter les demandes qualifiées.',
+                title: 'Beaucoup de visites, mais trop peu de messages ?',
+                description: 'On crée un parcours simple qui transforme les curieux en prospects motivés.',
+                bullets: ['Boutons visibles au bon moment', 'Réponses claires aux questions fréquentes', 'Lecture fluide sur mobile comme sur ordinateur'],
+                emphasis: '“C’est clair, je sais quoi faire ensuite.”',
                 image: { src: '/images/qualif-convert.png', alt: 'Conversion et CTA' },
             },
             {
                 icon: 'layout',
-                title: 'Votre offre est bonne, mais mal comprise en ligne.',
-                description: 'On rend votre valeur évidente en 5 secondes : pour qui, quoi, bénéfice, preuve.',
-                bullets: ['Proposition de valeur ultra claire', 'Offres structurées (choisir sans hésiter)', 'Storytelling sobre, pro, rassurant'],
-                emphasis: 'Objectif : réduire la confusion.',
+                title: 'Votre offre est excellente, mais elle manque de clarté en ligne ?',
+                description: 'On reformule votre proposition pour que chaque visiteur comprenne votre valeur en quelques secondes.',
+                bullets: ['Message simple et direct dès le haut de page', 'Offres présentées de façon lisible', 'Ton professionnel, humain et rassurant'],
+                emphasis: '“Je comprends rapidement ce qui me convient.”',
                 image: { src: '/images/qualif-clarity.png', alt: 'Clarté du message' },
             },
             {
                 icon: 'gauge',
-                title: 'Vous voulez un site rapide, solide, maintenable.',
-                description: 'Je livre une base propre (Next.js/TS) pensée pour durer : perf, SEO, a11y, structure.',
-                bullets: ['Performance (LCP/CLS) + images optimisées', 'SEO technique + métas propres', 'UI accessible + composants réutilisables'],
-                emphasis: 'Objectif : une exécution “enterprise-like”.',
+                title: 'Vous voulez un site moderne, rapide et agréable à utiliser ?',
+                description: 'Je conçois une expérience fluide qui donne une impression premium et inspire confiance dès la première seconde.',
+                bullets: ['Chargement rapide pour éviter de perdre des visiteurs', 'Navigation intuitive et confortable', 'Design soigné qui valorise votre image de marque'],
+                emphasis: '“Cette entreprise est sérieuse, je peux leur faire confiance.”',
                 image: { src: '/images/qualif-tech.png', alt: 'Qualité technique' },
             },
         ],

@@ -298,6 +298,78 @@ body {
     transform: translateY(0);
 }
 
+.qualification-section {
+    position: relative;
+}
+
+.qualification-journey__step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 75%, hsl(var(--accent)) 25%);
+    border-radius: 999px;
+    background: color-mix(in oklab, hsl(var(--surface-elevated)) 84%, transparent 16%);
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+}
+
+.qualification-journey__index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: hsl(var(--accent));
+    background: color-mix(in oklab, hsl(var(--accent)) 18%, transparent 82%);
+}
+
+.qualification-journey__step p {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: hsl(var(--text-muted));
+}
+
+.qualification-card {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard);
+}
+
+.qualification-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 35%, hsl(var(--border)) 65%);
+}
+
+.qualification-card__glow {
+    animation: drift 6s ease-in-out infinite;
+}
+
+.qualification-card__icon {
+    transition: transform var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard);
+}
+
+.qualification-card:hover .qualification-card__icon {
+    transform: translateY(-2px) scale(1.04);
+    background-color: color-mix(in oklab, hsl(var(--accent)) 15%, transparent 85%);
+}
+
+.qualification-card__signal {
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard);
+}
+
+.qualification-card:hover .qualification-card__signal {
+    transform: translateX(2px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 40%, hsl(var(--border)) 60%);
+}
+
+@media (max-width: 640px) {
+    .qualification-journey__step {
+        border-radius: 1rem;
+    }
+}
+
 .site-mobile--open .site-mobile__inner {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
