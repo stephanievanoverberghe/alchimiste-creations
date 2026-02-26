@@ -39,8 +39,12 @@ export type HomeProofCard = {
 };
 
 export type HomePillar = {
-    title: string;
-    text: string;
+    title: 'Attire' | 'Convainc' | 'Convertit';
+    headline: string;
+    description: string;
+    icon: 'sparkles' | 'shield' | 'target';
+    bullets: string[];
+    image?: { src: string; alt: string };
 };
 
 export type HomeProcessStep = {
@@ -192,16 +196,36 @@ export const homeContent = {
         title: 'Une trame qui attire, convainc et convertit.',
         pillars: [
             {
-                title: 'Attract',
-                text: 'Positionnement clair + branding digital qui capte l’attention en moins de 5 secondes.',
+                title: 'Attire',
+                icon: 'sparkles',
+                headline: 'Votre valeur est comprise en 5 secondes.',
+                description: 'On clarifie votre promesse, votre cible et votre différence — avec une UI premium qui capte l’attention sans en faire trop.',
+                bullets: [
+                    'Proposition de valeur nette (pour qui, quoi, bénéfice)',
+                    'Hiérarchie visuelle + lecture mobile “scan-friendly”',
+                    'Univers cohérent (tokens, couleurs, composants)',
+                ],
+                image: { src: '/images/arch-attract.png', alt: 'Attract - clarté immédiate' },
             },
             {
-                title: 'Convince',
-                text: 'Structure narrative et preuves sociales pour transformer une visite en intention d’achat.',
+                title: 'Convainc',
+                icon: 'shield',
+                headline: 'Le site rassure et répond aux objections.',
+                description: 'On met les preuves au bon endroit : méthode, repères, crédibilité — pour transformer le doute en intention.',
+                bullets: ['Preuves rapides (repères, process, résultats)', 'Sections qui répondent aux freins (prix, délais, confiance)', 'FAQ courte, utile, sans blabla'],
+                image: { src: '/images/arch-convince.png', alt: 'Convince - confiance et preuves' },
             },
             {
-                title: 'Convert',
-                text: 'CTA, parcours utilisateur et performance technique optimisés pour maximiser les demandes entrantes.',
+                title: 'Convertit',
+                icon: 'target',
+                headline: 'Le visiteur sait quoi faire, et passe à l’action.',
+                description: 'CTA visibles, chemin simple, friction minimale : le parcours mène naturellement vers une prise de rendez-vous.',
+                bullets: [
+                    'CTA stratégiques (visibles + répétés intelligemment)',
+                    'Parcours guidé (structure, rythme, micro-copies)',
+                    'Exécution Next.js propre (perf/SEO/a11y) pour ne pas perdre de leads',
+                ],
+                image: { src: '/images/arch-convert.png', alt: 'Convert - CTA et passage à l’action' },
             },
         ],
     },
