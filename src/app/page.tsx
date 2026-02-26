@@ -27,12 +27,12 @@ export default function HomePage() {
     ];
 
     const heroHighlights = [
-        'Positionnement clair pour être compris en moins de 5 secondes.',
-        'Parcours de conversion construit pour générer des demandes qualifiées.',
-        'Stack ultra-rapide pensée pour rassurer Google… et vos prospects.',
+        'Votre offre est comprise instantanément par la bonne cible.',
+        'Le parcours guide vers une prise de contact sans friction.',
+        'Le site inspire confiance avec vitesse, clarté et preuves.',
     ];
 
-    const heroAssurances = ['Audit offert (20 min)', 'Sans engagement', 'Roadmap actionnable en 48h'];
+    const heroAssurances = ['Audit offert (20 min)', 'Réponse sous 24h', 'Plan d’action concret'];
 
     return (
         <>
@@ -40,11 +40,16 @@ export default function HomePage() {
                 <Container>
                     <div className="reveal-up grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center">
                         <div className="space-y-6">
-                            <Badge>Freelance front-end premium · orienté résultats business</Badge>
-                            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight md:text-6xl">{siteContent.baseline}</h1>
-                            <p className="max-w-2xl text-pretty text-lg text-text-muted">{siteContent.valueProposition}</p>
+                            <Badge>Sites web qui transforment des visiteurs en clients</Badge>
+                            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+                                Développeuse front-end freelance pour créer un site qui attire, rassure et convertit.
+                            </h1>
+                            <p className="max-w-2xl text-pretty text-lg text-text-muted">
+                                Je conçois des expériences web performantes pour aider votre entreprise à vendre plus simplement: message clair, design crédible, tunnel de
+                                conversion pensé business.
+                            </p>
                             <div className="max-w-2xl rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur">
-                                <p className="text-sm font-semibold text-accent">Ce que vos prospects ressentent dès l’arrivée :</p>
+                                <p className="text-sm font-semibold text-accent">Ce que votre client perçoit en arrivant sur votre site :</p>
                                 <ul className="mt-3 space-y-2 text-sm text-text-muted">
                                     {heroHighlights.map((highlight) => (
                                         <li key={highlight}>✓ {highlight}</li>
@@ -68,7 +73,7 @@ export default function HomePage() {
                         <div className="space-y-4">
                             <AtomBackground />
                             <Card>
-                                <p className="mb-5 text-sm font-medium text-text-muted">Preuves immédiates</p>
+                                <p className="mb-5 text-sm font-medium text-text-muted">Ce que vous sécurisez tout de suite</p>
                                 <ul className="space-y-4">
                                     {siteContent.stats.map((stat) => (
                                         <li key={stat.label} className="space-y-1 rounded-xl border border-border/70 bg-background/70 p-3">

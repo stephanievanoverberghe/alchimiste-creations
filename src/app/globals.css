@@ -364,11 +364,11 @@ body {
     min-height: 360px;
     border-radius: 1.5rem;
     overflow: hidden;
-    border: 1px solid color-mix(in oklab, hsl(var(--border)) 75%, hsl(var(--accent)) 25%);
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 65%, hsl(var(--accent)) 35%);
     background:
-        radial-gradient(circle at 20% 20%, rgba(117, 90, 255, 0.2), transparent 45%),
-        radial-gradient(circle at 80% 65%, rgba(19, 209, 255, 0.16), transparent 42%),
-        color-mix(in oklab, hsl(var(--surface)) 88%, transparent 12%);
+        radial-gradient(circle at 18% 18%, rgba(117, 90, 255, 0.32), transparent 46%),
+        radial-gradient(circle at 80% 72%, rgba(19, 209, 255, 0.24), transparent 48%),
+        linear-gradient(160deg, rgba(9, 13, 24, 0.92) 12%, rgba(19, 11, 38, 0.9) 100%);
     box-shadow: var(--shadow-card);
 }
 

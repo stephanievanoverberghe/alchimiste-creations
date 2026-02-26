@@ -3,25 +3,49 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
-type Orbit = {
-    radiusX: number;
-    radiusY: number;
-    speed: number;
-    tilt: number;
-    color: string;
+type ThreeObject = {
+    position: { set: (x: number, y: number, z: number) => void; y: number };
+    rotation: { x: number; y: number };
 };
 
-const orbits: Orbit[] = [
-    { radiusX: 130, radiusY: 62, speed: 0.9, tilt: 0.3, color: 'rgba(117, 90, 255, 0.75)' },
-    { radiusX: 110, radiusY: 80, speed: -0.7, tilt: -0.45, color: 'rgba(19, 209, 255, 0.7)' },
-    { radiusX: 145, radiusY: 54, speed: 0.55, tilt: 1.05, color: 'rgba(255, 120, 214, 0.58)' },
-];
+type ThreeMaterial = { dispose: () => void };
+type ThreeGeometry = { dispose: () => void; setAttribute: (name: string, attribute: ThreeBufferAttribute) => void };
+type ThreeBufferAttribute = object;
+type ThreeRenderer = {
+    setPixelRatio: (value: number) => void;
+    setSize: (width: number, height: number, updateStyle: boolean) => void;
+    render: (scene: object, camera: ThreeCamera) => void;
+    dispose: () => void;
+};
+type ThreeCamera = { aspect: number; position: { set: (x: number, y: number, z: number) => void }; updateProjectionMatrix: () => void };
+type ThreeNamespace = {
+    Scene: new () => { fog?: object; add: (...objects: object[]) => void };
+    FogExp2: new (color: number, density: number) => object;
+    PerspectiveCamera: new (fov: number, aspect: number, near: number, far: number) => ThreeCamera;
+    WebGLRenderer: new (options: { canvas: HTMLCanvasElement; alpha: boolean; antialias: boolean }) => ThreeRenderer;
+    PointLight: new (color: number, intensity: number, distance: number) => ThreeObject;
+    TorusKnotGeometry: new (radius: number, tube: number, tubularSegments: number, radialSegments: number) => ThreeGeometry;
+    MeshPhysicalMaterial: new (options: object) => ThreeMaterial;
+    Mesh: new (geometry: ThreeGeometry, material: ThreeMaterial) => ThreeObject;
+    BufferGeometry: new () => ThreeGeometry;
+    BufferAttribute: new (array: Float32Array, itemSize: number) => ThreeBufferAttribute;
+    PointsMaterial: new (options: object) => ThreeMaterial;
+    Points: new (geometry: ThreeGeometry, material: ThreeMaterial) => ThreeObject;
+};
+
+declare global {
+    interface Window {
+        THREE?: Record<string, unknown>;
+    }
+}
 
 const discoveries = [
-    { label: 'IA', image: '/images/discovery-ai.svg', offset: -15, delay: '0s' },
-    { label: 'Motion', image: '/images/discovery-motion.svg', offset: 10, delay: '1.8s' },
-    { label: 'Story', image: '/images/discovery-story.svg', offset: 24, delay: '3.1s' },
+    { label: 'Offre claire', image: '/images/discovery-story.svg', offset: -18, delay: '0s' },
+    { label: 'Preuves', image: '/images/discovery-ai.svg', offset: 4, delay: '1.6s' },
+    { label: 'CTA visible', image: '/images/discovery-motion.svg', offset: 26, delay: '3s' },
 ];
+
+const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 
 export function AtomBackground() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -30,69 +54,135 @@ export function AtomBackground() {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const context = canvas.getContext('2d');
-        if (!context) return;
+        let stopAnimation = false;
+        let frameId = 0;
+        let renderer: ThreeRenderer | undefined;
 
-        let frame = 0;
-        let rafId = 0;
+        const initScene = () => {
+            if (!window.THREE) return;
+            const THREE = window.THREE as unknown as ThreeNamespace;
 
-        const render = () => {
-            const ratio = window.devicePixelRatio || 1;
-            const width = canvas.clientWidth;
-            const height = canvas.clientHeight;
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x070b14, 0.035);
 
-            if (canvas.width !== width * ratio || canvas.height !== height * ratio) {
-                canvas.width = width * ratio;
-                canvas.height = height * ratio;
-                context.setTransform(ratio, 0, 0, ratio, 0, 0);
-            }
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+            camera.position.set(0, 0, 7.5);
 
-            context.clearRect(0, 0, width, height);
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-            const centerX = width / 2;
-            const centerY = height / 2;
+            const lightMain = new THREE.PointLight(0x755aff, 1.4, 30);
+            lightMain.position.set(2.5, 2.2, 6);
+            scene.add(lightMain);
 
-            context.save();
-            context.beginPath();
-            context.arc(centerX, centerY, 22, 0, Math.PI * 2);
-            const nucleus = context.createRadialGradient(centerX - 6, centerY - 4, 4, centerX, centerY, 30);
-            nucleus.addColorStop(0, 'rgba(255,255,255,0.95)');
-            nucleus.addColorStop(1, 'rgba(117,90,255,0.18)');
-            context.fillStyle = nucleus;
-            context.fill();
-            context.restore();
+            const lightFill = new THREE.PointLight(0x13d1ff, 1, 25);
+            lightFill.position.set(-4, -2.5, 3);
+            scene.add(lightFill);
 
-            orbits.forEach((orbit) => {
-                context.save();
-                context.translate(centerX, centerY);
-                context.rotate(orbit.tilt);
-
-                context.beginPath();
-                context.ellipse(0, 0, orbit.radiusX, orbit.radiusY, 0, 0, Math.PI * 2);
-                context.strokeStyle = orbit.color;
-                context.lineWidth = 1.7;
-                context.stroke();
-
-                const t = frame * 0.01 * orbit.speed;
-                const x = Math.cos(t) * orbit.radiusX;
-                const y = Math.sin(t) * orbit.radiusY;
-
-                context.beginPath();
-                context.arc(x, y, 5.3, 0, Math.PI * 2);
-                context.fillStyle = orbit.color;
-                context.shadowColor = orbit.color;
-                context.shadowBlur = 20;
-                context.fill();
-                context.restore();
+            const coreGeometry = new THREE.TorusKnotGeometry(1.4, 0.34, 140, 16);
+            const coreMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0x9f8dff,
+                metalness: 0.35,
+                roughness: 0.2,
+                transmission: 0.15,
+                clearcoat: 0.9,
+                wireframe: true,
             });
 
-            frame += 1;
-            rafId = window.requestAnimationFrame(render);
+            const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+            scene.add(coreMesh);
+
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 320;
+            const starsPositions = new Float32Array(starsCount * 3);
+            for (let i = 0; i < starsCount; i += 1) {
+                starsPositions[i * 3] = (Math.random() - 0.5) * 9;
+                starsPositions[i * 3 + 1] = (Math.random() - 0.5) * 6;
+                starsPositions[i * 3 + 2] = (Math.random() - 0.5) * 7;
+            }
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xd0ebff,
+                size: 0.045,
+                transparent: true,
+                opacity: 0.8,
+            });
+            const stars = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(stars);
+
+            const resize = () => {
+                const width = canvas.clientWidth;
+                const height = canvas.clientHeight;
+                renderer?.setSize(width, height, false);
+                camera.aspect = width / Math.max(height, 1);
+                camera.updateProjectionMatrix();
+            };
+
+            resize();
+            window.addEventListener('resize', resize);
+
+            const tick = (time: number) => {
+                if (stopAnimation) return;
+
+                const t = time * 0.001;
+                coreMesh.rotation.x = t * 0.25;
+                coreMesh.rotation.y = t * 0.45;
+                coreMesh.position.y = Math.sin(t * 1.3) * 0.2;
+
+                stars.rotation.y = t * 0.05;
+                stars.rotation.x = t * 0.025;
+
+                renderer?.render(scene, camera);
+                frameId = window.requestAnimationFrame(tick);
+            };
+
+            frameId = window.requestAnimationFrame(tick);
+
+            return () => {
+                window.removeEventListener('resize', resize);
+                window.cancelAnimationFrame(frameId);
+                coreGeometry.dispose();
+                coreMaterial.dispose();
+                starsGeometry.dispose();
+                starsMaterial.dispose();
+                renderer?.dispose();
+            };
         };
 
-        rafId = window.requestAnimationFrame(render);
+        let cleanup: (() => void) | undefined;
 
-        return () => window.cancelAnimationFrame(rafId);
+        const ensureThree = () => {
+            if (window.THREE) {
+                cleanup = initScene();
+                return;
+            }
+
+            const existing = document.querySelector<HTMLScriptElement>('script[data-three-cdn="true"]');
+            if (existing) {
+                existing.addEventListener('load', () => {
+                    cleanup = initScene();
+                });
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = THREE_CDN;
+            script.async = true;
+            script.dataset.threeCdn = 'true';
+            script.addEventListener('load', () => {
+                cleanup = initScene();
+            });
+            document.head.appendChild(script);
+        };
+
+        ensureThree();
+
+        return () => {
+            stopAnimation = true;
+            window.cancelAnimationFrame(frameId);
+            cleanup?.();
+            renderer?.dispose();
+        };
     }, []);
 
     return (
