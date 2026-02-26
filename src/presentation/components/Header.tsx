@@ -84,7 +84,7 @@ export default function Header() {
                         </Link>
                     );
                 })}
-                <Link href="/devis" onClick={() => setMenuOpen(false)} className={ctaClasses}>
+                <Link href="/contact" onClick={() => setMenuOpen(false)} className={ctaClasses}>
                     {headerCopy.mobileCtaLabel}
                 </Link>
             </nav>
@@ -109,7 +109,7 @@ export default function Header() {
                 })}
             </nav>
 
-            <Link href="/devis" className={cn('hidden lg:inline-block', ctaClasses)}>
+            <Link href="/contact" className={cn('hidden lg:inline-block', ctaClasses)}>
                 {headerCopy.desktopCtaLabel}
             </Link>
         </header>

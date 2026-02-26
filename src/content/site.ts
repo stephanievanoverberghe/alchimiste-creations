@@ -40,7 +40,7 @@ export const siteContent = siteSchema.parse({
             description: 'Je transforme votre identité en expérience web premium: message limpide, design sensible, parcours qui convertit sans forcer.',
             cta: {
                 primary: { label: 'Réserver un appel', href: '/contact' },
-                secondary: { label: 'Demander un devis', href: '/devis' },
+                secondary: { label: 'Demander un devis', href: '/contact' },
             },
         },
         problems: [
@@ -78,7 +78,7 @@ export const siteContent = siteSchema.parse({
             eyebrow: 'Projets',
             title: 'Des cas concrets, des résultats mesurables.',
             description: 'Avant/après, défis réels, décisions design/tech et impact business.',
-            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/devis' } },
+            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/contact' } },
         },
         testimonials: [
             { quote: 'Mon site m’aide enfin à signer les bons clients.', author: 'Camille — Thérapeute' },
@@ -98,7 +98,7 @@ export const siteContent = siteSchema.parse({
             eyebrow: 'Contact',
             title: 'Parlons de votre projet, simplement.',
             description: 'Un échange de 30 minutes pour clarifier besoins, budget, timing et prochaines étapes.',
-            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/devis' } },
+            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/contact' } },
         },
         reassurance: ['Réponse sous 48h', 'Aucun engagement après l’appel', 'Process transparent et devis détaillé'],
     },
@@ -107,7 +107,7 @@ export const siteContent = siteSchema.parse({
             eyebrow: 'FAQ',
             title: 'Tout ce qu’il faut savoir avant de lancer votre site.',
             description: 'Délais, budget, SEO, propriété du site, maintenance: réponses courtes et concrètes.',
-            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/devis' } },
+            cta: { primary: { label: 'Réserver un appel', href: '/contact' }, secondary: { label: 'Demander un devis', href: '/contact' } },
         },
     },
 });

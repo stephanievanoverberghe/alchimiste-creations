@@ -11,8 +11,8 @@ export const headerCopy = {
     logoAlt: 'Alchimiste — logo',
     openMenuAriaLabel: 'Ouvrir le menu',
     closeMenuAriaLabel: 'Fermer le menu',
-    mobileCtaLabel: 'Demander un devis',
-    desktopCtaLabel: 'Demander un devis',
+    mobileCtaLabel: 'Réserver un appel',
+    desktopCtaLabel: 'Réserver un appel',
 } as const;
 
 export const footerCopy = {
@@ -33,7 +33,6 @@ export const footerCopy = {
         ['/methode', 'Méthode'],
         ['/offres', 'Offres'],
         ['/projets', 'Projets'],
-        ['/devis', 'Devis'],
         ['/contact', 'Contact'],
     ],
     navLegal: [

@@ -16,7 +16,7 @@ export function CtaBand({
     primaryLabel = 'Réserver un appel',
     primaryHref = '/contact',
     secondaryLabel = 'Demander un devis',
-    secondaryHref = '/devis',
+    secondaryHref = '/contact',
 }: CtaBandProps) {
     return (
         <Section tone="dark" spacing="md">
