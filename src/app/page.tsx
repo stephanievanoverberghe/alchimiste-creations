@@ -34,24 +34,6 @@ export default function HomePage() {
 
     const heroAssurances = ['Audit offert (20 min)', 'Réponse sous 24h', 'Sans engagement'];
 
-    const uxJourneySteps = [
-        {
-            step: '01 · Clarifier',
-            title: 'Votre promesse devient évidente en 5 secondes',
-            text: 'Headline orientée résultat, design lisible, hiérarchie claire: votre visiteur comprend instantanément pourquoi vous plutôt qu’un autre.',
-        },
-        {
-            step: '02 · Rassurer',
-            title: 'Vous créez la confiance avant même le premier échange',
-            text: 'Preuves sociales, résultats concrets, réponses aux objections: on réduit les doutes pour augmenter l’intention de contact.',
-        },
-        {
-            step: '03 · Convertir',
-            title: 'Chaque section pousse vers une action simple',
-            text: 'CTA contextualisés, micro-engagements et parcours sans friction pour transformer une visite qualifiée en demande entrante.',
-        },
-    ];
-
     return (
         <>
             <Section>
@@ -104,33 +86,6 @@ export default function HomePage() {
                             </Card>
                         </div>
                     </div>
-                </Container>
-            </Section>
-
-            <Section>
-                <Container>
-                    <SectionHeading
-                        eyebrow="Parcours UX"
-                        title="La suite logique du Hero : un parcours qui transforme un visiteur en client."
-                        description="Après le Hero, votre futur client suit une progression claire: il comprend votre valeur, il est rassuré, puis il passe à l’action."
-                    />
-                    <div className="grid gap-5 md:grid-cols-3">
-                        {uxJourneySteps.map((step) => (
-                            <Card key={step.step}>
-                                <p className="text-sm font-medium text-accent">{step.step}</p>
-                                <p className="mt-2 text-lg font-semibold text-balance">{step.title}</p>
-                                <p className="mt-3 text-sm text-text-muted">{step.text}</p>
-                            </Card>
-                        ))}
-                    </div>
-                    <Card className="mt-6 border-primary/50 bg-primary/6">
-                        <p className="text-sm font-medium text-accent">Objectif business</p>
-                        <p className="mt-2 text-base font-semibold sm:text-lg">Un seul cap: guider votre prospect du « c’est intéressant » au « je veux travailler avec vous ».</p>
-                        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <Button href={siteContent.ctaPrimary.href}>{siteContent.ctaPrimary.label}</Button>
-                            <p className="text-sm text-text-muted">On transforme votre trafic actuel en opportunités concrètes.</p>
-                        </div>
-                    </Card>
                 </Container>
             </Section>
 
