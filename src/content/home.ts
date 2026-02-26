@@ -50,6 +50,10 @@ export type HomePillar = {
 export type HomeProcessStep = {
     title: string;
     description: string;
+    icon: 'scan' | 'layers' | 'code' | 'rocket';
+    duration?: string;
+    deliverables: string[];
+    validation?: string;
 };
 
 export type HomeFaqItem = Pick<FAQ, 'question' | 'answer'>;
@@ -228,23 +232,39 @@ export const homeContent = {
     process: {
         eyebrow: 'Process',
         title: 'Un déroulé simple en 4 étapes, du cadrage au lancement.',
-        description: 'Vous savez à tout moment ce qui est en cours, ce que vous validez et ce qui arrive ensuite.',
+        description: 'Un cadre clair, des livrables concrets, et une exécution front-end premium (Next.js, perf, SEO, a11y).',
         steps: [
             {
                 title: '1. Audit & cadrage',
-                description: 'On identifie vos objectifs business, vos frictions actuelles et vos priorités de conversion.',
+                icon: 'scan',
+                duration: '20–45 min',
+                description: 'On clarifie vos objectifs, votre cible et les frictions de votre site/page actuelle.',
+                deliverables: ['Mini-audit priorisé (3 leviers)', 'Recommandations de structure', 'Objectif de conversion + KPI'],
+                validation: 'Vous validez la direction + le plan d’action.',
             },
             {
                 title: '2. Message & architecture',
-                description: 'On construit une structure de page claire, orientée décision, avec des CTA sans ambiguïté.',
+                icon: 'layers',
+                duration: '1–2 jours',
+                description: 'On structure la page pour guider : promesse, preuves, offres, CTA. Zéro blabla.',
+                deliverables: ['Trame de page (sections + hiérarchie)', 'Copy rapide (titres/CTA)', 'Wireframe léger (si nécessaire)'],
+                validation: 'Vous validez le message + le parcours.',
             },
             {
-                title: '3. Design & production',
-                description: 'Je conçois et développe une expérience fluide, rapide et alignée avec votre positionnement.',
+                title: '3. UI & développement',
+                icon: 'code',
+                duration: '3–7 jours',
+                description: 'Je design & développe une UI moderne et rapide, alignée avec votre branding.',
+                deliverables: ['UI responsive (mobile-first)', 'Intégration Next.js / TS / Tailwind', 'Perf/SEO/a11y (base solide)'],
+                validation: 'Vous validez l’UI sur une preview.',
             },
             {
                 title: '4. Mise en ligne & optimisation',
-                description: 'On lance, on mesure les signaux clés et on priorise les ajustements à fort impact.',
+                icon: 'rocket',
+                duration: '0.5–1 jour',
+                description: 'Mise en prod propre + derniers ajustements pour maximiser les prises de contact.',
+                deliverables: ['Mise en ligne (Vercel)', 'Checklist qualité (perf/SEO)', 'Ajustements CTA / sections'],
+                validation: 'Go live + plan des optimisations.',
             },
         ],
     },
