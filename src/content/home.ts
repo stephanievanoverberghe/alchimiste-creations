@@ -1,7 +1,6 @@
 import { offers } from '@/content/offers';
 import { projects } from '@/content/projects';
 import { faqs } from '@/content/faq';
-import { siteContent } from '@/content/site';
 import type { FAQ, Offer, Project } from '@/content/schemas';
 
 export type HomeHero = {
@@ -145,45 +144,45 @@ export const homeContent = {
         ],
     },
     proofs: {
-        eyebrow: 'Preuves rapides',
-        title: 'Des signaux concrets qui rassurent avant de vous engager.',
-        description: 'La confiance vient vite quand les indicateurs, les résultats et le cadre d’exécution sont clairs.',
-        stats: siteContent.stats,
+        eyebrow: 'Des preuves qui parlent à vos futurs clients',
+        title: 'En quelques secondes, votre visiteur comprend pourquoi il peut vous faire confiance.',
+        description: 'On met en scène les bonnes informations, au bon moment, pour que votre site inspire confiance et donne envie de passer à l’action.',
+        stats: [
+            { label: 'Temps moyen avant de comprendre votre offre', value: 'Moins de 10 secondes' },
+            { label: 'Chemin vers la prise de contact', value: 'Simple et visible sur chaque page' },
+            { label: 'Expérience ressentie', value: 'Clair, fluide et rassurant' },
+        ],
         cards: [
             {
                 icon: 'flow',
-                title: 'Parcours orienté conversion',
-                description: 'On construit une page qui mène naturellement vers la prise de contact — sans forcer, sans blabla.',
+                title: 'Un parcours évident pour passer à l’action',
+                description: 'Votre visiteur n’a jamais à se demander où cliquer : tout est pensé pour avancer naturellement.',
                 bullets: [
-                    'CTA visibles au bon moment (pas cachés)',
-                    'Sections qui répondent aux objections (prix, confiance, délais)',
-                    'Lecture “scan-friendly” mobile (hiérarchie, rythme, preuves)',
+                    'Des boutons bien placés, visibles au bon moment',
+                    'Des réponses claires aux questions qui freinent la décision',
+                    'Une lecture confortable sur mobile et ordinateur',
                 ],
-                emphasis: 'Objectif : plus de demandes qualifiées.',
+                emphasis: 'Résultat attendu : plus de prises de contact utiles.',
                 image: { src: '/images/proof-flow.png', alt: 'Parcours et CTA' },
             },
             {
                 icon: 'layers',
-                title: 'UI premium + cohérence de marque',
-                description: 'Un design propre, moderne et cohérent qui donne immédiatement une impression sérieuse.',
+                title: 'Une image de marque moderne et mémorable',
+                description: 'Votre site donne tout de suite une impression professionnelle, actuelle et cohérente avec votre niveau de service.',
                 bullets: [
-                    'Design system léger (tokens, composants réutilisables)',
-                    'Micro-détails qui rassurent (espaces, contraste, states)',
-                    'Expérience fluide (navigation, sections, transitions)',
+                    'Un style visuel aligné avec votre positionnement',
+                    'Des détails soignés qui renforcent la crédibilité',
+                    'Des transitions douces pour une navigation agréable',
                 ],
-                emphasis: 'Objectif : inspirer confiance en 5 secondes.',
+                emphasis: 'Résultat attendu : une première impression forte et rassurante.',
                 image: { src: '/images/proof-ui.png', alt: 'UI premium' },
             },
             {
                 icon: 'gauge',
-                title: 'Exécution technique solide (Next.js)',
-                description: 'Je livre une base propre, rapide et maintenable : performance, SEO, accessibilité.',
-                bullets: [
-                    'Perf web (LCP/CLS, images, loading, structure)',
-                    'SEO technique (metas, OG, sémantique, accessibilité)',
-                    'Code maintenable (separation content/UI, composants clairs)',
-                ],
-                emphasis: 'Objectif : un site qui dure et évolue.',
+                title: 'Un site agréable, rapide et facile à utiliser',
+                description: 'Les pages s’affichent vite, la navigation est fluide et vos visiteurs restent concentrés sur votre message.',
+                bullets: ['Chargement rapide, même sur mobile', 'Textes lisibles et contenus bien structurés', 'Une base solide pour faire évoluer votre site dans le temps'],
+                emphasis: 'Résultat attendu : une expérience qui met vos visiteurs en confiance.',
                 image: { src: '/images/proof-tech.png', alt: 'Performance et qualité technique' },
             },
         ],

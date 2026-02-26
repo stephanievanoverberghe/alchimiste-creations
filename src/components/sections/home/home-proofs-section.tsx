@@ -25,8 +25,26 @@ function ProofCard({ item }: { item: HomeContent['proofs']['cards'][number] }) {
     const Icon = ICONS[item.icon];
 
     return (
-        <Card className="relative overflow-hidden">
-            <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 h-48 w-48 rounded-full blur-3xl" style={{ background: 'rgba(19, 209, 255, 0.12)' }} />
+        <Card className="group relative overflow-hidden border-border/80 bg-background/90 transition duration-300 hover:-translate-y-1 hover:border-accent/40">
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full opacity-80 blur-3xl transition-transform duration-500 group-hover:scale-110"
+                style={{ background: 'rgba(19, 209, 255, 0.16)' }}
+            />
+
+            {item.image ? (
+                <div className="relative mb-5 overflow-hidden rounded-2xl border border-border/70">
+                    <Image
+                        src={item.image.src}
+                        alt={item.image.alt}
+                        width={1100}
+                        height={620}
+                        className="h-44 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/70 via-transparent to-transparent" />
+                </div>
+            ) : null}
+
             <div className="flex items-start gap-3">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40">
                     <Icon className="h-5 w-5 text-accent" />
@@ -37,16 +55,7 @@ function ProofCard({ item }: { item: HomeContent['proofs']['cards'][number] }) {
                 </div>
             </div>
 
-            {item.image ? (
-                <div className="mt-4 overflow-hidden rounded-2xl border border-border/70 bg-background/40 p-3">
-                    <div className="flex items-center gap-3">
-                        <Image src={item.image.src} alt={item.image.alt} width={44} height={44} />
-                        <p className="text-xs text-text-muted">
-                            <span className="font-medium text-text">Signal :</span> {item.emphasis ?? 'Clarté, confiance, action.'}
-                        </p>
-                    </div>
-                </div>
-            ) : item.emphasis ? (
+            {item.emphasis ? (
                 <p className="mt-4 text-xs text-text-muted">
                     <span className="font-medium text-accent">Signal :</span> {item.emphasis}
                 </p>
@@ -72,19 +81,22 @@ export function HomeProofsSection({ content }: HomeProofsSectionProps) {
 
                 <div className="grid gap-5 lg:grid-cols-[1fr_1.15fr] lg:items-start">
                     {/* Stats */}
-                    <Card className="relative overflow-hidden">
+                    <Card className="relative overflow-hidden border-border/80 bg-background/90">
                         <div
                             aria-hidden="true"
                             className="pointer-events-none absolute -left-12 -top-12 h-44 w-44 rounded-full blur-3xl"
                             style={{ background: 'rgba(122, 84, 255, 0.14)' }}
                         />
-                        <h3 className="text-sm font-medium text-text-muted">Repères immédiats</h3>
+                        <h3 className="text-sm font-medium text-text-muted">Ce que vos visiteurs ressentent tout de suite</h3>
 
                         <ul className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1" aria-label="Statistiques clés">
                             {content.stats.map((stat) => (
                                 <li
                                     key={stat.label}
-                                    className={cn('rounded-xl border border-border/70 bg-background/70 p-3', 'transition-transform duration-200 hover:-translate-y-0.5')}
+                                    className={cn(
+                                        'rounded-xl border border-border/70 bg-background/70 p-3',
+                                        'transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:bg-background',
+                                    )}
                                 >
                                     <p className="text-xl font-semibold text-primary">{stat.value}</p>
                                     <p className="text-sm text-text-muted">{stat.label}</p>
@@ -92,7 +104,9 @@ export function HomeProofsSection({ content }: HomeProofsSectionProps) {
                             ))}
                         </ul>
 
-                        <p className="mt-4 text-xs text-text-muted">Des repères simples, un cadre clair, et une exécution propre — pour décider sans stress.</p>
+                        <p className="mt-4 text-xs text-text-muted">
+                            Un message compréhensible, une navigation vivante et des preuves visibles : vos prospects avancent avec confiance.
+                        </p>
                     </Card>
 
                     {/* Proof cards */}
