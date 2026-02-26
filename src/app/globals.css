@@ -176,6 +176,7 @@ body {
     box-shadow: 0 0 0 1px color-mix(in oklab, hsl(var(--primary)) 20%, transparent 80%);
 }
 
+
 .site-header__link {
     font-size: 0.875rem;
     transition:

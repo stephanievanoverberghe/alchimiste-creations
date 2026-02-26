@@ -166,13 +166,15 @@ export function SiteHeader() {
                         </Link>
                     ) : null}
 
-                    <Button
-                        href={siteContent.ctaPrimary.href}
-                        variant="secondary"
-                        className={cn('site-header__primaryCta px-4 py-2 text-xs md:text-sm', isCompact ? 'hidden sm:inline-flex' : 'inline-flex')}
-                    >
-                        {siteContent.ctaPrimary.label}
-                    </Button>
+                    {!isCompact ? (
+                        <Button
+                            href={siteContent.ctaPrimary.href}
+                            variant="secondary"
+                            className="site-header__primaryCta site-header__primaryCta--tabletUp px-4 py-2 text-xs md:text-sm"
+                        >
+                            {siteContent.ctaPrimary.label}
+                        </Button>
+                    ) : null}
 
                     {isCompact ? (
                         <button
