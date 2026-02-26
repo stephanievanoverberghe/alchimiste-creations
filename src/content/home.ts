@@ -26,11 +26,17 @@ export type HomeQualificationItem = {
 export type HomeProofStat = {
     label: string;
     value: string;
+    icon?: 'clock' | 'reply' | 'check' | 'bolt' | 'shield' | 'sparkles';
+    hint?: string;
 };
 
 export type HomeProofCard = {
     title: string;
     description: string;
+    icon: 'flow' | 'layers' | 'shield' | 'sparkles' | 'gauge' | 'search';
+    bullets: string[];
+    emphasis?: string;
+    image?: { src: string; alt: string };
 };
 
 export type HomePillar = {
@@ -145,16 +151,40 @@ export const homeContent = {
         stats: siteContent.stats,
         cards: [
             {
-                title: 'Approche orientée conversion',
-                description: 'Chaque section répond à une objection et rapproche de la prise de rendez-vous.',
+                icon: 'flow',
+                title: 'Parcours orienté conversion',
+                description: 'On construit une page qui mène naturellement vers la prise de contact — sans forcer, sans blabla.',
+                bullets: [
+                    'CTA visibles au bon moment (pas cachés)',
+                    'Sections qui répondent aux objections (prix, confiance, délais)',
+                    'Lecture “scan-friendly” mobile (hiérarchie, rythme, preuves)',
+                ],
+                emphasis: 'Objectif : plus de demandes qualifiées.',
+                image: { src: '/images/proof-flow.png', alt: 'Parcours et CTA' },
             },
             {
-                title: 'Décisions simplifiées',
-                description: 'Offres lisibles, process transparent et étapes connues dès le départ.',
+                icon: 'layers',
+                title: 'UI premium + cohérence de marque',
+                description: 'Un design propre, moderne et cohérent qui donne immédiatement une impression sérieuse.',
+                bullets: [
+                    'Design system léger (tokens, composants réutilisables)',
+                    'Micro-détails qui rassurent (espaces, contraste, states)',
+                    'Expérience fluide (navigation, sections, transitions)',
+                ],
+                emphasis: 'Objectif : inspirer confiance en 5 secondes.',
+                image: { src: '/images/proof-ui.png', alt: 'UI premium' },
             },
             {
-                title: 'Exécution premium',
-                description: 'Stack moderne, performance technique et structure maintenable à long terme.',
+                icon: 'gauge',
+                title: 'Exécution technique solide (Next.js)',
+                description: 'Je livre une base propre, rapide et maintenable : performance, SEO, accessibilité.',
+                bullets: [
+                    'Perf web (LCP/CLS, images, loading, structure)',
+                    'SEO technique (metas, OG, sémantique, accessibilité)',
+                    'Code maintenable (separation content/UI, composants clairs)',
+                ],
+                emphasis: 'Objectif : un site qui dure et évolue.',
+                image: { src: '/images/proof-tech.png', alt: 'Performance et qualité technique' },
             },
         ],
     },
