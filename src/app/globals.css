@@ -161,6 +161,7 @@ body {
 }
 
 .site-header__nav {
+    position: relative;
     gap: clamp(0.75rem, 1.8vw, 1.5rem);
     justify-self: center;
     padding: 0.35rem;
@@ -195,15 +196,23 @@ body {
     color: hsl(var(--text));
 }
 
-.site-header__link--active::after {
-    content: '';
+.site-header__activeIndicator {
     position: absolute;
     left: 0;
-    right: 0;
     bottom: -0.35rem;
     height: 2px;
     border-radius: 999px;
     background: color-mix(in oklab, hsl(var(--accent)) 70%, hsl(var(--primary)) 30%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        transform var(--motion-base) var(--ease-standard),
+        width var(--motion-base) var(--ease-standard),
+        opacity var(--motion-fast) var(--ease-standard);
+    will-change: transform, width;
+}
+
+.site-header__activeIndicator--visible {
     opacity: 0.9;
 }
 

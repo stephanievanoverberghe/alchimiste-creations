@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Container } from '@/components/layout/container';
 import { Button } from '@/components/ui/button';
 import { siteContent } from '@/content/site';
@@ -12,11 +13,12 @@ type HeaderNavLinkProps = {
     href: string;
     label: string;
     isActive: boolean;
+    onLinkRef?: (element: HTMLAnchorElement | null) => void;
 };
 
-function HeaderNavLink({ href, label, isActive }: HeaderNavLinkProps) {
+function HeaderNavLink({ href, label, isActive, onLinkRef }: HeaderNavLinkProps) {
     return (
-        <Link href={href} className={cn('focus-ring site-header__link', isActive ? 'site-header__link--active' : 'site-header__link--idle')}>
+        <Link ref={onLinkRef} href={href} className={cn('focus-ring site-header__link', isActive ? 'site-header__link--active' : 'site-header__link--idle')}>
             {label}
         </Link>
     );
@@ -72,6 +74,45 @@ export function SiteHeader() {
     const pathname = usePathname();
     const { hidden, isCompact, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
     const hasSecondaryCtaInNav = siteContent.nav.some((item) => item.href === siteContent.ctaSecondary.href);
+    const navRef = useRef<HTMLElement | null>(null);
+    const indicatorRef = useRef<HTMLSpanElement | null>(null);
+    const navLinkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+
+    const activeNavHref = useMemo(() => siteContent.nav.find((item) => item.href === pathname)?.href ?? null, [pathname]);
+
+    const updateActiveIndicator = useCallback(() => {
+        const indicatorElement = indicatorRef.current;
+
+        if (!indicatorElement || isCompact || !activeNavHref) {
+            indicatorElement?.classList.remove('site-header__activeIndicator--visible');
+            return;
+        }
+
+        const navElement = navRef.current;
+        const activeLink = navLinkRefs.current[activeNavHref];
+
+        if (!navElement || !activeLink) {
+            indicatorElement.classList.remove('site-header__activeIndicator--visible');
+            return;
+        }
+
+        const navRect = navElement.getBoundingClientRect();
+        const activeRect = activeLink.getBoundingClientRect();
+
+        indicatorElement.style.width = `${activeRect.width}px`;
+        indicatorElement.style.transform = `translateX(${activeRect.left - navRect.left}px)`;
+        indicatorElement.classList.add('site-header__activeIndicator--visible');
+    }, [activeNavHref, isCompact]);
+
+    useEffect(() => {
+        const rafId = window.requestAnimationFrame(updateActiveIndicator);
+
+        window.addEventListener('resize', updateActiveIndicator);
+        return () => {
+            window.cancelAnimationFrame(rafId);
+            window.removeEventListener('resize', updateActiveIndicator);
+        };
+    }, [updateActiveIndicator]);
 
     return (
         <header
@@ -92,9 +133,18 @@ export function SiteHeader() {
                 </div>
 
                 {!isCompact ? (
-                    <nav className="site-header__nav flex items-center justify-center" aria-label="Navigation principale">
+                    <nav ref={navRef} className="site-header__nav flex items-center justify-center" aria-label="Navigation principale">
+                        <span ref={indicatorRef} aria-hidden="true" className="site-header__activeIndicator" />
                         {siteContent.nav.map((item) => (
-                            <HeaderNavLink key={item.href} href={item.href} label={item.label} isActive={pathname === item.href} />
+                            <HeaderNavLink
+                                key={item.href}
+                                href={item.href}
+                                label={item.label}
+                                isActive={pathname === item.href}
+                                onLinkRef={(element) => {
+                                    navLinkRefs.current[item.href] = element;
+                                }}
+                            />
                         ))}
                     </nav>
                 ) : null}
