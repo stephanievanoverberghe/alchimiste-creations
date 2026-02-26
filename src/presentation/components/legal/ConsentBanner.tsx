@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/shared/utils/cn';
-
-/* ---------- Types & constantes : alignés avec /preferences-cookies ---------- */
+import { consentBannerCopy } from '@/infrastructure/content/legal-copy';
 
 type ConsentModeFlag = 'granted' | 'denied';
 type GtagConsentUpdate = {
@@ -29,14 +28,12 @@ type Consent = {
     analytics: boolean;
     functional: boolean;
     marketing: boolean;
-    timestamp: string; // ISO
+    timestamp: string;
 };
 
 const COOKIE_NAME = 'ac_consent';
-const TTL_DAYS = 180; // CNIL : 6 mois
-const CONSENT_VERSION = 1; // incrémente si tu changes les finalités
-
-/* ------------------------------ Utils cookies ------------------------------ */
+const TTL_DAYS = 180;
+const CONSENT_VERSION = 1;
 
 function readCookie(name: string): string | null {
     if (typeof document === 'undefined') return null;
@@ -53,8 +50,6 @@ function writeCookie(name: string, value: string, maxAgeSeconds = TTL_DAYS * 24 
     const secure = typeof location !== 'undefined' && location.protocol === 'https:' ? '; Secure' : '';
     document.cookie = `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAgeSeconds}; SameSite=Lax${secure}`;
 }
-
-/* ------------------------- Consent helpers (mêmes règles) ------------------------- */
 
 function toConsent(p?: Partial<Consent>): Consent {
     return {
@@ -75,8 +70,6 @@ function isExpired(c: Consent) {
     return ageMs > ttlMs || (c.version ?? 0) < CONSENT_VERSION;
 }
 
-/* ----------------- Google Consent Mode v2 (update si présent) ---------------- */
-
 function updateGtagConsent(c: Consent) {
     if (typeof window === 'undefined') return;
     const w = window as WindowWithConsent;
@@ -94,8 +87,6 @@ function updateGtagConsent(c: Consent) {
     w.dataLayer = w.dataLayer ?? [];
     w.dataLayer.push({ event: 'consent_update', consent: payload });
 }
-
-/* ---------------- Purge cookies/stockages non essentiels ---------------- */
 
 const COOKIE_PREFIXES = ['_ga', '_gid', '_gat', '_gcl_', '_fbp', '_cl', '_hj', '_pk_id', '_pk_ses'];
 const STORAGE_PREFIXES = ['_ga', 'ga_', 'amp_', 'ajs_', '_hj', 'matomo_', 'clarity_', 'fb_'];
@@ -121,13 +112,11 @@ function deleteCookieEverywhere(name: string) {
 }
 
 function purgeNonEssentialStorage() {
-    // Cookies 1st-party usuels (GA, FB…)
     try {
         const names = document.cookie.split('; ').map((c) => decodeURIComponent(c.split('=')[0]));
         for (const n of names) if (COOKIE_PREFIXES.some((pre) => n.startsWith(pre))) deleteCookieEverywhere(n);
     } catch {}
 
-    // localStorage
     try {
         const keys: string[] = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -137,7 +126,6 @@ function purgeNonEssentialStorage() {
         keys.forEach((k) => localStorage.removeItem(k));
     } catch {}
 
-    // sessionStorage
     try {
         const keys: string[] = [];
         for (let i = 0; i < sessionStorage.length; i++) {
@@ -148,13 +136,10 @@ function purgeNonEssentialStorage() {
     } catch {}
 }
 
-/* --------------------------------- Composant --------------------------------- */
-
 export default function ConsentBanner({ className }: { className?: string }) {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        // source de vérité : ac_consent
         const raw = readCookie(COOKIE_NAME);
         if (!raw) {
             setOpen(true);
@@ -172,7 +157,6 @@ export default function ConsentBanner({ className }: { className?: string }) {
     function persist(c: Consent) {
         writeCookie(COOKIE_NAME, JSON.stringify(c));
         updateGtagConsent(c);
-        // si tout refusé → purge
         if (!c.preferences && !c.analytics && !c.functional && !c.marketing) {
             purgeNonEssentialStorage();
         }
@@ -186,7 +170,7 @@ export default function ConsentBanner({ className }: { className?: string }) {
 
     function rejectAll() {
         const c = toConsent({ preferences: false, analytics: false, functional: false, marketing: false });
-        purgeNonEssentialStorage(); // nettoyage immédiat
+        purgeNonEssentialStorage();
         persist(c);
         setOpen(false);
     }
@@ -194,14 +178,13 @@ export default function ConsentBanner({ className }: { className?: string }) {
     if (!open) return null;
 
     return (
-        <div role="dialog" aria-modal="true" aria-label="Préférences cookies" className={cn('fixed inset-x-0 bottom-0 z-[60] px-4 pb-4 sm:px-6 sm:pb-6', className)}>
+        <div role="dialog" aria-modal="true" aria-label={consentBannerCopy.dialogAriaLabel} className={cn('fixed inset-x-0 bottom-0 z-60 px-4 pb-4 sm:px-6 sm:pb-6', className)}>
             <div className="mx-auto max-w-3xl rounded-2xl border border-sauge/30 bg-background shadow-lg">
                 <div className="p-4 sm:p-5">
                     <p className="text-sm text-foreground/85">
-                        J’utilise des cookies strictement nécessaires, et — si tu l’acceptes — des cookies de mesure d’audience et d’intégrations tierces. Tu peux changer d’avis à
-                        tout moment dans{' '}
-                        <Link href="/preferences-cookies" className="underline underline-offset-2">
-                            Préférences cookies
+                        {consentBannerCopy.description}{' '}
+                        <Link href={consentBannerCopy.preferencesPath} className="underline underline-offset-2">
+                            {consentBannerCopy.preferencesLabel}
                         </Link>
                         .
                     </p>
@@ -210,27 +193,23 @@ export default function ConsentBanner({ className }: { className?: string }) {
                         <button
                             type="button"
                             onClick={acceptAll}
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
-              bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold
-              border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-background text-sm font-semibold border-b-2 border-r-2 border-ormat transition hover:scale-105 shadow-[0px_2px_6px_rgba(164,75,52,0.25)]"
                         >
-                            Tout accepter
+                            {consentBannerCopy.acceptAllLabel}
                         </button>
                         <button
                             type="button"
                             onClick={rejectAll}
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
-              border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/20 text-sm font-semibold"
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl border border-sauge/40 bg-sauge/10 text-sauge hover:bg-sauge/20 text-sm font-semibold"
                         >
-                            Tout refuser
+                            {consentBannerCopy.rejectAllLabel}
                         </button>
                         <Link
-                            href="/preferences-cookies"
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl
-              border border-sauge/40 bg-background hover:bg-sauge/10 text-sm font-semibold"
+                            href={consentBannerCopy.preferencesPath}
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl border border-sauge/40 bg-background hover:bg-sauge/10 text-sm font-semibold"
                             onClick={() => setOpen(false)}
                         >
-                            Personnaliser
+                            {consentBannerCopy.customizeLabel}
                         </Link>
                     </div>
                 </div>
