@@ -9,9 +9,18 @@ export function useSiteHeaderState(pathname: string) {
     const [scrolled, setScrolled] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [isCompact, setIsCompact] = React.useState(true);
+    const [hidden, setHidden] = React.useState(false);
+    const previousScrollY = React.useRef(0);
 
     React.useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+        const onScroll = () => {
+            const currentScrollY = window.scrollY;
+            const isScrollingDown = currentScrollY > previousScrollY.current;
+            setScrolled(currentScrollY > SCROLL_THRESHOLD);
+            setHidden(isScrollingDown && currentScrollY > SCROLL_THRESHOLD * 6);
+            previousScrollY.current = currentScrollY;
+        };
+
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
@@ -44,6 +53,8 @@ export function useSiteHeaderState(pathname: string) {
             return;
         }
 
+        setHidden(false);
+
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setOpen(false);
@@ -59,6 +70,7 @@ export function useSiteHeaderState(pathname: string) {
     }, []);
 
     return {
+        hidden,
         isCompact,
         open,
         scrolled,

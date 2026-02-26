@@ -27,9 +27,11 @@ function MobileMenu({ pathname, open, isCompact }: { pathname: string; open: boo
         return null;
     }
 
+    const hasSecondaryCtaInNav = siteContent.nav.some((item) => item.href === siteContent.ctaSecondary.href);
+
     return (
         <div id="mobile-menu" className={cn('site-mobile', open ? 'site-mobile--open' : 'site-mobile--closed')}>
-            <Container className="site-mobile__inner py-3">
+            <Container className="site-mobile__inner">
                 <nav className="grid gap-2" aria-label="Navigation mobile">
                     {siteContent.nav.map((item, index) => {
                         const isActive = pathname === item.href;
@@ -47,12 +49,14 @@ function MobileMenu({ pathname, open, isCompact }: { pathname: string; open: boo
                             </Link>
                         );
                     })}
-                    <Link
-                        href={siteContent.ctaSecondary.href}
-                        className="focus-ring site-mobile__link rounded-2xl px-3 py-3 text-sm text-text-muted transition hover:bg-surface-elevated/40 hover:text-text sm:hidden"
-                    >
-                        {siteContent.ctaSecondary.label}
-                    </Link>
+                    {!hasSecondaryCtaInNav ? (
+                        <Link
+                            href={siteContent.ctaSecondary.href}
+                            className="focus-ring site-mobile__link rounded-2xl px-3 py-3 text-sm text-text-muted transition hover:bg-surface-elevated/40 hover:text-text sm:hidden"
+                        >
+                            {siteContent.ctaSecondary.label}
+                        </Link>
+                    ) : null}
                     <div className="site-mobile__link pt-2 sm:hidden">
                         <Button href={siteContent.ctaPrimary.href} variant="primary" className="w-full">
                             {siteContent.ctaPrimary.label}
@@ -66,13 +70,20 @@ function MobileMenu({ pathname, open, isCompact }: { pathname: string; open: boo
 
 export function SiteHeader() {
     const pathname = usePathname();
-    const { isCompact, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
+    const { hidden, isCompact, open, scrolled, toggleOpen } = useSiteHeaderState(pathname);
+    const hasSecondaryCtaInNav = siteContent.nav.some((item) => item.href === siteContent.ctaSecondary.href);
 
     return (
         <header
-            className={cn('site-header sticky top-0 z-40 transition-all duration-(--motion-base) ease-(--ease-standard)', scrolled ? 'site-header--scrolled' : 'site-header--top')}
+            className={cn(
+                'site-header sticky top-0 z-40 transition-all duration-(--motion-base) ease-(--ease-standard)',
+                scrolled ? 'site-header--scrolled' : 'site-header--top',
+                hidden && !open ? 'site-header--hidden' : 'site-header--visible',
+            )}
         >
-            <Container className="grid grid-cols-[1fr_auto] items-center gap-3 py-3 md:grid-cols-[auto_1fr_auto] md:gap-4 md:py-4">
+            <Container
+                className={cn('site-header__inner grid grid-cols-[1fr_auto] items-center gap-3 md:grid-cols-[auto_1fr_auto] md:gap-4', open && 'site-header__inner--menuOpen')}
+            >
                 <div className="flex items-center gap-3 md:gap-4">
                     <Link href="/" className="focus-ring site-header__brand" aria-label={siteContent.brand}>
                         <span className="site-header__brandMark" aria-hidden="true" />
@@ -89,12 +100,17 @@ export function SiteHeader() {
                 ) : null}
 
                 <div className="flex items-center justify-end gap-2">
-                    <Link
-                        href={siteContent.ctaSecondary.href}
-                        className={cn('focus-ring rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text', isCompact ? 'hidden sm:inline-flex' : 'inline-flex')}
-                    >
-                        {siteContent.ctaSecondary.label}
-                    </Link>
+                    {!hasSecondaryCtaInNav ? (
+                        <Link
+                            href={siteContent.ctaSecondary.href}
+                            className={cn(
+                                'focus-ring rounded-xl px-3 py-2 text-xs text-text-muted transition hover:text-text',
+                                isCompact ? 'hidden sm:inline-flex' : 'inline-flex',
+                            )}
+                        >
+                            {siteContent.ctaSecondary.label}
+                        </Link>
+                    ) : null}
 
                     <Button
                         href={siteContent.ctaPrimary.href}
