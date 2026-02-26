@@ -5,8 +5,8 @@ export const siteContent = siteSchema.parse({
     baseline: 'Des sites qui claquent visuellement et performent commercialement.',
     valueProposition:
         'Je conçois des expériences web orientées acquisition pour coachs, studios et PME ambitieuses : branding digital fort, tunnel de conversion clair, et stack moderne React / Next.js / MongoDB.',
-    ctaPrimary: { label: 'Planifier un audit stratégique', href: '/contact' },
-    ctaSecondary: { label: 'Explorer les offres', href: '/offres' },
+    ctaPrimary: { label: 'Réserver mon audit conversion', href: '/contact' },
+    ctaSecondary: { label: 'Voir les offres & tarifs', href: '/offres' },
     nav: [
         { label: 'Offres', href: '/offres' },
         { label: 'Méthode', href: '/methode' },
