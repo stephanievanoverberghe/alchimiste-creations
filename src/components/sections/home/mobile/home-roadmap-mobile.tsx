@@ -119,7 +119,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
         <section
             id="conversion-journey-mobile"
             ref={sectionRef}
-            className="sm:hidden relative z-20 border-y border-border/50 bg-background/80 px-4 pb-5 pt-4 backdrop-blur"
+            className="lg:hidden relative z-20  bg-background/80  backdrop-blur"
             role="region"
             aria-label="Conversion journey mobile"
         >
@@ -172,7 +172,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
                         return (
                             <article
                                 key={pillar.title}
-                                className="w-full shrink-0 px-2"
+                                className="w-full shrink-0 "
                                 aria-hidden={!isActive}
                                 style={{
                                     transform: isActive ? 'scale(1)' : 'scale(0.92)',
@@ -245,26 +245,6 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
                         );
                     })}
                 </div>
-            </div>
-
-            <div className="mt-3 flex items-center justify-between">
-                <div className="flex items-center gap-1.5" aria-label="Progression des étapes">
-                    {pillars.map((pillar, index) => (
-                        <button
-                            key={pillar.title}
-                            type="button"
-                            onClick={() => {
-                                onInteraction();
-                                setIndex(index);
-                            }}
-                            className={cn('h-1.5 rounded-full transition-all', index === activeIndex ? 'w-7 bg-accent' : 'w-2 bg-border')}
-                            aria-label={`Voir ${pillar.title}`}
-                        />
-                    ))}
-                </div>
-                <p className="text-xs font-semibold text-text-muted">
-                    {String(activeIndex + 1).padStart(2, '0')}/{String(pillars.length).padStart(2, '0')}
-                </p>
             </div>
 
             <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/70">

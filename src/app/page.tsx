@@ -16,7 +16,7 @@ export default function HomePage() {
     const { content } = useHome();
 
     return (
-        <HomeRoadmap pillars={content.architecture.pillars}>
+        <HomeRoadmap>
             <HomeHeroSection content={content.hero} stats={content.proofs.stats} />
             <HomeQualificationSection content={content.qualification} />
             <HomeProofsSection content={content.proofs} />
