@@ -26,7 +26,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
                 <div className="mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-border/70 bg-background/20 p-3">
-                    {['Je veux plus de clients', 'Je veux une offre claire', 'Je veux vendre sans forcer', 'Je veux un site qui rassure'].map((label) => (
+                    {['Création vitrine en priorité', 'Refonte si votre base existe déjà', 'Choix clair en moins de 30 secondes'].map((label) => (
                         <span
                             key={label}
                             className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-background/55 px-3 py-1 text-xs font-semibold text-text-muted transition-all duration-300 hover:border-accent/45 hover:text-text"
@@ -37,17 +37,12 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                     ))}
                 </div>
 
-                <div className="grid gap-5 md:grid-cols-6">
+                <div className="grid gap-5 md:grid-cols-2">
                     {content.items.map((offer, index) => {
                         const Icon = offer.icon ? ICONS[offer.icon] : Sparkles;
 
                         return (
-                            <Link
-                                key={offer.slug}
-                                href={`/offres#${offer.slug}`}
-                                className={cn('group block h-full md:col-span-2', offer.featured ? 'md:row-span-2' : '')}
-                                aria-label={`Découvrir l'offre ${offer.name}`}
-                            >
+                            <Link key={offer.slug} href={`/offres#${offer.slug}`} className="group block h-full" aria-label={`Découvrir l'offre ${offer.name}`}>
                                 <Card
                                     className={cn(
                                         'relative flex h-full flex-col overflow-hidden border-border/70 bg-linear-to-b from-surface/95 to-surface/80 transition duration-300 ease-out hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_18px_40px_rgba(8,10,20,0.45)] focus-visible:border-accent/60 focus-visible:shadow-[0_18px_40px_rgba(8,10,20,0.45)]',

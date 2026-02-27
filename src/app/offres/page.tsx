@@ -10,7 +10,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Offres',
-    description: 'Des offres claires pour créer ou optimiser un site premium orienté conversion.',
+    description: 'Deux offres claires et priorisées : création de site vitrine puis refonte orientée conversion.',
 };
 
 export default function OffresPage() {
@@ -19,7 +19,7 @@ export default function OffresPage() {
             <PageHero
                 eyebrow="Offres"
                 title="Choisissez l’offre qui répond à votre besoin maintenant."
-                description="Chaque formule est pensée pour un objectif concret : plus de demandes, plus de clarté et une image qui donne confiance dès la première visite."
+                description="Offre principale : création de site vitrine. Offre secondaire : refonte d’un site existant pour clarifier le message et générer plus de demandes."
             />
             <Section className="pt-2">
                 <Container>
@@ -31,7 +31,7 @@ export default function OffresPage() {
                         ))}
                     </div>
 
-                    <div className="grid gap-6 md:grid-cols-3">
+                    <div className="grid gap-6 md:grid-cols-2">
                         {offers.map((offer) => (
                             <div id={offer.slug} key={offer.slug} className="scroll-mt-28">
                                 <Card className="group relative h-full overflow-hidden border-border/70 bg-linear-to-b from-surface/95 to-surface/80 transition duration-300 hover:-translate-y-1 hover:border-accent/55">

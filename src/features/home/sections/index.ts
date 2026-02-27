@@ -1,11 +1,7 @@
 export { HomeHeroSection } from './home-hero-section';
 export { HomeRoadmap } from './home-roadmap';
-export { HomeQualificationSection } from './home-qualification-section';
-export { HomeProofsSection } from './home-proofs-section';
-export { HomeArchitectureSection } from './home-architecture-section';
-export { HomeProcessSection } from './home-process-section';
+export { HomeDiagnosticSection } from './home-diagnostic-section';
+export { HomeMethodSection } from './home-method-section';
 export { HomeOffersSection } from './home-offers-section';
 export { HomeProjectsSection } from './home-projects-section';
 export { HomeFaqSection } from './home-faq-section';
-export { HomeDiagnosticSection } from './home-diagnostic-section';
-export { HomeMethodSection } from './home-method-section';
