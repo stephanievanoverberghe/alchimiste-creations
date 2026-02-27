@@ -274,9 +274,8 @@ export const homeContent = {
     },
     offers: {
         eyebrow: 'Offres',
-        title: 'Des offres pensées pour débloquer vos ventes rapidement.',
-        description:
-            'Chaque formule répond à une situation réelle : peu de demandes, message flou, ou besoin d’un site qui inspire enfin confiance. Vous choisissez selon votre besoin du moment.',
+        title: 'Des offres claires pour répondre à votre besoin du moment.',
+        description: 'Vous choisissez selon votre priorité : obtenir plus de demandes, mieux présenter votre valeur, ou poser une base solide pour vendre avec régularité.',
         items: offers,
     },
     projects: {
