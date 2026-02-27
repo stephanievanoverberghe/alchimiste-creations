@@ -2,18 +2,15 @@
 
 /**
  * HomeRoadmapLayout
- * - Pour ajouter une section: ajoutez son id et label dans HOME_ROADMAP_SECTIONS,
- *   puis assignez le même id au composant <Section id="..."> correspondant.
- * - Pour ajuster le tracé: modifiez les points calculés dans use-section-anchors.ts
- *   (x mobile/desktop) ou la génération de courbe dans path.ts.
- * - Responsive: le hook place le fil au centre sur mobile et en zig-zag sur desktop.
+ * - Ajouter une étape: ajoutez un item dans HOME_ROADMAP_SECTIONS avec { id, label }, puis donnez le même id à la section Home cible.
+ * - Régler glow/perf: baissez PATH_GLOW_DESKTOP / PATH_GLOW_MOBILE, ou désactivez shimmer + noise sur mobile/reduced-motion.
  */
 
-import { buildRoadmapPath } from '@/components/roadmap/path';
-import { type RoadmapSection, useSectionAnchors } from '@/components/roadmap/use-section-anchors';
+import { type RoadmapSection, useActiveSection } from '@/components/roadmap/use-active-section';
+import { useRoadmapPath } from '@/components/roadmap/use-roadmap-path';
 import { useScrollProgress } from '@/components/roadmap/use-scroll-progess';
 import { cn } from '@/lib/utils';
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 const HOME_ROADMAP_SECTIONS: RoadmapSection[] = [
     { id: 'hero', label: 'Hero' },
@@ -32,25 +29,22 @@ type HomeRoadmapLayoutProps = {
     isFancy?: boolean;
 };
 
+const PATH_GLOW_DESKTOP = 10;
+const PATH_GLOW_MOBILE = 5;
+
 export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayoutProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const pathRef = useRef<SVGPathElement>(null);
-    const scrollProgress = useScrollProgress();
-    const [pathLength, setPathLength] = useState(1);
+    const uid = useId().replace(/:/g, '-');
+    const gradientId = `roadmap-gradient-${uid}`;
+    const glowFilterId = `roadmap-glow-${uid}`;
+    const noiseFilterId = `roadmap-noise-${uid}`;
+
+    const { target, smoothed, reducedMotion, isMobile } = useScrollProgress();
+    const { anchors, activeSectionId, visibilityScoreById } = useActiveSection(containerRef, HOME_ROADMAP_SECTIONS);
+
     const [size, setSize] = useState({ width: 0, height: 0 });
-    const [reducedMotion, setReducedMotion] = useState(false);
-
-    const { anchors, activeSectionId } = useSectionAnchors(containerRef, HOME_ROADMAP_SECTIONS);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-        const onChange = () => setReducedMotion(mediaQuery.matches);
-        onChange();
-        mediaQuery.addEventListener('change', onChange);
-
-        return () => mediaQuery.removeEventListener('change', onChange);
-    }, []);
+    const [trailPoints, setTrailPoints] = useState<Array<{ x: number; y: number }>>([]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -69,18 +63,33 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
         return () => observer.disconnect();
     }, []);
 
-    const pathData = useMemo(() => buildRoadmapPath(size.width, size.height, anchors), [anchors, size.height, size.width]);
+    const { pathData, dasharray, dashoffset, drawProgress, headPoint, stepProgressById } = useRoadmapPath({
+        anchors,
+        width: size.width,
+        height: size.height,
+        pathRef,
+        progress: smoothed,
+        reducedMotion,
+    });
 
     useEffect(() => {
-        const pathElement = pathRef.current;
-        if (!pathElement) {
-            return;
-        }
+        let frameId = 0;
+        frameId = window.requestAnimationFrame(() => {
+            if (!headPoint || reducedMotion) {
+                setTrailPoints([]);
+                return;
+            }
+            setTrailPoints((previous) => [headPoint, ...previous].slice(0, isMobile ? 1 : 3));
+        });
 
-        setPathLength(pathElement.getTotalLength());
-    }, [pathData]);
+        return () => window.cancelAnimationFrame(frameId);
+    }, [headPoint, isMobile, reducedMotion]);
 
-    const visualProgress = reducedMotion ? 1 : scrollProgress;
+    const glowParallaxOffset = reducedMotion || isMobile ? 0 : ((target - 0.5) * 10) / 2;
+
+    const glowWidth = isMobile ? PATH_GLOW_MOBILE : PATH_GLOW_DESKTOP;
+    const shimmerEnabled = !reducedMotion && !isMobile && isFancy;
+    const showNoise = !reducedMotion && !isMobile && isFancy;
 
     return (
         <div ref={containerRef} className="relative isolate">
@@ -88,38 +97,80 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
                 <div className="pointer-events-none absolute inset-0 z-0">
                     <svg aria-hidden className="h-full w-full" viewBox={`0 0 ${size.width} ${size.height}`} preserveAspectRatio="none">
                         <defs>
-                            <linearGradient id="roadmap-gradient" x1="0" y1="0" x2="1" y2="1">
+                            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stopColor="hsl(var(--accent))" />
-                                <stop offset="100%" stopColor="hsl(var(--primary))" />
+                                <stop offset="50%" stopColor="hsl(var(--primary))" />
+                                <stop offset="100%" stopColor="hsl(var(--accent))" />
+                                {shimmerEnabled ? (
+                                    <animateTransform attributeName="gradientTransform" type="translate" values="-0.24 0;0.24 0;-0.24 0" dur="6s" repeatCount="indefinite" />
+                                ) : null}
                             </linearGradient>
-                            <filter id="roadmap-glow" x="-30%" y="-30%" width="160%" height="160%">
-                                <feGaussianBlur stdDeviation="8" result="blur" />
+
+                            <filter id={glowFilterId} x="-60%" y="-60%" width="220%" height="220%">
+                                <feGaussianBlur stdDeviation={glowWidth} result="glow-blur" />
+                                <feColorMatrix in="glow-blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1.4 0" result="glow-color" />
                                 <feMerge>
-                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="glow-color" />
                                     <feMergeNode in="SourceGraphic" />
                                 </feMerge>
                             </filter>
+
+                            <filter id={noiseFilterId} x="-10%" y="-10%" width="120%" height="120%">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="2" result="grain" />
+                                <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+                            </filter>
                         </defs>
 
-                        <path d={pathData} stroke="hsl(var(--border))" strokeWidth="2" fill="none" opacity="0.65" />
-                        {isFancy ? <path d={pathData} stroke="url(#roadmap-gradient)" strokeWidth="6" fill="none" opacity="0.25" filter="url(#roadmap-glow)" /> : null}
-                        <path
-                            ref={pathRef}
-                            d={pathData}
-                            stroke="url(#roadmap-gradient)"
-                            strokeWidth="3"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeDasharray={pathLength}
-                            strokeDashoffset={pathLength * (1 - visualProgress)}
-                            className="motion-safe:transition-[stroke-dashoffset] motion-safe:duration-150"
-                            opacity="0.95"
-                        />
+                        <g transform={`translate(0 ${glowParallaxOffset.toFixed(2)})`}>
+                            <path d={pathData} stroke="hsl(var(--border))" strokeWidth="2" fill="none" opacity="0.5" />
+                            {isFancy ? (
+                                <path
+                                    d={pathData}
+                                    stroke={`url(#${gradientId})`}
+                                    strokeWidth={isMobile ? 4 : 6}
+                                    fill="none"
+                                    opacity={isMobile ? 0.25 : 0.35}
+                                    filter={`url(#${glowFilterId})`}
+                                />
+                            ) : null}
+                            <path
+                                ref={pathRef}
+                                d={pathData}
+                                stroke={`url(#${gradientId})`}
+                                strokeWidth={isMobile ? 2.5 : 3}
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeDasharray={dasharray}
+                                strokeDashoffset={dashoffset}
+                                opacity="0.96"
+                                filter={showNoise ? `url(#${noiseFilterId})` : undefined}
+                            />
+                        </g>
+
+                        {headPoint && !reducedMotion ? (
+                            <g>
+                                {trailPoints.slice(1).map((point, index) => (
+                                    <circle
+                                        key={`${point.x}-${point.y}-${index}`}
+                                        cx={point.x}
+                                        cy={point.y}
+                                        r={Math.max(1.5, 3 - index)}
+                                        fill="hsl(var(--accent))"
+                                        opacity={Math.max(0.12, 0.35 - index * 0.1)}
+                                    />
+                                ))}
+                                <circle cx={headPoint.x} cy={headPoint.y} r={isMobile ? 4 : 5} fill="hsl(var(--accent))" opacity="0.95" />
+                                <circle cx={headPoint.x} cy={headPoint.y} r={isMobile ? 8 : 12} fill="hsl(var(--accent))" opacity="0.25" filter={`url(#${glowFilterId})`} />
+                            </g>
+                        ) : null}
                     </svg>
 
                     {anchors.map((anchor, index) => {
+                        const sectionProgress = stepProgressById[anchor.id] ?? 0;
+                        const isLit = drawProgress >= sectionProgress;
                         const isActive = anchor.id === activeSectionId;
+                        const score = visibilityScoreById[anchor.id] ?? 0;
 
                         return (
                             <button
@@ -129,26 +180,37 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
                                 style={{ left: `${anchor.x}px`, top: `${anchor.y}px` }}
                                 aria-label={`Aller à la section ${anchor.label}`}
                                 onClick={() => {
-                                    const section = document.getElementById(anchor.id);
-                                    section?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+                                    document.getElementById(anchor.id)?.scrollIntoView({
+                                        behavior: reducedMotion ? 'auto' : 'smooth',
+                                        block: 'start',
+                                    });
                                 }}
                             >
                                 <span
                                     className={cn(
-                                        'block h-4 w-4 rounded-full border transition-all duration-300',
-                                        isActive
-                                            ? 'scale-110 border-accent bg-accent shadow-[0_0_18px_rgba(27,194,255,0.85)] motion-safe:animate-pulse'
-                                            : 'border-primary/55 bg-background/70',
+                                        'absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border transition-all duration-300',
+                                        isActive || isLit ? 'border-accent/60 bg-accent/10 shadow-[0_0_24px_rgba(27,194,255,0.35)]' : 'border-border/70 bg-background/35',
                                     )}
                                 />
                                 <span
                                     className={cn(
-                                        'absolute left-1/2 top-full mt-2 -translate-x-1/2 rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide backdrop-blur-md',
-                                        isActive ? 'border-accent/60 bg-surface/85 text-text' : 'border-border/80 bg-background/60 text-text-muted',
+                                        'relative block h-3.5 w-3.5 rounded-full border transition-all duration-300',
+                                        isActive && !reducedMotion ? 'scale-125 border-accent bg-accent shadow-[0_0_18px_rgba(27,194,255,0.95)]' : '',
+                                        !isActive && isLit ? 'scale-105 border-primary/80 bg-primary/80' : '',
+                                        !isActive && !isLit ? 'border-primary/40 bg-background/75' : '',
+                                    )}
+                                />
+                                <span
+                                    className={cn(
+                                        'absolute left-1/2 top-full mt-3 -translate-x-1/2 rounded-full border px-3 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-text transition-all duration-300 backdrop-blur-xl',
+                                        isActive
+                                            ? 'translate-y-0 border-accent/60 bg-white/10 opacity-100 shadow-[0_6px_26px_rgba(80,80,180,0.24)]'
+                                            : 'pointer-events-none translate-y-1 border-border/60 bg-background/45 opacity-0',
                                     )}
                                 >
-                                    {String(index + 1).padStart(2, '0')}
+                                    {String(index + 1).padStart(2, '0')} · {anchor.label}
                                 </span>
+                                <span className="sr-only">{Math.round(score * 100)}% visible</span>
                             </button>
                         );
                     })}

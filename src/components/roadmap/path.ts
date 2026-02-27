@@ -1,4 +1,4 @@
-import type { SectionAnchor } from './use-section-anchors';
+import type { SectionAnchor } from './use-active-section';
 
 const round = (value: number) => Number(value.toFixed(2));
 

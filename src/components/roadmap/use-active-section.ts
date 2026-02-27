@@ -13,16 +13,20 @@ export type SectionAnchor = RoadmapSection & {
     y: number;
 };
 
-type UseSectionAnchorsResult = {
+type UseActiveSectionResult = {
     activeSectionId: string;
     anchors: SectionAnchor[];
+    visibilityScoreById: Record<string, number>;
 };
 
+const DESKTOP_LEFT = 0.24;
+const DESKTOP_RIGHT = 0.76;
 const MOBILE_BREAKPOINT = 768;
 
-export function useSectionAnchors(containerRef: RefObject<HTMLElement | null>, sections: RoadmapSection[]): UseSectionAnchorsResult {
+export function useActiveSection(containerRef: RefObject<HTMLElement | null>, sections: RoadmapSection[]): UseActiveSectionResult {
     const [anchors, setAnchors] = useState<SectionAnchor[]>([]);
     const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? '');
+    const [visibilityScoreById, setVisibilityScoreById] = useState<Record<string, number>>({});
 
     useEffect(() => {
         const container = containerRef.current;
@@ -46,8 +50,7 @@ export function useSectionAnchors(containerRef: RefObject<HTMLElement | null>, s
             const nextAnchors: SectionAnchor[] = sectionNodes.map(({ node, section }, index) => {
                 const nodeRect = node.getBoundingClientRect();
                 const y = nodeRect.top + window.scrollY - containerTop + nodeRect.height * 0.5;
-
-                const x = isMobile ? containerRect.width * 0.5 : containerRect.width * (index % 2 === 0 ? 0.26 : 0.74);
+                const x = isMobile ? containerRect.width * 0.5 : containerRect.width * (index % 2 === 0 ? DESKTOP_LEFT : DESKTOP_RIGHT);
 
                 return { ...section, index, x, y };
             });
@@ -60,7 +63,6 @@ export function useSectionAnchors(containerRef: RefObject<HTMLElement | null>, s
             if (rafId !== 0) {
                 return;
             }
-
             rafId = window.requestAnimationFrame(() => {
                 rafId = 0;
                 computeAnchors();
@@ -69,29 +71,37 @@ export function useSectionAnchors(containerRef: RefObject<HTMLElement | null>, s
 
         computeAnchors();
 
-        const ratioBySection = new Map<string, number>();
+        const scoreMap = new Map<string, number>();
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    ratioBySection.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+                    const rect = entry.boundingClientRect;
+                    const viewportCenter = window.innerHeight * 0.5;
+                    const sectionCenter = rect.top + rect.height * 0.5;
+                    const centerDistance = Math.abs(viewportCenter - sectionCenter);
+                    const centerWeight = Math.max(0, 1 - centerDistance / (window.innerHeight * 0.55));
+                    const score = entry.isIntersecting ? entry.intersectionRatio * 0.6 + centerWeight * 0.4 : 0;
+                    scoreMap.set(entry.target.id, score);
                 });
 
-                const mostVisible = sectionNodes.reduce<{ id: string; ratio: number } | null>((best, { section }) => {
-                    const ratio = ratioBySection.get(section.id) ?? 0;
-                    if (!best || ratio > best.ratio) {
-                        return { id: section.id, ratio };
+                const visibilityEntries = sectionNodes.map(({ section }) => [section.id, scoreMap.get(section.id) ?? 0] as const);
+                setVisibilityScoreById(Object.fromEntries(visibilityEntries));
+
+                const best = visibilityEntries.reduce<{ id: string; score: number } | null>((acc, [id, score]) => {
+                    if (!acc || score > acc.score) {
+                        return { id, score };
                     }
-                    return best;
+                    return acc;
                 }, null);
 
-                if (mostVisible && mostVisible.ratio > 0) {
-                    setActiveSectionId(mostVisible.id);
+                if (best && best.score > 0) {
+                    setActiveSectionId(best.id);
                 }
             },
             {
                 root: null,
-                rootMargin: '-35% 0px -55% 0px',
-                threshold: [0.2, 0.4, 0.6, 0.8],
+                rootMargin: '-40% 0px -40% 0px',
+                threshold: [0.1, 0.2, 0.35, 0.5, 0.7, 0.9],
             },
         );
 
@@ -102,16 +112,18 @@ export function useSectionAnchors(containerRef: RefObject<HTMLElement | null>, s
         sectionNodes.forEach(({ node }) => resizeObserver.observe(node));
 
         window.addEventListener('resize', scheduleCompute);
+        window.addEventListener('scroll', scheduleCompute, { passive: true });
 
         return () => {
             observer.disconnect();
             resizeObserver.disconnect();
             window.removeEventListener('resize', scheduleCompute);
+            window.removeEventListener('scroll', scheduleCompute);
             if (rafId !== 0) {
                 window.cancelAnimationFrame(rafId);
             }
         };
     }, [containerRef, sections]);
 
-    return { activeSectionId, anchors };
+    return { activeSectionId, anchors, visibilityScoreById };
 }
