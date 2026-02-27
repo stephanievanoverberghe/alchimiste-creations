@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Container } from '@/components/layout/container';
@@ -10,7 +9,8 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
 
-import { ARCHITECTURE_GLOW_BY_PILLAR, ARCHITECTURE_ICONS, ARCHITECTURE_IMAGE_CAPTION, ARCHITECTURE_IMPACT_LABEL, ARCHITECTURE_STEP_BADGE } from './home-architecture-section.data';
+import { ArchitecturePillarCard } from './architecture-pillar-card';
+import { ARCHITECTURE_GLOW_BY_PILLAR, ARCHITECTURE_STEP_BADGE } from './home-architecture-section.data';
 import { HomeRoadmapMobile } from './mobile/home-roadmap-mobile';
 import { useHomeArchitectureCarousel } from './use-home-architecture-carousel';
 
@@ -58,7 +58,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                             key={pillar.title}
                                             type="button"
                                             className={cn(
-                                                'rounded-full border px-3 py-1 text-xs font-semibold transition-all duration-300 cursor-pointer',
+                                                'cursor-pointer rounded-full border px-3 py-1 text-xs font-semibold transition-all duration-300',
                                                 isActive
                                                     ? 'border-accent/60 bg-accent/10 text-text'
                                                     : 'border-border/70 bg-background/40 text-text-muted hover:border-accent/40 hover:text-text',
@@ -76,7 +76,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                 <button
                                     type="button"
                                     onClick={goPrev}
-                                    className="inline-flex h-9 w-9 items-center justify-center rounded-full cursor-pointer border border-border/80 bg-background/70 text-text-muted transition hover:border-accent/60 hover:text-text"
+                                    className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/70 text-text-muted transition hover:border-accent/60 hover:text-text"
                                     aria-label="Slide précédente"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
@@ -84,7 +84,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                 <button
                                     type="button"
                                     onClick={goNext}
-                                    className="inline-flex h-9 w-9 items-center justify-center rounded-full cursor-pointer border border-border/80 bg-background/70 text-text-muted transition hover:border-accent/60 hover:text-text"
+                                    className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/70 text-text-muted transition hover:border-accent/60 hover:text-text"
                                     aria-label="Slide suivante"
                                 >
                                     <ChevronRight className="h-4 w-4" />
@@ -94,75 +94,18 @@ export function HomeArchitectureSection({ content }: Props) {
 
                         <div className="relative overflow-hidden rounded-3xl">
                             <div className="flex w-full transition-transform duration-500 ease-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
-                                {items.map((pillar) => {
-                                    const Icon = ARCHITECTURE_ICONS[pillar.icon];
-
-                                    return (
-                                        <div key={pillar.title} className="w-full shrink-0 px-1">
-                                            <Card className="group relative overflow-hidden p-6 sm:p-8">
-                                                <div
-                                                    aria-hidden="true"
-                                                    className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl"
-                                                    style={{
-                                                        background: ARCHITECTURE_GLOW_BY_PILLAR[pillar.title],
-                                                    }}
-                                                />
-
-                                                <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr] md:items-start">
-                                                    <div>
-                                                        <div className="flex items-start gap-3">
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40">
-                                                                <Icon className="h-5 w-5 text-accent" />
-                                                            </span>
-                                                            <div className="min-w-0">
-                                                                <p className="text-xs font-semibold tracking-wide text-text-muted">
-                                                                    {ARCHITECTURE_STEP_BADGE[pillar.title]} · <span className="text-accent">{pillar.title}</span>
-                                                                </p>
-                                                                <h3 className="mt-1 text-xl font-semibold leading-snug">{pillar.headline}</h3>
-                                                            </div>
-                                                        </div>
-
-                                                        <p className="mt-3 text-sm text-text-muted sm:text-base">{pillar.description}</p>
-
-                                                        <ul className="mt-5 space-y-2 text-sm sm:text-base">
-                                                            {pillar.bullets.map((bullet) => (
-                                                                <li key={bullet} className="flex gap-2 text-text-muted">
-                                                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                                                                    <span>{bullet}</span>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-
-                                                        <div className="mt-5 flex items-center justify-between border-t border-border/60 pt-4 text-xs text-text-muted sm:text-sm">
-                                                            <span>Impact</span>
-                                                            <span className={cn('font-medium', pillar.title === 'Convertit' ? 'text-text' : 'text-text-muted')}>
-                                                                {ARCHITECTURE_IMPACT_LABEL[pillar.title]}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-                                                    {pillar.image ? (
-                                                        <div className="overflow-hidden rounded-2xl border border-border/70 bg-background/30">
-                                                            <div className="relative">
-                                                                <Image
-                                                                    src={pillar.image.src}
-                                                                    alt={pillar.image.alt}
-                                                                    width={640}
-                                                                    height={420}
-                                                                    className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                                                />
-                                                                <div className="absolute inset-0 bg-linear-to-t from-background/80 via-background/25 to-transparent" />
-                                                                <p className="absolute bottom-3 left-3 text-xs font-medium text-text sm:text-sm">
-                                                                    {ARCHITECTURE_IMAGE_CAPTION[pillar.title]}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    ) : null}
-                                                </div>
-                                            </Card>
-                                        </div>
-                                    );
-                                })}
+                                {items.map((pillar) => (
+                                    <div key={pillar.title} className="w-full shrink-0 px-1">
+                                        <Card className="group relative overflow-hidden p-6 sm:p-8">
+                                            <div
+                                                aria-hidden
+                                                className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full blur-3xl"
+                                                style={{ background: `radial-gradient(circle, ${ARCHITECTURE_GLOW_BY_PILLAR[pillar.title]}, transparent 70%)` }}
+                                            />
+                                            <ArchitecturePillarCard pillar={pillar} variant="desktop" />
+                                        </Card>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -173,7 +116,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                         key={items[index].title}
                                         type="button"
                                         onClick={() => goToIndex(index)}
-                                        className={cn('h-2 rounded-full cursor-pointer transition-all duration-300', index === activeIndex ? 'w-8 bg-accent' : 'w-2 bg-border')}
+                                        className={cn('h-2 cursor-pointer rounded-full transition-all duration-300', index === activeIndex ? 'w-8 bg-accent' : 'w-2 bg-border')}
                                         aria-label={`Voir la slide ${index + 1}`}
                                         aria-selected={index === activeIndex}
                                         role="tab"

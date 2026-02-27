@@ -1,32 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, ShieldCheck, Target } from 'lucide-react';
-import { cn } from '@/lib/utils';
+
 import type { HomeContent } from '@/content/home';
+import { cn } from '@/lib/utils';
+
+import { ArchitecturePillarCard } from '../architecture-pillar-card';
 import { useSwipeCarousel } from './use-swipe-carousel';
 
 type HomeRoadmapMobileProps = {
     pillars: HomeContent['architecture']['pillars'];
-};
-
-const ICONS = {
-    sparkles: Sparkles,
-    shield: ShieldCheck,
-    target: Target,
-} as const;
-
-const IMPACT_LABEL: Record<HomeContent['architecture']['pillars'][number]['title'], string> = {
-    Attire: '↑ Attention',
-    Convainc: '↑ Confiance',
-    Convertit: '↑ Contacts',
-};
-
-const STEP_BADGE: Record<HomeContent['architecture']['pillars'][number]['title'], string> = {
-    Attire: '01',
-    Convainc: '02',
-    Convertit: '03',
 };
 
 export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
@@ -116,7 +99,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
     if (pillars.length === 0) return null;
 
     return (
-        <section id="conversion-journey-mobile" ref={sectionRef} className="lg:hidden relative z-20  bg-background/80" role="region" aria-label="Conversion journey mobile">
+        <section id="conversion-journey-mobile" ref={sectionRef} className="relative z-20 bg-background/80 lg:hidden" role="region" aria-label="Conversion journey mobile">
             <div className="z-10 mb-3">
                 <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1" aria-label="Étapes du conversion journey">
                     {pillars.map((pillar, index) => {
@@ -161,12 +144,12 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
                 <div className="flex gap-0 transition-transform duration-300" style={trackStyle}>
                     {pillars.map((pillar, index) => {
                         const isActive = index === activeIndex;
-                        const Icon = ICONS[pillar.icon];
                         const parallaxX = isActive ? (isDragging ? dragOffset * 0.08 : 0) : 0;
+
                         return (
                             <article
                                 key={pillar.title}
-                                className="w-full shrink-0 "
+                                className="w-full shrink-0"
                                 aria-hidden={!isActive}
                                 style={{
                                     transform: isActive ? 'scale(1)' : 'scale(0.92)',
@@ -183,48 +166,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
                                     )}
                                 >
                                     <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top,rgba(27,194,255,0.18),transparent_60%)]" />
-                                    <div className="relative z-10 flex h-full flex-col">
-                                        <div className="flex items-start gap-3">
-                                            <span className="rounded-2xl border border-border/70 bg-background/40 p-2 backdrop-blur">
-                                                <Icon className="h-5 w-5 text-accent" />
-                                            </span>
-                                            <div>
-                                                <p className="text-xs text-text-muted">
-                                                    {STEP_BADGE[pillar.title]} · <span className="text-accent">{pillar.title}</span>
-                                                </p>
-                                                <h3 className="mt-1 text-base font-semibold leading-snug">{pillar.headline}</h3>
-                                            </div>
-                                        </div>
-
-                                        <p className="mt-3 text-sm text-text-muted">{pillar.description}</p>
-                                        <ul className="mt-3 space-y-2 text-sm text-text-muted">
-                                            {pillar.bullets.slice(0, 3).map((bullet) => (
-                                                <li key={bullet} className="flex gap-2">
-                                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                                                    <span>{bullet}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-
-                                        {pillar.image ? (
-                                            <div className="relative mt-3 overflow-hidden rounded-2xl border border-border/70">
-                                                <Image
-                                                    src={pillar.image.src}
-                                                    alt={pillar.image.alt}
-                                                    width={540}
-                                                    height={300}
-                                                    className="h-36 w-full object-cover"
-                                                    style={{ transform: `translate3d(${parallaxX}px,0,0) scale(1.03)` }}
-                                                />
-                                                <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-                                            </div>
-                                        ) : null}
-
-                                        <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-text-muted">
-                                            <span>Impact</span>
-                                            <span className="font-semibold text-text">{IMPACT_LABEL[pillar.title]}</span>
-                                        </div>
-                                    </div>
+                                    <ArchitecturePillarCard pillar={pillar} variant="mobile" bulletLimit={3} imageTransform={`translate3d(${parallaxX}px,0,0) scale(1.03)`} />
                                 </div>
                             </article>
                         );

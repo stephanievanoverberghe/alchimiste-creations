@@ -35,10 +35,10 @@
 
 #### Sous-phase 1.2 — Réduction de duplication mobile/desktop
 
-- [ ] Créer un composant partagé `pillar-card` (ou équivalent) utilisé par les deux vues.
-- [ ] Conserver uniquement les variantes de layout dans les wrappers responsive.
-- [ ] Harmoniser les classes communes pour éviter les divergences futures.
-- [ ] Valider visuellement que le rendu reste identique avant/après.
+- [x] Créer un composant partagé `pillar-card` (ou équivalent) utilisé par les deux vues.
+- [x] Conserver uniquement les variantes de layout dans les wrappers responsive.
+- [x] Harmoniser les classes communes pour éviter les divergences futures.
+- [x] Valider visuellement que le rendu reste identique avant/après.
 
 #### Sous-phase 1.3 — Structure `features/home/*`
 
