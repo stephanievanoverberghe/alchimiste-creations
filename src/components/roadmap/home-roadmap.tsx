@@ -9,7 +9,6 @@
 import { type RoadmapSection, useActiveSection } from '@/components/roadmap/use-active-section';
 import { useRoadmapPath } from '@/components/roadmap/use-roadmap-path';
 import { useScrollProgress } from '@/components/roadmap/use-scroll-progress';
-import { cn } from '@/lib/utils';
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 const HOME_ROADMAP_SECTIONS: RoadmapSection[] = [
@@ -39,7 +38,7 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
     const noiseFilterId = `roadmap-noise-${uid}`;
 
     const { target, smoothed, reducedMotion, isMobile } = useScrollProgress();
-    const { anchors, activeSectionId, visibilityScoreById } = useActiveSection(containerRef, HOME_ROADMAP_SECTIONS);
+    const { anchors } = useActiveSection(containerRef, HOME_ROADMAP_SECTIONS);
 
     const [size, setSize] = useState({ width: 0, height: 0 });
     const [trailPoints, setTrailPoints] = useState<Array<{ x: number; y: number }>>([]);
@@ -61,7 +60,7 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
         return () => observer.disconnect();
     }, []);
 
-    const { pathData, dasharray, dashoffset, drawProgress, headPoint, stepProgressById } = useRoadmapPath({
+    const { pathData, dasharray, dashoffset, headPoint } = useRoadmapPath({
         anchors,
         width: size.width,
         height: size.height,
@@ -163,45 +162,6 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
                             </g>
                         ) : null}
                     </svg>
-
-                    {anchors.map((anchor) => {
-                        const sectionProgress = stepProgressById[anchor.id] ?? 0;
-                        const isLit = drawProgress >= sectionProgress;
-                        const isActive = anchor.id === activeSectionId;
-                        const score = visibilityScoreById[anchor.id] ?? 0;
-
-                        return (
-                            <button
-                                key={anchor.id}
-                                type="button"
-                                className="focus-ring pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
-                                style={{ left: `${anchor.x}px`, top: `${anchor.y}px` }}
-                                aria-label={`Aller à la section ${anchor.label}`}
-                                onClick={() => {
-                                    document.getElementById(anchor.id)?.scrollIntoView({
-                                        behavior: reducedMotion ? 'auto' : 'smooth',
-                                        block: 'start',
-                                    });
-                                }}
-                            >
-                                <span
-                                    className={cn(
-                                        'absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border transition-all duration-300',
-                                        isActive || isLit ? 'border-accent/60 bg-accent/10 shadow-[0_0_24px_rgba(27,194,255,0.35)]' : 'border-border/70 bg-background/35',
-                                    )}
-                                />
-                                <span
-                                    className={cn(
-                                        'relative block h-3.5 w-3.5 rounded-full border transition-all duration-300',
-                                        isActive && !reducedMotion ? 'scale-125 border-accent bg-accent shadow-[0_0_18px_rgba(27,194,255,0.95)]' : '',
-                                        !isActive && isLit ? 'scale-105 border-primary/80 bg-primary/80' : '',
-                                        !isActive && !isLit ? 'border-primary/40 bg-background/75' : '',
-                                    )}
-                                />
-                                <span className="sr-only">{Math.round(score * 100)}% visible</span>
-                            </button>
-                        );
-                    })}
                 </div>
             ) : null}
 

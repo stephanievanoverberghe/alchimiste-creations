@@ -25,6 +25,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
         <Section id="offers">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
+                <p className="mb-4 text-sm font-semibold text-accent">Avant de décider, regardez ensuite des cas concrets d&apos;indépendants et petites entreprises.</p>
                 <div className="mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-border/70 bg-background/20 p-3">
                     {['Création vitrine en priorité', 'Refonte si votre base existe déjà', 'Choix clair en moins de 30 secondes'].map((label) => (
                         <span

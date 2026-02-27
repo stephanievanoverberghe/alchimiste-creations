@@ -120,7 +120,7 @@ export const homeContent = {
         ctaHint: 'Audit offert : on vérifie en 20 minutes si vous devez créer un nouveau site vitrine ou refondre l’existant.',
     },
     qualification: {
-        eyebrow: 'Bloc 2 — Diagnostic rapide',
+        eyebrow: 'Diagnostic rapide',
         title: 'Si votre site est visité mais contacté trop rarement, voici les blocages les plus fréquents.',
         description: 'On identifie vite ce qui freine la prise de contact : message flou, parcours hésitant, manque de preuve visible.',
         transitionToMethod: 'Ces blocages se corrigent avec une méthode simple en 3 étapes.',
@@ -153,7 +153,7 @@ export const homeContent = {
         ],
     },
     proofs: {
-        eyebrow: 'Bloc 2 — Preuve rapide',
+        eyebrow: 'Preuve rapide',
         title: 'En quelques secondes, votre visiteur comprend pourquoi il peut vous faire confiance.',
         description: 'On met en scène les bonnes informations, au bon moment, pour que votre site inspire confiance et donne envie de passer à l’action.',
         stats: [
@@ -197,7 +197,7 @@ export const homeContent = {
         ],
     },
     architecture: {
-        eyebrow: 'Bloc 3 — Méthode',
+        eyebrow: 'Méthode',
         title: 'Une méthode simple pour rendre votre site clair, crédible et orienté contact.',
         pillars: [
             {
@@ -231,7 +231,7 @@ export const homeContent = {
         ],
     },
     process: {
-        eyebrow: 'Bloc 3 — Méthode en 3 étapes',
+        eyebrow: 'Méthode en 3 étapes',
         title: 'Ces blocages se corrigent avec une méthode simple en 3 étapes.',
         description: 'On fusionne stratégie de contenu et exécution pour aller de la clarté à la prise de contact, sans jargon technique.',
         transitionToOffers: 'Choisissez maintenant l’option adaptée : créer votre site vitrine ou refondre l’existant.',
@@ -263,19 +263,19 @@ export const homeContent = {
         ],
     },
     offers: {
-        eyebrow: 'Bloc 4 — Offres priorisées',
+        eyebrow: 'Offres priorisées',
         title: 'Choisissez l’option adaptée : création de site vitrine ou refonte.',
         description: 'Offre principale : création de site vitrine. Offre secondaire : refonte de site existant pour améliorer clarté et conversion.',
         items: offers,
     },
     projects: {
-        eyebrow: 'Bloc 5 — Preuves projets',
+        eyebrow: 'Preuves projets',
         title: 'Des exemples concrets de sites qui font passer de “je regarde” à “je vous contacte”.',
         description: 'On part d’un blocage client clair, puis on crée une expérience plus rassurante, plus lisible et plus engageante.',
         items: projects,
     },
     faq: {
-        eyebrow: 'Bloc 6 — FAQ + prochaine étape',
+        eyebrow: 'FAQ',
         title: 'Vos questions, en version simple et rassurante.',
         description: 'Des réponses claires, sans jargon, pour avancer en confiance.',
         questions: faqs,

@@ -7,7 +7,7 @@ export default function HomePage() {
 
     return (
         <HomeRoadmap>
-            <HomeHeroSection content={content.hero} stats={content.proofs.stats} />
+            <HomeHeroSection content={content.hero} />
             <HomeDiagnosticSection qualification={content.qualification} proofs={content.proofs} />
             <HomeMethodSection architecture={content.architecture} process={content.process} />
             <HomeOffersSection content={content.offers} />

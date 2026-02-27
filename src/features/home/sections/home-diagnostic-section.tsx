@@ -44,6 +44,13 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
                         ))}
                     </div>
                 </Card>
+                <div className="mt-5 rounded-2xl border border-border/70 bg-background/70 p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-accent">Aperçu de la suite</p>
+                    <p className="mt-2 text-sm text-text-muted">
+                        Vous pourrez ensuite choisir rapidement l&apos;option adaptée : <span className="font-semibold text-text">création de site vitrine</span> ou{' '}
+                        <span className="font-semibold text-text">refonte de l&apos;existant</span>.
+                    </p>
+                </div>
                 <p className="mt-5 text-sm font-semibold text-accent">{qualification.transitionToMethod}</p>
             </Container>
         </Section>

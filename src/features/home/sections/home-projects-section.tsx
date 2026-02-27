@@ -36,6 +36,7 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
                     </Link>
                 </div>
 
+                <p className="mb-5 text-sm font-semibold text-accent">Il vous reste des questions ? La FAQ juste après répond aux objections les plus fréquentes.</p>
                 <div className="grid gap-5 md:grid-cols-6">
                     {mainProject
                         ? (() => {
