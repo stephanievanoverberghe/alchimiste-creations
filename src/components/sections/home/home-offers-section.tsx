@@ -26,7 +26,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
                 <div className="mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-border/70 bg-background/20 p-3">
-                    {['Plus de demandes qualifiées', 'Offres prêtes à vendre', 'Choix simple en 30 secondes', 'Zéro jargon technique'].map((label) => (
+                    {['Je veux plus de clients', 'Je veux une offre claire', 'Je veux vendre sans forcer', 'Je veux un site qui rassure'].map((label) => (
                         <span
                             key={label}
                             className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-background/55 px-3 py-1 text-xs font-semibold text-text-muted transition-all duration-300 hover:border-accent/45 hover:text-text"
@@ -56,6 +56,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                                     style={{ animationDelay: `${index * 90}ms` }}
                                 >
                                     <div className="absolute inset-x-0 top-0 h-1 -translate-y-full bg-linear-to-r from-primary/0 via-accent/80 to-primary/0 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100" />
+                                    <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-primary/0 via-transparent to-accent/0 opacity-0 transition duration-500 group-hover:from-primary/8 group-hover:to-accent/8" />
 
                                     <div
                                         aria-hidden="true"
@@ -73,7 +74,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                                                 <p className={cn('font-semibold', offer.featured ? 'text-xl' : 'text-lg')}>{offer.name}</p>
                                                 {offer.featured ? (
                                                     <span className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-text">
-                                                        Offre prioritaire
+                                                        Offre la plus demandée
                                                     </span>
                                                 ) : null}
                                             </div>
@@ -98,7 +99,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                                     ) : null}
 
                                     <div className="relative mt-5 rounded-2xl border border-border/70 bg-background/25 p-3">
-                                        <p className="text-xs font-semibold tracking-wide text-accent">En clair, pour vous</p>
+                                        <p className="text-xs font-semibold tracking-wide text-accent">Ce que ça change concrètement</p>
                                         <ul className="mt-3 space-y-2 text-sm">
                                             {offer.deliverables.slice(0, 3).map((d) => (
                                                 <li key={d} className="flex gap-2 text-text-muted">
