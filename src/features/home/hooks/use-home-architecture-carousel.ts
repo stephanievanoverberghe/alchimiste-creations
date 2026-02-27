@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { HomePillar } from '@/content/home';
 
-import { ARCHITECTURE_AUTO_PLAY_MS } from './home-architecture-section.data';
+import { ARCHITECTURE_AUTO_PLAY_MS } from '../sections/home-architecture-section.data';
 
 function mod(value: number, divisor: number) {
     return ((value % divisor) + divisor) % divisor;

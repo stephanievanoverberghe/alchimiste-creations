@@ -5,8 +5,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
 
-import { ArchitecturePillarCard } from '../architecture-pillar-card';
-import { useSwipeCarousel } from './use-swipe-carousel';
+import { ArchitecturePillarCard } from './architecture-pillar-card';
+import { useSwipeCarousel } from '../hooks/use-swipe-carousel';
 
 type HomeRoadmapMobileProps = {
     pillars: HomeContent['architecture']['pillars'];

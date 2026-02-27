@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { HomePillar } from '@/content/home';
 import { cn } from '@/lib/utils';
 
-import { ARCHITECTURE_ICONS, ARCHITECTURE_IMAGE_CAPTION, ARCHITECTURE_IMPACT_LABEL, ARCHITECTURE_STEP_BADGE } from './home-architecture-section.data';
+import { ARCHITECTURE_ICONS, ARCHITECTURE_IMAGE_CAPTION, ARCHITECTURE_IMPACT_LABEL, ARCHITECTURE_STEP_BADGE } from '../sections/home-architecture-section.data';
 
 type ArchitecturePillarCardProps = {
     pillar: HomePillar;

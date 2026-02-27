@@ -9,7 +9,7 @@ import {
     HomeProjectsSection,
     HomeProofsSection,
     HomeQualificationSection,
-} from '@/components/sections/home';
+} from '@/features/home/sections';
 import { homeContent } from '@/content/home';
 
 export default function HomePage() {

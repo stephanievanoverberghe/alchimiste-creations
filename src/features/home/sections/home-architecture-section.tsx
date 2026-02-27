@@ -9,10 +9,10 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
 
-import { ArchitecturePillarCard } from './architecture-pillar-card';
+import { ArchitecturePillarCard } from '../components/architecture-pillar-card';
 import { ARCHITECTURE_GLOW_BY_PILLAR, ARCHITECTURE_STEP_BADGE } from './home-architecture-section.data';
-import { HomeRoadmapMobile } from './mobile/home-roadmap-mobile';
-import { useHomeArchitectureCarousel } from './use-home-architecture-carousel';
+import { HomeRoadmapMobile } from '../components/home-roadmap-mobile';
+import { useHomeArchitectureCarousel } from '../hooks/use-home-architecture-carousel';
 
 type Props = { content: HomeContent['architecture'] };
 

@@ -42,10 +42,10 @@
 
 #### Sous-phase 1.3 — Structure `features/home/*`
 
-- [ ] Introduire une arborescence claire: `features/home/sections`, `features/home/components`, `features/home/hooks`.
-- [ ] Déplacer progressivement les sections home existantes sans refactor massif en une fois.
-- [ ] Ajouter un fichier d’index par dossier pour fiabiliser les imports.
-- [ ] Vérifier les alias et chemins d’import après déplacement.
+- [x] Introduire une arborescence claire: `features/home/sections`, `features/home/components`, `features/home/hooks`.
+- [x] Déplacer progressivement les sections home existantes sans refactor massif en une fois.
+- [x] Ajouter un fichier d’index par dossier pour fiabiliser les imports.
+- [x] Vérifier les alias et chemins d’import après déplacement
 
 #### Sous-phase 1.4 — Préparation du split CSS
 
@@ -104,4 +104,5 @@
 ## Journal d’avancement
 
 - **Sprint architecture #1**: nettoyage de base effectué (hook home, typo roadmap hook, dépendance inutile).
-- Prochaine action: découpage de la section architecture et réduction de la duplication mobile/desktop.
+- **Sprint architecture #2**: phase 1.3 réalisée avec migration de la home vers `features/home/*` et sécurisation des imports via fichiers d’index.
+- Prochaine action: préparation du split CSS (sous-phase 1.4).
