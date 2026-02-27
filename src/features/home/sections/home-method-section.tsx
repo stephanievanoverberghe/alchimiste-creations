@@ -22,11 +22,9 @@ export function HomeMethodSection({ architecture, process }: Props) {
     return (
         <Section id="methode">
             <Container>
-                <SectionHeading
-                    eyebrow="Bloc 3 — Méthode en 3 étapes"
-                    title="Ces blocages se corrigent avec une méthode simple en 3 étapes."
-                    description="On fusionne stratégie de contenu et exécution pour aller de la clarté à la prise de contact, sans jargon technique."
-                />
+                <SectionHeading eyebrow={process.eyebrow} title={process.title} description={process.description} />
+
+                <p className="mb-5 text-sm font-semibold text-accent">{process.transitionToOffers}</p>
 
                 <div className="grid gap-4 lg:grid-cols-3">
                     {steps.map((step, index) => {

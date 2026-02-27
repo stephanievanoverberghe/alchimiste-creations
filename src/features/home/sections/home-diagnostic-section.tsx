@@ -14,11 +14,7 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
     return (
         <Section id="diagnostic" className="pt-2">
             <Container>
-                <SectionHeading
-                    eyebrow="Bloc 2 — Diagnostic + preuve rapide"
-                    title={qualification.title}
-                    description="Si votre site est visité mais contacté trop rarement, voici les blocages les plus fréquents — et les signaux qui rassurent immédiatement."
-                />
+                <SectionHeading eyebrow={qualification.eyebrow} title={qualification.title} description={qualification.description} />
 
                 <div className="grid gap-4 lg:grid-cols-3">
                     {qualification.items.map((item) => (
@@ -48,6 +44,7 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
                         ))}
                     </div>
                 </Card>
+                <p className="mt-5 text-sm font-semibold text-accent">{qualification.transitionToMethod}</p>
             </Container>
         </Section>
     );

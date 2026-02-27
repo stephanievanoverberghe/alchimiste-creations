@@ -10,6 +10,7 @@ export type HomeHero = {
     highlightsTitle: string;
     highlights: string[];
     assurances: string[];
+    needs: string[];
     ctaHint: string;
 };
 
@@ -64,6 +65,7 @@ export type HomeContent = {
         eyebrow: string;
         title: string;
         description: string;
+        transitionToMethod: string;
         journey: string[];
         items: HomeQualificationItem[];
     };
@@ -83,6 +85,7 @@ export type HomeContent = {
         eyebrow: string;
         title: string;
         description: string;
+        transitionToOffers: string;
         steps: HomeProcessStep[];
     };
     offers: {
@@ -110,15 +113,17 @@ export const homeContent = {
         badge: 'Création de sites vitrines pour indépendants et petites entreprises (refonte possible)',
         title: 'Je crée des sites vitrines clairs et crédibles pour indépendants et petites entreprises.',
         lead: 'Offre principale : création de site vitrine. Offre secondaire : refonte. Objectif : transformer vos visites en demandes qualifiées.',
-        highlightsTitle: 'En moins de 5 secondes, votre visiteur comprend :',
-        highlights: ['Ce que vous faites, pour qui, et avec quel résultat.', 'Pourquoi votre approche est crédible.', 'Quelle action faire maintenant pour vous contacter.'],
-        assurances: ['Accompagnement clair et concret', 'Priorité à la prise de contact', 'Sans jargon inutile'],
+        highlightsTitle: 'En 5 secondes, votre prospect doit capter :',
+        highlights: ['Ce que vous faites et pour qui.', 'Pourquoi vous contacter maintenant.'],
+        assurances: ['Accompagnement clair et concret', 'Sans jargon inutile'],
+        needs: ['Message clair dès l’arrivée', 'Parcours qui incite à agir', 'Plus de contacts qualifiés'],
         ctaHint: 'Audit offert : on vérifie en 20 minutes si vous devez créer un nouveau site vitrine ou refondre l’existant.',
     },
     qualification: {
         eyebrow: 'Bloc 2 — Diagnostic rapide',
-        title: 'Votre site devient une vraie vitrine qui rassure et donne envie de vous contacter.',
-        description: 'Ici, pas de jargon : on simplifie votre message, on met en avant vos points forts et on guide naturellement vers la prise de contact.',
+        title: 'Si votre site est visité mais contacté trop rarement, voici les blocages les plus fréquents.',
+        description: 'On identifie vite ce qui freine la prise de contact : message flou, parcours hésitant, manque de preuve visible.',
+        transitionToMethod: 'Ces blocages se corrigent avec une méthode simple en 3 étapes.',
         journey: ['Compréhension immédiate de votre promesse.', 'Projection rapide sur la bonne offre.', 'Passage à l’action avec confiance.'],
         items: [
             {
@@ -226,9 +231,10 @@ export const homeContent = {
         ],
     },
     process: {
-        eyebrow: 'Bloc 3 — Processus',
-        title: 'Un accompagnement simple en 3 étapes, pensé pour aller à l’essentiel.',
-        description: 'Chaque étape vous donne un résultat concret : un message clair, une page crédible, puis un passage à l’action fluide.',
+        eyebrow: 'Bloc 3 — Méthode en 3 étapes',
+        title: 'Ces blocages se corrigent avec une méthode simple en 3 étapes.',
+        description: 'On fusionne stratégie de contenu et exécution pour aller de la clarté à la prise de contact, sans jargon technique.',
+        transitionToOffers: 'Choisissez maintenant l’option adaptée : créer votre site vitrine ou refondre l’existant.',
         steps: [
             {
                 title: '1. On fait le point ensemble',
