@@ -9,35 +9,22 @@ import {
     HomeProjectsSection,
     HomeProofsSection,
     HomeQualificationSection,
+    useHome,
 } from '@/components/sections/home';
 
-import type { HomeHeroVariant } from '@/components/sections/home/use-home-hero';
-import { homeContent } from '@/content/home';
-
-type HomePageSearchParams = Promise<{
-    hero?: string;
-}>;
-
-type HomePageProps = {
-    searchParams: HomePageSearchParams;
-};
-
-const getHeroVariant = (heroParam?: string): HomeHeroVariant => (heroParam === 'b' ? 'b' : 'a');
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-    const params = await searchParams;
-    const heroVariant = getHeroVariant(params?.hero);
+export default function HomePage() {
+    const { content } = useHome();
 
     return (
         <HomeRoadmap>
-            <HomeHeroSection variant={heroVariant} />
-            <HomeQualificationSection content={homeContent.qualification} />
-            <HomeProofsSection content={homeContent.proofs} />
-            <HomeArchitectureSection content={homeContent.architecture} />
-            <HomeProcessSection content={homeContent.process} />
-            <HomeOffersSection content={homeContent.offers} />
-            <HomeProjectsSection content={homeContent.projects} />
-            <HomeFaqSection content={homeContent.faq} />
+            <HomeHeroSection content={content.hero} stats={content.proofs.stats} />
+            <HomeQualificationSection content={content.qualification} />
+            <HomeProofsSection content={content.proofs} />
+            <HomeArchitectureSection content={content.architecture} />
+            <HomeProcessSection content={content.process} />
+            <HomeOffersSection content={content.offers} />
+            <HomeProjectsSection content={content.projects} />
+            <HomeFaqSection content={content.faq} />
             <CtaStrip />
         </HomeRoadmap>
     );
