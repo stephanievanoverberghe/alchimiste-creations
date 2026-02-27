@@ -108,15 +108,15 @@ export type HomeContent = {
 export const homeContent = {
     hero: {
         badge: 'Création & refonte de sites web pour indépendants et petites entreprises',
-        title: 'Votre site web doit expliquer clairement votre valeur et donner envie de vous contacter.',
-        lead: 'Je crée ou refonds votre site pour transformer une visite en prise de contact qualifiée, avec un parcours simple et crédible.',
+        title: 'J’aide les indépendants et petites entreprises à obtenir plus de contacts qualifiés.',
+        lead: 'Votre visiteur comprend votre valeur en quelques secondes, vous fait confiance, puis passe à l’action sans friction.',
         highlightsTitle: 'En moins de 5 secondes, votre visiteur comprend :',
-        highlights: ['Ce que vous proposez, clairement.', 'Pourquoi vous êtes la bonne personne pour son besoin.', 'Comment vous contacter en une action simple.'],
+        highlights: ['Ce que vous faites, pour qui, et avec quel résultat.', 'Pourquoi votre approche est crédible.', 'Quelle action faire maintenant pour vous contacter.'],
         assurances: ['Audit offert (20 min)', 'Plan clair et actionnable', 'Sans engagement'],
-        ctaHint: 'Pendant l’audit, on identifie si vous avez besoin d’une refonte ciblée ou d’un nouveau site pensé pour convertir.',
+        ctaHint: 'Audit offert: on identifie en 20 minutes le message prioritaire et le parcours à corriger en premier.',
     },
     qualification: {
-        eyebrow: 'Un site qui aide vos futurs clients à dire “oui”',
+        eyebrow: 'Étape 1 — Clarifier votre message',
         title: 'Votre site devient une vraie vitrine qui rassure et donne envie de vous contacter.',
         description: 'Ici, pas de jargon : on simplifie votre message, on met en avant vos points forts et on guide naturellement vers la prise de contact.',
         journey: ['Compréhension immédiate de votre promesse.', 'Projection rapide sur la bonne offre.', 'Passage à l’action avec confiance.'],
@@ -148,7 +148,7 @@ export const homeContent = {
         ],
     },
     proofs: {
-        eyebrow: 'Des preuves qui parlent à vos futurs clients',
+        eyebrow: 'Étape 2 — Prouver que ça fonctionne',
         title: 'En quelques secondes, votre visiteur comprend pourquoi il peut vous faire confiance.',
         description: 'On met en scène les bonnes informations, au bon moment, pour que votre site inspire confiance et donne envie de passer à l’action.',
         stats: [
@@ -192,7 +192,7 @@ export const homeContent = {
         ],
     },
     architecture: {
-        eyebrow: 'Parcours client',
+        eyebrow: 'Étape 3 — Structurer le parcours qui convertit',
         title: 'Une page pensée pour être claire, agréable et donner envie de passer à l’action.',
         pillars: [
             {
@@ -226,7 +226,7 @@ export const homeContent = {
         ],
     },
     process: {
-        eyebrow: 'Process',
+        eyebrow: 'Étape 4 — Avancer simplement, étape par étape',
         title: 'Un accompagnement simple en 4 étapes, pensé pour vous faire gagner du temps.',
         description: 'Vous savez toujours où on en est, ce qui arrive ensuite, et ce que vous recevez à chaque étape.',
         steps: [
@@ -269,19 +269,19 @@ export const homeContent = {
         ],
     },
     offers: {
-        eyebrow: 'Offres',
+        eyebrow: 'Étape 5 — Choisir l’accompagnement adapté',
         title: 'Des offres claires pour répondre à votre besoin du moment.',
         description: 'Vous choisissez selon votre priorité : obtenir plus de demandes, mieux présenter votre valeur, ou poser une base solide pour vendre avec régularité.',
         items: offers,
     },
     projects: {
-        eyebrow: 'Projets',
+        eyebrow: 'Étape 6 — Voir des cas concrets',
         title: 'Des exemples concrets de sites qui font passer de “je regarde” à “je vous contacte”.',
         description: 'On part d’un blocage client clair, puis on crée une expérience plus rassurante, plus lisible et plus engageante.',
         items: projects,
     },
     faq: {
-        eyebrow: 'FAQ',
+        eyebrow: 'Dernière étape — Lever les derniers doutes',
         title: 'Vos questions, en version simple et rassurante.',
         description: 'Des réponses claires, sans jargon, pour avancer en confiance.',
         questions: faqs,
