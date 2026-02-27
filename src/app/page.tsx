@@ -9,11 +9,11 @@ import {
     HomeProjectsSection,
     HomeProofsSection,
     HomeQualificationSection,
-    useHome,
 } from '@/components/sections/home';
+import { homeContent } from '@/content/home';
 
 export default function HomePage() {
-    const { content } = useHome();
+    const content = homeContent;
 
     return (
         <HomeRoadmap>

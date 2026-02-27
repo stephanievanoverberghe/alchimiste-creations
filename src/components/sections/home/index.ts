@@ -7,4 +7,3 @@ export { HomeProcessSection } from './home-process-section';
 export { HomeOffersSection } from './home-offers-section';
 export { HomeProjectsSection } from './home-projects-section';
 export { HomeFaqSection } from './home-faq-section';
-export { useHome } from './use-home';

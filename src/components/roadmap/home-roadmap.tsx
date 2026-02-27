@@ -8,7 +8,7 @@
 
 import { type RoadmapSection, useActiveSection } from '@/components/roadmap/use-active-section';
 import { useRoadmapPath } from '@/components/roadmap/use-roadmap-path';
-import { useScrollProgress } from '@/components/roadmap/use-scroll-progess';
+import { useScrollProgress } from '@/components/roadmap/use-scroll-progress';
 import { cn } from '@/lib/utils';
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
