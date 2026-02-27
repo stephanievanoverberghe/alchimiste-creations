@@ -274,8 +274,8 @@ export const homeContent = {
     },
     offers: {
         eyebrow: 'Offres',
-        title: 'Des formats pensés pour décider vite et bien.',
-        description: 'Choisissez un cadre adapté à votre niveau de maturité, avec un objectif clair de conversion.',
+        title: 'Des offres claires, pensées pour vos vrais besoins clients.',
+        description: 'Chaque offre répond à une situation concrète : clarifier votre message, moderniser votre image ou lancer un site qui génère des demandes.',
         items: offers,
     },
     projects: {
