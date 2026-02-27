@@ -1,15 +1,5 @@
 import { CtaStrip } from '@/components/sections/cta-strip';
-import {
-    HomeRoadmap,
-    HomeArchitectureSection,
-    HomeFaqSection,
-    HomeHeroSection,
-    HomeOffersSection,
-    HomeProcessSection,
-    HomeProjectsSection,
-    HomeProofsSection,
-    HomeQualificationSection,
-} from '@/features/home/sections';
+import { HomeRoadmap, HomeDiagnosticSection, HomeFaqSection, HomeHeroSection, HomeMethodSection, HomeOffersSection, HomeProjectsSection } from '@/features/home/sections';
 import { homeContent } from '@/content/home';
 
 export default function HomePage() {
@@ -18,10 +8,8 @@ export default function HomePage() {
     return (
         <HomeRoadmap>
             <HomeHeroSection content={content.hero} stats={content.proofs.stats} />
-            <HomeQualificationSection content={content.qualification} />
-            <HomeProofsSection content={content.proofs} />
-            <HomeArchitectureSection content={content.architecture} />
-            <HomeProcessSection content={content.process} />
+            <HomeDiagnosticSection qualification={content.qualification} proofs={content.proofs} />
+            <HomeMethodSection architecture={content.architecture} process={content.process} />
             <HomeOffersSection content={content.offers} />
             <HomeProjectsSection content={content.projects} />
             <HomeFaqSection content={content.faq} />

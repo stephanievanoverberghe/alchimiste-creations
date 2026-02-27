@@ -14,14 +14,12 @@ import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 const HOME_ROADMAP_SECTIONS: RoadmapSection[] = [
     { id: 'hero', label: 'Hero' },
-    { id: 'qualification', label: 'Qualification' },
-    { id: 'proofs', label: 'Preuves' },
-    { id: 'architecture', label: 'Architecture' },
-    { id: 'process', label: 'Process' },
+    { id: 'diagnostic', label: 'Diagnostic' },
+    { id: 'methode', label: 'Méthode' },
     { id: 'offers', label: 'Offres' },
     { id: 'projects', label: 'Projets' },
     { id: 'faq', label: 'FAQ' },
-    { id: 'cta', label: 'CTA' },
+    { id: 'cta', label: 'CTA final' },
 ];
 
 type HomeRoadmapLayoutProps = {
