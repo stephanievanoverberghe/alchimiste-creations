@@ -681,4 +681,22 @@ body {
     50% {
         transform: translateY(-56%) translateX(-12px);
     }
+
+}
+
+.hero-device-frame {
+    transform-style: preserve-3d;
+}
+
+.hero-device-overlay {
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 45%),
+        linear-gradient(180deg, transparent 50%, rgba(3, 6, 18, 0.28));
+}
+
+@media (min-width: 1024px) {
+    .group:hover .hero-device-gloss {
+        transform: translateX(10px);
+        transition: transform var(--motion-base) var(--ease-standard);
+    }
 }

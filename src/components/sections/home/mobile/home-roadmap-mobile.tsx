@@ -116,13 +116,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
     if (pillars.length === 0) return null;
 
     return (
-        <section
-            id="conversion-journey-mobile"
-            ref={sectionRef}
-            className="lg:hidden relative z-20  bg-background/80  backdrop-blur"
-            role="region"
-            aria-label="Conversion journey mobile"
-        >
+        <section id="conversion-journey-mobile" ref={sectionRef} className="lg:hidden relative z-20  bg-background/80" role="region" aria-label="Conversion journey mobile">
             <div className="z-10 mb-3">
                 <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1" aria-label="Étapes du conversion journey">
                     {pillars.map((pillar, index) => {
@@ -229,15 +223,6 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
                                         <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-text-muted">
                                             <span>Impact</span>
                                             <span className="font-semibold text-text">{IMPACT_LABEL[pillar.title]}</span>
-                                        </div>
-
-                                        <div className="mt-auto pt-4">
-                                            <button type="button" className="min-h-11 w-full rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground">
-                                                Réserver l’audit
-                                            </button>
-                                            <button type="button" className="mt-2 min-h-11 text-sm font-medium text-accent underline-offset-4 hover:underline">
-                                                Voir les offres
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
