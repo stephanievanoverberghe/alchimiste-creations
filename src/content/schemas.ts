@@ -24,13 +24,11 @@ export const offerSchema = z.object({
     priceFrom: z.string(),
     deliverables: z.array(z.string()).min(3),
     featured: z.boolean().default(false),
-
-    // ✅ champs UI/marketing (pour une section Offres plus visuelle)
-    icon: z.enum(['shield', 'sparkles', 'layout']),
-    bestFor: z.string(),
-    highlights: z.array(z.string()).min(2),
+    icon: z.enum(['shield', 'sparkles', 'layout']).optional(),
+    bestFor: z.string().optional(),
+    highlights: z.array(z.string()).optional(),
     note: z.string().optional(),
-    image: offerImageSchema.optional(),
+    image: z.object({ src: z.string(), alt: z.string() }).optional(),
 });
 
 export const projectSchema = z.object({
