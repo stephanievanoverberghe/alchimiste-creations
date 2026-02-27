@@ -74,10 +74,10 @@
 
 ### Sous-phase 2.3 — Frictions et charge cognitive
 
-- [ ] Détecter les zones de surcharge d’information (blocs trop denses, listes longues, multi-messages).
-- [ ] Qualifier les frictions de lecture (scroll trop long, manque de structure, transitions faibles).
-- [ ] Évaluer la longueur totale de page vs. valeur perçue à chaque écran.
-- [ ] Prioriser les frictions par impact conversion (fort / moyen / faible).
+- [x] Détecter les zones de surcharge d’information (blocs trop denses, listes longues, multi-messages).
+- [x] Qualifier les frictions de lecture (scroll trop long, manque de structure, transitions faibles).
+- [x] Évaluer la longueur totale de page vs. valeur perçue à chaque écran.
+- [x] Prioriser les frictions par impact conversion (fort / moyen / faible).
 
 ### Sous-phase 2.4 — Recommandation de parcours cible
 
@@ -138,4 +138,5 @@
 - **Sprint architecture #3**: sous-phase 1.4 terminée avec split CSS par domaine (`header`, `home`, `animations`) et `globals.css` conservé comme point d’entrée.
 - **Sprint UX #1**: sous-phase 2.1 réalisée (diagnostic 5 secondes), avec points de clarté, ambiguïtés de wording et distractions identifiées dans `docs/ux-phase-2-1-diagnostic.md`.
 - **Sprint UX #2**: sous-phase 2.2 réalisée avec cartographie complète du parcours, ruptures de narration et recommandations de fil rouge dans `docs/ux-phase-2-2-diagnostic.md`.
-- Prochaine action: lancer la sous-phase 2.3 (frictions et charge cognitive).
+- **Sprint UX #3**: sous-phase 2.3 réalisée avec cartographie des surcharges, qualification des frictions de lecture et priorisation par impact conversion dans `docs/ux-phase-2-3-diagnostic.md`.
+- Prochaine action: lancer la sous-phase 2.4 (recommandation de parcours cible).
