@@ -42,8 +42,8 @@ export const projectSchema = z.object({
     tag: z.string().optional(),
     icon: z.enum(['brush', 'sparkles', 'camera', 'layout', 'wand2']).optional(),
     image: z.object({ src: z.string(), alt: z.string() }).optional(),
-    featured: z.boolean().default(false),
     liveUrl: z.string().url().optional(),
+    featured: z.boolean().default(false),
 });
 
 export const faqSchema = z.object({
