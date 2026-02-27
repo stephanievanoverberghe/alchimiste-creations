@@ -81,17 +81,17 @@
 
 ### Sous-phase 2.4 — Recommandation de parcours cible
 
-- [ ] Proposer un nouveau parcours conseillé orienté conversion (6 blocs max si possible).
-- [ ] Définir l’ordre optimal des sections avec justification UX courte pour chaque bloc.
-- [ ] Lister les simplifications possibles (fusion, suppression, condensation de sections).
-- [ ] Rédiger des suggestions de micro-copy (hero, CTA, transitions, réassurance).
+- [x] Proposer un nouveau parcours conseillé orienté conversion (6 blocs max si possible).
+- [x] Définir l’ordre optimal des sections avec justification UX courte pour chaque bloc.
+- [x] Lister les simplifications possibles (fusion, suppression, condensation de sections).
+- [x] Rédiger des suggestions de micro-copy (hero, CTA, transitions, réassurance).
 
 ### Livrables attendus (fin de phase 2)
 
-- [ ] Diagnostic UX synthétique (forces / faiblesses / risques de confusion).
-- [ ] Nouveau parcours recommandé (version actuelle vs version cible).
-- [ ] Ordre optimal des sections validé pour implémentation.
-- [ ] Banque de micro-copy prête à intégrer dans les composants.
+- [x] Diagnostic UX synthétique (forces / faiblesses / risques de confusion).
+- [x] Nouveau parcours recommandé (version actuelle vs version cible).
+- [x] Ordre optimal des sections validé pour implémentation.
+- [x] Banque de micro-copy prête à intégrer dans les composants.
 
 ---
 
@@ -139,4 +139,5 @@
 - **Sprint UX #1**: sous-phase 2.1 réalisée (diagnostic 5 secondes), avec points de clarté, ambiguïtés de wording et distractions identifiées dans `docs/ux-phase-2-1-diagnostic.md`.
 - **Sprint UX #2**: sous-phase 2.2 réalisée avec cartographie complète du parcours, ruptures de narration et recommandations de fil rouge dans `docs/ux-phase-2-2-diagnostic.md`.
 - **Sprint UX #3**: sous-phase 2.3 réalisée avec cartographie des surcharges, qualification des frictions de lecture et priorisation par impact conversion dans `docs/ux-phase-2-3-diagnostic.md`.
-- Prochaine action: lancer la sous-phase 2.4 (recommandation de parcours cible).
+- **Sprint UX #4**: sous-phase 2.4 réalisée avec proposition d'un parcours cible en 6 blocs, simplifications de sections et banque de micro-copy dans `docs/ux-phase-2-4-target-journey.md`.
+- Prochaine action: implémenter la version cible dans les composants de la home puis mesurer les impacts sur la compréhension et la conversion.
