@@ -7,7 +7,7 @@
 ## Statut global
 
 - [x] Lancer la phase 1 (architecture)
-- [ ] Finaliser la phase 1 (architecture)
+- [x] Finaliser la phase 1 (architecture)
 - [ ] Phase 2 (UX)
 - [ ] Phase 3 (UI)
 - [ ] Phase 4 (performance)
@@ -49,10 +49,10 @@
 
 #### Sous-phase 1.4 — Préparation du split CSS
 
-- [ ] Identifier dans `globals.css` les blocs relevant de `header`, `home`, `animations`.
-- [ ] Créer les nouveaux fichiers de style par domaine sans changer le comportement.
-- [ ] Brancher les imports dans le bon ordre pour conserver la cascade actuelle.
-- [ ] Laisser `globals.css` comme point d’entrée temporaire pendant la transition.
+- [x] Identifier dans `globals.css` les blocs relevant de `header`, `home`, `animations`.
+- [x] Créer les nouveaux fichiers de style par domaine sans changer le comportement.
+- [x] Brancher les imports dans le bon ordre pour conserver la cascade actuelle.
+- [x] Laisser `globals.css` comme point d’entrée temporaire pendant la transition.
 
 ---
 
@@ -105,4 +105,5 @@
 
 - **Sprint architecture #1**: nettoyage de base effectué (hook home, typo roadmap hook, dépendance inutile).
 - **Sprint architecture #2**: phase 1.3 réalisée avec migration de la home vers `features/home/*` et sécurisation des imports via fichiers d’index.
-- Prochaine action: préparation du split CSS (sous-phase 1.4).
+- **Sprint architecture #3**: sous-phase 1.4 terminée avec split CSS par domaine (`header`, `home`, `animations`) et `globals.css` conservé comme point d’entrée.
+- Prochaine action: démarrer la phase 2 (UX).
