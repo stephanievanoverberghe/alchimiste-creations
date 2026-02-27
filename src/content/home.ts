@@ -107,13 +107,13 @@ export type HomeContent = {
 
 export const homeContent = {
     hero: {
-        badge: 'Sites web qui donnent envie de vous contacter',
-        title: 'Transformez vos visiteurs en vrais clients, avec un site clair, vivant et rassurant.',
-        lead: 'On refait votre présence en ligne pour que vos futurs clients comprennent immédiatement ce que vous proposez, sentent votre différence et passent à l’action sans hésiter.',
-        highlightsTitle: 'En 5 secondes, votre visiteur comprend :',
-        highlights: ['Si vous êtes la bonne personne pour son besoin.', 'Quelle offre répond exactement à sa situation.', 'Comment vous contacter simplement, au bon moment.'],
-        assurances: ['Audit offert (20 min)', 'Premières pistes actionnables dès l’appel', 'Sans engagement'],
-        ctaHint: 'Pendant l’audit, on identifie ensemble les freins qui vous coûtent des clients et les actions à lancer immédiatement.',
+        badge: 'Création & refonte de sites web pour indépendants et petites entreprises',
+        title: 'Votre site web doit expliquer clairement votre valeur et donner envie de vous contacter.',
+        lead: 'Je crée ou refonds votre site pour transformer une visite en prise de contact qualifiée, avec un parcours simple et crédible.',
+        highlightsTitle: 'En moins de 5 secondes, votre visiteur comprend :',
+        highlights: ['Ce que vous proposez, clairement.', 'Pourquoi vous êtes la bonne personne pour son besoin.', 'Comment vous contacter en une action simple.'],
+        assurances: ['Audit offert (20 min)', 'Plan clair et actionnable', 'Sans engagement'],
+        ctaHint: 'Pendant l’audit, on identifie si vous avez besoin d’une refonte ciblée ou d’un nouveau site pensé pour convertir.',
     },
     qualification: {
         eyebrow: 'Un site qui aide vos futurs clients à dire “oui”',

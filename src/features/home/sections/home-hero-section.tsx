@@ -39,7 +39,7 @@ export function HomeHeroSection({ content, stats }: HomeHeroSectionProps) {
                             ))}
                         </ul>
                         <div className="flex flex-wrap gap-2" aria-label="Besoins clients couverts">
-                            {['Plus de demandes qualifiées', 'Message compris en quelques secondes', 'Site moderne qui inspire confiance'].map((need, index) => (
+                            {['Message clair dès l’arrivée', 'Parcours qui incite à agir', 'Plus de contacts qualifiés'].map((need, index) => (
                                 <span
                                     key={need}
                                     className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/40 px-3 py-1.5 text-xs font-semibold text-text-muted transition hover:-translate-y-0.5 hover:border-accent/45 hover:text-text"
