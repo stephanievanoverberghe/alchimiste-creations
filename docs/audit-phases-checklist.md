@@ -58,10 +58,40 @@
 
 ## Phase 2 — UX
 
-- [ ] Réduire la home à 6 blocs max (priorité conversion).
-- [ ] Revoir l’ordre narratif des sections.
-- [ ] Simplifier la densité texte/infos par section.
-- [ ] Clarifier les CTA principaux et secondaires.
+### Sous-phase 2.1 — Diagnostic de compréhension immédiate (5 secondes)
+
+- [ ] Vérifier la clarté du message principal au premier écran (promesse + cible + bénéfice).
+- [ ] Mesurer si l’offre est compréhensible en moins de 5 secondes sans scroller.
+- [ ] Identifier les ambiguïtés de vocabulaire (termes flous, jargon, formulations doubles).
+- [ ] Lister les éléments qui détournent l’attention de la promesse centrale.
+
+### Sous-phase 2.2 — Audit du parcours utilisateur
+
+- [ ] Cartographier le parcours actuel section par section (intention utilisateur + action attendue).
+- [ ] Évaluer la logique narrative: problème → solution → preuve → offre → contact.
+- [ ] Repérer les ruptures de rythme (sauts de sujet, répétitions, redondances).
+- [ ] Valider la place et la progression des CTA principaux/secondaires.
+
+### Sous-phase 2.3 — Frictions et charge cognitive
+
+- [ ] Détecter les zones de surcharge d’information (blocs trop denses, listes longues, multi-messages).
+- [ ] Qualifier les frictions de lecture (scroll trop long, manque de structure, transitions faibles).
+- [ ] Évaluer la longueur totale de page vs. valeur perçue à chaque écran.
+- [ ] Prioriser les frictions par impact conversion (fort / moyen / faible).
+
+### Sous-phase 2.4 — Recommandation de parcours cible
+
+- [ ] Proposer un nouveau parcours conseillé orienté conversion (6 blocs max si possible).
+- [ ] Définir l’ordre optimal des sections avec justification UX courte pour chaque bloc.
+- [ ] Lister les simplifications possibles (fusion, suppression, condensation de sections).
+- [ ] Rédiger des suggestions de micro-copy (hero, CTA, transitions, réassurance).
+
+### Livrables attendus (fin de phase 2)
+
+- [ ] Diagnostic UX synthétique (forces / faiblesses / risques de confusion).
+- [ ] Nouveau parcours recommandé (version actuelle vs version cible).
+- [ ] Ordre optimal des sections validé pour implémentation.
+- [ ] Banque de micro-copy prête à intégrer dans les composants.
 
 ---
 
