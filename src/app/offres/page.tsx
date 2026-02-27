@@ -24,18 +24,20 @@ export default function OffresPage() {
                 <Container>
                     <div className="grid gap-6 md:grid-cols-3">
                         {offers.map((offer) => (
-                            <Card key={offer.slug}>
-                                <p className="text-xl font-semibold">{offer.name}</p>
-                                <p className="mt-2 text-sm text-text-muted">{offer.summary}</p>
-                                <ul className="mt-5 space-y-2 text-sm text-text-muted">
-                                    {offer.deliverables.map((deliverable) => (
-                                        <li key={deliverable}>• {deliverable}</li>
-                                    ))}
-                                </ul>
-                                <p className="mt-5 text-sm font-medium text-accent">
-                                    {offer.timeline} · {offer.priceFrom}
-                                </p>
-                            </Card>
+                            <div id={offer.slug} key={offer.slug} className="scroll-mt-28">
+                                <Card>
+                                    <p className="text-xl font-semibold">{offer.name}</p>
+                                    <p className="mt-2 text-sm text-text-muted">{offer.summary}</p>
+                                    <ul className="mt-5 space-y-2 text-sm text-text-muted">
+                                        {offer.deliverables.map((deliverable) => (
+                                            <li key={deliverable}>• {deliverable}</li>
+                                        ))}
+                                    </ul>
+                                    <p className="mt-5 text-sm font-medium text-accent">
+                                        {offer.timeline} · {offer.priceFrom}
+                                    </p>
+                                </Card>
+                            </div>
                         ))}
                     </div>
                     <div className="mt-10">

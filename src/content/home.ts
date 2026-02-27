@@ -274,8 +274,8 @@ export const homeContent = {
     },
     offers: {
         eyebrow: 'Offres',
-        title: 'Des offres claires, pensées pour vos vrais besoins clients.',
-        description: 'Chaque offre répond à une situation concrète : clarifier votre message, moderniser votre image ou lancer un site qui génère des demandes.',
+        title: 'Des offres orientées résultats, selon votre étape de croissance.',
+        description: 'Audit, landing page ou site complet : chaque option répond à un besoin business précis avec un objectif de conversion mesurable.',
         items: offers,
     },
     projects: {
