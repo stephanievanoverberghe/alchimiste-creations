@@ -67,10 +67,10 @@
 
 ### Sous-phase 2.2 — Audit du parcours utilisateur
 
-- [ ] Cartographier le parcours actuel section par section (intention utilisateur + action attendue).
-- [ ] Évaluer la logique narrative: problème → solution → preuve → offre → contact.
-- [ ] Repérer les ruptures de rythme (sauts de sujet, répétitions, redondances).
-- [ ] Valider la place et la progression des CTA principaux/secondaires.
+- [x] Cartographier le parcours actuel section par section (intention utilisateur + action attendue).
+- [x] Évaluer la logique narrative: problème → solution → preuve → offre → contact.
+- [x] Repérer les ruptures de rythme (sauts de sujet, répétitions, redondances).
+- [x] Valider la place et la progression des CTA principaux/secondaires.
 
 ### Sous-phase 2.3 — Frictions et charge cognitive
 
@@ -137,4 +137,5 @@
 - **Sprint architecture #2**: phase 1.3 réalisée avec migration de la home vers `features/home/*` et sécurisation des imports via fichiers d’index.
 - **Sprint architecture #3**: sous-phase 1.4 terminée avec split CSS par domaine (`header`, `home`, `animations`) et `globals.css` conservé comme point d’entrée.
 - **Sprint UX #1**: sous-phase 2.1 réalisée (diagnostic 5 secondes), avec points de clarté, ambiguïtés de wording et distractions identifiées dans `docs/ux-phase-2-1-diagnostic.md`.
-- Prochaine action: lancer la sous-phase 2.2 (audit du parcours utilisateur).
+- **Sprint UX #2**: sous-phase 2.2 réalisée avec cartographie complète du parcours, ruptures de narration et recommandations de fil rouge dans `docs/ux-phase-2-2-diagnostic.md`.
+- Prochaine action: lancer la sous-phase 2.3 (frictions et charge cognitive).
