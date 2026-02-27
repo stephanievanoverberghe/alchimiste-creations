@@ -26,10 +26,33 @@
 
 ### À faire (prochaine sous-étape)
 
-- [ ] Découper `home-architecture-section.tsx` (logique vs rendu).
-- [ ] Extraire un composant partagé pour éviter la duplication mobile/desktop des "pillars".
-- [ ] Poser une architecture `features/home/*` (sections, hooks, components).
-- [ ] Commencer à scinder `globals.css` par domaines (header/home/animations).
+#### Sous-phase 1.1 — Découpage de `home-architecture-section`
+
+- [ ] Isoler les données statiques (titres, descriptions, labels) dans un module dédié.
+- [ ] Extraire la logique de calcul (état / mapping / helpers) dans un hook local.
+- [ ] Garder le composant de section centré sur le rendu JSX.
+- [ ] Vérifier qu’aucune prop inutile n’est propagée entre sous-composants.
+
+#### Sous-phase 1.2 — Réduction de duplication mobile/desktop
+
+- [ ] Créer un composant partagé `pillar-card` (ou équivalent) utilisé par les deux vues.
+- [ ] Conserver uniquement les variantes de layout dans les wrappers responsive.
+- [ ] Harmoniser les classes communes pour éviter les divergences futures.
+- [ ] Valider visuellement que le rendu reste identique avant/après.
+
+#### Sous-phase 1.3 — Structure `features/home/*`
+
+- [ ] Introduire une arborescence claire: `features/home/sections`, `features/home/components`, `features/home/hooks`.
+- [ ] Déplacer progressivement les sections home existantes sans refactor massif en une fois.
+- [ ] Ajouter un fichier d’index par dossier pour fiabiliser les imports.
+- [ ] Vérifier les alias et chemins d’import après déplacement.
+
+#### Sous-phase 1.4 — Préparation du split CSS
+
+- [ ] Identifier dans `globals.css` les blocs relevant de `header`, `home`, `animations`.
+- [ ] Créer les nouveaux fichiers de style par domaine sans changer le comportement.
+- [ ] Brancher les imports dans le bon ordre pour conserver la cascade actuelle.
+- [ ] Laisser `globals.css` comme point d’entrée temporaire pendant la transition.
 
 ---
 
