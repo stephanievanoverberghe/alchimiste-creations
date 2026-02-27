@@ -39,6 +39,11 @@ export const projectSchema = z.object({
     solution: z.string(),
     outcomes: z.array(z.string()).min(2),
     stack: z.array(z.string()),
+    tag: z.string().optional(),
+    icon: z.enum(['brush', 'sparkles', 'camera', 'layout', 'wand2']).optional(),
+    image: z.object({ src: z.string(), alt: z.string() }).optional(),
+    featured: z.boolean().default(false),
+    liveUrl: z.string().url().optional(),
 });
 
 export const faqSchema = z.object({
