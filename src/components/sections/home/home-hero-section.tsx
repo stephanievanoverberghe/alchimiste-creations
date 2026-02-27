@@ -15,7 +15,7 @@ type HomeHeroSectionProps = {
 
 export function HomeHeroSection({ content, stats }: HomeHeroSectionProps) {
     return (
-        <Section>
+        <Section id="hero">
             <Container>
                 <div className="reveal-up grid gap-6 md:gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
                     <div className="space-y-5 md:space-y-6">

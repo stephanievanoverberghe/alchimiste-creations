@@ -23,7 +23,7 @@ const ICONS = {
 
 export function HomeQualificationSection({ content }: Props) {
     return (
-        <Section className="qualification-section">
+        <Section id="qualification" className="qualification-section">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
 

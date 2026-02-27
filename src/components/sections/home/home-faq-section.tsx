@@ -12,7 +12,7 @@ type HomeFaqSectionProps = {
 
 export function HomeFaqSection({ content }: HomeFaqSectionProps) {
     return (
-        <Section>
+        <Section id="faq">
             <Container>
                 <div className="faq-shell relative overflow-hidden rounded-3xl border border-border/70 bg-linear-to-b from-surface/95 via-surface/80 to-background/60 p-5 sm:p-7">
                     <div

@@ -27,7 +27,7 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
     const [mainProject, secondaryProject] = displayed;
 
     return (
-        <Section>
+        <Section id="projects">
             <Container>
                 <div className="flex flex-wrap items-end justify-between gap-4">
                     <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />

@@ -5,7 +5,7 @@ import { siteContent } from '@/content/site';
 
 export function CtaStrip() {
     return (
-        <Section>
+        <Section id="cta">
             <Container>
                 <div className="glass reveal-up relative overflow-hidden rounded-2xl p-8">
                     <div aria-hidden="true" className="pointer-events-none absolute -left-12 -top-16 h-44 w-44 rounded-full bg-primary/20 blur-3xl motion-safe:animate-pulse" />

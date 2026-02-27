@@ -22,7 +22,7 @@ const ICONS = {
 
 export function HomeOffersSection({ content }: HomeOffersSectionProps) {
     return (
-        <Section>
+        <Section id="offers">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
                 <div className="mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-border/70 bg-background/20 p-3">

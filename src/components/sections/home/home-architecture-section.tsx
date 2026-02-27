@@ -87,7 +87,7 @@ export function HomeArchitectureSection({ content }: Props) {
     if (count === 0) return null;
 
     return (
-        <Section>
+        <Section id="architecture">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} />
 

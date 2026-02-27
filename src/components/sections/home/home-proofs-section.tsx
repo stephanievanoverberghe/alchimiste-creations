@@ -75,7 +75,7 @@ function ProofCard({ item }: { item: HomeContent['proofs']['cards'][number] }) {
 
 export function HomeProofsSection({ content }: HomeProofsSectionProps) {
     return (
-        <Section className="pt-2">
+        <Section id="proofs" className="pt-2">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
 

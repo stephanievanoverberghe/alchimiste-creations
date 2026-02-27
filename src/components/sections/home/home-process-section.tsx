@@ -20,7 +20,7 @@ const ICONS = {
 
 export function HomeProcessSection({ content }: HomeProcessSectionProps) {
     return (
-        <Section>
+        <Section id="process">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
 
