@@ -10,6 +10,11 @@ export const statSchema = z.object({
     value: z.string(),
 });
 
+export const offerImageSchema = z.object({
+    src: z.string(),
+    alt: z.string(),
+});
+
 export const offerSchema = z.object({
     slug: z.string(),
     name: z.string(),
@@ -19,6 +24,13 @@ export const offerSchema = z.object({
     priceFrom: z.string(),
     deliverables: z.array(z.string()).min(3),
     featured: z.boolean().default(false),
+
+    // ✅ champs UI/marketing (pour une section Offres plus visuelle)
+    icon: z.enum(['shield', 'sparkles', 'layout']),
+    bestFor: z.string(),
+    highlights: z.array(z.string()).min(2),
+    note: z.string().optional(),
+    image: offerImageSchema.optional(),
 });
 
 export const projectSchema = z.object({
