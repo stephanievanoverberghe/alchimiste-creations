@@ -166,7 +166,7 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
                         ) : null}
                     </svg>
 
-                    {anchors.map((anchor, index) => {
+                    {anchors.map((anchor) => {
                         const sectionProgress = stepProgressById[anchor.id] ?? 0;
                         const isLit = drawProgress >= sectionProgress;
                         const isActive = anchor.id === activeSectionId;
@@ -200,16 +200,6 @@ export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayou
                                         !isActive && !isLit ? 'border-primary/40 bg-background/75' : '',
                                     )}
                                 />
-                                <span
-                                    className={cn(
-                                        'absolute left-1/2 top-full mt-3 -translate-x-1/2 rounded-full border px-3 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-text transition-all duration-300 backdrop-blur-xl',
-                                        isActive
-                                            ? 'translate-y-0 border-accent/60 bg-white/10 opacity-100 shadow-[0_6px_26px_rgba(80,80,180,0.24)]'
-                                            : 'pointer-events-none translate-y-1 border-border/60 bg-background/45 opacity-0',
-                                    )}
-                                >
-                                    {String(index + 1).padStart(2, '0')} · {anchor.label}
-                                </span>
                                 <span className="sr-only">{Math.round(score * 100)}% visible</span>
                             </button>
                         );
