@@ -603,12 +603,11 @@ body {
 }
 
 .atom-hero {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    inset: 0;
-    object-fit: cover;
+    position: relative;
+    min-height: 260px;
+    border-radius: 1.5rem;
     overflow: hidden;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 65%, hsl(var(--accent)) 35%);
     background:
         radial-gradient(circle at 18% 18%, rgba(117, 90, 255, 0.32), transparent 46%),
         radial-gradient(circle at 80% 72%, rgba(19, 209, 255, 0.24), transparent 48%),
@@ -617,9 +616,10 @@ body {
 }
 
 .atom-hero__canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    display: block;
 }
 
 .atom-hero__discoveries {

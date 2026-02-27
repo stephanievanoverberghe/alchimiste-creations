@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 type ThreeObject = {
@@ -8,25 +9,15 @@ type ThreeObject = {
 };
 
 type ThreeMaterial = { dispose: () => void };
-type ThreeGeometry = {
-    dispose: () => void;
-    setAttribute: (name: string, attribute: ThreeBufferAttribute) => void;
-};
+type ThreeGeometry = { dispose: () => void; setAttribute: (name: string, attribute: ThreeBufferAttribute) => void };
 type ThreeBufferAttribute = object;
-
 type ThreeRenderer = {
     setPixelRatio: (value: number) => void;
     setSize: (width: number, height: number, updateStyle: boolean) => void;
     render: (scene: object, camera: ThreeCamera) => void;
     dispose: () => void;
 };
-
-type ThreeCamera = {
-    aspect: number;
-    position: { set: (x: number, y: number, z: number) => void };
-    updateProjectionMatrix: () => void;
-};
-
+type ThreeCamera = { aspect: number; position: { set: (x: number, y: number, z: number) => void }; updateProjectionMatrix: () => void };
 type ThreeNamespace = {
     Scene: new () => { fog?: object; add: (...objects: object[]) => void };
     FogExp2: new (color: number, density: number) => object;
@@ -47,6 +38,12 @@ declare global {
         THREE?: Record<string, unknown>;
     }
 }
+
+const discoveries = [
+    { label: 'Offre claire', image: '/images/discovery-story.svg', offset: -18, delay: '0s' },
+    { label: 'Preuves', image: '/images/discovery-ai.svg', offset: 4, delay: '1.6s' },
+    { label: 'CTA visible', image: '/images/discovery-motion.svg', offset: 26, delay: '3s' },
+];
 
 const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 
@@ -71,12 +68,7 @@ export function AtomBackground() {
             const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
             camera.position.set(0, 0, 7.5);
 
-            renderer = new THREE.WebGLRenderer({
-                canvas,
-                alpha: true,
-                antialias: true,
-            });
-
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
             const lightMain = new THREE.PointLight(0x755aff, 1.4, 30);
@@ -103,22 +95,18 @@ export function AtomBackground() {
             const starsGeometry = new THREE.BufferGeometry();
             const starsCount = 320;
             const starsPositions = new Float32Array(starsCount * 3);
-
             for (let i = 0; i < starsCount; i += 1) {
                 starsPositions[i * 3] = (Math.random() - 0.5) * 9;
                 starsPositions[i * 3 + 1] = (Math.random() - 0.5) * 6;
                 starsPositions[i * 3 + 2] = (Math.random() - 0.5) * 7;
             }
-
             starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
-
             const starsMaterial = new THREE.PointsMaterial({
                 color: 0xd0ebff,
                 size: 0.045,
                 transparent: true,
                 opacity: 0.8,
             });
-
             const stars = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(stars);
 
@@ -137,7 +125,6 @@ export function AtomBackground() {
                 if (stopAnimation) return;
 
                 const t = time * 0.001;
-
                 coreMesh.rotation.x = t * 0.25;
                 coreMesh.rotation.y = t * 0.45;
                 coreMesh.position.y = Math.sin(t * 1.3) * 0.2;
@@ -170,13 +157,21 @@ export function AtomBackground() {
                 return;
             }
 
+            const existing = document.querySelector<HTMLScriptElement>('script[data-three-cdn="true"]');
+            if (existing) {
+                existing.addEventListener('load', () => {
+                    cleanup = initScene();
+                });
+                return;
+            }
+
             const script = document.createElement('script');
             script.src = THREE_CDN;
             script.async = true;
+            script.dataset.threeCdn = 'true';
             script.addEventListener('load', () => {
                 cleanup = initScene();
             });
-
             document.head.appendChild(script);
         };
 
@@ -191,8 +186,17 @@ export function AtomBackground() {
     }, []);
 
     return (
-        <div className="atom-hero" aria-hidden="true">
-            <canvas ref={canvasRef} className="atom-hero__canvas" />
+        <div className="atom-hero">
+            <canvas ref={canvasRef} className="atom-hero__canvas" aria-hidden="true" />
+
+            <div className="atom-hero__discoveries" aria-hidden="true">
+                {discoveries.map((discovery) => (
+                    <div key={discovery.label} className="atom-hero__chip" style={{ top: `calc(50% + ${discovery.offset}%)`, animationDelay: discovery.delay }}>
+                        <Image src={discovery.image} alt="" width={46} height={46} />
+                        <span>{discovery.label}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
