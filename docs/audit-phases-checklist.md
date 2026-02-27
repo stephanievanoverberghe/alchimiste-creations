@@ -8,7 +8,7 @@
 
 - [x] Lancer la phase 1 (architecture)
 - [x] Finaliser la phase 1 (architecture)
-- [ ] Phase 2 (UX)
+- [ ] Phase 2 (UX) — en cours
 - [ ] Phase 3 (UI)
 - [ ] Phase 4 (performance)
 - [ ] Phase 5 (clean code)
@@ -60,10 +60,10 @@
 
 ### Sous-phase 2.1 — Diagnostic de compréhension immédiate (5 secondes)
 
-- [ ] Vérifier la clarté du message principal au premier écran (promesse + cible + bénéfice).
-- [ ] Mesurer si l’offre est compréhensible en moins de 5 secondes sans scroller.
-- [ ] Identifier les ambiguïtés de vocabulaire (termes flous, jargon, formulations doubles).
-- [ ] Lister les éléments qui détournent l’attention de la promesse centrale.
+- [x] Vérifier la clarté du message principal au premier écran (promesse + cible + bénéfice).
+- [x] Mesurer si l’offre est compréhensible en moins de 5 secondes sans scroller.
+- [x] Identifier les ambiguïtés de vocabulaire (termes flous, jargon, formulations doubles).
+- [x] Lister les éléments qui détournent l’attention de la promesse centrale.
 
 ### Sous-phase 2.2 — Audit du parcours utilisateur
 
@@ -136,4 +136,5 @@
 - **Sprint architecture #1**: nettoyage de base effectué (hook home, typo roadmap hook, dépendance inutile).
 - **Sprint architecture #2**: phase 1.3 réalisée avec migration de la home vers `features/home/*` et sécurisation des imports via fichiers d’index.
 - **Sprint architecture #3**: sous-phase 1.4 terminée avec split CSS par domaine (`header`, `home`, `animations`) et `globals.css` conservé comme point d’entrée.
-- Prochaine action: démarrer la phase 2 (UX).
+- **Sprint UX #1**: sous-phase 2.1 réalisée (diagnostic 5 secondes), avec points de clarté, ambiguïtés de wording et distractions identifiées dans `docs/ux-phase-2-1-diagnostic.md`.
+- Prochaine action: lancer la sous-phase 2.2 (audit du parcours utilisateur).
