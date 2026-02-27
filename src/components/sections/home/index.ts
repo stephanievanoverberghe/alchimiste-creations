@@ -1,4 +1,5 @@
 export { HomeHeroSection } from './home-hero-section';
+export { HomeRoadmap } from './home-roadmap';
 export { HomeQualificationSection } from './home-qualification-section';
 export { HomeProofsSection } from './home-proofs-section';
 export { HomeArchitectureSection } from './home-architecture-section';

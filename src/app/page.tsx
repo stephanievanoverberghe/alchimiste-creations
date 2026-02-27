@@ -1,6 +1,6 @@
-import { HomeRoadmapLayout } from '@/components/roadmap/home-roadmap';
 import { CtaStrip } from '@/components/sections/cta-strip';
 import {
+    HomeRoadmap,
     HomeArchitectureSection,
     HomeFaqSection,
     HomeHeroSection,
@@ -16,7 +16,7 @@ export default function HomePage() {
     const { content } = useHome();
 
     return (
-        <HomeRoadmapLayout>
+        <HomeRoadmap pillars={content.architecture.pillars}>
             <HomeHeroSection content={content.hero} stats={content.proofs.stats} />
             <HomeQualificationSection content={content.qualification} />
             <HomeProofsSection content={content.proofs} />
@@ -26,6 +26,6 @@ export default function HomePage() {
             <HomeProjectsSection content={content.projects} />
             <HomeFaqSection content={content.faq} />
             <CtaStrip />
-        </HomeRoadmapLayout>
+        </HomeRoadmap>
     );
 }
