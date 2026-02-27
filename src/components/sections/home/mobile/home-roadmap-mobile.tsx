@@ -123,7 +123,7 @@ export function HomeRoadmapMobile({ pillars }: HomeRoadmapMobileProps) {
             role="region"
             aria-label="Conversion journey mobile"
         >
-            <div className="sticky top-2 z-10 mb-3">
+            <div className="z-10 mb-3">
                 <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1" aria-label="Étapes du conversion journey">
                     {pillars.map((pillar, index) => {
                         const isActive = index === activeIndex;
