@@ -2,23 +2,23 @@ import { faqListSchema } from './schemas';
 
 export const faqs = faqListSchema.parse([
     {
-        question: 'Avec qui vais-je travailler ?',
-        answer: 'Directement avec moi. Pas de sous-traitance opaque : vous avez une interlocutrice unique du cadrage à la mise en ligne.',
+        question: 'Je ne suis pas à l’aise avec le digital, est-ce un problème ?',
+        answer: 'Pas du tout. Je vous guide étape par étape avec des mots simples. Vous n’avez rien de technique à gérer : vous validez, je m’occupe du reste.',
     },
     {
-        question: 'Combien de temps avant une première version ?',
-        answer: 'Un premier livrable solide arrive en général entre J+5 et J+10 selon le périmètre.',
+        question: 'En combien de temps je peux voir une vraie amélioration ?',
+        answer: 'Vous avez une première version rapidement (souvent en quelques jours) et des améliorations visibles sur la clarté et les demandes dès la mise en ligne.',
     },
     {
-        question: 'Puis-je garder mes contenus actuels ?',
-        answer: 'Oui, je peux les retravailler pour la conversion sans repartir de zéro si votre base est saine.',
+        question: 'Est-ce que vous pouvez reprendre mon site actuel sans tout jeter ?',
+        answer: 'Oui. Si votre base est exploitable, on garde ce qui fonctionne et on améliore le reste pour éviter les dépenses inutiles.',
     },
     {
-        question: 'Le site est-il maintenable à long terme ?',
-        answer: 'Oui. Le code est structuré avec un design system, des composants réutilisables et une séparation claire contenu/UI.',
+        question: 'J’ai peur d’investir sans résultat, comment être rassuré ?',
+        answer: 'Chaque offre est pensée autour d’un besoin concret : plus de demandes, plus de clarté, plus de confiance. Vous savez ce qui sera livré et pourquoi c’est utile.',
     },
     {
-        question: 'Proposes-tu un suivi après livraison ?',
-        answer: 'Oui, une phase post-lancement optionnelle permet de corriger, itérer et optimiser selon les KPI observés.',
+        question: 'Après la livraison, je suis autonome ou je reste dépendant ?',
+        answer: 'Vous restez autonome. Le site est clair, facile à faire évoluer, et je peux aussi vous accompagner ensuite si vous voulez continuer à optimiser.',
     },
 ]);

@@ -287,8 +287,8 @@ export const homeContent = {
     },
     faq: {
         eyebrow: 'FAQ',
-        title: 'Réponses courtes aux objections les plus fréquentes.',
-        description: 'L’objectif : vous aider à décider sereinement, sans zone grise.',
+        title: 'Vos questions, en version simple et rassurante.',
+        description: 'Des réponses claires, sans jargon, pour avancer en confiance.',
         questions: faqs,
     },
 } satisfies HomeContent;

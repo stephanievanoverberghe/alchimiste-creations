@@ -31,7 +31,7 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
             <Container>
                 <div className="flex flex-wrap items-end justify-between gap-4">
                     <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
-                    <Link href="/projets" className="focus-ring inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-strong">
+                    <Link href="/projets" className="focus-ring inline-flex items-center mb-2 gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-strong">
                         Voir tous les projets <ArrowRight className="h-4 w-4" />
                     </Link>
                 </div>
