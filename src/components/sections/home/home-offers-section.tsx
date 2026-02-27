@@ -26,7 +26,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
                 <div className="mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-border/70 bg-background/20 p-3">
-                    {['Le plus demandé', 'Simple à choisir', 'Pensé pour convertir', 'Design tendance'].map((label) => (
+                    {['Objectif business clair', 'Simple à choisir', 'Pensé pour convertir', 'Sans blabla technique'].map((label) => (
                         <span
                             key={label}
                             className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-background/55 px-3 py-1 text-xs font-semibold text-text-muted transition-all duration-300 hover:border-accent/45 hover:text-text"

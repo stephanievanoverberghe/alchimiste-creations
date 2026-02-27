@@ -274,8 +274,9 @@ export const homeContent = {
     },
     offers: {
         eyebrow: 'Offres',
-        title: 'Des offres claires, pensées pour vos vrais besoins clients.',
-        description: 'Chaque offre répond à une situation concrète : clarifier votre message, moderniser votre image ou lancer un site qui génère des demandes.',
+        title: 'Choisissez l’offre qui transforme vos visites en demandes qualifiées.',
+        description:
+            'Vous savez où vous bloquez ? Parfait. Chaque offre cible un problème précis (message flou, image datée, site inexistant) avec un plan clair pour vendre plus sereinement.',
         items: offers,
     },
     projects: {
