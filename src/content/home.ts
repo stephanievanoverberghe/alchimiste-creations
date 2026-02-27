@@ -274,15 +274,15 @@ export const homeContent = {
     },
     offers: {
         eyebrow: 'Offres',
-        title: 'Choisissez l’offre qui transforme vos visites en demandes qualifiées.',
+        title: 'Des offres pensées pour débloquer vos ventes rapidement.',
         description:
-            'Vous savez où vous bloquez ? Parfait. Chaque offre cible un problème précis (message flou, image datée, site inexistant) avec un plan clair pour vendre plus sereinement.',
+            'Chaque formule répond à une situation réelle : peu de demandes, message flou, ou besoin d’un site qui inspire enfin confiance. Vous choisissez selon votre besoin du moment.',
         items: offers,
     },
     projects: {
         eyebrow: 'Projets',
-        title: 'Des résultats concrets, pas juste un beau design.',
-        description: 'Chaque projet montre comment une meilleure structure web améliore les demandes entrantes.',
+        title: 'Des exemples concrets de sites qui font passer de “je regarde” à “je vous contacte”.',
+        description: 'On part d’un blocage client clair, puis on crée une expérience plus rassurante, plus lisible et plus engageante.',
         items: projects,
     },
     faq: {
