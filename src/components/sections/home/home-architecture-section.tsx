@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Sparkles, ShieldCheck, Target } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
@@ -11,80 +10,15 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
 
+import { ARCHITECTURE_GLOW_BY_PILLAR, ARCHITECTURE_ICONS, ARCHITECTURE_IMAGE_CAPTION, ARCHITECTURE_IMPACT_LABEL, ARCHITECTURE_STEP_BADGE } from './home-architecture-section.data';
 import { HomeRoadmapMobile } from './mobile/home-roadmap-mobile';
+import { useHomeArchitectureCarousel } from './use-home-architecture-carousel';
 
 type Props = { content: HomeContent['architecture'] };
 
-const ICONS = {
-    sparkles: Sparkles,
-    shield: ShieldCheck,
-    target: Target,
-} as const;
-
-const STEP_BADGE: Record<string, string> = {
-    Attire: '01',
-    Convainc: '02',
-    Convertit: '03',
-};
-
-const AUTO_PLAY_MS = 5200;
-
-function mod(n: number, m: number) {
-    return ((n % m) + m) % m;
-}
-
 export function HomeArchitectureSection({ content }: Props) {
     const items = content.pillars;
-    const count = items.length;
-
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
-    const [isReducedMotion, setIsReducedMotion] = useState(false);
-
-    const autoPlayTimerRef = useRef<number | null>(null);
-
-    const goToIndex = useCallback(
-        (index: number) => {
-            if (count === 0) return;
-            setActiveIndex(mod(index, count));
-        },
-        [count],
-    );
-
-    const goNext = useCallback(() => goToIndex(activeIndex + 1), [activeIndex, goToIndex]);
-    const goPrev = useCallback(() => goToIndex(activeIndex - 1), [activeIndex, goToIndex]);
-
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const updateMotion = () => setIsReducedMotion(mediaQuery.matches);
-
-        updateMotion();
-        mediaQuery.addEventListener('change', updateMotion);
-
-        return () => mediaQuery.removeEventListener('change', updateMotion);
-    }, []);
-
-    useEffect(() => {
-        if (count <= 1 || isPaused || isReducedMotion) return;
-
-        autoPlayTimerRef.current = window.setInterval(() => {
-            setActiveIndex((previous) => mod(previous + 1, count));
-        }, AUTO_PLAY_MS);
-
-        return () => {
-            if (autoPlayTimerRef.current) window.clearInterval(autoPlayTimerRef.current);
-            autoPlayTimerRef.current = null;
-        };
-    }, [count, isPaused, isReducedMotion]);
-
-    const orderedSlides = useMemo(() => {
-        return items.map((_, index) => {
-            const offset = mod(index - activeIndex, count);
-            return { index, offset };
-        });
-    }, [activeIndex, count, items]);
+    const { activeIndex, count, goNext, goPrev, goToIndex, orderedSlides, setIsPaused } = useHomeArchitectureCarousel({ items });
 
     if (count === 0) return null;
 
@@ -92,12 +26,8 @@ export function HomeArchitectureSection({ content }: Props) {
         <Section id="architecture">
             <Container>
                 <SectionHeading eyebrow={content.eyebrow} title={content.title} />
-
-                {/* ✅ Mobile + tablette : Swipe */}
-                {/* (⚠️ Assure-toi que HomeRoadmapMobile a bien `className="lg:hidden ..."` côté section) */}
                 <HomeRoadmapMobile pillars={items} />
 
-                {/* ✅ Desktop : Carousel */}
                 <div className="hidden lg:block">
                     <div
                         className="relative"
@@ -136,13 +66,12 @@ export function HomeArchitectureSection({ content }: Props) {
                                             onClick={() => goToIndex(idx)}
                                             aria-current={isActive}
                                         >
-                                            {STEP_BADGE[pillar.title]} · {pillar.title}
+                                            {ARCHITECTURE_STEP_BADGE[pillar.title]} · {pillar.title}
                                         </button>
                                     );
                                 })}
                             </div>
 
-                            {/* ✅ Desktop only, donc plus besoin de sm:hidden ici */}
                             <div className="flex items-center gap-2">
                                 <button
                                     type="button"
@@ -166,7 +95,7 @@ export function HomeArchitectureSection({ content }: Props) {
                         <div className="relative overflow-hidden rounded-3xl">
                             <div className="flex w-full transition-transform duration-500 ease-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                                 {items.map((pillar) => {
-                                    const Icon = ICONS[pillar.icon];
+                                    const Icon = ARCHITECTURE_ICONS[pillar.icon];
 
                                     return (
                                         <div key={pillar.title} className="w-full shrink-0 px-1">
@@ -175,12 +104,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                                     aria-hidden="true"
                                                     className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl"
                                                     style={{
-                                                        background:
-                                                            pillar.title === 'Attire'
-                                                                ? 'rgba(122,84,255,0.16)'
-                                                                : pillar.title === 'Convainc'
-                                                                  ? 'rgba(19,209,255,0.14)'
-                                                                  : 'rgba(122,84,255,0.12)',
+                                                        background: ARCHITECTURE_GLOW_BY_PILLAR[pillar.title],
                                                     }}
                                                 />
 
@@ -192,7 +116,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                                             </span>
                                                             <div className="min-w-0">
                                                                 <p className="text-xs font-semibold tracking-wide text-text-muted">
-                                                                    {STEP_BADGE[pillar.title]} · <span className="text-accent">{pillar.title}</span>
+                                                                    {ARCHITECTURE_STEP_BADGE[pillar.title]} · <span className="text-accent">{pillar.title}</span>
                                                                 </p>
                                                                 <h3 className="mt-1 text-xl font-semibold leading-snug">{pillar.headline}</h3>
                                                             </div>
@@ -212,7 +136,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                                         <div className="mt-5 flex items-center justify-between border-t border-border/60 pt-4 text-xs text-text-muted sm:text-sm">
                                                             <span>Impact</span>
                                                             <span className={cn('font-medium', pillar.title === 'Convertit' ? 'text-text' : 'text-text-muted')}>
-                                                                {pillar.title === 'Attire' ? '↑ Attention' : pillar.title === 'Convainc' ? '↑ Confiance' : '↑ Prises de contact'}
+                                                                {ARCHITECTURE_IMPACT_LABEL[pillar.title]}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -229,11 +153,7 @@ export function HomeArchitectureSection({ content }: Props) {
                                                                 />
                                                                 <div className="absolute inset-0 bg-linear-to-t from-background/80 via-background/25 to-transparent" />
                                                                 <p className="absolute bottom-3 left-3 text-xs font-medium text-text sm:text-sm">
-                                                                    {pillar.title === 'Attire'
-                                                                        ? 'Clarté immédiate'
-                                                                        : pillar.title === 'Convainc'
-                                                                          ? 'Confiance renforcée'
-                                                                          : 'Action évidente'}
+                                                                    {ARCHITECTURE_IMAGE_CAPTION[pillar.title]}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -262,7 +182,7 @@ export function HomeArchitectureSection({ content }: Props) {
                             </div>
 
                             <p className="text-xs font-medium text-text-muted sm:text-sm">
-                                {STEP_BADGE[items[activeIndex]?.title] ?? '01'} / {String(items.length).padStart(2, '0')}
+                                {ARCHITECTURE_STEP_BADGE[items[activeIndex]?.title] ?? '01'} / {String(items.length).padStart(2, '0')}
                             </p>
                         </div>
                     </div>

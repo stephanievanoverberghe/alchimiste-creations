@@ -28,10 +28,10 @@
 
 #### Sous-phase 1.1 — Découpage de `home-architecture-section`
 
-- [ ] Isoler les données statiques (titres, descriptions, labels) dans un module dédié.
-- [ ] Extraire la logique de calcul (état / mapping / helpers) dans un hook local.
-- [ ] Garder le composant de section centré sur le rendu JSX.
-- [ ] Vérifier qu’aucune prop inutile n’est propagée entre sous-composants.
+- [x] Isoler les données statiques (titres, descriptions, labels) dans un module dédié.
+- [x] Extraire la logique de calcul (état / mapping / helpers) dans un hook local.
+- [x] Garder le composant de section centré sur le rendu JSX.
+- [x] Vérifier qu’aucune prop inutile n’est propagée entre sous-composants.
 
 #### Sous-phase 1.2 — Réduction de duplication mobile/desktop
 
