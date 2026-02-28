@@ -185,8 +185,8 @@ export function MobileBottomNav() {
     useEffect(() => {
         if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
 
-        // Reduced motion: pas d'anim, juste hide/show
         if (prefersReducedMotion) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setAnim(shouldHide ? 'hidden' : 'shown');
             return;
         }
