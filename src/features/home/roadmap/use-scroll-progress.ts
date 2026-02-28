@@ -1,15 +1,15 @@
 'use client';
 
+import { useMediaQuery } from '@/hooks';
 import { useEffect, useRef, useState } from 'react';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-const MOBILE_BREAKPOINT = 640;
 
 export function useScrollProgress() {
     const [target, setTarget] = useState(0);
     const [smoothed, setSmoothed] = useState(0);
-    const [reducedMotion, setReducedMotion] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
+    const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)') === true;
+    const isMobile = useMediaQuery('(max-width: 639px)') === true;
 
     const targetRef = useRef(0);
     const smoothedRef = useRef(0);
@@ -21,25 +21,6 @@ export function useScrollProgress() {
     useEffect(() => {
         smoothedRef.current = smoothed;
     }, [smoothed]);
-
-    useEffect(() => {
-        const reduceMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const mobileMedia = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-
-        const syncFlags = () => {
-            setReducedMotion(reduceMedia.matches);
-            setIsMobile(mobileMedia.matches);
-        };
-
-        syncFlags();
-        reduceMedia.addEventListener('change', syncFlags);
-        mobileMedia.addEventListener('change', syncFlags);
-
-        return () => {
-            reduceMedia.removeEventListener('change', syncFlags);
-            mobileMedia.removeEventListener('change', syncFlags);
-        };
-    }, []);
 
     useEffect(() => {
         let rafId = 0;

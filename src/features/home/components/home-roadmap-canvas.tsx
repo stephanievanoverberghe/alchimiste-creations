@@ -6,9 +6,9 @@
  * - Régler glow/perf: baissez PATH_GLOW_DESKTOP / PATH_GLOW_MOBILE, ou désactivez shimmer + noise sur mobile/reduced-motion.
  */
 
-import { type RoadmapSection, useActiveSection } from '@/components/roadmap/use-active-section';
-import { useRoadmapPath } from '@/components/roadmap/use-roadmap-path';
-import { useScrollProgress } from '@/components/roadmap/use-scroll-progress';
+import { type RoadmapSection, useActiveSection } from '@/features/home/roadmap/use-active-section';
+import { useRoadmapPath } from '@/features/home/roadmap/use-roadmap-path';
+import { useScrollProgress } from '@/features/home/roadmap/use-scroll-progress';
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 const HOME_ROADMAP_SECTIONS: RoadmapSection[] = [
@@ -29,7 +29,7 @@ type HomeRoadmapLayoutProps = {
 const PATH_GLOW_DESKTOP = 10;
 const PATH_GLOW_MOBILE = 5;
 
-export function HomeRoadmapLayout({ children, isFancy = true }: HomeRoadmapLayoutProps) {
+export function HomeRoadmapCanvas({ children, isFancy = true }: HomeRoadmapLayoutProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const pathRef = useRef<SVGPathElement>(null);
     const uid = useId().replace(/:/g, '-');

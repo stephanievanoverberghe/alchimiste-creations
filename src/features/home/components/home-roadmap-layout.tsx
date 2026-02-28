@@ -1,7 +1,7 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { HomeRoadmapLayout as HomeRoadmapDesktop } from '@/components/roadmap/home-roadmap';
+import { HomeRoadmapCanvas } from '@/features/home/components/home-roadmap-canvas';
 import { useIsMobile } from '@/features/home/hooks';
 
 type HomeRoadmapLayoutProps = {
@@ -15,5 +15,5 @@ export function HomeRoadmapLayout({ children }: HomeRoadmapLayoutProps) {
         return <>{children}</>;
     }
 
-    return <HomeRoadmapDesktop isFancy={false}>{children}</HomeRoadmapDesktop>;
+    return <HomeRoadmapCanvas isFancy={false}>{children}</HomeRoadmapCanvas>;
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import { buildRoadmapPath } from '@/components/roadmap/path';
-import { type SectionAnchor } from '@/components/roadmap/use-active-section';
+import { buildRoadmapPath } from '@/features/home/roadmap/path';
+import { type SectionAnchor } from '@/features/home/roadmap/use-active-section';
 import { type RefObject, useCallback, useEffect, useMemo, useState } from 'react';
 
 type Point = { x: number; y: number };

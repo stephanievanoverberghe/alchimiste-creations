@@ -1,5 +1,6 @@
 'use client';
 
+import { useMediaQuery } from '@/hooks';
 import * as React from 'react';
 
 const SCROLL_THRESHOLD = 8;
@@ -9,8 +10,8 @@ const MOBILE_QUERY = '(max-width: 639px)';
 export function useSiteHeaderState(pathname: string) {
     const [scrolled, setScrolled] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const [isCompact, setIsCompact] = React.useState(true);
-    const [isMobile, setIsMobile] = React.useState(true);
+    const isCompact = useMediaQuery(COMPACT_HEADER_QUERY) !== false;
+    const isMobile = useMediaQuery(MOBILE_QUERY) !== false;
     const [hidden, setHidden] = React.useState(false);
     const previousScrollY = React.useRef(0);
 
@@ -31,30 +32,6 @@ export function useSiteHeaderState(pathname: string) {
     React.useEffect(() => {
         setOpen(false);
     }, [pathname]);
-
-    React.useEffect(() => {
-        const mediaQuery = window.matchMedia(COMPACT_HEADER_QUERY);
-        const syncCompactMode = (event: MediaQueryList | MediaQueryListEvent) => {
-            setIsCompact(event.matches);
-        };
-
-        syncCompactMode(mediaQuery);
-        mediaQuery.addEventListener('change', syncCompactMode);
-
-        return () => mediaQuery.removeEventListener('change', syncCompactMode);
-    }, []);
-
-    React.useEffect(() => {
-        const mobileMediaQuery = window.matchMedia(MOBILE_QUERY);
-        const syncMobileMode = (event: MediaQueryList | MediaQueryListEvent) => {
-            setIsMobile(event.matches);
-        };
-
-        syncMobileMode(mobileMediaQuery);
-        mobileMediaQuery.addEventListener('change', syncMobileMode);
-
-        return () => mobileMediaQuery.removeEventListener('change', syncMobileMode);
-    }, []);
 
     React.useEffect(() => {
         if (!isCompact) {

@@ -102,27 +102,27 @@
     - [x] Définir une échelle type unique (desktop + mobile) pour hero, sections, cartes.
     - [x] Aligner poids/tailles/interlignage des titres section par section.
 
-- [ ] Sous-phase 3.2 — Système d'espacements
+- [x] Sous-phase 3.2 — Système d'espacements
     - [x] Auditer les espacements verticaux entre sections et blocs internes.
     - [x] Définir une grille d'espacement (tokens) cohérente (`gap`, `py`, `mt`).
     - [x] Harmoniser les paddings de conteneurs et cartes sur toute la home.
 
-- [ ] Sous-phase 3.3 — Rationalisation visuelle
-    - [ ] Réduire les répétitions décoratives (chips, badges, glow, orbs) sans perdre l'identité.
-    - [ ] Normaliser styles des badges/eyebrows/labels pour éviter les variantes concurrentes.
-    - [ ] Clarifier la priorité visuelle (1 focus fort par écran).
+- [x] Sous-phase 3.3 — Rationalisation visuelle
+    - [x] Réduire les répétitions décoratives (chips, badges, glow, orbs) sans perdre l'identité.
+    - [x] Normaliser styles des badges/eyebrows/labels pour éviter les variantes concurrentes.
+    - [x] Clarifier la priorité visuelle (1 focus fort par écran).
 
-- [ ] Sous-phase 3.4 — Lisibilité & contraste
-    - [ ] Vérifier contraste texte/fond des éléments critiques (titres, CTA, textes secondaires).
-    - [ ] Revalider lisibilité mobile (taille min de police, densité par bloc, line-height).
-    - [ ] Ajuster les états interactifs (hover/focus/active) pour maintenir la clarté.
+- [x] Sous-phase 3.4 — Lisibilité & contraste
+    - [x] Vérifier contraste texte/fond des éléments critiques (titres, CTA, textes secondaires).
+    - [x] Revalider lisibilité mobile (taille min de police, densité par bloc, line-height).
+    - [x] Ajuster les états interactifs (hover/focus/active) pour maintenir la clarté.
 
 ### Critères de sortie phase 3
 
-- [ ] Les titres principaux suivent une hiérarchie lisible et stable sur toutes les sections.
-- [ ] Les espacements sont homogènes et prédictibles (desktop + mobile).
-- [ ] Les éléments décoratifs n'éclipsent plus l'information principale.
-- [ ] Contraste et lisibilité validés sur les écrans critiques (hero, offres, CTA final).
+- [x] Les titres principaux suivent une hiérarchie lisible et stable sur toutes les sections.
+- [x] Les espacements sont homogènes et prédictibles (desktop + mobile).
+- [x] Les éléments décoratifs n'éclipsent plus l'information principale.
+- [x] Contraste et lisibilité validés sur les écrans critiques (hero, offres, CTA final).
 
 ---
 
