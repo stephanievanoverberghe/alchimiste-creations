@@ -22,6 +22,7 @@ const ICONS = {
 } as const;
 
 export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeProjectsSectionProps) {
+    const tickerItems = ['One page performante', 'Parcours orienté conversion', 'Storytelling visuel', 'Positionnement clarifié', 'Site vitrine complète', 'Blog', 'Portfolio'];
     const featured = content.items.filter((p) => p.featured).slice(0, 2);
     const displayed = featured.length ? featured : content.items.slice(0, 2);
     const [mainProject, secondaryProject] = displayed;
@@ -173,12 +174,12 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
 
                         <div className="projects-contact__ticker" aria-hidden="true">
                             <div className="projects-contact__ticker-track">
-                                <span>One page performante</span>
-                                <span>Parcours orienté conversion</span>
-                                <span>Storytelling visuel</span>
-                                <span>Positionnement clarifié</span>
-                                <span>One page performante</span>
-                                <span>Parcours orienté conversion</span>
+                                {tickerItems.map((item) => (
+                                    <span key={`ticker-primary-${item}`}>{item}</span>
+                                ))}
+                                {tickerItems.map((item) => (
+                                    <span key={`ticker-duplicate-${item}`}>{item}</span>
+                                ))}
                             </div>
                         </div>
 
