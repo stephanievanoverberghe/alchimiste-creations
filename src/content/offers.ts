@@ -6,8 +6,8 @@ export const offers = offersSchema.parse([
         name: 'Création de landing page / site One Page',
         punchline: 'Besoin d’une présence en ligne rapide et efficace ? Je crée une page stratégique pensée pour convertir.',
         summary: 'Une page unique, claire et structurée, idéale pour présenter votre activité, lancer une offre ou générer des demandes de contact rapidement.',
-        timeline: '1 à 2 semaines',
-        priceFrom: 'À partir de 1 190€',
+        timeline: '7 à 10 jours ouvrés',
+        priceFrom: 'À partir de 1 090€',
         deliverables: [
             'Page unique structurée (Hero, Services, À propos, Preuves sociales, Contact)',
             'Design moderne et professionnel',
@@ -19,7 +19,7 @@ export const offers = offersSchema.parse([
         ],
         featured: false,
 
-        icon: 'zap',
+        icon: 'layout',
         bestFor: 'Idéal pour indépendants, coachs et petites structures qui veulent une présence professionnelle sans projet lourd.',
         highlights: ['Rapide', 'Efficace', 'Optimisé conversion'],
         note: 'Projet 100% codé sur mesure (pas de template générique).',
@@ -61,8 +61,8 @@ export const offers = offersSchema.parse([
         name: 'Refonte de site internet',
         punchline: 'Votre site est dépassé ou ne reflète plus votre niveau ? Je le modernise et clarifie votre message.',
         summary: 'Une refonte stratégique pour améliorer la lisibilité, la structure et l’image professionnelle de votre site (priorité : page d’accueil).',
-        timeline: '2 à 3 semaines',
-        priceFrom: 'À partir de 1 690€',
+        timeline: '3 à 6 semaines',
+        priceFrom: 'À partir de 2 990€',
         deliverables: [
             'Refonte UX de la page d’accueil (narratif, hiérarchie, sections)',
             'Modernisation UI (responsive mobile / tablette / desktop)',

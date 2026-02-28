@@ -8,7 +8,7 @@
 
 - [x] Lancer la phase 1 (architecture)
 - [x] Finaliser la phase 1 (architecture)
-- [ ] Phase 2 (UX) — en cours
+- [ ] Phase 2 (UX) — En cours
 - [ ] Phase 3 (UI)
 - [ ] Phase 4 (performance)
 - [ ] Phase 5 (clean code)

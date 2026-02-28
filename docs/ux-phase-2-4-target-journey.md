@@ -4,8 +4,7 @@
 
 Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement explicite:
 
-- **Offre principale**: création de **sites vitrines**.
-- **Offre secondaire**: **refonte de site web**.
+- **Offres**: **One Page**, **Site vitrine**, **Refonte**.
 - **Cible prioritaire**: **indépendants** et **petites entreprises**.
 
 ## Verdict rapide
@@ -18,8 +17,9 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 
 ### Priorités business
 
-1. **Créer des sites vitrines qui génèrent des demandes qualifiées** (priorité #1).
-2. **Refondre des sites existants pour améliorer clarté et conversion** (priorité #2).
+1. **One Page** pour lancer rapidement une présence claire et crédible.
+2. **Site vitrine** pour structurer une acquisition régulière de demandes.
+3. **Refonte** pour corriger un site existant qui sous-performe.
 
 ### Cible
 
@@ -28,7 +28,46 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 
 ### Message-cadre recommandé
 
-> "J'aide les indépendants et petites entreprises à créer (ou refondre) un site vitrine clair, crédible et orienté prise de contact."
+> "J'aide les indépendants et petites entreprises à lancer une One Page, créer un site vitrine complet ou refondre leur site pour générer plus de demandes."
+
+---
+
+## 0 bis) Grille d'offres, prix et délais (alignement marché freelance FR)
+
+> Positionnement conseillé: **milieu de gamme orienté ROI** (ni low-cost, ni agence premium).
+
+### Références marché observées (ordre de grandeur)
+
+- **One Page**: 700 € à 2 000 € (freelance), souvent livré en 1 à 3 semaines.
+- **Site vitrine (4 à 8 pages)**: 1 800 € à 5 500 €, souvent livré en 3 à 8 semaines.
+- **Refonte**: 2 500 € à 8 000 €+ selon complexité, souvent livrée en 4 à 10 semaines.
+
+### Proposition commerciale recommandée (claire et vendable)
+
+1. **One Page — Offre d'entrée**
+    - Prix affiché: **à partir de 1 190 € HT**.
+    - Fourchette de vente cible: **1 190 € – 1 690 € HT**.
+    - Délai annoncé: **7 à 14 jours ouvrés**.
+    - Bon pour: lancement rapide, budget maîtrisé, une seule action de conversion.
+
+2. **Site vitrine — Offre cœur de gamme**
+    - Prix affiché: **à partir de 2 490 € HT**.
+    - Fourchette de vente cible: **2 490 € – 4 490 € HT**.
+    - Délai annoncé: **3 à 6 semaines**.
+    - Bon pour: activité installée, besoin de pages services + SEO de base + crédibilité.
+
+3. **Refonte — Offre optimisation business**
+    - Prix affiché: **à partir de 2 990 € HT**.
+    - Fourchette de vente cible: **2 990 € – 5 900 € HT**.
+    - Délai annoncé: **3 à 6 semaines**.
+    - Bon pour: site existant peu performant, repositionnement, montée en gamme.
+
+### Règles de pricing UX (pour éviter la friction)
+
+- Afficher les prix en **"à partir de"** + plage indicative (transparence sans se bloquer).
+- Préciser ce qui fait varier le prix: volume de pages, rédaction, SEO, multilingue, réservation/calendrier.
+- Toujours associer **prix + délai + livrables** sur la même carte d'offre.
+- Garder une progression lisible entre offres (écart de valeur perçu, pas seulement écart de prix).
 
 ---
 
@@ -81,13 +120,13 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 
 - Rôle: transformer l'intérêt en choix concret.
 - Pourquoi ici: le visiteur a déjà compris la valeur, il peut se projeter.
-- Règle: présenter **Création site vitrine** en premier (offre phare), puis **Refonte** comme alternative.
+- Règle: ordre recommandé : 1. One Page, 2. Site vitrine, 3. Refonte.
 
 ### Bloc 5 — Preuves projets
 
 - Rôle: conforter la décision par des cas concrets alignés avec la cible.
 - Pourquoi ici: agit comme renforcement final juste avant les objections.
-- Règle: montrer en priorité des cas “indépendants / petites entreprises”.
+- Règle: montrer en priorité des cas “indépendants / petites entreprises”. Avant / Après
 
 ### Bloc 6 — FAQ + CTA final
 
@@ -112,7 +151,8 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
     - Afficher explicitement “sites vitrines” + “indépendants / petites entreprises”.
 
 4. **Offres rationalisées**
-    - Garder 2 entrées lisibles: **Création site vitrine** et **Refonte**.
+
+- Garder 3 entrées lisibles: **One Page**, **Site vitrine**, **Refonte**.
     - Éviter les intitulés ambigus et les options trop proches.
 
 5. **Micro-preuve avancée**
@@ -127,30 +167,31 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 
 - Option A: **"Je crée des sites vitrines clairs et crédibles pour indépendants et petites entreprises."**
 - Option B: **"Votre site vitrine doit vous apporter des demandes, pas juste des visites."**
-- Option C: **"Création de site vitrine en priorité, refonte en second, pour mieux convertir."**
+- Option C: **"One Page, site vitrine ou refonte: une offre claire selon votre niveau de maturité."**
 
 ## Sous-titres (précision de l'offre)
 
-- **"Offre principale: création de site vitrine. Offre secondaire: refonte de site existant."**
+- **"3 offres claires: One Page pour démarrer, Site vitrine pour accélérer, Refonte pour optimiser."**
 - **"Pour freelances, artisans, consultants et petites entreprises de service."**
 
 ## CTA principaux
 
 - **"Lancer mon site vitrine"**
+- **"Lancer ma One Page"**
 - **"Demander un devis création"**
 - **"Planifier un audit de refonte"**
 
 ## CTA secondaires
 
 - **"Voir des sites vitrines réalisés"**
-- **"Comparer Création vs Refonte"**
+- **"Comparer One Page / Vitrine / Refonte"**
 - **"Vérifier si la refonte est nécessaire"**
 
 ## Transitions inter-blocs
 
 - Bloc 1 → Bloc 2: **"Si votre site est visité mais contacté trop rarement, voici les blocages les plus fréquents."**
 - Bloc 2 → Bloc 3: **"Ces blocages se corrigent avec une méthode simple en 3 étapes."**
-- Bloc 3 → Bloc 4: **"Choisissez maintenant l'option adaptée: créer votre site vitrine ou refondre l'existant."**
+- Bloc 3 → Bloc 4: **"Choisissez maintenant l'option adaptée: One Page, site vitrine complet, ou refonte stratégique."**
 - Bloc 4 → Bloc 5: **"Avant de décider, regardez des cas concrets d'indépendants et petites entreprises."**
 - Bloc 5 → Bloc 6: **"Il vous reste des questions ? Voici les réponses les plus fréquentes."**
 
@@ -164,12 +205,13 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 
 ## 5) Plan d'implémentation proposé (phase suivante)
 
-1. Réécrire le hero avec le positionnement explicite (site vitrine d'abord, refonte ensuite).
+1. Réécrire le hero avec le positionnement explicite (One Page, Site vitrine, Refonte).
 2. Regrouper Qualification/Proofs et Architecture/Process dans deux sections fusionnées.
 3. Réordonner la home selon les 6 blocs cibles.
-4. Revoir la section offres avec hiérarchie nette: **Création** puis **Refonte**.
-5. Injecter les micro-transitions entre sections.
-6. Tester la version avec un contrôle simple:
+4. Revoir la section offres avec hiérarchie nette: **One Page** → **Site vitrine** → **Refonte**.
+5. Intégrer la grille **prix + délais + livrables** directement dans les cartes d'offre.
+6. Injecter les micro-transitions entre sections.
+7. Tester la version avec un contrôle simple:
     - compréhension de la promesse en 5 secondes,
     - clarté de la cible (indépendants / petites entreprises),
     - compréhension de la hiérarchie des offres,
@@ -184,7 +226,7 @@ Pour optimiser le site au maximum, chaque bloc doit répondre à une question r�
 - **"Est-ce que vous faites exactement ce dont j'ai besoin ?"** → Hero (offre principale + cible).
 - **"Est-ce que vous comprenez mon problème concret ?"** → Diagnostic rapide.
 - **"Comment ça se passe, et est-ce simple ?"** → Méthode en 3 étapes.
-- **"Quelle option me correspond (création ou refonte) ?"** → Offres priorisées.
+- **"Quelle option me correspond (One Page, vitrine ou refonte) ?"** → Offres priorisées.
 - **"Est-ce que ça marche pour des profils comme moi ?"** → Preuves projets ciblées.
 - **"Qu'est-ce qui me bloque encore avant de vous contacter ?"** → FAQ + CTA final.
 
@@ -196,19 +238,32 @@ Si un visiteur (indépendant ou petite entreprise) ne peut pas répondre à ces 
 
 1. **Cible prioritaire immédiate**: veux-tu viser d'abord les freelances/solopreneurs, ou les petites entreprises déjà structurées ?
 2. **Secteurs à privilégier**: y a-t-il 2–3 métiers où tu as le plus de légitimité (ex: coach, artisan, consultant, services locaux) ?
-3. **Offre principale “site vitrine”**: quel livrable standard veux-tu vendre en premier (nombre de pages, délai, niveau d'accompagnement) ?
-4. **Offre de refonte**: à partir de quel signal proposes-tu une refonte plutôt qu'une création (site ancien, mauvais taux de contact, message flou) ?
-5. **Preuve clé à montrer**: quelle preuve est la plus forte aujourd'hui (avant/après, témoignage, chiffre de conversion, rapidité de livraison) ?
-6. **Objection majeure**: aujourd'hui, tes prospects hésitent surtout sur le prix, le délai, la qualité du design, ou la rentabilité business ?
-7. **CTA principal**: tu préfères pousser d'abord un devis, un appel découverte, ou un audit ?
-8. **Niveau de premium souhaité**: tu veux te positionner accessible, milieu de gamme, ou premium orienté ROI ?
+3. **Offre One Page**: quel périmètre minimal garantis-tu (sections, formulaire, SEO on-page, analytics) ?
+4. **Offre principale “site vitrine”**: quel livrable standard veux-tu vendre en premier (nombre de pages, délai, niveau d'accompagnement) ?
+5. **Offre de refonte**: à partir de quel signal proposes-tu une refonte plutôt qu'une création (site ancien, mauvais taux de contact, message flou) ?
+6. **Preuve clé à montrer**: quelle preuve est la plus forte aujourd'hui (avant/après, témoignage, chiffre de conversion, rapidité de livraison) ?
+7. **Objection majeure**: aujourd'hui, tes prospects hésitent surtout sur le prix, le délai, la qualité du design, ou la rentabilité business ?
+8. **CTA principal**: tu préfères pousser d'abord un devis, un appel découverte, ou un audit ?
+9. **Niveau de premium souhaité**: tu veux te positionner accessible, milieu de gamme, ou premium orienté ROI ?
 
-> Tant que ces 8 points ne sont pas clarifiés, l'optimisation visuelle seule restera limitée.
+Réponses :
+
+1. **Indépendants** (freelances, consultants, artisans, professions de service), **Petites entreprises** (TPE/PME locales de service).
+2. Thérapeutes, artistes, coach, artisans, services locaux
+3. Page unique structurée (Hero, Services, À propos, Preuves sociales, Contact), Design moderne et professionnel, Responsive mobile / tablette / desktop, Structure optimisée pour la conversion, Formulaire de contact intégré, SEO technique de base (metas, structure), Mise en ligne accompagnée
+4. Site complet 3 à 5 pages (Accueil, À propos, Services, Contact + options), Design moderne et professionnel (cohérent avec votre activité), Responsive mobile / tablette / desktop, Formulaire de contact optimisé, SEO technique de base (metas, structure, indexabilité), Mise en ligne accompagnée
+5. Refonte UX de la page d’accueil (narratif, hiérarchie, sections), Modernisation UI (responsive mobile / tablette / desktop), Clarification du message + optimisation des CTA, Amélioration du parcours utilisateur (frictions, lisibilité, confiance), Optimisations de base (perf/SEO technique simple). Site > 4 ans, Message flou, Peu de demandes; Non responsive.
+6. Avant / Après visuel + clarté du message.
+7. Objection visible : le prix / Objection réelle : “Est-ce que ça va vraiment me rapporter des demandes ?” Donc communication orientée ROI.
+8. Un appel découverte
+9. Milieu de gamme orienté ROI. Accessible mais structuré. Stratégique sans être agence premium.
+
+> Tant que ces 9 points ne sont pas clarifiés, l'optimisation visuelle seule restera limitée.
 
 ## Statut de sortie
 
-- ✅ Positionnement business clarifié (Création vitrine #1, Refonte #2).
+- ✅ Positionnement business clarifié (One Page + Site vitrine + Refonte).
 - ✅ Nouveau parcours conseillé (6 blocs max): défini.
 - ✅ Ordre optimal des sections: justifié.
 - ✅ Simplifications (fusion / suppression / condensation): listées.
-- ✅ Banque de micro-copy alignée sur la cible: prête.
+- ✅ Grille prix/délais recalibrée marché: prête à intégrer dans la section offres.
