@@ -49,7 +49,8 @@ export function AtomBackgroundCanvas() {
 
         const reduceMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
         const mobileMedia = window.matchMedia('(max-width: 767px)');
-        if (reduceMedia.matches || mobileMedia.matches) return;
+        const isMobile = mobileMedia.matches;
+        if (reduceMedia.matches) return;
 
         let stopAnimation = false;
         let frameId = 0;
@@ -66,7 +67,7 @@ export function AtomBackgroundCanvas() {
             const scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x070b14, 0.035);
 
-            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+            const camera = new THREE.PerspectiveCamera(isMobile ? 52 : 45, 1, 0.1, 100);
             camera.position.set(0, 0, 7.5);
 
             renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -80,7 +81,7 @@ export function AtomBackgroundCanvas() {
             lightFill.position.set(-4, -2.5, 3);
             scene.add(lightFill);
 
-            const coreGeometry = new THREE.TorusKnotGeometry(1.4, 0.34, 140, 16);
+            const coreGeometry = new THREE.TorusKnotGeometry(1.4, 0.34, isMobile ? 90 : 140, isMobile ? 12 : 16);
             const coreMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0x9f8dff,
                 metalness: 0.35,
@@ -94,7 +95,7 @@ export function AtomBackgroundCanvas() {
             scene.add(coreMesh);
 
             const starsGeometry = new THREE.BufferGeometry();
-            const starsCount = 320;
+            const starsCount = isMobile ? 180 : 320;
             const starsPositions = new Float32Array(starsCount * 3);
             for (let i = 0; i < starsCount; i += 1) {
                 starsPositions[i * 3] = (Math.random() - 0.5) * 9;
@@ -130,7 +131,7 @@ export function AtomBackgroundCanvas() {
                     return;
                 }
 
-                if (time - lastFrameTime < 33) {
+                if (time - lastFrameTime < (isMobile ? 45 : 33)) {
                     frameId = window.requestAnimationFrame(tick);
                     return;
                 }
