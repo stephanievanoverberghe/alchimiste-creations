@@ -18,8 +18,8 @@ export function Accordion({ items }: { items: FAQ[] }) {
                         </span>
                     </summary>
 
-                    <div className="faq-accordion__content grid grid-rows-[0fr] transition-all duration-300 ease-out group-open:grid-rows-[1fr]">
-                        <div className="overflow-hidden">
+                    <div className="faq-accordion__content grid grid-rows-[0fr] group-open:grid-rows-[1fr]">
+                        <div className="faq-accordion__content-inner overflow-hidden">
                             <p className="faq-accordion__answer border-t border-border/60 px-5 py-4 text-sm leading-relaxed text-text-muted">{item.answer}</p>
                         </div>
                     </div>

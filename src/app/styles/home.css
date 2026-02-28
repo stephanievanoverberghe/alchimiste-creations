@@ -63,6 +63,21 @@
     transition: transform var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard);
 }
 
+.faq-accordion__content {
+    transition: grid-template-rows 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-accordion__content-inner {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 260ms ease-out, transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-accordion[open] .faq-accordion__content-inner {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .faq-accordion:hover .faq-accordion__question {
     transform: translateX(2px);
 }
