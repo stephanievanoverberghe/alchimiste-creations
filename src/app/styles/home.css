@@ -86,39 +86,19 @@
 
 .process-card {
     animation: revealUp var(--motion-slow) var(--ease-standard) both;
-    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+    transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
 }
 
 .process-card:hover {
-    transform: translateY(-6px) scale(1.01);
-    border-color: color-mix(in oklab, hsl(var(--accent)) 35%, hsl(var(--border)) 65%);
-    box-shadow: 0 16px 50px rgba(5, 9, 22, 0.45);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 28%, hsl(var(--border)) 72%);
+    box-shadow: 0 12px 34px rgba(5, 9, 22, 0.32);
 }
 
-.process-card__mesh {
+.process-card__aura {
     position: absolute;
     inset: 0;
-    opacity: 0;
-    background:
-        radial-gradient(circle at 20% 10%, rgba(122, 84, 255, 0.16), transparent 42%),
-        radial-gradient(circle at 85% 85%, rgba(19, 209, 255, 0.14), transparent 48%);
-    transition: opacity var(--motion-base) var(--ease-standard);
-}
-
-.process-card:hover .process-card__mesh {
-    opacity: 1;
-}
-
-.process-card__pulse {
-    position: absolute;
-    right: -80px;
-    top: -80px;
-    width: 180px;
-    height: 180px;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(122, 84, 255, 0.2), transparent 65%);
-    filter: blur(6px);
-    animation: driftOrb 8s ease-in-out infinite;
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 .process-card__iconWrap,
@@ -128,7 +108,6 @@
 }
 
 .process-card:hover .process-card__iconWrap {
-    transform: translateY(-2px);
     border-color: color-mix(in oklab, hsl(var(--accent)) 45%, hsl(var(--border)) 55%);
     background-color: color-mix(in oklab, hsl(var(--accent)) 14%, transparent 86%);
 }

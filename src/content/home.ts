@@ -255,7 +255,7 @@ export const homeContent = {
             {
                 title: '3. Je crée une page moderne et dynamique',
                 icon: 'code',
-                duration: 'En quelques semaines',
+                duration: '1 à 6 semaines',
                 description: 'Je transforme tout ça en une page fluide, élégante et agréable à parcourir sur mobile comme sur ordinateur.',
                 deliverables: ['Un design tendance, cohérent avec votre image', 'Des animations légères qui donnent du rythme', 'Une page rapide et confortable à consulter'],
                 validation: 'Vous découvrez une version en ligne et validez le rendu.',
