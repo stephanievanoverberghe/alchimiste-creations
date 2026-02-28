@@ -71,7 +71,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                                                     ) : null}
                                                 </div>
 
-                                                {offer.bestFor ? <p className="mt-1 line-clamp-1 text-xs text-text-muted">{offer.bestFor}</p> : null}
+                                                {offer.bestFor ? <p className="mt-1 text-xs text-text-muted">{offer.bestFor}</p> : null}
                                             </div>
                                         </div>
                                         <p className="mt-3 text-sm text-text-muted">{offer.punchline}</p>
