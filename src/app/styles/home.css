@@ -147,10 +147,6 @@
     animation: shimmerFlow 2.4s linear infinite;
 }
 
-.qualification-section {
-    position: relative;
-}
-
 .qualification-journey__step {
     display: flex;
     align-items: center;
@@ -192,6 +188,7 @@
 }
 
 .qualification-card__glow {
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.28), rgba(19, 209, 255, 0.2) 38%, transparent 70%);
     animation: drift 6s ease-in-out infinite;
 }
 
@@ -211,6 +208,30 @@
 .qualification-card:hover .qualification-card__signal {
     transform: translateX(2px);
     border-color: color-mix(in oklab, hsl(var(--accent)) 40%, hsl(var(--border)) 60%);
+}
+
+.proof-band {
+    position: relative;
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+}
+
+.proof-band__pulse {
+    position: absolute;
+    inset: auto -90px -120px auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(19, 209, 255, 0.25), transparent 68%);
+    animation: driftOrb 7s ease-in-out infinite;
+}
+
+.proof-band__item {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+}
+
+.proof-band__line {
+    background-size: 210% 100%;
+    animation: shimmerFlow 2.7s linear infinite;
 }
 
 @media (max-width: 640px) {
