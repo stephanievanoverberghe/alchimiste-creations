@@ -9,8 +9,8 @@
 - [x] Lancer la phase 1 (architecture)
 - [x] Finaliser la phase 1 (architecture)
 - [x] Phase 2 (UX) — Terminée
-- [ ] Phase 3 (UI) — En cours
-- [ ] Phase 4 (performance)
+- [x] Phase 3 (UI) — Terminée
+- [ ] Phase 4 (performance) — En cours
 - [ ] Phase 5 (clean code)
 - [ ] Phase 6 (responsive)
 
@@ -163,5 +163,7 @@
 - **Sprint UX #3**: sous-phase 2.3 réalisée avec cartographie des surcharges, qualification des frictions de lecture et priorisation par impact conversion dans `docs/ux-phase-2-3-diagnostic.md`.
 - **Sprint UX #4**: sous-phase 2.4 réalisée avec proposition d'un parcours cible en 6 blocs, simplifications de sections et banque de micro-copy dans `docs/ux-phase-2-4-target-journey.md`.
 - **Sprint UI #1 (kickoff)**: ouverture de la phase 3 avec plan détaillé en 4 sous-phases (typographie, spacing, rationalisation visuelle, contraste/lisibilité).
--   - **Sprint UI #2**: sous-phase 3.2 finalisée avec une grille de spacing tokenisée (`container`, `section`, `heading`, `stack`, `grid`, `card`) et mapping appliqué sur les sections critiques de la home.
-- Prochaine action: démarrer la sous-phase 3.1 sur le Hero + sections à fort impact (Offers, CTA final), puis déployer le même système au reste de la home.
+- **Sprint UI #2**: sous-phase 3.2 finalisée avec une grille de spacing tokenisée (`container`, `section`, `heading`, `stack`, `grid`, `card`) et mapping appliqué sur les sections critiques de la home.
+- **Sprint UI #3 (clôture)**: phase 3 validée avec hiérarchie typographique stabilisée, système d'espacements harmonisé et contrôles de contraste/lisibilité finalisés.
+- **Sprint Performance #1 (kickoff)**: démarrage de la phase 4 pour optimiser le rendu, l'hydration et le chargement des blocs lourds.
+- Prochaine action: lancer la sous-phase performance sur `AtomBackground` (délestage + chargement différé), puis mesurer l'impact Lighthouse avant/après.
