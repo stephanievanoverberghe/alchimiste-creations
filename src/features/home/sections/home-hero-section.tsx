@@ -12,8 +12,8 @@ type HomeHeroSectionProps = {
 };
 
 const trustHighlights = [
-    { icon: ShieldCheck, label: 'Paiement sécurisé' },
-    { icon: Clock3, label: 'Réponse rapide' },
+    { icon: Clock3, label: 'Devis sous 24h' },
+    { icon: ShieldCheck, label: 'Accompagnement 1:1' },
     { icon: Sparkles, label: 'Design premium' },
 ] as const;
 

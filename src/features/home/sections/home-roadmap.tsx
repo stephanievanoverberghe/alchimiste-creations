@@ -23,5 +23,5 @@ export function HomeRoadmap({ children }: HomeRoadmapProps) {
         return <>{children}</>;
     }
 
-    return <HomeRoadmapDesktop>{children}</HomeRoadmapDesktop>;
+    return <HomeRoadmapDesktop isFancy={false}>{children}</HomeRoadmapDesktop>;
 }

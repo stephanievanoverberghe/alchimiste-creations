@@ -35,9 +35,9 @@
 }
 
 .faq-accordion:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, hsl(var(--accent)) 30%, hsl(var(--border)) 70%);
-    box-shadow: 0 12px 34px rgba(5, 9, 22, 0.35);
+    transform: translateY(-1px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 26%, hsl(var(--border)) 74%);
+    box-shadow: 0 8px 24px rgba(5, 9, 22, 0.28);
 }
 
 .faq-accordion__glow {
@@ -111,7 +111,7 @@
 
 .process-card:hover {
     border-color: color-mix(in oklab, hsl(var(--accent)) 28%, hsl(var(--border)) 72%);
-    box-shadow: 0 12px 34px rgba(5, 9, 22, 0.32);
+    box-shadow: 0 8px 24px rgba(5, 9, 22, 0.24);
 }
 
 .process-card__aura {
@@ -181,11 +181,6 @@
     transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard);
 }
 
-.qualification-card:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in oklab, hsl(var(--accent)) 35%, hsl(var(--border)) 65%);
-}
-
 .qualification-card__glow {
     background: radial-gradient(circle, rgba(122, 84, 255, 0.28), rgba(19, 209, 255, 0.2) 38%, transparent 70%);
     animation: drift 6s ease-in-out infinite;
@@ -195,18 +190,8 @@
     transition: transform var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard);
 }
 
-.qualification-card:hover .qualification-card__icon {
-    transform: translateY(-2px) scale(1.04);
-    background-color: color-mix(in oklab, hsl(var(--accent)) 15%, transparent 85%);
-}
-
 .qualification-card__signal {
     transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard);
-}
-
-.qualification-card:hover .qualification-card__signal {
-    transform: translateX(2px);
-    border-color: color-mix(in oklab, hsl(var(--accent)) 40%, hsl(var(--border)) 60%);
 }
 
 .proof-band {
@@ -230,7 +215,7 @@
 
 .proof-band__line {
     background-size: 210% 100%;
-    animation: shimmerFlow 2.7s linear infinite;
+    animation: shimmerFlow 4.8s linear infinite;
 }
 
 .cta-strip {
@@ -340,7 +325,7 @@
 .offers-shell__mesh {
     position: absolute;
     inset: 0;
-    opacity: 0.35;
+    opacity: 0.22;
     pointer-events: none;
     background:
         radial-gradient(circle at 16% 12%, rgba(122, 84, 255, 0.2), transparent 46%),
@@ -536,15 +521,15 @@
 }
 
 .projects-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-3px);
     border-color: color-mix(in oklab, hsl(var(--accent)) 38%, hsl(var(--border)) 62%);
-    box-shadow: 0 20px 44px rgba(8, 10, 20, 0.42);
+    box-shadow: 0 12px 28px rgba(8, 10, 20, 0.3);
 }
 
 .projects-card__mesh {
     position: absolute;
     inset: 0;
-    opacity: 0.35;
+    opacity: 0.22;
     pointer-events: none;
     background:
         radial-gradient(circle at 8% 12%, rgba(122, 84, 255, 0.16), transparent 42%),
@@ -558,7 +543,7 @@
     border-radius: 999px;
     pointer-events: none;
     filter: blur(2px);
-    opacity: 0.42;
+    opacity: 0.28;
     animation: driftOrb 7.5s ease-in-out infinite;
 }
 
@@ -643,7 +628,7 @@
 .projects-contact__ticker-track {
     display: flex;
     width: max-content;
-    animation: projectTicker 18s linear infinite;
+    animation: projectTicker 28s linear infinite;
 }
 
 .projects-contact__ticker-track span {

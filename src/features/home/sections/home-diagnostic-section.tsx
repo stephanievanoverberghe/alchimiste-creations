@@ -1,6 +1,7 @@
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
@@ -85,10 +86,7 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
                             {proofs.stats.map((stat, index) => (
                                 <div
                                     key={stat.label}
-                                    className={cn(
-                                        'proof-band__item min-w-55 rounded-xl border border-border/70 bg-background/65 p-3 md:min-w-0',
-                                        'transition duration-300 hover:border-accent/45 hover:-translate-y-0.5',
-                                    )}
+                                    className={cn('proof-band__item min-w-55 rounded-xl border border-border/70 bg-background/65 p-3 md:min-w-0')}
                                     style={{ animationDelay: `${index * 120}ms` }}
                                 >
                                     <p className="text-lg font-semibold text-primary">{stat.value}</p>
@@ -101,6 +99,11 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
                 </Card>
 
                 <p className="mt-4 text-sm font-semibold text-accent">{qualification.transitionToMethod}</p>
+                <div className="mt-4">
+                    <Button href="/offres" variant="secondary" className="border-border/80">
+                        Voir les offres maintenant
+                    </Button>
+                </div>
             </Container>
         </Section>
     );
