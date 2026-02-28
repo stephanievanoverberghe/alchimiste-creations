@@ -3,11 +3,12 @@ import { offersSchema } from './schemas';
 export const offers = offersSchema.parse([
     {
         slug: 'creation-landing-page',
-        name: 'Création de landing page / site One Page',
-        punchline: 'Besoin d’une présence en ligne rapide et efficace ? Je crée une page stratégique pensée pour convertir.',
-        summary: 'Une page unique, claire et structurée, idéale pour présenter votre activité, lancer une offre ou générer des demandes de contact rapidement.',
-        timeline: '7 à 10 jours ouvrés',
-        priceFrom: 'À partir de 1 090€',
+        name: 'One Page — offre d’entrée',
+        punchline: 'Lancez une présence claire et crédible en quelques jours avec une page unique orientée prise de contact.',
+        summary: 'Une One Page structurée pour présenter votre activité, rassurer rapidement et guider vers une seule action de conversion.',
+        timeline: '7 à 14 jours ouvrés',
+        priceFrom: 'À partir de 1 090€ HT',
+        priceFactors: ['Volume de contenu', 'Niveau de rédaction', 'Fonctionnalités de prise de rendez-vous'],
         deliverables: [
             'Page unique structurée (Hero, Services, À propos, Preuves sociales, Contact)',
             'Design moderne et professionnel',
@@ -20,8 +21,8 @@ export const offers = offersSchema.parse([
         featured: false,
 
         icon: 'layout',
-        bestFor: 'Idéal pour indépendants, coachs et petites structures qui veulent une présence professionnelle sans projet lourd.',
-        highlights: ['Rapide', 'Efficace', 'Optimisé conversion'],
+        bestFor: 'Idéal pour indépendants et petites entreprises qui veulent démarrer vite avec un budget maîtrisé.',
+        highlights: ['Lancement rapide', 'Message clair', 'Une action de conversion'],
         note: 'Projet 100% codé sur mesure (pas de template générique).',
         image: {
             src: '/images/offer-landing.png',
@@ -31,13 +32,14 @@ export const offers = offersSchema.parse([
 
     {
         slug: 'creation-site-vitrine',
-        name: 'Création de site vitrine',
-        punchline: 'Vous n’avez pas encore de site ? Je crée un site professionnel, clair et responsive.',
-        summary: 'Un site vitrine moderne et structuré, pensé pour inspirer confiance et faciliter la prise de contact dès la première visite.',
+        name: 'Site vitrine — offre cœur de gamme',
+        punchline: 'Créez un site complet pour structurer vos demandes et renforcer votre crédibilité.',
+        summary: 'Un site vitrine de 4 à 8 pages pensé pour présenter vos services, améliorer votre visibilité et soutenir une acquisition régulière.',
         timeline: '3 à 5 semaines',
-        priceFrom: 'À partir de 2 490€',
+        priceFrom: 'À partir de 2 490 € HT',
+        priceFactors: ['Nombre de pages', 'Travail SEO de base', 'Besoins multilingues'],
         deliverables: [
-            'Site complet 3 à 5 pages (Accueil, À propos, Services, Contact + options)',
+            'Site complet 4 à 8 pages (Accueil, À propos, Services, Contact + options)',
             'Design moderne et professionnel (cohérent avec votre activité)',
             'Responsive mobile / tablette / desktop',
             'Formulaire de contact optimisé',
@@ -47,8 +49,8 @@ export const offers = offersSchema.parse([
         featured: true,
 
         icon: 'layout',
-        bestFor: 'Idéal pour lancer ou structurer votre présence en ligne avec une base solide.',
-        highlights: ['Site complet', 'Crédibilité', 'Base évolutive'],
+        bestFor: 'Parfait pour une activité installée qui veut plus de lisibilité et plus de demandes qualifiées.',
+        highlights: ['Offre principale', 'Crédibilité forte', 'Base SEO solide'],
         note: 'Projet 100% codé sur mesure (pas de WordPress).',
         image: {
             src: '/images/offer-vitrine.png',
@@ -58,11 +60,12 @@ export const offers = offersSchema.parse([
 
     {
         slug: 'refonte-site-internet',
-        name: 'Refonte de site internet',
+        name: 'Refonte — optimisation business',
         punchline: 'Votre site est dépassé ou ne reflète plus votre niveau ? Je le modernise et clarifie votre message.',
         summary: 'Une refonte stratégique pour améliorer la lisibilité, la structure et l’image professionnelle de votre site (priorité : page d’accueil).',
         timeline: '3 à 6 semaines',
-        priceFrom: 'À partir de 2 990€',
+        priceFrom: 'À partir de 2 990€ HT',
+        priceFactors: ['Niveau de refonte UX/UI', 'Réorganisation des contenus', 'Optimisations techniques nécessaires'],
         deliverables: [
             'Refonte UX de la page d’accueil (narratif, hiérarchie, sections)',
             'Modernisation UI (responsive mobile / tablette / desktop)',
@@ -73,8 +76,8 @@ export const offers = offersSchema.parse([
         featured: false,
 
         icon: 'sparkles',
-        bestFor: 'Parfait si votre activité a évolué mais que votre site ne suit plus.',
-        highlights: ['Modernisation', 'Message clarifié', 'Image plus pro'],
+        bestFor: 'Parfait si votre site existe déjà mais sous-performe sur la clarté et la conversion.',
+        highlights: ['Repositionnement', 'Parcours optimisé', 'Montée en gamme'],
         note: 'La bonne option si la base existe déjà, mais ne convertit pas assez.',
         image: {
             src: '/images/offer-refonte.png',

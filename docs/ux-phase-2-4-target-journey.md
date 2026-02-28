@@ -45,15 +45,15 @@ Transformer le diagnostic 2.3 en plan d'action concret avec un positionnement ex
 ### Proposition commerciale recommandée (claire et vendable)
 
 1. **One Page — Offre d'entrée**
-    - Prix affiché: **à partir de 1 190 € HT**.
-    - Fourchette de vente cible: **1 190 € – 1 690 € HT**.
+    - Prix affiché: **à partir de 1 090 € HT**.
+    - Fourchette de vente cible: **1 090 € – 1 690 € HT**.
     - Délai annoncé: **7 à 14 jours ouvrés**.
     - Bon pour: lancement rapide, budget maîtrisé, une seule action de conversion.
 
 2. **Site vitrine — Offre cœur de gamme**
     - Prix affiché: **à partir de 2 490 € HT**.
     - Fourchette de vente cible: **2 490 € – 4 490 € HT**.
-    - Délai annoncé: **3 à 6 semaines**.
+    - Délai annoncé: **3 à 5 semaines**.
     - Bon pour: activité installée, besoin de pages services + SEO de base + crédibilité.
 
 3. **Refonte — Offre optimisation business**

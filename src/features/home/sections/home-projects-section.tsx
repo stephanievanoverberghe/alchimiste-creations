@@ -31,77 +31,69 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
             <Container>
                 <div className="flex flex-wrap items-end justify-between gap-4">
                     <SectionHeading eyebrow={content.eyebrow} title={content.title} description={content.description} />
-                    <Link href="/projets" className="focus-ring inline-flex items-center mb-2 gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-strong">
+                    <Link href="/projets" className="focus-ring inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-strong">
                         Voir tous les projets <ArrowRight className="h-4 w-4" />
                     </Link>
                 </div>
 
-                <p className="mb-5 text-sm font-semibold text-accent">Il vous reste des questions ? La FAQ juste après répond aux objections les plus fréquentes.</p>
-                <div className="grid gap-5 md:grid-cols-6">
+                <div className="mt-6 grid gap-5 md:grid-cols-6">
                     {mainProject
                         ? (() => {
                               const Icon = mainProject.icon ? ICONS[mainProject.icon] : null;
 
                               return (
                                   <Link key={mainProject.slug} href={`/projets/${mainProject.slug}`} className="focus-ring rounded-lg md:col-span-4">
-                                      <Card className="group relative overflow-hidden border-border/70 bg-linear-to-br from-surface via-surface/95 to-surface/80 transition duration-300 ease-out hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_22px_50px_rgba(8,10,20,0.5)]">
-                                          <div className="absolute inset-x-0 top-0 h-1 -translate-y-full bg-linear-to-r from-primary/0 via-accent/80 to-primary/0 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100" />
-
-                                          <div
-                                              aria-hidden="true"
-                                              className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl opacity-20 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 motion-safe:animate-pulse"
-                                              style={{ background: 'rgba(19,209,255,0.14)' }}
-                                          />
-
+                                      <Card className="group relative overflow-hidden border-border/70 bg-linear-to-br from-surface via-surface/95 to-surface/80 p-5 transition duration-300 ease-out hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_22px_50px_rgba(8,10,20,0.5)]">
                                           <div className="relative flex items-start justify-between gap-3">
-                                              <div>
+                                              <div className="min-w-0">
                                                   <p className="text-xs font-semibold tracking-wide text-text-muted">{mainProject.sector}</p>
                                                   <p className="mt-1 text-xl font-semibold">{mainProject.client}</p>
                                               </div>
 
                                               {Icon ? (
-                                                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
+                                                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2">
                                                       <Icon className="h-5 w-5 text-accent" />
                                                   </span>
                                               ) : null}
                                           </div>
 
                                           {mainProject.image ? (
-                                              <div className="relative mt-5 overflow-hidden rounded-2xl border border-border/70 bg-background/30">
+                                              <div className="relative mt-4 overflow-hidden rounded-2xl border border-border/70 bg-background/30">
                                                   <Image
                                                       src={mainProject.image.src}
                                                       alt={mainProject.image.alt}
-                                                      width={640}
-                                                      height={360}
-                                                      className="h-52 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                                      width={900}
+                                                      height={520}
+                                                      className="h-48 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-56"
+                                                      priority
                                                   />
-                                                  <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-surface/75 via-surface/20 to-transparent opacity-80" />
+                                                  <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-surface/70 via-surface/15 to-transparent opacity-90" />
 
-                                                  <div className="absolute inset-x-4 bottom-4 grid gap-2 sm:grid-cols-2">
+                                                  <div className="absolute inset-x-3 bottom-3 flex flex-wrap gap-2">
                                                       {mainProject.outcomes.slice(0, 2).map((outcome) => (
-                                                          <p
+                                                          <span
                                                               key={outcome}
-                                                              className="rounded-xl border border-white/20 bg-black/35 px-3 py-2 text-xs font-medium text-white backdrop-blur"
+                                                              className="rounded-full border border-white/15 bg-black/35 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur"
                                                           >
                                                               {outcome}
-                                                          </p>
+                                                          </span>
                                                       ))}
                                                   </div>
                                               </div>
                                           ) : null}
 
-                                          <div className="relative mt-5 grid gap-3 md:grid-cols-2">
+                                          <div className="mt-4 grid gap-3 sm:grid-cols-2">
                                               <div className="rounded-2xl border border-border/70 bg-background/25 p-3 text-sm text-text-muted">
-                                                  <p className="font-semibold text-text">Avant</p>
-                                                  <p className="mt-1">{mainProject.challenge}</p>
+                                                  <p className="text-xs font-semibold tracking-wide text-text-muted">Avant</p>
+                                                  <p className="mt-1 text-pretty">{mainProject.challenge}</p>
                                               </div>
                                               <div className="rounded-2xl border border-accent/35 bg-accent/8 p-3 text-sm text-text-muted">
-                                                  <p className="font-semibold text-text">Après</p>
-                                                  <p className="mt-1">{mainProject.solution}</p>
+                                                  <p className="text-xs font-semibold tracking-wide text-accent">Après</p>
+                                                  <p className="mt-1 text-pretty">{mainProject.solution}</p>
                                               </div>
                                           </div>
 
-                                          <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-text">
+                                          <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-text">
                                               Voir l&apos;étude de cas <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                                           </div>
                                       </Card>
@@ -116,15 +108,15 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
 
                               return (
                                   <Link key={secondaryProject.slug} href={`/projets/${secondaryProject.slug}`} className="focus-ring rounded-lg md:col-span-2">
-                                      <Card className="group relative h-full overflow-hidden border-border/70 bg-linear-to-b from-surface/95 to-surface/80 transition duration-300 ease-out hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_18px_40px_rgba(8,10,20,0.45)]">
+                                      <Card className="group relative h-full overflow-hidden border-border/70 bg-linear-to-b from-surface/95 to-surface/80 p-5 transition duration-300 ease-out hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_18px_40px_rgba(8,10,20,0.45)]">
                                           <div className="relative flex items-start justify-between gap-3">
-                                              <div>
+                                              <div className="min-w-0">
                                                   <p className="text-xs font-semibold tracking-wide text-text-muted">{secondaryProject.sector}</p>
                                                   <p className="mt-1 text-lg font-semibold">{secondaryProject.client}</p>
                                               </div>
 
                                               {Icon ? (
-                                                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
+                                                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/70 bg-background/40 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2">
                                                       <Icon className="h-5 w-5 text-accent" />
                                                   </span>
                                               ) : null}
@@ -143,25 +135,13 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
                                               </div>
                                           ) : null}
 
-                                          <div className="relative mt-4 space-y-3 text-sm text-text-muted">
-                                              <p>
-                                                  <span className="font-semibold text-text">Besoin client :</span> {secondaryProject.challenge}
+                                          <div className="mt-4 space-y-3 text-sm text-text-muted">
+                                              <p className="text-pretty">
+                                                  <span className="font-semibold text-text">Besoin :</span> {secondaryProject.challenge}
                                               </p>
-                                              <p>
+                                              <p className="text-pretty">
                                                   <span className="font-semibold text-text">Réponse :</span> {secondaryProject.solution}
                                               </p>
-                                          </div>
-
-                                          <div className="relative mt-4 rounded-2xl border border-border/70 bg-background/25 p-3">
-                                              <p className="text-xs font-semibold tracking-wide text-accent">Impact visible</p>
-                                              <ul className="mt-3 space-y-2 text-sm" aria-label={`Résultats pour ${secondaryProject.client}`}>
-                                                  {secondaryProject.outcomes.slice(0, 2).map((outcome) => (
-                                                      <li key={outcome} className="flex gap-2 text-text-muted">
-                                                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                                                          <span>{outcome}</span>
-                                                      </li>
-                                                  ))}
-                                              </ul>
                                           </div>
 
                                           <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-text">
@@ -180,7 +160,7 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
                             'glass relative overflow-hidden p-6 md:p-8',
                             'transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(8,10,20,0.45)]',
                         )}
-                        aria-label="Contact - Et si c’était votre projet ?"
+                        aria-label="Contact - Planifier un appel découverte"
                     >
                         <div
                             aria-hidden="true"
@@ -189,22 +169,24 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
                         />
 
                         <div className="flex flex-wrap items-center justify-between gap-6">
-                            <div>
+                            <div className="max-w-xl">
                                 <p className="text-sm font-semibold text-accent">Et si c’était le vôtre ?</p>
-                                <h3 className="mt-2 text-lg font-semibold">On transforme votre site en machine à prises de contact.</h3>
-                                <p className="mt-2 text-sm text-text-muted">Parlez-moi de votre activité : je vous propose un plan simple, moderne et orienté résultats.</p>
+                                <h3 className="mt-2 text-lg font-semibold">On clarifie votre message et on augmente les prises de contact.</h3>
+                                <p className="mt-2 text-sm text-text-muted">
+                                    Parlez-moi de votre activité : on voit en 20 min si la meilleure option est une One Page, un site vitrine ou une refonte.
+                                </p>
                             </div>
 
                             <ul className="grid gap-2 text-sm text-text-muted sm:grid-cols-2" aria-label="Bénéfices de l'accompagnement">
-                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Audit UX orienté conversion</li>
-                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Direction artistique tendance</li>
-                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Structure narrative qui rassure</li>
-                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">CTA stratégiques pour déclencher l&apos;action</li>
+                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Message clair en 5 secondes</li>
+                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Parcours simple vers le contact</li>
+                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">Design moderne et crédible</li>
+                                <li className="rounded-xl border border-border/70 bg-background/20 px-3 py-2">CTA visibles au bon moment</li>
                             </ul>
                         </div>
 
                         <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-text">
-                            Lancer la discussion <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            Planifier un appel découverte <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                         </div>
                     </Link>
                 </div>

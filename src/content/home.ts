@@ -110,14 +110,14 @@ export type HomeContent = {
 
 export const homeContent = {
     hero: {
-        badge: 'Création de sites vitrines pour indépendants et petites entreprises (refonte possible)',
-        title: 'Je crée des sites vitrines clairs et crédibles pour indépendants et petites entreprises.',
-        lead: 'Offre principale : création de site vitrine. Offre secondaire : refonte. Objectif : transformer vos visites en demandes qualifiées.',
-        highlightsTitle: 'En 5 secondes, votre prospect doit capter :',
-        highlights: ['Ce que vous faites et pour qui.', 'Pourquoi vous contacter maintenant.'],
-        assurances: ['Accompagnement clair et concret', 'Sans jargon inutile'],
+        badge: 'One Page • Site vitrine • Refonte — pour indépendants & petites entreprises',
+        title: 'Je crée des sites vitrines clairs, crédibles et orientés prise de contact.',
+        lead: 'Pour freelances, artisans, consultants et TPE : une One Page pour démarrer vite, un site vitrine pour structurer vos demandes, ou une refonte pour améliorer un site existant.',
+        highlightsTitle: 'En 5 secondes, votre prospect comprend :',
+        highlights: ['Ce que vous faites et pour qui.', 'Pourquoi vous contacter maintenant.', 'Quelle option choisir (One Page / Vitrine / Refonte).'],
+        assurances: ['Accompagnement clair et concret.', 'Sans jargon inutile.', 'Objectif : plus de demandes qualifiées.'],
         needs: ['Message clair dès l’arrivée', 'Parcours qui incite à agir', 'Plus de contacts qualifiés'],
-        ctaHint: 'Audit offert : on vérifie en 20 minutes si vous devez créer un nouveau site vitrine ou refondre l’existant.',
+        ctaHint: 'Appel découverte 20 min : on valide ensemble l’option la plus adaptée (One Page, site vitrine ou refonte).',
     },
     qualification: {
         eyebrow: 'Diagnostic rapide',
@@ -255,7 +255,7 @@ export const homeContent = {
             {
                 title: '3. Je crée une page moderne et dynamique',
                 icon: 'code',
-                duration: '3–7 jours',
+                duration: 'En quelques semaines',
                 description: 'Je transforme tout ça en une page fluide, élégante et agréable à parcourir sur mobile comme sur ordinateur.',
                 deliverables: ['Un design tendance, cohérent avec votre image', 'Des animations légères qui donnent du rythme', 'Une page rapide et confortable à consulter'],
                 validation: 'Vous découvrez une version en ligne et validez le rendu.',

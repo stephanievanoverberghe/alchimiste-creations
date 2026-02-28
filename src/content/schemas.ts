@@ -22,6 +22,7 @@ export const offerSchema = z.object({
     summary: z.string(),
     timeline: z.string(),
     priceFrom: z.string(),
+    priceFactors: z.array(z.string()).optional(),
     deliverables: z.array(z.string()).min(3),
     featured: z.boolean().default(false),
     icon: z.enum(['shield', 'sparkles', 'layout', 'zap']).optional(),

@@ -2,11 +2,13 @@ import { siteSchema } from './schemas';
 
 export const siteContent = siteSchema.parse({
     brand: 'Alchimiste Créations',
-    baseline: 'Des sites qui claquent visuellement et performent commercialement.',
+    baseline: 'Des sites vitrines clairs, crédibles et orientés prise de contact.',
     valueProposition:
-        'Je conçois des expériences web orientées acquisition pour coachs, studios et PME ambitieuses : branding digital fort, tunnel de conversion clair, et stack moderne React / Next.js / MongoDB.',
-    ctaPrimary: { label: 'Réserver mon audit conversion', href: '/contact' },
+        'J’aide les freelances et petites entreprises à lancer une One Page, créer un site vitrine structuré ou refondre leur site pour générer plus de demandes qualifiées.',
+
+    ctaPrimary: { label: 'Planifier un appel découverte', href: '/contact' },
     ctaSecondary: { label: 'Voir les offres & tarifs', href: '/offres' },
+
     nav: [
         { label: 'Offres', href: '/offres' },
         { label: 'Méthode', href: '/methode' },
@@ -14,9 +16,10 @@ export const siteContent = siteSchema.parse({
         { label: 'FAQ', href: '/faq' },
         { label: 'Contact', href: '/contact' },
     ],
+
     stats: [
-        { label: 'Délai moyen de lancement', value: '2 à 6 semaines' },
-        { label: 'Score Lighthouse cible', value: '95+ mobile & desktop' },
-        { label: 'Accompagnement', value: '1:1 stratégique + production' },
+        { label: 'One Page', value: '7 à 14 jours ouvrés' },
+        { label: 'Site vitrine', value: '3 à 6 semaines' },
+        { label: 'Accompagnement', value: 'Stratégique + production sur mesure' },
     ],
 });
