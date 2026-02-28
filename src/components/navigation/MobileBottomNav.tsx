@@ -41,7 +41,6 @@ function NavLink({ item, pathname }: { item: Item; pathname: string }) {
                 active ? 'text-text' : 'text-text-muted hover:text-text',
             )}
         >
-            {/* active indicator (pro, discret, moderne) */}
             <span
                 aria-hidden="true"
                 className={cn(
@@ -79,21 +78,22 @@ function Cta({ pathname }: { pathname: string }) {
             aria-current={active ? 'page' : undefined}
             className={cn('focus-ring group relative -mt-8 inline-flex flex-col items-center justify-center gap-1', 'active:scale-[0.98] motion-reduce:active:scale-100')}
         >
-            {/* halo (subtil) */}
             <span
                 aria-hidden="true"
-                className={cn('pointer-events-none absolute -z-10 h-16 w-16 rounded-full blur-xl', active ? 'bg-primary/25' : 'bg-primary/15 opacity-70 group-hover:opacity-100')}
+                className={cn('pointer-events-none absolute -z-10 h-18 w-18 rounded-full blur-2xl', active ? 'bg-primary/22' : 'bg-primary/16 opacity-80 group-hover:opacity-100')}
             />
 
             <span
                 aria-hidden="true"
                 className={cn(
-                    'inline-flex h-15 w-15 items-center justify-center rounded-full border border-border/70',
-                    // IMPORTANT: surface premium + léger contraste
-                    'bg-surface-elevated text-text shadow-[0_18px_45px_rgba(4,7,18,0.62)]',
+                    'inline-flex h-15 w-15 items-center justify-center rounded-full border',
+                    'bg-primary text-primary-foreground',
+                    'border-white/10 shadow-[0_18px_45px_rgba(4,7,18,0.45),0_0_0_1px_rgba(255,255,255,0.06)_inset]',
                     'transition duration-(--motion-fast) ease-(--ease-standard)',
                     'motion-reduce:transition-none',
-                    active ? 'ring-2 ring-primary/55' : 'group-hover:-translate-y-0.5',
+                    active
+                        ? 'ring-2 ring-primary/40 shadow-[0_18px_45px_rgba(4,7,18,0.45),0_0_40px_rgba(122,84,255,0.28)]'
+                        : 'group-hover:-translate-y-0.5 group-hover:shadow-[0_18px_45px_rgba(4,7,18,0.45),0_0_48px_rgba(122,84,255,0.22)]',
                 )}
             >
                 <Icon className="h-6 w-6" />
@@ -112,19 +112,11 @@ export function MobileBottomNav() {
 
     return (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:hidden">
-            <nav aria-label="Navigation mobile" className="pointer-events-auto mx-auto max-w-[28rem]">
-                <div
-                    className={cn(
-                        'relative rounded-[2rem] border border-border/70',
-                        // glass propre : pas trop opaque, pas trop blur
-                        'bg-surface/70 backdrop-blur-xl',
-                        // ombre profonde mais clean
-                        'shadow-[0_22px_60px_rgba(4,7,18,0.62)]',
-                    )}
-                >
-                    {/* hairline highlight (premium) */}
+            <nav aria-label="Navigation mobile" className="pointer-events-auto mx-auto max-w-md">
+                <div className={cn('relative rounded-4xl border border-border/70', 'bg-surface/70 backdrop-blur-xl', 'shadow-[0_22px_60px_rgba(4,7,18,0.62)]')}>
                     <div aria-hidden="true" className="pointer-events-none absolute inset-x-6 top-0 h-px bg-linear-to-r from-transparent via-white/22 to-transparent" />
-
+                    <div aria-hidden="true" className="pointer-events-none absolute -inset-x-6 -top-10 h-24 bg-radial from-primary/10 via-transparent to-transparent blur-2xl" />
+                    <div aria-hidden="true" className="pointer-events-none absolute -inset-x-6 -bottom-12 h-24 bg-radial from-accent/8 via-transparent to-transparent blur-2xl" />
                     <div className="grid grid-cols-5 items-end gap-1 px-2 pb-2 pt-3">
                         {left.map((item) => (
                             <NavLink key={item.href} item={item} pathname={pathname} />
