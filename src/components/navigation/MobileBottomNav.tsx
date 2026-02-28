@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { BadgeEuro, HelpCircle, LayoutGrid, Layers3, Send, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +24,71 @@ const CTA: Item = { href: '/contact', label: 'Contact', icon: Send };
 function isActive(pathname: string, href: string) {
     if (href === '/') return pathname === '/';
     return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function usePrefersReducedMotion() {
+    const [reduced, setReduced] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const onChange = () => setReduced(mq.matches);
+
+        onChange();
+        mq.addEventListener?.('change', onChange);
+        return () => mq.removeEventListener?.('change', onChange);
+    }, []);
+
+    return reduced;
+}
+
+function useHideOnScroll() {
+    const [hidden, setHidden] = useState(false);
+    const lastY = useRef(0);
+    const ticking = useRef(false);
+
+    useEffect(() => {
+        const MIN_Y_TO_START = 24; // visible tout en haut
+        const DELTA = 10; // anti-jitter
+        const HIDE_AFTER = 64; // évite de cacher trop tôt
+
+        lastY.current = window.scrollY || 0;
+
+        const update = () => {
+            ticking.current = false;
+
+            const y = window.scrollY || 0;
+            const diff = y - lastY.current;
+
+            // proche du top -> visible
+            if (y < MIN_Y_TO_START) {
+                setHidden(false);
+                lastY.current = y;
+                return;
+            }
+
+            // ignore micro scroll
+            if (Math.abs(diff) < DELTA) return;
+
+            // scroll down -> hide (après un peu de scroll)
+            if (diff > 0 && y > HIDE_AFTER) setHidden(true);
+
+            // scroll up -> show
+            if (diff < 0) setHidden(false);
+
+            lastY.current = y;
+        };
+
+        const onScroll = () => {
+            if (ticking.current) return;
+            ticking.current = true;
+            window.requestAnimationFrame(update);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    return hidden;
 }
 
 function NavLink({ item, pathname }: { item: Item; pathname: string }) {
@@ -106,17 +172,70 @@ function Cta({ pathname }: { pathname: string }) {
 
 export function MobileBottomNav() {
     const pathname = usePathname();
+    const prefersReducedMotion = usePrefersReducedMotion();
+    const shouldHide = useHideOnScroll();
 
     const left = ITEMS.slice(0, 2);
     const right = ITEMS.slice(2);
 
+    type AnimState = 'shown' | 'showing' | 'hiding' | 'hidden';
+    const [anim, setAnim] = useState<AnimState>('shown');
+    const timeoutRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+
+        // Reduced motion: pas d'anim, juste hide/show
+        if (prefersReducedMotion) {
+            setAnim(shouldHide ? 'hidden' : 'shown');
+            return;
+        }
+
+        if (shouldHide) {
+            // si déjà caché ou en train de cacher, ne rien faire
+            if (anim === 'hidden' || anim === 'hiding') return;
+
+            setAnim('hiding');
+            timeoutRef.current = window.setTimeout(() => setAnim('hidden'), 240);
+            return;
+        }
+
+        // show
+        if (anim === 'shown' || anim === 'showing') return;
+
+        setAnim('showing');
+        timeoutRef.current = window.setTimeout(() => setAnim('shown'), 240);
+    }, [shouldHide, prefersReducedMotion]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const isInteractive = anim === 'shown' || anim === 'showing';
+    const isGone = anim === 'hidden';
+
     return (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:hidden">
-            <nav aria-label="Navigation mobile" className="pointer-events-auto mx-auto max-w-md">
+        <div
+            className={cn(
+                'fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:hidden',
+                'will-change-transform',
+                prefersReducedMotion
+                    ? isGone
+                        ? 'opacity-0'
+                        : 'opacity-100'
+                    : anim === 'showing'
+                      ? 'animate-[mobileNavIn_240ms_cubic-bezier(0.2,0.8,0.2,1)_both]'
+                      : anim === 'hiding'
+                        ? 'animate-[mobileNavOut_220ms_cubic-bezier(0.4,0,1,1)_both]'
+                        : anim === 'hidden'
+                          ? 'translate-y-[110%] opacity-0'
+                          : 'translate-y-0 opacity-100',
+            )}
+            style={{ pointerEvents: isInteractive ? 'auto' : 'none' }}
+            aria-hidden={!isInteractive}
+        >
+            <nav aria-label="Navigation mobile" className="mx-auto max-w-md">
                 <div className={cn('relative rounded-4xl border border-border/70', 'bg-surface/70 backdrop-blur-xl', 'shadow-[0_22px_60px_rgba(4,7,18,0.62)]')}>
                     <div aria-hidden="true" className="pointer-events-none absolute inset-x-6 top-0 h-px bg-linear-to-r from-transparent via-white/22 to-transparent" />
                     <div aria-hidden="true" className="pointer-events-none absolute -inset-x-6 -top-10 h-24 bg-radial from-primary/10 via-transparent to-transparent blur-2xl" />
                     <div aria-hidden="true" className="pointer-events-none absolute -inset-x-6 -bottom-12 h-24 bg-radial from-accent/8 via-transparent to-transparent blur-2xl" />
+
                     <div className="grid grid-cols-5 items-end gap-1 px-2 pb-2 pt-3">
                         {left.map((item) => (
                             <NavLink key={item.href} item={item} pathname={pathname} />
