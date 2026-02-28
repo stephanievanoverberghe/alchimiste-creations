@@ -18,11 +18,8 @@ export function HomeHeroSection({ content }: HomeHeroSectionProps) {
                 <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
                     <div className="space-y-6">
                         <Badge className="max-w-max">{content.badge}</Badge>
-
-                        <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl">{content.title}</h1>
-
-                        <p className="text-base text-text-muted sm:text-lg">{content.lead}</p>
-
+                        <h1 className="typography-h1">{content.title}</h1>
+                        <p className="typography-body-lg">{content.lead}</p>
                         <div className="flex flex-wrap gap-2">
                             {content.assurances.slice(0, 3).map((a) => (
                                 <span key={a} className="rounded-full border border-border/70 bg-surface/60 px-3 py-1 text-xs font-semibold text-text-muted">

@@ -171,7 +171,7 @@ export function HomeProjectsSection({ content, contactHref = '/contact' }: HomeP
                         <div className="flex flex-wrap items-center justify-between gap-6">
                             <div className="max-w-xl">
                                 <p className="text-sm font-semibold text-accent">Et si c’était le vôtre ?</p>
-                                <h3 className="mt-2 text-lg font-semibold">On clarifie votre message et on augmente les prises de contact.</h3>
+                                <h3 className="mt-2 typography-h3">On clarifie votre message et on augmente les prises de contact.</h3>
                                 <p className="mt-2 text-sm text-text-muted">
                                     Parlez-moi de votre activité : on voit en 20 min si la meilleure option est une One Page, un site vitrine ou une refonte.
                                 </p>

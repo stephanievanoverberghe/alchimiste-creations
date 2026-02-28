@@ -8,8 +8,8 @@ export function PageHero({ eyebrow, title, description }: { eyebrow: string; tit
             <Container>
                 <div className="reveal-up max-w-3xl space-y-5">
                     <Badge>{eyebrow}</Badge>
-                    <h1 className="text-balance text-4xl font-semibold tracking-tight md:text-6xl">{title}</h1>
-                    <p className="text-pretty text-lg text-text-muted">{description}</p>
+                    <h1 className="typography-h1">{title}</h1>
+                    <p className="typography-body-lg">{description}</p>
                 </div>
             </Container>
         </Section>

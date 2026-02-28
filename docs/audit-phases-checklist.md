@@ -8,8 +8,8 @@
 
 - [x] Lancer la phase 1 (architecture)
 - [x] Finaliser la phase 1 (architecture)
-- [ ] Phase 2 (UX) — En cours
-- [ ] Phase 3 (UI)
+- [x] Phase 2 (UX) — Terminée
+- [ ] Phase 3 (UI) — En cours
 - [ ] Phase 4 (performance)
 - [ ] Phase 5 (clean code)
 - [ ] Phase 6 (responsive)
@@ -97,10 +97,32 @@
 
 ## Phase 3 — UI
 
-- [ ] Harmoniser la hiérarchie typographique (H1/H2/H3).
-- [ ] Uniformiser les espacements verticaux/horizontaux.
-- [ ] Réduire les répétitions visuelles (chips, badges, orbs, glow).
-- [ ] Vérifier contraste et lisibilité (mobile et desktop).
+- [ ] Sous-phase 3.1 — Hiérarchie typographique
+    - [ ] Cartographier les styles actuels H1/H2/H3 + textes d'accroche.
+    - [ ] Définir une échelle type unique (desktop + mobile) pour hero, sections, cartes.
+    - [ ] Aligner poids/tailles/interlignage des titres section par section.
+
+- [ ] Sous-phase 3.2 — Système d'espacements
+    - [ ] Auditer les espacements verticaux entre sections et blocs internes.
+    - [ ] Définir une grille d'espacement (tokens) cohérente (`gap`, `py`, `mt`).
+    - [ ] Harmoniser les paddings de conteneurs et cartes sur toute la home.
+
+- [ ] Sous-phase 3.3 — Rationalisation visuelle
+    - [ ] Réduire les répétitions décoratives (chips, badges, glow, orbs) sans perdre l'identité.
+    - [ ] Normaliser styles des badges/eyebrows/labels pour éviter les variantes concurrentes.
+    - [ ] Clarifier la priorité visuelle (1 focus fort par écran).
+
+- [ ] Sous-phase 3.4 — Lisibilité & contraste
+    - [ ] Vérifier contraste texte/fond des éléments critiques (titres, CTA, textes secondaires).
+    - [ ] Revalider lisibilité mobile (taille min de police, densité par bloc, line-height).
+    - [ ] Ajuster les états interactifs (hover/focus/active) pour maintenir la clarté.
+
+### Critères de sortie phase 3
+
+- [ ] Les titres principaux suivent une hiérarchie lisible et stable sur toutes les sections.
+- [ ] Les espacements sont homogènes et prédictibles (desktop + mobile).
+- [ ] Les éléments décoratifs n'éclipsent plus l'information principale.
+- [ ] Contraste et lisibilité validés sur les écrans critiques (hero, offres, CTA final).
 
 ---
 
@@ -140,4 +162,5 @@
 - **Sprint UX #2**: sous-phase 2.2 réalisée avec cartographie complète du parcours, ruptures de narration et recommandations de fil rouge dans `docs/ux-phase-2-2-diagnostic.md`.
 - **Sprint UX #3**: sous-phase 2.3 réalisée avec cartographie des surcharges, qualification des frictions de lecture et priorisation par impact conversion dans `docs/ux-phase-2-3-diagnostic.md`.
 - **Sprint UX #4**: sous-phase 2.4 réalisée avec proposition d'un parcours cible en 6 blocs, simplifications de sections et banque de micro-copy dans `docs/ux-phase-2-4-target-journey.md`.
-- Prochaine action: implémenter la version cible dans les composants de la home puis mesurer les impacts sur la compréhension et la conversion.
+- **Sprint UI #1 (kickoff)**: ouverture de la phase 3 avec plan détaillé en 4 sous-phases (typographie, spacing, rationalisation visuelle, contraste/lisibilité).
+- Prochaine action: démarrer la sous-phase 3.1 sur le Hero + sections à fort impact (Offers, CTA final), puis déployer le même système au reste de la home.

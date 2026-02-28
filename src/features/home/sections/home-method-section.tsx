@@ -43,7 +43,7 @@ export function HomeMethodSection({ architecture, process }: Props) {
                                     ) : null}
                                 </div>
 
-                                <h3 className="mt-4 text-base font-semibold">{step.title}</h3>
+                                <h3 className="mt-4 typography-h4">{step.title}</h3>
                                 <p className="mt-2 text-sm text-text-muted">{step.description}</p>
 
                                 {step.deliverables?.length ? (

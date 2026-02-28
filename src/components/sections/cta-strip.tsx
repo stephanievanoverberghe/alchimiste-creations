@@ -25,7 +25,7 @@ export function CtaStrip() {
 
                     <div className="relative mt-5 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                         <div>
-                            <p className="text-balance text-2xl font-semibold">Votre site doit vous apporter des clients, pas juste être joli.</p>
+                            <p className="typography-h3">Votre site doit vous apporter des clients, pas juste être joli.</p>
                             <p className="mt-2 max-w-2xl text-sm text-text-muted">
                                 On clarifie votre message, on rend le parcours plus fluide, et on vous aide à obtenir plus de demandes sérieuses.
                             </p>

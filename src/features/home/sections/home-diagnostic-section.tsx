@@ -19,7 +19,7 @@ export function HomeDiagnosticSection({ qualification, proofs }: Props) {
                 <div className="mt-6 grid gap-4 lg:grid-cols-3">
                     {qualification.items.map((item) => (
                         <Card key={item.title} className="border-border/80 bg-background/90 p-5">
-                            <h3 className="text-base font-semibold">{item.title}</h3>
+                            <h3 className="typography-h4">{item.title}</h3>
                             <p className="mt-2 text-sm text-text-muted">{item.description}</p>
 
                             <ul className="mt-4 space-y-2 text-sm text-text-muted">
