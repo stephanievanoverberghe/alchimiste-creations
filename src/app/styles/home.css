@@ -312,7 +312,7 @@
 }
 
 .offers-card:hover .offers-card__surface {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.02);
     border-color: color-mix(in oklab, hsl(var(--accent)) 38%, hsl(var(--border)) 62%);
     box-shadow: 0 22px 48px rgba(8, 10, 20, 0.42);
 }

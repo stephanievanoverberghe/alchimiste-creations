@@ -47,7 +47,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                             const Icon = offer.icon ? ICONS[offer.icon] : Sparkles;
 
                             return (
-                                <Link key={offer.slug} href={`/offres#${offer.slug}`} className="offers-card group block h-full" aria-label={`Découvrir l'offre ${offer.name}`}>
+                                <Link key={offer.slug} href={`/offres/${offer.slug}`} className="offers-card group block h-full" aria-label={`Découvrir l'offre ${offer.name}`}>
                                     <Card
                                         className={cn(
                                             'offers-card__surface relative flex h-full flex-col overflow-hidden border-border/70 bg-linear-to-br from-surface to-surface-elevated/85 p-5',
