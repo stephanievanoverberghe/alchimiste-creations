@@ -233,6 +233,99 @@
     animation: shimmerFlow 2.7s linear infinite;
 }
 
+.cta-strip {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 72%, hsl(var(--accent)) 28%);
+    background:
+        linear-gradient(135deg, color-mix(in oklab, hsl(var(--surface)) 88%, transparent 12%), color-mix(in oklab, hsl(var(--surface-elevated)) 82%, transparent 18%));
+    box-shadow: 0 24px 54px rgba(5, 9, 22, 0.4);
+}
+
+.cta-strip__mesh {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background:
+        radial-gradient(circle at 20% 16%, rgba(122, 84, 255, 0.28), transparent 46%),
+        radial-gradient(circle at 78% 74%, rgba(19, 209, 255, 0.25), transparent 52%),
+        linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.08) 50%, transparent 65%);
+    background-size: auto, auto, 220% 100%;
+    animation: shimmerFlow 7.5s linear infinite;
+}
+
+.cta-strip__orb {
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 999px;
+    filter: blur(6px);
+    pointer-events: none;
+    opacity: 0.9;
+    animation: driftOrb 8.2s ease-in-out infinite;
+}
+
+.cta-strip__orb--primary {
+    left: -72px;
+    top: -132px;
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.34), transparent 64%);
+}
+
+.cta-strip__orb--accent {
+    right: -90px;
+    bottom: -148px;
+    background: radial-gradient(circle, rgba(19, 209, 255, 0.32), transparent 64%);
+    animation-delay: 1.6s;
+}
+
+.cta-strip__orb--trail {
+    right: 22%;
+    top: 12%;
+    width: 150px;
+    height: 150px;
+    opacity: 0.45;
+    background: radial-gradient(circle, rgba(151, 111, 255, 0.34), transparent 68%);
+    animation-duration: 6.5s;
+    animation-delay: 0.8s;
+}
+
+.cta-strip__pill {
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 66%, hsl(var(--accent)) 34%);
+    background: color-mix(in oklab, hsl(var(--surface-elevated)) 72%, transparent 28%);
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+}
+
+.cta-strip__pill:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 48%, hsl(var(--border)) 52%);
+    color: hsl(var(--text));
+}
+
+.cta-strip__button {
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.cta-strip__button::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(110deg, transparent 24%, rgba(255, 255, 255, 0.35) 50%, transparent 76%);
+    transform: translateX(-140%);
+    transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cta-strip__button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(122, 84, 255, 0.35);
+}
+
+.cta-strip__button:hover::before {
+    transform: translateX(140%);
+}
+
 .offers-shell {
     position: relative;
     padding: clamp(1rem, 2vw, 1.35rem);
