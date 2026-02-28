@@ -213,6 +213,130 @@
     animation: shimmerFlow 2.7s linear infinite;
 }
 
+.offers-shell {
+    position: relative;
+    padding: clamp(1rem, 2vw, 1.35rem);
+    border-radius: 1.7rem;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 70%, hsl(var(--accent)) 30%);
+    background:
+        linear-gradient(160deg, color-mix(in oklab, hsl(var(--surface)) 90%, transparent 10%), color-mix(in oklab, hsl(var(--surface-elevated)) 86%, transparent 14%));
+    overflow: hidden;
+    box-shadow: 0 20px 46px rgba(5, 9, 22, 0.35);
+}
+
+.offers-shell__mesh {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 16% 12%, rgba(122, 84, 255, 0.2), transparent 46%),
+        radial-gradient(circle at 84% 76%, rgba(19, 209, 255, 0.2), transparent 52%);
+}
+
+.offers-shell__glow {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    filter: blur(4px);
+    opacity: 0.5;
+    pointer-events: none;
+    animation: driftOrb 7s ease-in-out infinite;
+}
+
+.offers-shell__glow--primary {
+    top: -98px;
+    right: -70px;
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.3), transparent 68%);
+}
+
+.offers-shell__glow--accent {
+    bottom: -110px;
+    left: -60px;
+    background: radial-gradient(circle, rgba(19, 209, 255, 0.26), transparent 70%);
+    animation-delay: 1.4s;
+}
+
+.offers-shell__chips {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+}
+
+.offers-shell__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 65%, hsl(var(--accent)) 35%);
+    background: color-mix(in oklab, hsl(var(--surface-elevated)) 86%, transparent 14%);
+    padding: 0.35rem 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: hsl(var(--text-muted));
+}
+
+.offers-card {
+    position: relative;
+    z-index: 1;
+}
+
+.offers-card__surface {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.offers-card__surface--featured {
+    border-color: color-mix(in oklab, hsl(var(--primary)) 55%, hsl(var(--border)) 45%);
+    box-shadow: 0 16px 40px rgba(122, 84, 255, 0.2);
+}
+
+.offers-card__spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--motion-base) var(--ease-standard);
+    background:
+        radial-gradient(circle at 14% -10%, rgba(122, 84, 255, 0.22), transparent 52%),
+}
+
+.offers-card__icon,
+.offers-card__tag,
+.offers-card__cta {
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard);
+}
+
+.offers-card:hover .offers-card__surface {
+    transform: translateY(-6px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 38%, hsl(var(--border)) 62%);
+    box-shadow: 0 22px 48px rgba(8, 10, 20, 0.42);
+}
+
+.offers-card:hover .offers-card__spotlight {
+    opacity: 1;
+}
+
+.offers-card:hover .offers-card__icon {
+    transform: translateY(-2px) scale(1.06);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 42%, hsl(var(--border)) 58%);
+    background-color: color-mix(in oklab, hsl(var(--accent)) 14%, transparent 86%);
+}
+
+.offers-card:hover .offers-card__tag {
+    border-color: color-mix(in oklab, hsl(var(--accent)) 40%, hsl(var(--border)) 60%);
+    color: hsl(var(--text));
+}
+
+.offers-card:hover .offers-card__cta {
+    transform: translateX(2px);
+    color: hsl(var(--accent));
+}
+
 @media (max-width: 640px) {
     .qualification-journey__step {
         border-radius: 1rem;
