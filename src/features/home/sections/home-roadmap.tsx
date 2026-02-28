@@ -8,7 +8,7 @@ type HomeRoadmapProps = {
 };
 
 export function HomeRoadmap({ children }: HomeRoadmapProps) {
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -19,7 +19,7 @@ export function HomeRoadmap({ children }: HomeRoadmapProps) {
         return () => mediaQuery.removeEventListener('change', onChange);
     }, []);
 
-    if (isMobile) {
+    if (isMobile !== false) {
         return <>{children}</>;
     }
 

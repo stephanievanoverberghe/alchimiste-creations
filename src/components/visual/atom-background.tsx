@@ -49,14 +49,37 @@ const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.mi
 
 export function AtomBackground() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const reducedMotionRef = useRef(false);
+    const isMobileRef = useRef(false);
+
+    useEffect(() => {
+        const reduceMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const mobileMedia = window.matchMedia('(max-width: 767px)');
+
+        const syncFlags = () => {
+            reducedMotionRef.current = reduceMedia.matches;
+            isMobileRef.current = mobileMedia.matches;
+        };
+
+        syncFlags();
+        reduceMedia.addEventListener('change', syncFlags);
+        mobileMedia.addEventListener('change', syncFlags);
+
+        return () => {
+            reduceMedia.removeEventListener('change', syncFlags);
+            mobileMedia.removeEventListener('change', syncFlags);
+        };
+    }, []);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
+        if (reducedMotionRef.current || isMobileRef.current) return;
 
         let stopAnimation = false;
         let frameId = 0;
         let renderer: ThreeRenderer | undefined;
+        let lastFrameTime = 0;
 
         const initScene = () => {
             if (!window.THREE) return;
@@ -69,7 +92,7 @@ export function AtomBackground() {
             camera.position.set(0, 0, 7.5);
 
             renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
             const lightMain = new THREE.PointLight(0x755aff, 1.4, 30);
             lightMain.position.set(2.5, 2.2, 6);
@@ -123,6 +146,17 @@ export function AtomBackground() {
 
             const tick = (time: number) => {
                 if (stopAnimation) return;
+
+                if (document.hidden) {
+                    frameId = window.requestAnimationFrame(tick);
+                    return;
+                }
+
+                if (time - lastFrameTime < 33) {
+                    frameId = window.requestAnimationFrame(tick);
+                    return;
+                }
+                lastFrameTime = time;
 
                 const t = time * 0.001;
                 coreMesh.rotation.x = t * 0.25;
