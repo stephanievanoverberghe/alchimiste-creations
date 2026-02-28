@@ -157,7 +157,7 @@ export const homeContent = {
         title: 'En quelques secondes, votre visiteur comprend pourquoi il peut vous faire confiance.',
         description: 'On met en scène les bonnes informations, au bon moment, pour que votre site inspire confiance et donne envie de passer à l’action.',
         stats: [
-            { label: 'Temps moyen avant de comprendre votre offre', value: 'Moins de 10 secondes' },
+            { label: 'Temps moyen pour comprendre votre offre', value: 'Moins de 10 secondes' },
             { label: 'Chemin vers la prise de contact', value: 'Simple et visible sur chaque page' },
             { label: 'Expérience ressentie', value: 'Clair, fluide et rassurant' },
         ],

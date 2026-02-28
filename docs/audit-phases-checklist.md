@@ -97,15 +97,15 @@
 
 ## Phase 3 — UI
 
-- [ ] Sous-phase 3.1 — Hiérarchie typographique
-    - [ ] Cartographier les styles actuels H1/H2/H3 + textes d'accroche.
-    - [ ] Définir une échelle type unique (desktop + mobile) pour hero, sections, cartes.
-    - [ ] Aligner poids/tailles/interlignage des titres section par section.
+- [x] Sous-phase 3.1 — Hiérarchie typographique
+    - [x] Cartographier les styles actuels H1/H2/H3 + textes d'accroche.
+    - [x] Définir une échelle type unique (desktop + mobile) pour hero, sections, cartes.
+    - [x] Aligner poids/tailles/interlignage des titres section par section.
 
 - [ ] Sous-phase 3.2 — Système d'espacements
-    - [ ] Auditer les espacements verticaux entre sections et blocs internes.
-    - [ ] Définir une grille d'espacement (tokens) cohérente (`gap`, `py`, `mt`).
-    - [ ] Harmoniser les paddings de conteneurs et cartes sur toute la home.
+    - [x] Auditer les espacements verticaux entre sections et blocs internes.
+    - [x] Définir une grille d'espacement (tokens) cohérente (`gap`, `py`, `mt`).
+    - [x] Harmoniser les paddings de conteneurs et cartes sur toute la home.
 
 - [ ] Sous-phase 3.3 — Rationalisation visuelle
     - [ ] Réduire les répétitions décoratives (chips, badges, glow, orbs) sans perdre l'identité.
@@ -163,4 +163,5 @@
 - **Sprint UX #3**: sous-phase 2.3 réalisée avec cartographie des surcharges, qualification des frictions de lecture et priorisation par impact conversion dans `docs/ux-phase-2-3-diagnostic.md`.
 - **Sprint UX #4**: sous-phase 2.4 réalisée avec proposition d'un parcours cible en 6 blocs, simplifications de sections et banque de micro-copy dans `docs/ux-phase-2-4-target-journey.md`.
 - **Sprint UI #1 (kickoff)**: ouverture de la phase 3 avec plan détaillé en 4 sous-phases (typographie, spacing, rationalisation visuelle, contraste/lisibilité).
+-   - **Sprint UI #2**: sous-phase 3.2 finalisée avec une grille de spacing tokenisée (`container`, `section`, `heading`, `stack`, `grid`, `card`) et mapping appliqué sur les sections critiques de la home.
 - Prochaine action: démarrer la sous-phase 3.1 sur le Hero + sections à fort impact (Offers, CTA final), puis déployer le même système au reste de la home.

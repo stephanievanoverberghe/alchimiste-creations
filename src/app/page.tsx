@@ -1,5 +1,5 @@
 import { CtaStrip } from '@/components/sections/cta-strip';
-import { HomeRoadmap, HomeDiagnosticSection, HomeFaqSection, HomeHeroSection, HomeMethodSection, HomeOffersSection, HomeProjectsSection } from '@/features/home/sections';
+import { HomeRoadmap, HomeDiagnosticSection, HomeFaqSection, HomeHeroSection, HomeMethodSection, HomeOffersSection, HomeProjectsSection } from '@/features/home';
 import { homeContent } from '@/content/home';
 
 export default function HomePage() {
