@@ -302,7 +302,7 @@
     opacity: 0;
     transition: opacity var(--motion-base) var(--ease-standard);
     background:
-        radial-gradient(circle at 14% -10%, rgba(122, 84, 255, 0.22), transparent 52%),
+        radial-gradient(circle at 14% -10%, rgba(122, 84, 255, 0.22), transparent 52%);
 }
 
 .offers-card__icon,
@@ -409,5 +409,160 @@
 @media (max-width: 479px) {
     .atom-hero__chip {
         display: none;
+    }
+}
+
+.projects-shell {
+    position: relative;
+    isolation: isolate;
+}
+
+.projects-card {
+    animation: revealUp var(--motion-slow) var(--ease-standard) both;
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.projects-card:hover {
+    transform: translateY(-6px);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 38%, hsl(var(--border)) 62%);
+    box-shadow: 0 20px 44px rgba(8, 10, 20, 0.42);
+}
+
+.projects-card__mesh {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 8% 12%, rgba(122, 84, 255, 0.16), transparent 42%),
+        radial-gradient(circle at 82% 85%, rgba(19, 209, 255, 0.14), transparent 48%);
+}
+
+.projects-card__orb {
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(2px);
+    opacity: 0.42;
+    animation: driftOrb 7.5s ease-in-out infinite;
+}
+
+.projects-card__orb--primary {
+    top: -90px;
+    right: -70px;
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.28), transparent 70%);
+}
+
+.projects-card__orb--accent {
+    bottom: -120px;
+    left: -75px;
+    background: radial-gradient(circle, rgba(19, 209, 255, 0.24), transparent 72%);
+    animation-delay: 1.2s;
+}
+
+.projects-card__media,
+.projects-card__icon,
+.projects-card__panel,
+.projects-card__cta,
+.projects-card__badge {
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+}
+
+.projects-card:hover .projects-card__icon {
+    transform: rotate(3deg) scale(1.04);
+    border-color: color-mix(in oklab, hsl(var(--accent)) 42%, hsl(var(--border)) 58%);
+}
+
+.projects-card:hover .projects-card__panel {
+    border-color: color-mix(in oklab, hsl(var(--accent)) 34%, hsl(var(--border)) 66%);
+}
+
+.projects-card:hover .projects-card__badge {
+    transform: translateY(-1px);
+}
+
+.projects-card:hover .projects-card__cta {
+    color: hsl(var(--accent));
+    transform: translateX(2px);
+}
+
+.projects-contact {
+    position: relative;
+    border-color: color-mix(in oklab, hsl(var(--accent)) 30%, hsl(var(--border)) 70%);
+}
+
+.projects-contact__halo {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    pointer-events: none;
+    opacity: 0.45;
+    filter: blur(10px);
+    animation: driftOrb 8.5s ease-in-out infinite;
+}
+
+.projects-contact__halo--left {
+    left: -90px;
+    bottom: -130px;
+    background: radial-gradient(circle, rgba(122, 84, 255, 0.24), transparent 68%);
+}
+
+.projects-contact__halo--right {
+    right: -80px;
+    top: -140px;
+    background: radial-gradient(circle, rgba(19, 209, 255, 0.2), transparent 70%);
+    animation-delay: 1s;
+}
+
+.projects-contact__ticker {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, hsl(var(--border)) 65%, hsl(var(--accent)) 35%);
+    background: color-mix(in oklab, hsl(var(--background)) 72%, transparent 28%);
+}
+
+.projects-contact__ticker-track {
+    display: flex;
+    width: max-content;
+    animation: projectTicker 18s linear infinite;
+}
+
+.projects-contact__ticker-track span {
+    padding: 0.45rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: hsl(var(--text-muted));
+    white-space: nowrap;
+}
+
+.projects-contact__ticker-track span::after {
+    content: '•';
+    margin-left: 1rem;
+    color: color-mix(in oklab, hsl(var(--accent)) 70%, hsl(var(--text-muted)) 30%);
+}
+
+.projects-contact__benefit {
+    transition: transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard);
+}
+
+.projects-contact:hover .projects-contact__benefit {
+    border-color: color-mix(in oklab, hsl(var(--accent)) 36%, hsl(var(--border)) 64%);
+    background-color: color-mix(in oklab, hsl(var(--accent)) 10%, transparent 90%);
+}
+
+@keyframes projectTicker {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
     }
 }
