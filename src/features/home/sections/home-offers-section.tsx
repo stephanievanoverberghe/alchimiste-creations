@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { SectionHeading } from '@/components/ui/section-heading';
 import type { HomeContent } from '@/content/home';
 import { cn } from '@/lib/utils';
-import { ArrowUpRight, ChevronRight, Code2, Gauge, LayoutTemplate, Rocket, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowUpRight, ChevronRight, Code2, Gauge, LayoutTemplate, Rocket, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 type HomeOffersSectionProps = {
@@ -14,6 +14,7 @@ type HomeOffersSectionProps = {
 const ICONS = {
     sparkles: Sparkles,
     layout: LayoutTemplate,
+    zap: Zap,
     gauge: Gauge,
     code: Code2,
     rocket: Rocket,
@@ -38,7 +39,7 @@ export function HomeOffersSection({ content }: HomeOffersSectionProps) {
                     ))}
                 </div>
 
-                <div className="grid gap-5 md:grid-cols-2">
+                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                     {content.items.map((offer, index) => {
                         const Icon = offer.icon ? ICONS[offer.icon] : Sparkles;
 

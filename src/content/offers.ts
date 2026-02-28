@@ -2,6 +2,34 @@ import { offersSchema } from './schemas';
 
 export const offers = offersSchema.parse([
     {
+        slug: 'creation-landing-page',
+        name: 'Création de landing page / site One Page',
+        punchline: 'Besoin d’une présence en ligne rapide et efficace ? Je crée une page stratégique pensée pour convertir.',
+        summary: 'Une page unique, claire et structurée, idéale pour présenter votre activité, lancer une offre ou générer des demandes de contact rapidement.',
+        timeline: '1 à 2 semaines',
+        priceFrom: 'À partir de 1 190€',
+        deliverables: [
+            'Page unique structurée (Hero, Services, À propos, Preuves sociales, Contact)',
+            'Design moderne et professionnel',
+            'Responsive mobile / tablette / desktop',
+            'Structure optimisée pour la conversion',
+            'Formulaire de contact intégré',
+            'SEO technique de base (metas, structure)',
+            'Mise en ligne accompagnée',
+        ],
+        featured: false,
+
+        icon: 'zap',
+        bestFor: 'Idéal pour indépendants, coachs et petites structures qui veulent une présence professionnelle sans projet lourd.',
+        highlights: ['Rapide', 'Efficace', 'Optimisé conversion'],
+        note: 'Projet 100% codé sur mesure (pas de template générique).',
+        image: {
+            src: '/images/offer-landing.png',
+            alt: 'Création de landing page moderne et optimisée',
+        },
+    },
+
+    {
         slug: 'creation-site-vitrine',
         name: 'Création de site vitrine',
         punchline: 'Vous n’avez pas encore de site ? Je crée un site professionnel, clair et responsive.',

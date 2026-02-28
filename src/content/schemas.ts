@@ -24,7 +24,7 @@ export const offerSchema = z.object({
     priceFrom: z.string(),
     deliverables: z.array(z.string()).min(3),
     featured: z.boolean().default(false),
-    icon: z.enum(['shield', 'sparkles', 'layout']).optional(),
+    icon: z.enum(['shield', 'sparkles', 'layout', 'zap']).optional(),
     bestFor: z.string().optional(),
     highlights: z.array(z.string()).optional(),
     note: z.string().optional(),
