@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { BadgeEuro, HelpCircle, LayoutGrid, Layers3, Send, type LucideIcon } from 'lucide-react';
+import { BadgeEuro, House, LayoutGrid, Layers3, Send, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Item = {
@@ -13,10 +13,10 @@ type Item = {
 };
 
 const ITEMS: Item[] = [
+    { href: '/', label: 'Accueil', icon: House },
     { href: '/projets', label: 'Projets', icon: LayoutGrid },
     { href: '/offres', label: 'Offres', icon: BadgeEuro },
     { href: '/methode', label: 'Méthode', icon: Layers3 },
-    { href: '/faq', label: 'FAQ', icon: HelpCircle },
 ];
 
 const CTA: Item = { href: '/contact', label: 'Contact', icon: Send };
