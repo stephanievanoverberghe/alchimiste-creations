@@ -47,9 +47,9 @@ function useHideOnScroll() {
     const ticking = useRef(false);
 
     useEffect(() => {
-        const MIN_Y_TO_START = 24; // visible tout en haut
-        const DELTA = 10; // anti-jitter
-        const HIDE_AFTER = 64; // évite de cacher trop tôt
+        const MIN_Y_TO_START = 24;
+        const DELTA = 10;
+        const HIDE_AFTER = 64;
 
         lastY.current = window.scrollY || 0;
 
@@ -59,20 +59,16 @@ function useHideOnScroll() {
             const y = window.scrollY || 0;
             const diff = y - lastY.current;
 
-            // proche du top -> visible
             if (y < MIN_Y_TO_START) {
                 setHidden(false);
                 lastY.current = y;
                 return;
             }
 
-            // ignore micro scroll
             if (Math.abs(diff) < DELTA) return;
 
-            // scroll down -> hide (après un peu de scroll)
             if (diff > 0 && y > HIDE_AFTER) setHidden(true);
 
-            // scroll up -> show
             if (diff < 0) setHidden(false);
 
             lastY.current = y;
@@ -192,7 +188,6 @@ export function MobileBottomNav() {
         }
 
         if (shouldHide) {
-            // si déjà caché ou en train de cacher, ne rien faire
             if (anim === 'hidden' || anim === 'hiding') return;
 
             setAnim('hiding');
@@ -200,7 +195,6 @@ export function MobileBottomNav() {
             return;
         }
 
-        // show
         if (anim === 'shown' || anim === 'showing') return;
 
         setAnim('showing');
