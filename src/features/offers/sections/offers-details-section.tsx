@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { Badge } from '@/components/ui/badge';
@@ -23,7 +24,7 @@ export function OffersDetailsSection({ offers }: OffersDetailsSectionProps) {
                 />
                 <div className="space-y-6">
                     {offers.map((offer) => (
-                        <div key={offer.slug} id={`detail-${offer.slug}`} className="scroll-mt-28">
+                        <div key={offer.slug} className="scroll-mt-28">
                             <Card className="border border-border/70 bg-surface/70 p-5 md:p-6">
                                 <div className="flex flex-wrap items-center justify-between gap-3">
                                     <h3 className="text-xl font-semibold text-text">{offer.name}</h3>
@@ -67,10 +68,16 @@ export function OffersDetailsSection({ offers }: OffersDetailsSectionProps) {
                                 </p>
 
                                 <div className="mt-5 flex flex-wrap gap-3">
+                                    <Button href={`/offres/${offer.slug}`} variant="secondary">
+                                        Voir le descriptif complet
+                                    </Button>
                                     <Button href="/contact">Réserver un appel</Button>
                                     <Button href="/contact#devis" variant="secondary">
                                         Demander un devis
                                     </Button>
+                                    <Link href={`/offres/${offer.slug}`} className="focus-ring mt-3 inline-flex text-sm font-semibold text-accent hover:text-accent-strong">
+                                        Consulter la page dédiée de cette offre →
+                                    </Link>
                                 </div>
                             </Card>
                         </div>

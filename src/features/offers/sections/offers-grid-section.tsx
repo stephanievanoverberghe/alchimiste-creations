@@ -26,7 +26,7 @@ export function OffersGridSection({ offers }: OffersGridSectionProps) {
                         <div key={offer.slug} id={offer.slug} className="scroll-mt-28">
                             <Card
                                 className={`border p-5 transition-all duration-300 md:hover:-translate-y-1 ${
-                                    offer.featured ? 'border-primary/60 bg-primary/5 shadow-[var(--shadow-glow)]' : 'border-border/70 bg-surface/70 md:hover:border-accent/60'
+                                    offer.featured ? 'border-primary/60 bg-primary/5 shadow-(--shadow-glow)' : 'border-border/70 bg-surface/70 md:hover:border-accent/60'
                                 }`}
                             >
                                 <div className="flex items-start justify-between gap-3">
@@ -46,8 +46,8 @@ export function OffersGridSection({ offers }: OffersGridSectionProps) {
                                 </div>
                                 <p className="mt-4 text-sm text-text-muted">{offer.bestFor}</p>
                                 <div className="mt-5 flex flex-wrap gap-2">
-                                    <Link href={`#detail-${offer.slug}`} className="focus-ring text-sm font-semibold text-accent">
-                                        Voir les détails ↓
+                                    <Link href={`/offres/${offer.slug}`} className="focus-ring text-sm font-semibold text-accent">
+                                        Voir le descriptif complet →
                                     </Link>
                                 </div>
                             </Card>
