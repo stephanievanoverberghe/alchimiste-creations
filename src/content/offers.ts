@@ -36,7 +36,7 @@ export const offers = offersSchema.parse([
         punchline: 'Créez un site complet pour structurer vos demandes et renforcer votre crédibilité.',
         summary: 'Un site vitrine de 4 à 8 pages pensé pour présenter vos services, améliorer votre visibilité et soutenir une acquisition régulière.',
         timeline: '3 à 5 semaines',
-        priceFrom: 'À partir de 2 490 € HT',
+        priceFrom: 'À partir de 2 490€ HT',
         priceFactors: ['Nombre de pages', 'Travail SEO de base', 'Besoins multilingues'],
         deliverables: [
             'Site complet 4 à 8 pages (Accueil, À propos, Services, Contact + options)',
